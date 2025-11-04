@@ -9,7 +9,6 @@
 	let mobileMenuOpen = $state(false);
 	let activeTab = $state('realtime');
 	let activeFeatureTab = $state('transcription');
-	let activePricingTab = $state('monthly');
 	let transcriptIndex = $state(0);
 	let sentimentScore = $state(0);
 	let buyingSignals = $state(0);
@@ -23,7 +22,6 @@
 		features: false,
 		demo: false,
 		testimonials: false,
-		pricing: false,
 		cta: false
 	});
 
@@ -118,13 +116,13 @@
 				</div>
 			</div>
 			
-			<div class="hidden md:flex items-center gap-1">
-				<button onclick={() => scrollToSection('products')} class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Products</button>
-				<a href="/features" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Features</a>
-				<button onclick={() => scrollToSection('demo')} class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Platform</button>
-				<button onclick={() => scrollToSection('pricing')} class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Pricing</button>
-				
-				<div class="ml-4 flex items-center gap-3">
+		<div class="hidden md:flex items-center gap-1">
+			<button onclick={() => scrollToSection('products')} class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Products</button>
+			<a href="/features" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Features</a>
+			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Platform</a>
+			<a href="/contact-sales" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Contact Sales</a>
+			
+			<div class="ml-4 flex items-center gap-3">
 					<button class="px-4 py-2 text-sm font-semibold text-white hover:text-red-500 transition-colors duration-300">
 						Log In
 					</button>
@@ -150,15 +148,15 @@
 			</button>
 		</div>
 
-		<!-- Mobile Menu -->
-		{#if mobileMenuOpen}
-			<div class="md:hidden mt-4 pb-4 space-y-2 border-t border-red-900/30 pt-4">
-				<button onclick={() => scrollToSection('products')} class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Products</button>
-				<a href="/features" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Features</a>
-				<button onclick={() => scrollToSection('demo')} class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Platform</button>
-				<button onclick={() => scrollToSection('pricing')} class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Pricing</button>
-			</div>
-		{/if}
+	<!-- Mobile Menu -->
+	{#if mobileMenuOpen}
+		<div class="md:hidden mt-4 pb-4 space-y-2 border-t border-red-900/30 pt-4">
+			<button onclick={() => scrollToSection('products')} class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Products</button>
+			<a href="/features" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Features</a>
+			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Platform</a>
+			<a href="/contact-sales" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Contact Sales</a>
+		</div>
+	{/if}
 	</div>
 </nav>
 
@@ -219,9 +217,9 @@
 					</span>
 					<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 				</button>
-				<button class="px-8 py-4 bg-transparent text-white rounded font-semibold text-lg border border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300">
+				<a href="/contact-sales" class="px-8 py-4 bg-transparent text-white rounded font-semibold text-lg border border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300 text-center">
 					Contact Sales
-				</button>
+				</a>
 			</div>
 
 			<!-- Feature Metrics Bar -->
@@ -526,161 +524,6 @@
 	</div>
 </section>
 
-<!-- Pricing Section -->
-<section id="pricing" data-section="pricing" class="py-32 bg-black relative overflow-hidden">
-	<!-- Background Grid -->
-	<div class="absolute inset-0" style="background-image: linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px); background-size: 40px 40px;"></div>
-	
-	<div class="max-w-7xl mx-auto px-6 relative z-10">
-		<div class="text-center mb-16 transform transition-all duration-1000 {visibleSections.pricing ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
-			<span class="text-sm font-bold text-red-500 tracking-widest uppercase">Flexible Pricing</span>
-			<h2 class="text-6xl md:text-7xl font-black mt-4 mb-6 text-white tracking-tight">
-				Plans for Every<br />
-				<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">
-					Sales Team
-				</span>
-			</h2>
-			<p class="text-xl text-zinc-400 max-w-3xl mx-auto font-light">
-				Start free and scale with AI-powered conversational intelligence.
-			</p>
-		</div>
-
-		<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-			{#each [
-				{
-					name: 'Starter',
-					price: null,
-					period: 'Free Forever',
-					description: 'For individual sales reps',
-					features: [
-						'5 hours meeting transcription/month',
-						'Basic AI-powered insights',
-						'Up to 10 knowledge documents',
-						'7-day conversation history',
-						'Email support'
-					],
-					cta: 'Get Started Free',
-					highlight: false
-				},
-				{
-					name: 'Professional',
-					price: activePricingTab === 'monthly' ? 49 : 39,
-					period: activePricingTab === 'monthly' ? '/month' : '/month',
-					savings: activePricingTab === 'annual' ? 'Save $120/year' : null,
-					description: 'For high-performing sales teams',
-					features: [
-						'Unlimited meeting transcription',
-						'Real-time AI knowledge agent',
-						'Unlimited knowledge base',
-						'Call simulator & role-plays',
-						'Auto follow-up planning',
-						'MEDPIC framework tracking',
-						'CRM integrations',
-						'Priority support',
-						'30-day history'
-					],
-					cta: 'Start Free Trial',
-					highlight: true
-				},
-				{
-					name: 'Enterprise',
-					price: null,
-					period: 'Custom',
-					description: 'For enterprise sales organizations',
-					features: [
-						'Everything in Professional',
-						'Unlimited team members',
-						'Custom integrations (Jira, Asana)',
-						'Dedicated account manager',
-						'SLA guarantee',
-						'Advanced analytics & reporting',
-						'Enterprise security & SSO',
-						'Unlimited history',
-						'White-glove onboarding'
-					],
-					cta: 'Contact Sales',
-					highlight: false
-				}
-			] as plan, i}
-				<div 
-					class="relative bg-zinc-950 border-2 {plan.highlight ? 'border-red-600' : 'border-zinc-900'} rounded-lg p-8 transition-all duration-500 transform hover:-translate-y-2 {visibleSections.pricing ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} {plan.highlight ? 'scale-105' : ''}"
-					style="transition-delay: {i * 100}ms"
-				>
-					{#if plan.highlight}
-						<div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-							<span class="bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
-								Most Popular
-							</span>
-						</div>
-					{/if}
-					
-					<div class="mb-6">
-						<h3 class="text-xl font-black text-white mb-1 tracking-tight">{plan.name}</h3>
-						<p class="text-zinc-500 text-sm">{plan.description}</p>
-					</div>
-					
-					<div class="mb-8">
-						{#if plan.price !== null}
-							<div class="flex items-baseline gap-2">
-								<span class="text-5xl font-black text-white">
-									${plan.price}
-								</span>
-								<span class="text-zinc-500">{plan.period}</span>
-							</div>
-							{#if plan.savings}
-								<div class="mt-2 text-xs text-red-500 font-semibold">{plan.savings}</div>
-							{/if}
-						{:else}
-							<div class="text-3xl font-black text-white">
-								{plan.period}
-							</div>
-						{/if}
-					</div>
-					
-					<ul class="space-y-3 mb-8">
-						{#each plan.features as feature}
-							<li class="flex items-start gap-3">
-								<svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-								</svg>
-								<span class="text-sm text-zinc-400">{feature}</span>
-							</li>
-						{/each}
-					</ul>
-					
-					<button class="group w-full py-3.5 rounded font-bold text-sm transition-all duration-300 {plan.highlight ? 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:shadow-lg hover:shadow-red-600/50' : 'bg-zinc-900 text-white hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700'}">
-						<span class="flex items-center justify-center gap-2">
-							{plan.cta}
-							<svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-							</svg>
-						</span>
-					</button>
-				</div>
-			{/each}
-		</div>
-
-		<!-- Pricing Toggle -->
-		<div class="flex justify-center mt-12">
-			<div class="inline-flex bg-zinc-950 border border-zinc-900 rounded p-1">
-				<button
-					onclick={() => activePricingTab = 'monthly'}
-					class="px-6 py-2 rounded font-semibold text-sm transition-all duration-300 {activePricingTab === 'monthly' ? 'bg-red-600 text-white' : 'text-zinc-500 hover:text-white'}"
-				>
-					Monthly
-				</button>
-				<button
-					onclick={() => activePricingTab = 'annual'}
-					class="px-6 py-2 rounded font-semibold text-sm transition-all duration-300 flex items-center gap-2 {activePricingTab === 'annual' ? 'bg-red-600 text-white' : 'text-zinc-500 hover:text-white'}"
-				>
-					Annual
-					<span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Save 20%</span>
-				</button>
-			</div>
-		</div>
-	</div>
-</section>
-
 <!-- CTA Section -->
 <section data-section="cta" class="py-32 bg-gradient-to-br from-red-950 via-black to-black relative overflow-hidden border-t border-red-900/20">
 	<!-- Animated Background -->
@@ -712,9 +555,9 @@
 				</span>
 				<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 			</button>
-			<button class="px-8 py-4 bg-transparent text-white rounded font-semibold text-lg border border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300">
+			<a href="/contact-sales" class="px-8 py-4 bg-transparent text-white rounded font-semibold text-lg border border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300 text-center">
 				Contact Sales
-			</button>
+			</a>
 		</div>
 		<p class="mt-6 text-zinc-600 text-sm">Free forever plan • No credit card required • Quick setup</p>
 	</div>
@@ -740,20 +583,17 @@
 					Conversational AI for Sales Teams. Empower your team with real-time intelligence and automated workflows.
 				</p>
 				<div class="flex gap-4">
-					{#each [
-						{ name: 'LinkedIn', icon: 'M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z' },
-						{ name: 'X', icon: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' },
-					{ name: 'YouTube', icon: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' }
-				] as social}
-					<button 
+					<a
+						href="https://www.linkedin.com/company/spiked-ai"
+						target="_blank"
+						rel="noopener noreferrer"
 						class="p-2 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-900/50 rounded transition-all duration-300 group"
-						aria-label={`Follow us on ${social.name}`}
+						aria-label="Follow us on LinkedIn"
 					>
 						<svg class="w-4 h-4 fill-zinc-600 group-hover:fill-red-500 transition-colors" viewBox="0 0 24 24">
-							<path d={social.icon} />
+							<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
 						</svg>
-					</button>
-				{/each}
+					</a>
 				</div>
 			</div>
 			

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<!-- Change or deletion of the name attributes in the input tag will lead to empty values on record submission-->
+<form
+	action="https://forms.zohopublic.in/einsteini/form/CONTACTUS/formperma/JxLWUxq9cpXYKp2TuFg7u3HCZHJgh6X6zBNWzYYeXSM/htmlRecords/submit"
+	name="form"
+	id="form"
+	method="POST"
+	accept-charset="UTF-8"
+	enctype="multipart/form-data"
+	onSubmit="zf_validateandsubmitdata();"
+	class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-8"
+>
+	<input
+		type="hidden"
+		name="zf_referrer_name"
+		value=""
+	/><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
+	<input
+		type="hidden"
+		name="zf_redirect_url"
+		value=""
+	/><!-- To redirect to a specific page after record submission , place the respective url within the " " in the above hidden input field -->
+	<input
+		type="hidden"
+		name="zc_gad"
+		value=""
+	/><!-- If GCLID is enabled in Zoho CRM Integration, click details of AdWords Ads will be pushed to Zoho CRM -->
+	<h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">Share your details, and our team will reach out soon.</h2>
+	
+	<!--Name-->
+	<div class="grid grid-cols-1 gap-6 mb-6">
+		<div class="grid grid-cols-2 gap-4">
+			<div>
+				<label class="block text-sm font-medium text-gray-700 mb-1">
+					First Name
+					<span class="text-red-500">*</span>
+				</label>
+				<input
+					type="text"
+					maxlength="255"
+					name="Name_First"
+					fieldType="7"
+					placeholder="Enter first name"
+					class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label class="block text-sm font-medium text-gray-700 mb-1">
+					Last Name
+					<span class="text-red-500">*</span>
+				</label>
+				<input
+					type="text"
+					maxlength="255"
+					name="Name_Last"
+					fieldType="7"
+					placeholder="Enter last name"
+					class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+				/>
+			</div>
+		</div>
+	<!--Company-->
+	<div class="mb-6">
+		<label class="block text-sm font-medium text-gray-700 mb-1">
+			Company
+			<span class="text-red-500">*</span>
+		</label>
+		<input
+			type="text"
+			name="SingleLine"
+			value=""
+			fieldType="1"
+			maxlength="255"
+			placeholder="Your Company Name"
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+		/>
+	</div>
+
+	<!--Company URL-->
+	<div class="mb-6">
+		<label class="block text-sm font-medium text-gray-700 mb-1">
+			Company URL
+			<span class="text-red-500">*</span>
+		</label>
+		<input
+			type="text"
+			name="SingleLine2"
+			value=""
+			fieldType="1"
+			maxlength="255"
+			placeholder="https://your-company.com"
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+		/>
+	</div>
+	<!--Email-->
+	<div class="mb-6">
+		<label class="block text-sm font-medium text-gray-700 mb-1">
+			Email
+			<span class="text-red-500">*</span>
+		</label>
+		<input
+			type="email"
+			maxlength="255"
+			name="Email"
+			value=""
+			fieldType="9"
+			placeholder="Your Business Email"
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+		/>
+	</div>
+
+	<!--Phone-->
+	<div class="mb-6">
+		<label class="block text-sm font-medium text-gray-700 mb-1">
+			Phone
+			<span class="text-red-500">*</span>
+		</label>
+		<div class="grid grid-cols-3 gap-4">
+			<div>
+				<input
+					type="text"
+					compname="PhoneNumber_countrycodeval"
+					name="PhoneNumber_countrycodeval"
+					phoneFormat="1"
+					maxlength="10"
+					id="international_PhoneNumber_countrycodeval"
+					placeholder="+1"
+					class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+				/>
+				<label class="block text-xs text-gray-500 mt-1">Country Code</label>
+			</div>
+			<div class="col-span-2">
+				<input
+					type="tel"
+					compname="PhoneNumber"
+					name="PhoneNumber_countrycode"
+					phoneFormat="1"
+					isCountryCodeEnabled="true"
+					maxlength="20"
+					value=""
+					fieldType="11"
+					id="international_PhoneNumber_countrycode"
+					placeholder="Your Phone Number"
+					class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+				/>
+				<label class="block text-xs text-gray-500 mt-1">Phone Number</label>
+			</div>
+		</div>
+	</div>
+	<!--How Did You Hear About Us-->
+	<div class="mb-6">
+		<label class="block text-sm font-medium text-gray-700 mb-1">
+			How Did You Hear About Us?
+		</label>
+		<input
+			type="text"
+			name="SingleLine1"
+			value=""
+			fieldType="1"
+			maxlength="255"
+			placeholder="e.g., Search Engine, Social Media, Referral"
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+		/>
+	</div>
+
+	<!--Business Details-->
+	<div class="mb-8">
+		<label class="block text-sm font-medium text-gray-700 mb-1">
+			Your Business Details
+			<span class="text-red-500">*</span>
+		</label>
+		<textarea
+			name="MultiLine"
+			maxlength="65535"
+			placeholder="Please describe your business needs or the challenges you are facing in your sales and revenue conversions."
+			rows="4"
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+		></textarea>
+	</div>
+
+	<div class="flex items-center justify-center">
+		<button 
+			type="submit"
+			class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md shadow-sm transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+		>
+			Submit
+		</button>
+	</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+	var salesIQFieldsArray = [
+		{ formFieldName: "Email", formFieldType: 9, salesIQFieldName: "Email" },
+		{
+			formFieldName: "PhoneNumber",
+			formFieldType: 11,
+			salesIQFieldName: "Phone",
+		},
+		{
+			formFieldName: "Name",
+			formFieldType: 7,
+			salesIQFieldName: "Name",
+			fieldCompLinkName: "Name_First",
+		},
+	];
+	function getSalesiqPhoneVal(inpElem) {
+		var fieldLinkName = inpElem.getAttribute("compname");
+		var phoneFormat = inpElem.getAttribute("phoneFormat");
+		var salesIQValue = "";
+		if (phoneFormat === "1") {
+			var isCodeEnabled = inpElem.getAttribute("isCountryCodeEnabled");
+			salesIQValue = document.getElementById(
+				"international_" + fieldLinkName + "_countrycode"
+			).value;
+			if (
+				salesIQValue != null &&
+				salesIQValue !== "" &&
+				isCodeEnabled === "true"
+			) {
+				salesIQValue =
+					document.getElementById(
+						"international_" + fieldLinkName + "_countrycodeval"
+					).value + salesIQValue;
+			}
+		} else if (phoneFormat === "2") {
+			var countryCode = document.getElementById(
+				fieldLinkName + "_countrycode"
+			).value;
+			var first = document.getElementById(fieldLinkName + "_first").value;
+			var last = document.getElementById(fieldLinkName + "_second").value;
+			salesIQValue = countryCode + first + last;
+		}
+		return salesIQValue;
+	}
+	function zf_validateandsubmitdata() {
+		var visitorinfo = {};
+		var elements = document.getElementById("form").elements;
+		var zfFieldValueMap = {};
+		var elements = document.getElementById("form").elements;
+		for (var elmIdx = 0; elmIdx < elements.length; elmIdx++) {
+			var inpElem = elements[elmIdx];
+			var fieldType = inpElem.getAttribute("fieldType");
+			if (
+				fieldType === "1" ||
+				fieldType === "7" ||
+				fieldType === "9" ||
+				fieldType === "11"
+			) {
+				var nameAttr = inpElem.getAttribute("name");
+				if (fieldType === "1") {
+					zfFieldValueMap[nameAttr] = inpElem.value;
+				}
+				if (fieldType === "7") {
+					zfFieldValueMap[nameAttr] = inpElem.value;
+				}
+				if (fieldType === "9") {
+					zfFieldValueMap[nameAttr] = inpElem.value;
+				}
+				if (fieldType === "11") {
+					var compLinkAttr = inpElem.getAttribute("compname");
+					zfFieldValueMap[compLinkAttr] = getSalesiqPhoneVal(inpElem);
+				}
+			}
+		}
+		for (var elmIdx = 0; elmIdx < elements.length; elmIdx++) {
+			var inpElem = elements[elmIdx];
+			var fieldType = inpElem.getAttribute("fieldType");
+			if (
+				fieldType === "1" ||
+				fieldType === "7" ||
+				fieldType === "9" ||
+				fieldType === "11"
+			) {
+				for (var idx = 0; idx < salesIQFieldsArray.length; idx++) {
+					var salesIQObj = salesIQFieldsArray[idx];
+					var salesIQFieldName = salesIQObj.salesIQFieldName;
+					var zfFieldName = salesIQObj.formFieldName;
+					var zfFldCompLinkName = salesIQObj.fieldCompLinkName;
+					if (salesIQObj.hasOwnProperty("custom_val")) {
+						var salesIQFieldName = salesIQObj.salesIQFieldName;
+						var pattern = /\$\{zf:([^}]+)\}/g;
+						var customVal = salesIQObj.custom_val.replace(
+							pattern,
+							function (match, fieldName) {
+								var key = fieldName.replace(".", "_");
+								var value = "";
+								if (zfFieldValueMap.hasOwnProperty(fieldName)) {
+									value = zfFieldValueMap[fieldName];
+								} else if (zfFieldValueMap.hasOwnProperty(key)) {
+									value = zfFieldValueMap[key];
+								}
+								return value !== undefined ? value : match;
+							}
+						);
+						if (salesIQFieldName === "FirstName") {
+							visitorinfo.firstname = customVal;
+						} else if (salesIQFieldName === "LastName") {
+							// No I18N
+							visitorinfo.lastname = customVal;
+						} else if (salesIQFieldName === "Name") {
+							// No I18N
+							visitorinfo.name = customVal;
+						}
+					} else {
+						var value = "";
+						if (zfFieldValueMap.hasOwnProperty(zfFieldName)) {
+							value = zfFieldValueMap[zfFieldName];
+						} else if (zfFieldValueMap.hasOwnProperty(zfFldCompLinkName)) {
+							value = zfFieldValueMap[zfFldCompLinkName];
+						}
+						if (salesIQFieldName === "Phone") {
+							visitorinfo.contactnumber = value;
+						} else if (salesIQFieldName === "Email") {
+							// No I18N
+							visitorinfo.email = value;
+						} else if (salesIQFieldName === "Name") {
+							// No I18N
+							visitorinfo.name = value;
+						} else if (salesIQFieldName === "LastName") {
+							// No I18N
+							visitorinfo.lastname = value;
+						} else if (salesIQFieldName === "FirstName") {
+							// No I18N
+							visitorinfo.firstname = value;
+						} else if (salesIQFieldName === "Salutation") {
+							// No I18N
+							visitorinfo.salutation = value;
+						}
+					}
+				}
+			}
+		}
+		parent.postMessage(
+			JSON.stringify({ type: "zoho.salesiq.apimessage", visitor: visitorinfo }),
+			"*"
+		); // No I18N
+	}
+</script>

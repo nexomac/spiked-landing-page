@@ -234,7 +234,7 @@
 					<span class="text-xl font-black tracking-tight text-white group-hover:text-red-500 transition-colors duration-300">
 						SPIKED<span class="text-red-600">AI</span>
 					</span>
-					<span class="text-[10px] text-zinc-500 font-medium tracking-wider uppercase -mt-0.5">Revenue Intelligence OS</span>
+					<span class="text-[10px] text-zinc-500 font-medium tracking-wider uppercase -mt-0.5">Revenue Growth OS</span>
 				</div>
 			</a>
 			
@@ -307,7 +307,7 @@
 					<h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none tracking-tighter">
 						Let's Transform<br />
 						<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">
-							Your Sales Process
+							Your Sales Growth
 						</span>
 					</h1>
 					

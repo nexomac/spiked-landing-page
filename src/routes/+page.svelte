@@ -112,7 +112,7 @@
 					<span class="text-xl font-black tracking-tight text-white group-hover:text-red-500 transition-colors duration-300">
 						SPIKED<span class="text-red-600">AI</span>
 					</span>
-					<span class="text-[10px] text-zinc-500 font-medium tracking-wider uppercase -mt-0.5">Revenue Intelligence OS</span>
+					<span class="text-[10px] text-zinc-500 font-medium tracking-wider uppercase -mt-0.5">Revenue Growth OS</span>
 				</div>
 			</div>
 			

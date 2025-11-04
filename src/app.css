@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* Smooth transitions for theme changes */
+* {
+	transition-property: background-color, border-color, color;
+	transition-duration: 300ms;
+	transition-timing-function: ease-in-out;
+}
+
+/* Prevent transition on page load */
+.preload * {
+	transition: none !important;
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	@apply bg-gray-100 dark:bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+	@apply bg-gray-300 dark:bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	@apply bg-gray-400 dark:bg-gray-600;
+}
+
+/* Smooth scroll behavior */
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100;
+}

@@ -2,6 +2,11 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+/* Custom utilities */
+.bg-gradient-radial {
+	background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
 /* Smooth transitions for theme changes - only on specific elements */
 body, body * {
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

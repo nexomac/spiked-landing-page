@@ -180,88 +180,101 @@
 	data-section="hero" 
 	class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
 >
-	<!-- Animated Grid Background with Parallax -->
+	<!-- Enhanced Animated Grid Background with Parallax -->
 	<div class="absolute inset-0" style="transform: translateY({scrollY * 0.5}px);">
-		<div class="absolute inset-0 bg-gradient-to-b from-red-950/20 via-black to-black"></div>
-		<div class="absolute inset-0 animate-grid-pulse" style="background-image: linear-gradient(rgba(220, 38, 38, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.05) 1px, transparent 1px); background-size: 50px 50px;"></div>
+		<div class="absolute inset-0 bg-gradient-to-b from-red-950/30 via-black via-50% to-black"></div>
+		<div class="absolute inset-0 animate-grid-pulse" style="background-image: linear-gradient(rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px); background-size: 60px 60px;"></div>
 		
-		<!-- Animated Red Orbs with Mouse Interaction -->
+		<!-- Enhanced Animated Red Orbs with Mouse Interaction -->
 		<div 
-			class="absolute w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-float transition-transform duration-1000"
-			style="top: 25%; left: 25%; transform: translate({mouseX * 0.02}px, {mouseY * 0.02}px);"
+			class="absolute w-[600px] h-[600px] bg-red-600/25 rounded-full blur-3xl animate-float transition-transform duration-1000"
+			style="top: 15%; left: 20%; transform: translate({mouseX * 0.03}px, {mouseY * 0.03}px);"
 		></div>
 		<div 
-			class="absolute w-96 h-96 bg-red-800/10 rounded-full blur-3xl animate-float-delayed transition-transform duration-1000"
-			style="bottom: 25%; right: 25%; transform: translate({-mouseX * 0.01}px, {-mouseY * 0.01}px);"
+			class="absolute w-[500px] h-[500px] bg-red-800/15 rounded-full blur-3xl animate-float-delayed transition-transform duration-1000"
+			style="bottom: 15%; right: 20%; transform: translate({-mouseX * 0.02}px, {-mouseY * 0.02}px);"
 		></div>
 		
-		<!-- Additional floating orbs -->
-		<div class="absolute top-1/2 left-1/3 w-64 h-64 bg-red-500/10 rounded-full blur-2xl animate-float" style="animation-delay: 2s;"></div>
-		<div class="absolute bottom-1/3 right-1/3 w-80 h-80 bg-red-700/15 rounded-full blur-3xl animate-float-delayed" style="animation-delay: 1s;"></div>
+		<!-- Additional floating orbs with better positioning -->
+		<div class="absolute top-1/3 left-1/4 w-80 h-80 bg-red-500/15 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+		<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-700/20 rounded-full blur-3xl animate-float-delayed" style="animation-delay: 1s;"></div>
 		
-		<!-- Scanning Line Effect -->
+		<!-- Multiple Scanning Line Effects -->
 		<div class="absolute inset-0 overflow-hidden">
-			<div class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-20 animate-scan"></div>
+			<div class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-500/40 to-transparent opacity-30 animate-scan"></div>
+			<div class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-400/20 to-transparent opacity-20 animate-scan" style="animation-delay: 3s; animation-duration: 10s;"></div>
 		</div>
 		
-		<!-- Particle grid -->
+		<!-- Enhanced Particle grid -->
 		<div class="absolute inset-0">
-			{#each Array(20) as _, i}
+			{#each Array(30) as _, i}
 				<div 
-					class="absolute w-1 h-1 bg-red-500/30 rounded-full animate-particle-float"
+					class="absolute w-1.5 h-1.5 bg-red-500/40 rounded-full animate-particle-float"
 					style="left: {Math.random() * 100}%; top: {Math.random() * 100}%; animation-delay: {Math.random() * 5}s; animation-duration: {8 + Math.random() * 4}s;"
 				></div>
 			{/each}
 		</div>
+		
+		<!-- Radial gradient spotlight -->
+		<div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/50"></div>
 	</div>
 
 	<div class="relative z-10 max-w-7xl mx-auto px-6 py-32">
 		<div class="transform transition-all duration-1000 {visibleSections.hero ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
-			<!-- Status Badge (Larger with better animation) -->
-			<div class="inline-flex items-center gap-4 mb-8 px-6 py-3 bg-zinc-950/80 backdrop-blur-xl rounded-full border-2 border-red-900/50 group hover:border-red-600/50 transition-all duration-500 text-sm hover:scale-105 hover:shadow-lg hover:shadow-red-900/30 animate-slide-down">
-				<div class="relative flex items-center gap-3">
-					<div class="relative">
-						<div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-						<div class="absolute inset-0 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
+			<!-- Enhanced Status Badge with better visual hierarchy -->
+			<div class="inline-flex flex-col gap-3 mb-10 animate-slide-down">
+				<div class="inline-flex items-center gap-3 px-5 py-2.5 bg-zinc-950/90 backdrop-blur-xl rounded-full border border-red-900/50 group hover:border-red-600/70 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-900/30">
+					<div class="relative flex items-center gap-2.5">
+						<div class="relative">
+							<div class="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></div>
+							<div class="absolute inset-0 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></div>
+						</div>
+						<span class="text-lg font-extrabold text-zinc-300 tracking-widest uppercase">Revenue AI Agents built for the Global 2000</span>
 					</div>
-					<span class="text-sm font-bold text-zinc-300 tracking-wider uppercase">Revenue AI Agents built for the Global 2000</span>
 				</div>
-				<div class="h-6 w-px bg-red-900/40 group-hover:bg-red-600/60 transition-colors"></div>
-				<span class="text-sm font-bold text-red-500 tracking-wide">Combining conversational, computational, and contextual intelligence to drive reasoning, speed, and measurable ROI</span>
-				<span class="text-sm text-zinc-500 group-hover:text-red-400 transition-colors"><span class="underline"></span></span>
+				<div class="px-5 py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
+					<span class="text-xl font-semibold text-red-400 tracking-wide leading-relaxed block">Combining conversational, computational, and contextual intelligence to drive reasoning, speed, and measurable ROI</span>
+				</div>
 			</div>
-			<h1 class="text-7xl md:text-8xl lg:text-9xl font-black mb-8 leading-none tracking-tighter animate-fade-in-up">
-				<span class="text-white inline-block hover:scale-105 transition-transform duration-300">Sell Like</span>
-				<span class="bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent inline-block hover:scale-105 transition-transform duration-300 animate-gradient">
-					a CEO
-				</span>
-			</h1>
+
+			<!-- Enhanced Headline with better spacing and effects -->
+			<div class="mb-10">
+				<h1 class="text-7xl md:text-8xl lg:text-[10rem] font-black leading-[0.9] tracking-tighter animate-fade-in-up">
+					<span class="block text-white mb-2 hover:scale-[1.02] transition-transform duration-300 inline-block">Sell Like</span>
+					<span class="block bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent hover:scale-[1.02] transition-transform duration-300 inline-block animate-gradient bg-[length:200%_auto]">
+						a CEO
+					</span>
+				</h1>
+			</div>
 			
-			<p class="text-xl md:text-2xl text-zinc-400 mb-12 max-w-3xl leading-relaxed font-light animate-fade-in-up" style="animation-delay: 0.2s;">
-				AI-Powered Revenue Generation Platform, <span class="text-red-500 font-medium hover:text-red-400 transition-colors">Human and AI Revenue Agents, built to reason, act, and close. </span> <span class="text-white font-medium">Together, they transform every conversation into measurable growth.</span>
+			<!-- Enhanced Description with better typography -->
+			<p class="text-xl md:text-2xl lg:text-3xl text-zinc-400 mb-14 max-w-4xl leading-[1.6] font-light animate-fade-in-up" style="animation-delay: 0.2s;">
+				AI-Powered Revenue Generation Platform, <span class="text-red-400 font-semibold hover:text-red-300 transition-colors">Human and AI Revenue Agents, built to reason, act, and close.</span> <span class="text-white font-medium">Together, they transform every conversation into measurable growth.</span>
 			</p>
 			
-			<div class="flex flex-col sm:flex-row gap-4 mb-16 animate-fade-in-up" style="animation-delay: 0.4s;">
+			<!-- Enhanced CTA Buttons -->
+			<div class="flex flex-col sm:flex-row gap-5 mb-20 animate-fade-in-up" style="animation-delay: 0.4s;">
 				<button 
 					onclick={() => onboardingStore.start()}
-					class="group relative px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/50 hover:scale-105 hover:-translate-y-1"
+					class="group relative px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1"
 				>
-					<span class="relative z-10 flex items-center gap-2">
+					<span class="relative z-10 flex items-center justify-center gap-2">
 						Start Now, Skip Demos
-						<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+						<svg class="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
 						</svg>
 					</span>
 					<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 					<div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
+					<div class="absolute inset-0 rounded-xl ring-2 ring-red-500/0 group-hover:ring-red-500/50 transition-all duration-300"></div>
 				</button>
-				<a href="/contact-sales" class="px-8 py-4 bg-transparent text-white rounded font-semibold text-lg border border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20">
+				<a href="/contact-sales" class="px-10 py-5 bg-zinc-950/50 backdrop-blur-sm text-white rounded-xl font-semibold text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/30 transition-all duration-300 text-center hover:scale-[1.05] hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/30">
 					Contact Sales
 				</a>
 			</div>
 
-			<!-- Feature Metrics Bar with staggered animation -->
-			<div class="grid md:grid-cols-3 gap-6 max-w-4xl">
+			<!-- Enhanced Feature Metrics Bar with better design -->
+			<div class="grid md:grid-cols-3 gap-6 max-w-5xl">
 				{#each [
 					{ 
 						metric: '100%', 
@@ -280,33 +293,36 @@
 					}
 				] as feature, i}
 					<div 
-						class="group relative bg-zinc-950/50 backdrop-blur-sm p-6 rounded-lg border border-zinc-900 hover:border-red-900/50 transition-all duration-500 overflow-hidden hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20 animate-fade-in-up cursor-pointer"
+						class="group relative bg-gradient-to-br from-zinc-950/80 to-zinc-950/50 backdrop-blur-xl p-7 rounded-2xl border-2 border-zinc-900 hover:border-red-900/60 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-900/30 animate-fade-in-up cursor-pointer"
 						style="animation-delay: {0.6 + i * 0.1}s; transform: translate3d(0, 0, 0);"
 					>
-						<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 to-red-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-						<div class="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+						<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 via-red-950/10 to-red-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+						<div class="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/15 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 rounded-2xl"></div>
 						<div class="relative">
-							<div class="flex items-center gap-3 mb-3">
-								<div class="p-2 bg-red-950/30 rounded border border-red-900/30 group-hover:border-red-600/50 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110">
-									<svg class="w-5 h-5 text-red-500 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={feature.icon} />
+							<div class="flex items-center gap-4 mb-4">
+								<div class="p-3 bg-gradient-to-br from-red-950/50 to-red-950/30 rounded-xl border border-red-900/40 group-hover:border-red-600/60 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-red-900/20">
+									<svg class="w-6 h-6 text-red-500 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d={feature.icon} />
 									</svg>
 								</div>
-								<span class="text-3xl font-black text-white group-hover:text-red-500 transition-colors duration-300">{feature.metric}</span>
+								<span class="text-4xl font-black text-white group-hover:text-red-400 transition-colors duration-300">{feature.metric}</span>
 							</div>
-							<p class="text-sm text-zinc-500 font-medium tracking-wide uppercase group-hover:text-zinc-400 transition-colors">{feature.label}</p>
+							<p class="text-sm text-zinc-500 font-bold tracking-wider uppercase group-hover:text-zinc-300 transition-colors leading-relaxed">{feature.label}</p>
 						</div>
+						<!-- Corner accent -->
+						<div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-red-600/0 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full"></div>
 					</div>
 				{/each}
 			</div>
 		</div>
 	</div>
 
-	<!-- Scroll Indicator with enhanced animation -->
-	<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
-		<div class="w-6 h-10 border-2 border-zinc-800 rounded-full flex items-start justify-center p-2 hover:border-red-600 transition-colors duration-300 cursor-pointer group">
-			<div class="w-1 h-2 bg-red-500 rounded-full animate-scroll-indicator group-hover:bg-red-400"></div>
+	<!-- Enhanced Scroll Indicator -->
+	<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+		<div class="w-7 h-12 border-2 border-zinc-800 rounded-full flex items-start justify-center p-2 hover:border-red-500 transition-all duration-300 cursor-pointer group hover:shadow-lg hover:shadow-red-900/30">
+			<div class="w-1.5 h-3 bg-red-500 rounded-full animate-scroll-indicator group-hover:bg-red-400 shadow-lg shadow-red-500/50"></div>
 		</div>
+		<p class="text-xs text-zinc-600 text-center mt-2 font-medium">Scroll to explore</p>
 	</div>
 </section>
 

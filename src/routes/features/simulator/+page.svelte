@@ -411,7 +411,7 @@
 							</div>
 							<div>
 								<h4 class="text-sm font-bold text-white">Meeting Simulator</h4>
-								<p class="text-xs text-zinc-500">AI-Powered Sales Training</p>
+								<p class="text-xs text-zinc-500">AI-Powered Training</p>
 							</div>
 						</div>
 						<div class="flex items-center gap-2">

@@ -40,6 +40,20 @@
 			onboardingStore.close();
 		}
 	}
+
+	// Handle Escape key
+	$effect(() => {
+		if (!isActive) return;
+
+		const handleKeyDown = (e) => {
+			if (e.key === 'Escape') {
+				handleClose();
+			}
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		return () => document.removeEventListener('keydown', handleKeyDown);
+	});
 </script>
 
 {#if isActive}
@@ -50,11 +64,13 @@
 	>
 		<!-- Close Button -->
 		<button
-			onclick={handleClose}
-			class="absolute top-6 right-6 z-10 p-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-lg transition-all duration-300 group"
-			aria-label="Close onboarding"
+			type="button"
+			on:click={handleClose}
+			on:keydown={(e) => e.key === 'Enter' && handleClose()}
+			class="fixed top-6 right-6 z-[60] p-3 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-700 rounded-lg transition-all duration-300 group cursor-pointer hover:scale-110 active:scale-95"
+			aria-label="Close onboarding modal"
 		>
-			<svg class="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<svg class="w-6 h-6 text-zinc-400 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
 			</svg>
 		</button>

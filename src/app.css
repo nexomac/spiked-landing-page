@@ -2,11 +2,9 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
-/* Smooth transitions for theme changes */
-* {
-	transition-property: background-color, border-color, color;
-	transition-duration: 300ms;
-	transition-timing-function: ease-in-out;
+/* Smooth transitions for theme changes - only on specific elements */
+body, body * {
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Prevent transition on page load */
@@ -34,8 +32,42 @@
 /* Smooth scroll behavior */
 html {
 	scroll-behavior: smooth;
+	overflow-x: hidden;
 }
 
 body {
 	@apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100;
+	overflow-x: hidden;
+}
+
+/* Enhance hardware acceleration for animations */
+@media (prefers-reduced-motion: no-preference) {
+	* {
+		will-change: auto;
+		/* Prevent layout shift by using consistent sizing */
+		box-sizing: border-box;
+	}
+	
+	[class*="animate-"],
+	[class*="transition-"] {
+		backface-visibility: hidden;
+		-webkit-font-smoothing: antialiased;
+	}
+	
+	/* Smooth transforms without jitter */
+	button, a, [role="button"] {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }

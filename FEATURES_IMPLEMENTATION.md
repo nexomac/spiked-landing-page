@@ -50,7 +50,7 @@ Created reusable tab components in `/src/lib/components/`:
 1. **Navbar Logo**:
    - Glassmorphism border effect
    - Animated glow on hover
-   - Tagline added: "Sales Intelligence Platform"
+   - Tagline added: "Revenue Generation Platform"
    - Smooth transitions and hover effects
 
 2. **Hero Section**:

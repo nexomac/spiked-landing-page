@@ -194,7 +194,7 @@
 		<!-- Main Content Area: Description on Left, Grid on Right -->
 		<div class="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start max-w-6xl mx-auto mb-16">
 			<!-- Left Side: Feature Description & Preview -->
-			<div class="transition-all duration-500 ease-out {isBlurred ? 'blur-sm opacity-50 scale-[0.98]' : 'blur-0 opacity-100 scale-100'}">
+			<div class="transition-all duration-500 ease-out {isBlurred ? 'blur-sm opacity-50' : 'blur-0 opacity-100'}" style="transform: translate3d(0, 0, 0);">
 				<div class="sticky top-24">
 					<!-- Feature Title & Description -->
 					<div class="mb-8 transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'}">
@@ -1747,9 +1747,9 @@
 									selectedFeature = feature.id;
 								}}
 								onmouseleave={() => hoveredFeature = null}
-								class="group relative bg-zinc-950 rounded-xl p-4 border-2 transition-all duration-500 ease-out hover:shadow-xl hover:scale-[1.05] active:scale-[0.95] will-change-transform w-full
-								{selectedFeature === feature.id ? 'border-red-500 bg-gradient-to-br from-red-950/30 to-zinc-950/50 shadow-lg shadow-red-500/20' : 'border-zinc-800 hover:border-red-600'}"
-								style="transition-delay: {idx * 30}ms"
+								class="group relative bg-zinc-950 rounded-xl p-4 border-2 transition-all duration-500 ease-out active:scale-[0.97] w-full
+								{selectedFeature === feature.id ? 'border-red-500 bg-gradient-to-br from-red-950/30 to-zinc-950/50 shadow-lg shadow-red-500/20' : 'border-zinc-800 hover:border-red-600 hover:shadow-lg hover:shadow-red-600/10'}"
+								style="transition-delay: {idx * 30}ms; transform: translate3d(0, 0, 0);"
 							>
 								<!-- Checkbox -->
 								<div class="absolute top-3 left-3 w-4 h-4 rounded border-2 transition-all duration-500 ease-out
@@ -1882,5 +1882,21 @@
 	button {
 		transform: translateZ(0);
 		backface-visibility: hidden;
+		-webkit-font-smoothing: antialiased;
 	}
+
+	/* Ensure transitions don't cause layout shift */
+	:global(body) {
+		-webkit-app-region: drag;
+	}
+
+	/* Optimize for smooth 60fps transitions */
+	@media (prefers-reduced-motion: no-preference) {
+		* {
+			--tw-transition-property: all;
+			--tw-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+			--tw-transition-duration: 300ms;
+		}
+	}
+
 </style>

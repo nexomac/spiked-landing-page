@@ -246,7 +246,7 @@
 							<div class="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-pulse"></div>
 							<div class="absolute inset-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-ping"></div>
 						</div>
-						<span class="text-sm sm:text-base md:text-lg font-extrabold text-zinc-300 tracking-wider sm:tracking-widest uppercase leading-tight">Revenue AI Agents built for the Global 2000</span>
+						<span class="text-sm sm:text-base md:text-lg font-extrabold text-zinc-300 tracking-wider sm:tracking-widest uppercase leading-tight">Revenue AI Agents built for the Fortune 2000</span>
 					</div>
 				</div>
 				<div class="px-4 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">

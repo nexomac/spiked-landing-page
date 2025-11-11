@@ -187,7 +187,7 @@
 			</h2>
 			
 			<p class="text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
-				Select a feature to see how Spiked AI transforms your sales process
+				Explore a feature to see how Spiked AI transforms your sales process
 			</p>
 		</div>
 

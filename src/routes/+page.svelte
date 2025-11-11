@@ -7,7 +7,7 @@
 	let isDark = $state(true); // Default to dark theme
 	let isScrolled = $state(false);
 	let mobileMenuOpen = $state(false);
-	let activeTab = $state('realtime');
+	let activeTab = $state('simulator');
 	let activeFeatureTab = $state('transcription');
 	let transcriptIndex = $state(0);
 	let sentimentScore = $state(0);
@@ -186,22 +186,22 @@
 			<div class="inline-flex items-center gap-4 mb-8 px-6 py-3 bg-zinc-950/80 backdrop-blur-xl rounded-full border-2 border-red-900/50 group hover:border-red-600/50 transition-all duration-500 text-sm">
 				<div class="relative flex items-center gap-3">
 					<div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-					<span class="text-sm font-bold text-zinc-300 tracking-wider uppercase">Live Intelligence</span>
+					<span class="text-sm font-bold text-zinc-300 tracking-wider uppercase">Revenue AI Agents built for the Global 2000</span>
 				</div>
 				<div class="h-6 w-px bg-red-900/40"></div>
-				<span class="text-sm font-bold text-red-500 tracking-wide">Real-Time Knowledge Agent™</span>
-				<span class="text-sm text-zinc-500">Now available in Beta - <span class="underline">Join the waitlist</span></span>
+				<span class="text-sm font-bold text-red-500 tracking-wide">Combining conversational, computational, and contextual intelligence to drive reasoning, speed, and measurable ROI</span>
+				<span class="text-sm text-zinc-500"><span class="underline">Get Started</span></span>
 
 			</div>
 			<h1 class="text-7xl md:text-8xl lg:text-9xl font-black mb-8 leading-none tracking-tighter">
-				<span class="block text-white">Sell Like</span>
-				<span class="block bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent">
+				<span class="text-white">Sell Like</span>
+				<span class="bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent">
 					a CEO
 				</span>
 			</h1>
 			
 			<p class="text-xl md:text-2xl text-zinc-400 mb-12 max-w-3xl leading-relaxed font-light">
-				Transform every sales conversation with real-time AI intelligence. From live knowledge agents to automated follow-ups, <span class="text-red-500 font-medium">SpikedAI empowers sales and dev teams</span> with <span class="text-white font-medium">conversational intelligence that actually works.</span>
+				AI-Powered Sales Intelligence Platform, <span class="text-red-500 font-medium">Human and AI Revenue Agents, built to reason, act, and close. </span> <span class="text-white font-medium">Together, they transform every conversation into measurable growth.</span>
 			</p>
 			
 			<div class="flex flex-col sm:flex-row gap-4 mb-16">
@@ -227,17 +227,17 @@
 				{#each [
 					{ 
 						metric: '100%', 
-						label: 'Meeting Coverage',
+						label: 'Every meeting is captured 100%',
 						icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
 					},
 					{ 
 						metric: 'Real-Time', 
-						label: 'AI Assistance',
+						label: 'AI Assistance in Real Time',
 						icon: 'M13 10V3L4 14h7v7l9-11h-7z'
 					},
 					{ 
 						metric: 'Auto', 
-						label: 'Follow-Up Planning',
+						label: 'FOLLOW-UP & PLANNING',
 						icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'
 					}
 				] as feature, i}
@@ -288,7 +288,7 @@
 				</span>
 			</h2>
 			<p class="text-xl text-zinc-400 max-w-3xl mx-auto font-light">
-				From real-time meeting assistance to automated follow-ups and seamless CRM integration—everything your sales team needs in one intelligent platform.
+				Built to support revenue teams from the first conversation to the final follow-up. It combines real-time intelligence, automated meeting assistance, and CRM-ready insights into one platform so sellers don’t just talk,  they convert.
 			</p>
 		</div>
 
@@ -296,31 +296,31 @@
 		<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
 			{#each [
 				{ 
-					id: 'realtime',
-					label: 'Knowledge Agent', 
-					title: 'Real-Time AI Answers',
-					description: 'Instant answers from your knowledge base during live calls',
-					icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
-				},
-				{ 
-					id: 'intelligence',
-					label: 'Call Simulator', 
-					title: 'Practice Sales Scenarios',
-					description: 'AI-powered role-play to sharpen your pitch and objection handling',
+					id: 'simulator',
+					label: 'CALL SIMULATOR', 
+					title: 'Call AI Sales Simulator',
+					description: 'AI role-play to practice sales plays, objection handling, and selling methodologies.',
 					icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
 				},
 				{ 
-					id: 'automation',
-					label: 'Meeting AI', 
-					title: 'Conversational Notetaker',
-					description: 'Automatic transcription, summaries, and action items extraction',
+					id: 'knowledge',
+					label: 'KNOWLEDGE AGENT', 
+					title: 'Knowledge Agent – Real-Time Answers',
+					description: 'AI gives instant answers during live calls from you\'re A to Z knowledge base.',
+					icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+				},
+				{ 
+					id: 'meeting',
+					label: 'MEETING AI', 
+					title: 'Meeting AI – Conversational Notetaker',
+					description: 'Auto-transcription, key takeaways, action items extraction, and CRM sync.',
 					icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
 				},
 				{ 
-					id: 'analytics',
-					label: 'Follow-Up Planner', 
-					title: 'Smart Task Automation',
-					description: 'AI-generated follow-up sequences and task assignments',
+					id: 'followup',
+					label: 'FOLLOW-UP PLANNER', 
+					title: 'Follow-Up AI – Smart Task Automation',
+					description: 'Real time follow-up, and task assignments so nothing gets missed.',
 					icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'
 				}
 			] as workflow, i}
@@ -441,7 +441,7 @@
 					metricLabel: "More Deals Closed"
 				},
 				{
-					quote: "Automatic follow-up planning saves hours every week. CRM integration means zero manual data entry.",
+					quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual data entry.",
 					author: "Michael Chen",
 					role: "Account Executive",
 					metric: "15hrs",
@@ -600,8 +600,8 @@
 			<div>
 				<h4 class="font-bold text-white mb-4 text-sm tracking-wider uppercase">Features</h4>
 				<ul class="space-y-2 text-zinc-500 text-sm">
-					<li><button class="hover:text-red-500 transition-colors">Knowledge Agent</button></li>
 					<li><button class="hover:text-red-500 transition-colors">Call Simulator</button></li>
+					<li><button class="hover:text-red-500 transition-colors">Knowledge Agent</button></li>
 					<li><button class="hover:text-red-500 transition-colors">Meeting AI</button></li>
 					<li><button class="hover:text-red-500 transition-colors">Follow-Up Planner</button></li>
 					<li><button class="hover:text-red-500 transition-colors">CRM Integrations</button></li>

@@ -97,7 +97,7 @@
 
 <div class="min-h-screen bg-black">
 	<!-- Hero -->
-	<section class="relative pt-32 pb-20">
+	<section class="relative pt-40 pb-20">
 		<div class="absolute inset-0 overflow-hidden pointer-events-none">
 			<div class="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse"></div>
 			<div class="absolute bottom-1/4 -right-48 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
@@ -160,7 +160,7 @@
 			<h2 class="text-4xl font-bold text-white mb-6">Ready to Get Started?</h2>
 			<p class="text-xl text-zinc-400 mb-8">Transform your sales process with SpikedAI today.</p>
 			<button 
-				onclick={() => onboardingStore.start()}
+				onclick={onboardingStore.start}
 				class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-all"
 			>
 				Get Started

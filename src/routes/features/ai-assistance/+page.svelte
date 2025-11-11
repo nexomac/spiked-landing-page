@@ -2,6 +2,7 @@
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
 	import { Sparkles, MessageSquare, Brain, FileText, Users, Calendar } from 'lucide-svelte';
+	import { onboardingStore } from '$lib/stores/onboarding.js';
 
 	// Track selected question - default to 'roi'
 	let selectedQuestion = 'roi';
@@ -333,7 +334,7 @@
 	<FeatureNav currentFeature="ai-assistance" />
 	
 	<!-- Hero Section -->
-	<section class="relative pt-32 pb-20 overflow-hidden">
+	<section class="relative pt-40 pb-20 overflow-hidden">
 		<!-- Background Effects -->
 		<div class="absolute inset-0 overflow-hidden pointer-events-none">
 			<div class="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse"></div>
@@ -400,9 +401,9 @@
 									<!-- Transcription entries -->
 									{#each dialogues as dialogue}
 										<button
-											on:click={() => dialogue.isQuestion && selectQuestion(dialogue.questionType)}
-											on:mouseenter={() => handleMouseEnter(dialogue.questionType)}
-											on:mouseleave={handleMouseLeave}
+											onclick={() => dialogue.isQuestion && selectQuestion(dialogue.questionType)}
+											onmouseenter={() => handleMouseEnter(dialogue.questionType)}
+											onmouseleave={handleMouseLeave}
 											class="flex gap-2 group p-2 rounded-lg transition-all w-full text-left relative {dialogue.isQuestion ? 'bg-blue-950/20 border border-blue-900/50 hover:bg-blue-950/40 hover:border-blue-800/70 cursor-pointer hover:scale-[1.02]' : 'hover:bg-zinc-900/30'} {selectedQuestion === dialogue.questionType ? 'ring-2 ring-red-500/50 bg-blue-950/30' : ''}"
 										>
 											{#if dialogue.color === 'blue'}
@@ -573,12 +574,15 @@
 		<div class="max-w-4xl mx-auto px-6 text-center">
 			<h2 class="text-4xl font-bold text-white mb-6">Stop Winging It. Start Winning.</h2>
 			<p class="text-xl text-zinc-400 mb-8">Give your team instant access to perfect answers and watch your close rates soar.</p>
-			<a href="/" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-all">
+			<button 
+				onclick={onboardingStore.start}
+				class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-all"
+			>
 				Get Started Free
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
 				</svg>
-			</a>
+			</button>
 		</div>
 	</section>
 

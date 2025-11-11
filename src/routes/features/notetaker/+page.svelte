@@ -241,7 +241,7 @@ Follow-up questions:
 	<FeatureNav currentFeature="notetaker" />
 	
 	<!-- Hero Section -->
-	<section class="relative pt-32 pb-20 overflow-hidden">
+	<section class="relative pt-40 pb-20 overflow-hidden">
 		<div class="absolute inset-0 overflow-hidden pointer-events-none">
 			<div class="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse"></div>
 			<div class="absolute bottom-1/4 -right-48 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>

@@ -12,7 +12,7 @@
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="crm" />
 	
-	<section class="relative pt-32 pb-20">
+	<section class="relative pt-40 pb-20">
 		<div class="max-w-7xl mx-auto px-6">
 			<div class="text-center mb-16">
 				<div class="inline-flex items-center gap-2 px-4 py-2 bg-red-950/30 border border-red-900/50 rounded-full mb-6">

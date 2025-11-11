@@ -375,7 +375,7 @@
 	<FeatureNav currentFeature="simulator" />
 	
 	<!-- Hero Section -->
-	<section class="relative pt-32 pb-20 overflow-hidden">
+	<section class="relative pt-40 pb-20 overflow-hidden">
 		<!-- Background Effects -->
 		<div class="absolute inset-0 overflow-hidden pointer-events-none">
 			<div class="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse"></div>

@@ -19,7 +19,7 @@
 	const nextFeature = currentIndex < features.length - 1 ? features[currentIndex + 1] : null;
 </script>
 
-<div class="bg-zinc-950/50 border-y border-zinc-800 sticky top-0 z-40 backdrop-blur-xl">
+<div class="bg-zinc-950/50 border-y border-zinc-800 sticky top-[72px] z-40 backdrop-blur-xl">
 	<div class="max-w-7xl mx-auto px-6 py-4">
 		<div class="flex items-center justify-between gap-4">
 			<!-- Left: Back Navigation -->

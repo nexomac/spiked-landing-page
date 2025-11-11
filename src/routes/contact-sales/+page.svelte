@@ -1,19 +1,6 @@
 <script>
-	import { onMount } from 'svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import OnboardingFlow from '$lib/components/OnboardingFlow.svelte';
-
-	let isScrolled = $state(false);
-	let mobileMenuOpen = $state(false);
-
-	onMount(() => {
-		const handleScroll = () => {
-			isScrolled = window.scrollY > 50;
-		};
-
-		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	});
 </script>
 
 <svelte:head>
@@ -217,73 +204,8 @@
 	</script>
 </svelte:head>
 
-<!-- Navbar -->
-<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-700 {isScrolled ? 'bg-black/90 backdrop-blur-xl border-b border-red-900/30' : 'bg-transparent'}">
-	<div class="max-w-7xl mx-auto px-6 py-5">
-		<div class="flex items-center justify-between">
-			<a href="/" class="group flex items-center gap-3 cursor-pointer">
-				<div class="relative">
-					<!-- Animated red glow -->
-					<div class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-					<!-- Logo container -->
-					<div class="relative bg-gradient-to-br from-zinc-900 to-black p-2 rounded-lg border border-red-900/50 group-hover:border-red-600 transition-all duration-500">
-						<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="h-7 w-7 rounded transform group-hover:scale-110 transition-transform duration-500" />
-					</div>
-				</div>
-				<div class="flex flex-col">
-					<span class="text-xl font-black tracking-tight text-white group-hover:text-red-500 transition-colors duration-300">
-						SPIKED<span class="text-red-600">AI</span>
-					</span>
-					<span class="text-[10px] text-zinc-500 font-medium tracking-wider uppercase -mt-0.5">Revenue Growth OS</span>
-				</div>
-			</a>
-			
-		<div class="hidden md:flex items-center gap-1">
-			<a href="/" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Home</a>
-			<a href="/features" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Features</a>
-			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-colors duration-300">Platform</a>
-			<a href="/contact-sales" class="px-4 py-2 text-sm font-medium text-red-500 transition-colors duration-300">Contact Sales</a>
-			
-			<div class="ml-4 flex items-center gap-3">
-					<button class="px-4 py-2 text-sm font-semibold text-white hover:text-red-500 transition-colors duration-300">
-						Log In
-					</button>
-					<button 
-						onclick={() => onboardingStore.start()}
-						class="group relative px-6 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded font-semibold text-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50"
-					>
-						<span class="relative z-10">Get Started</span>
-						<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-					</button>
-				</div>
-			</div>
-
-			<!-- Mobile Menu Button -->
-			<button 
-				onclick={() => mobileMenuOpen = !mobileMenuOpen}
-				class="md:hidden p-2 text-zinc-400 hover:text-red-500 transition-colors duration-300"
-				aria-label="Toggle mobile menu"
-			>
-				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-				</svg>
-			</button>
-		</div>
-
-	<!-- Mobile Menu -->
-	{#if mobileMenuOpen}
-		<div class="md:hidden mt-4 pb-4 space-y-2 border-t border-red-900/30 pt-4">
-			<a href="/" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Home</a>
-			<a href="/features" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Features</a>
-			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Platform</a>
-			<a href="/contact-sales" class="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-950/30 rounded transition-all duration-300">Contact Sales</a>
-		</div>
-	{/if}
-	</div>
-</nav>
-
 <!-- Contact Sales Hero Section -->
-<section class="min-h-screen bg-black relative overflow-hidden pt-32 pb-20">
+<section class="min-h-screen bg-black relative overflow-hidden pt-40 pb-20">
 	<!-- Animated Grid Background -->
 	<div class="absolute inset-0">
 		<div class="absolute inset-0 bg-gradient-to-b from-red-950/20 via-black to-black"></div>

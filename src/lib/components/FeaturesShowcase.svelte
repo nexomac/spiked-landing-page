@@ -3,6 +3,7 @@
 	import FeatureGridCard from './FeatureGridCard.svelte';
 	import { Sparkles, MessageSquare, Calendar, Users, GitBranch, BarChart3, Heart, Settings, TrendingUp, Activity, Zap, FileText, Brain, Target } from 'lucide-svelte';
 	import { innerWidth } from 'svelte/reactivity/window';
+	import { onboardingStore } from '$lib/stores/onboarding.js';
 	
 	let selectedFeature = $state('ai-assistance');
 	let showContent = $state(true);
@@ -1811,7 +1812,10 @@
 
 				<!-- Get Started Button -->
 				<div class="text-center mt-4 sm:mt-6 px-4 lg:px-0">
-					<button class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full font-semibold text-sm sm:text-base hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out flex items-center gap-2 sm:gap-3 mx-auto group shadow-lg shadow-red-500/30">
+					<button 
+						onclick={onboardingStore.start}
+						class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full font-semibold text-sm sm:text-base hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out flex items-center gap-2 sm:gap-3 mx-auto group shadow-lg shadow-red-500/30"
+					>
 						<span>Get Started</span>
 						<svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />

@@ -1,5 +1,6 @@
 <script>
 	import { ArrowRight } from 'lucide-svelte';
+	import { onboardingStore } from '$lib/stores/onboarding.js';
 	
 	export let currentFeature = '';
 	
@@ -46,13 +47,13 @@
 				Join thousands of sales professionals using SpikedAI to close more deals and work smarter.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-4 justify-center">
-				<a 
-					href="/#pricing"
+				<button 
+					onclick={onboardingStore.start}
 					class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-all hover:scale-105 group"
 				>
 					<span>Get Started Free</span>
 					<ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-				</a>
+				</button>
 				<a 
 					href="/features"
 					class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-zinc-800 text-white font-semibold rounded-xl hover:bg-zinc-700 transition-all hover:scale-105"

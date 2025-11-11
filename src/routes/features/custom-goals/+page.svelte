@@ -14,7 +14,7 @@
 	<FeatureNav currentFeature="custom-goals" />
 	
 	<!-- Hero Section -->
-	<div class="relative overflow-hidden bg-gradient-to-b from-indigo-950/20 to-black py-24">
+	<div class="relative overflow-hidden bg-gradient-to-b from-indigo-950/20 to-black pt-32 pb-24">
 		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-black to-black"></div>
 		
 		<div class="relative max-w-7xl mx-auto px-6">

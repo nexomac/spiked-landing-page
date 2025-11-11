@@ -2,6 +2,7 @@
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
 	import { Heart, TrendingUp, TrendingDown, Meh, Smile, Frown, BarChart3, Activity, ArrowRight, AlertCircle } from 'lucide-svelte';
+	import { onboardingStore } from '$lib/stores/onboarding.js';
 </script>
 
 <svelte:head>
@@ -14,7 +15,7 @@
 	<FeatureNav currentFeature="sentiment" />
 
 	<!-- Hero Section -->
-	<div class="relative overflow-hidden bg-gradient-to-b from-pink-950/20 to-black py-24">
+	<div class="relative overflow-hidden bg-gradient-to-b from-pink-950/20 to-black pt-32 pb-24">
 		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-pink-900/20 via-black to-black"></div>
 		
 		<div class="relative max-w-7xl mx-auto px-6">
@@ -332,10 +333,13 @@
 			<p class="text-xl text-zinc-400 mb-12">Join sales teams using AI to read the room in every conversation</p>
 			
 			<div class="flex flex-wrap gap-4 justify-center">
-				<a href="/demo" class="px-8 py-4 bg-gradient-to-r from-pink-600 to-pink-700 rounded-xl font-semibold hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 hover:scale-105 inline-flex items-center gap-2">
+				<button 
+					onclick={onboardingStore.start}
+					class="px-8 py-4 bg-gradient-to-r from-pink-600 to-pink-700 rounded-xl font-semibold hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 hover:scale-105 inline-flex items-center gap-2"
+				>
 					<span>Get Started Free</span>
 					<ArrowRight class="w-5 h-5" />
-				</a>
+				</button>
 				<a href="/features" class="px-8 py-4 bg-zinc-900 rounded-xl font-semibold border border-zinc-800 hover:border-pink-500 transition-all duration-300 hover:scale-105">
 					Explore All Features
 				</a>

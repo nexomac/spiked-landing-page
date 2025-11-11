@@ -1,11 +1,15 @@
 <script>
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import Navigation from '$lib/components/Navigation.svelte';
 
 	let { children } = $props();
 	let enableScale = $state(false);
 
 	onMount(() => {
+		// Force dark theme
+		document.documentElement.classList.add('dark');
+
 		// Enable scaling automatically when running on vercel.app hosts
 		// or when ?scale=0.8 is present (handy for testing locally)
 		try {
@@ -24,5 +28,6 @@
 </script>
 
 <div id="site-root" class:scaled={enableScale}>
+	<Navigation />
 	{@render children()}
 </div>

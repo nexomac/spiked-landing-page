@@ -65,8 +65,8 @@
 		<!-- Close Button -->
 		<button
 			type="button"
-			on:click={handleClose}
-			on:keydown={(e) => e.key === 'Enter' && handleClose()}
+			onclick={handleClose}
+			onkeydown={(e) => e.key === 'Enter' && handleClose()}
 			class="fixed top-6 right-6 z-[60] p-3 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-700 rounded-lg transition-all duration-300 group cursor-pointer hover:scale-110 active:scale-95"
 			aria-label="Close onboarding modal"
 		>

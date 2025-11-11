@@ -440,9 +440,11 @@
 											<div class="flex items-center justify-between">
 												<div class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wide">Knowledge Base Active</div>
 												<div class="flex gap-2">
-													<span class="px-2 py-0.5 bg-blue-950/30 text-blue-400 text-[10px] font-medium rounded-full border border-blue-900/50">32 Documents</span>
-													<span class="px-2 py-0.5 bg-green-950/30 text-green-400 text-[10px] font-medium rounded-full border border-green-900/50">15 Case Studies</span>
-													<span class="px-2 py-0.5 bg-red-950/30 text-red-400 text-[10px] font-medium rounded-full border border-red-900/50">8 FAQs</span>
+													<!-- Compact knowledge-base summary to avoid visual overlap on small screens -->
+													<span class="px-3 py-1 bg-zinc-900/30 text-zinc-300 text-[11px] font-medium rounded-full border border-zinc-800">
+														Knowledge Base
+														<span class="ml-2 text-white font-bold">55 assets</span>
+													</span>
 												</div>
 											</div>
 										</div>

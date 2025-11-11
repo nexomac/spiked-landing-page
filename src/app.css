@@ -45,6 +45,32 @@ body {
 	overflow-x: hidden;
 }
 
+/* When hosting on Vercel we want the whole site to render at 80% scale.
+   We apply the scale to the root wrapper added in +layout.svelte and
+   add a class on <html> so fixed elements can be adjusted if needed. */
+.site-root.scaled,
+:root.site-scale-80 #site-root {
+	transform-origin: top center;
+	transform: scale(0.8);
+	/* Compensate width reduction so layout stays centered */
+	width: 125%;
+	margin-left: calc((100% - 125%) / 2);
+}
+
+/* Make sure fixed-position elements (like nav) stay visually aligned.
+   This reduces pointer-event issues and keeps the scaled UI usable. */
+@media (min-width: 640px) {
+	:root.site-scale-80 nav,
+	.site-root.scaled nav {
+		left: calc(50% - 50vw);
+		right: calc(50% - 50vw);
+		width: 100vw;
+	}
+}
+
+/* Provide an easy override for local testing: append ?scale=0.8 to URL */
+
+
 /* Enhance hardware acceleration for animations */
 @media (prefers-reduced-motion: no-preference) {
 	* {

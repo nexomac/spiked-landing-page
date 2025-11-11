@@ -2,10 +2,16 @@
 	import FeatureCard from './FeatureCard.svelte';
 	import FeatureGridCard from './FeatureGridCard.svelte';
 	import { Sparkles, MessageSquare, Calendar, Users, GitBranch, BarChart3, Heart, Settings, TrendingUp, Activity, Zap, FileText, Brain, Target } from 'lucide-svelte';
+	import { innerWidth } from 'svelte/reactivity/window';
 	
 	let selectedFeature = $state('ai-assistance');
 	let showContent = $state(true);
 	let isTransitioning = $state(false);
+	
+	// Reactive breakpoints using Svelte 5 $derived
+	let isMobile = $derived(innerWidth.current ? innerWidth.current < 768 : false);
+	let isTablet = $derived(innerWidth.current ? innerWidth.current >= 768 && innerWidth.current < 1024 : false);
+	let isDesktop = $derived(innerWidth.current ? innerWidth.current >= 1024 : true);
 	
 	// Smooth content transition with fade and slide
 	$effect(() => {
@@ -168,17 +174,17 @@
 	<!-- Grid Background -->
 	<div class="absolute inset-0" style="background-image: linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px); background-size: 40px 40px;"></div>
 
-	<div class="relative max-w-7xl mx-auto px-6">
+	<div class="relative max-w-7xl mx-auto px-4 sm:px-6">
 		<!-- Section Header -->
-		<div class="text-center mb-16">
-			<div class="inline-flex items-center gap-2 px-6 py-3 bg-zinc-950 backdrop-blur-sm rounded-full border border-red-900/50 shadow-lg mb-6">
-				<Sparkles class="w-5 h-5 text-red-500" />
-				<span class="text-sm font-semibold text-red-500">
+		<div class="text-center mb-12 md:mb-16">
+			<div class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-zinc-950 backdrop-blur-sm rounded-full border border-red-900/50 shadow-lg mb-4 sm:mb-6">
+				<Sparkles class="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+				<span class="text-xs sm:text-sm font-semibold text-red-500">
 					Enterprise-Grade Features
 				</span>
 			</div>
 			
-			<h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+			<h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight px-4">
 				<span class="text-white">What would you like</span>
 				<br />
 				<span class="bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent">
@@ -186,36 +192,36 @@
 				</span>
 			</h2>
 			
-			<p class="text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
+			<p class="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed px-4">
 				Explore a feature to see how Spiked AI transforms your sales process
 			</p>
 		</div>
 
 		<!-- Main Content Area: Description on Left, Grid on Right -->
-		<div class="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start max-w-6xl mx-auto mb-16">
+		<div class="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 md:gap-8 items-start max-w-6xl mx-auto mb-12 md:mb-16">
 			<!-- Left Side: Feature Description & Preview -->
 			<div class="transition-all duration-500 ease-out {isBlurred ? 'blur-sm opacity-50' : 'blur-0 opacity-100'}" style="transform: translate3d(0, 0, 0);">
-				<div class="sticky top-24">
+				<div class={isDesktop ? 'sticky top-24' : ''}>
 					<!-- Feature Title & Description -->
-					<div class="mb-8 transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'}">
-						<h3 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+					<div class="mb-6 md:mb-8 transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'} px-4 lg:px-0">
+						<h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-white">
 							{currentFeature.fullTitle}
 						</h3>
-						<p class="text-lg text-red-500 font-semibold mb-4">
+						<p class="text-base sm:text-lg text-red-500 font-semibold mb-3 md:mb-4">
 							{currentFeature.subtitle}
 						</p>
-						<p class="text-base text-zinc-400 leading-relaxed mb-6">
+						<p class="text-sm sm:text-base text-zinc-400 leading-relaxed mb-4 md:mb-6">
 							{currentFeature.description}
 						</p>
 						
 						<!-- Feature List -->
-						<ul class="space-y-3 mb-8">
+						<ul class="space-y-2 md:space-y-3 mb-6 md:mb-8">
 							{#each currentFeature.features as feature, i}
-								<li class="flex items-start gap-3 transition-all duration-500 ease-out {showContent ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}" style="transition-delay: {i * 80}ms">
-									<svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<li class="flex items-start gap-2 md:gap-3 transition-all duration-500 ease-out {showContent ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}" style="transition-delay: {i * 80}ms">
+									<svg class="w-4 h-4 md:w-5 md:h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 									</svg>
-									<span class="text-sm text-zinc-300">{feature}</span>
+									<span class="text-xs sm:text-sm text-zinc-300">{feature}</span>
 								</li>
 							{/each}
 						</ul>
@@ -224,19 +230,20 @@
 						{#if currentFeature.href}
 							<a 
 								href={currentFeature.href}
-								class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 hover:scale-105 group"
+								class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-semibold text-sm sm:text-base hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 hover:scale-105 group"
 							>
 								<span>Learn More</span>
-								<svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<svg class="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
 								</svg>
 							</a>
 						{/if}
 					</div>
 
-					<!-- Feature Preview/Demo UI -->
+					<!-- Feature Preview/Demo UI - Hide on mobile for better performance -->
+					{#if !isMobile}
 					<div class="transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'}">
-						<div class="bg-zinc-950 backdrop-blur-sm rounded-2xl border border-zinc-900 shadow-xl overflow-hidden p-6">
+						<div class="bg-zinc-950 backdrop-blur-sm rounded-2xl border border-zinc-900 shadow-xl overflow-hidden p-4 md:p-6">
 							{#if selectedFeature === 'ai-assistance'}
 								<div class="space-y-3">
 									<!-- App Header Bar -->
@@ -905,7 +912,7 @@
 									</div>
 								</div>
 							{:else if selectedFeature === 'simulator'}
-								<div class="space-y-4">
+								<div class="space-y-3 md:space-y-4">
 									<!-- Active Simulation Header -->
 									<div class="p-4 bg-gradient-to-r from-orange-950/30 to-red-950/30 rounded-xl border border-orange-900/50 shadow-lg">
 										<div class="flex items-center justify-between mb-4">
@@ -1734,12 +1741,13 @@
 							{/if}
 						</div>
 					</div>
+				{/if}
 				</div>
 			</div>
 
 			<!-- Right Side: Interactive Grid -->
-			<div class="lg:sticky lg:top-24">
-				<div class="grid grid-cols-2 gap-3 max-w-md mx-auto lg:max-w-none">
+			<div class={isDesktop ? 'lg:sticky lg:top-24' : ''}>
+				<div class="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto lg:max-w-none px-4 lg:px-0">
 					{#each features as feature, idx}
 						{@const Icon = feature.icon}
 						<div class="relative">
@@ -1749,12 +1757,13 @@
 									selectedFeature = feature.id;
 								}}
 								onmouseleave={() => hoveredFeature = null}
-								class="group relative bg-zinc-950 rounded-xl p-4 border-2 transition-all duration-500 ease-out active:scale-[0.97] w-full
+								onclick={() => selectedFeature = feature.id}
+								class="group relative bg-zinc-950 rounded-lg sm:rounded-xl p-3 sm:p-4 border-2 transition-all duration-500 ease-out active:scale-[0.97] w-full
 								{selectedFeature === feature.id ? 'border-red-500 bg-gradient-to-br from-red-950/30 to-zinc-950/50 shadow-lg shadow-red-500/20' : 'border-zinc-800 hover:border-red-600 hover:shadow-lg hover:shadow-red-600/10'}"
 								style="transition-delay: {idx * 30}ms; transform: translate3d(0, 0, 0);"
 							>
 								<!-- Checkbox -->
-								<div class="absolute top-3 left-3 w-4 h-4 rounded border-2 transition-all duration-500 ease-out
+								<div class="absolute top-2 sm:top-3 left-2 sm:left-3 w-3 h-3 sm:w-4 sm:h-4 rounded border-2 transition-all duration-500 ease-out
 									{selectedFeature === feature.id ? 'bg-red-500 border-red-500 scale-110' : 'border-zinc-700 group-hover:border-red-500 group-hover:scale-105'}">
 									{#if selectedFeature === feature.id}
 										<svg class="w-full h-full text-white p-0.5 animate-in fade-in zoom-in duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1764,14 +1773,14 @@
 								</div>
 								
 								<!-- Icon -->
-								<div class="flex flex-col items-center justify-center pt-3 pb-1">
-									<div class="w-12 h-12 mb-3 flex items-center justify-center text-zinc-500 group-hover:text-red-500 transition-all duration-500 ease-out group-hover:scale-110
+								<div class="flex flex-col items-center justify-center pt-2 sm:pt-3 pb-1">
+									<div class="w-10 h-10 sm:w-12 sm:h-12 mb-2 sm:mb-3 flex items-center justify-center text-zinc-500 group-hover:text-red-500 transition-all duration-500 ease-out group-hover:scale-110
 										{selectedFeature === feature.id ? 'text-red-500 scale-110' : ''}">
 										<Icon class="w-full h-full" strokeWidth={1.5} />
 									</div>
 									
 									<!-- Title -->
-									<h3 class="text-sm font-semibold text-white text-center transition-all duration-500 ease-out
+									<h3 class="text-xs sm:text-sm font-semibold text-white text-center transition-all duration-500 ease-out
 										{selectedFeature === feature.id ? 'text-red-500' : ''}">
 										{feature.title}
 									</h3>
@@ -1788,10 +1797,10 @@
 							{#if feature.href}
 								<a 
 									href={feature.href}
-									class="mt-2 inline-flex items-center justify-center gap-1.5 text-xs text-zinc-400 hover:text-red-500 transition-all duration-300 group/link w-full"
+									class="mt-1 sm:mt-2 inline-flex items-center justify-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs text-zinc-400 hover:text-red-500 transition-all duration-300 group/link w-full"
 								>
 									<span>View Details</span>
-									<svg class="w-3 h-3 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 									</svg>
 								</a>
@@ -1801,20 +1810,20 @@
 				</div>
 
 				<!-- Get Started Button -->
-				<div class="text-center mt-6">
-					<button class="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full font-semibold text-base hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out flex items-center gap-3 mx-auto group shadow-lg shadow-red-500/30">
+				<div class="text-center mt-4 sm:mt-6 px-4 lg:px-0">
+					<button class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full font-semibold text-sm sm:text-base hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out flex items-center gap-2 sm:gap-3 mx-auto group shadow-lg shadow-red-500/30">
 						<span>Get Started</span>
-						<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
 						</svg>
 					</button>
-					<p class="mt-3 text-xs text-zinc-500">No credit card needed • Unlimited time on Free plan</p>
+					<p class="mt-2 sm:mt-3 text-[10px] sm:text-xs text-zinc-500">No credit card needed • Unlimited time on Free plan</p>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </section>
+
 
 <style>
 	@keyframes blob {

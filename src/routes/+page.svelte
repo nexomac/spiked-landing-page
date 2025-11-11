@@ -3,6 +3,7 @@
 	import FeaturesShowcase from '$lib/components/FeaturesShowcase.svelte';
 	import OnboardingFlow from '$lib/components/OnboardingFlow.svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
+	import { innerWidth } from 'svelte/reactivity/window';
 	
 	let isDark = $state(true); // Default to dark theme
 	let isScrolled = $state(false);
@@ -16,6 +17,11 @@
 	let mouseX = $state(0);
 	let mouseY = $state(0);
 	let scrollY = $state(0);
+	
+	// Reactive breakpoints using Svelte 5 $derived
+	let isMobile = $derived(innerWidth.current ? innerWidth.current < 768 : false);
+	let isTablet = $derived(innerWidth.current ? innerWidth.current >= 768 && innerWidth.current < 1024 : false);
+	let isDesktop = $derived(innerWidth.current ? innerWidth.current >= 1024 : true);
 	
 	let visibleSections = $state({
 		hero: false,
@@ -99,50 +105,50 @@
 
 <!-- Navbar -->
 <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-700 {isScrolled ? 'bg-black/90 backdrop-blur-xl border-b border-red-900/30 shadow-lg shadow-red-900/10' : 'bg-transparent'}">
-	<div class="max-w-7xl mx-auto px-6 py-5">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
 		<div class="flex items-center justify-between">
-			<div class="group flex items-center gap-3 cursor-pointer">
+			<div class="group flex items-center gap-2 sm:gap-3 cursor-pointer">
 				<div class="relative">
 					<!-- Animated red glow -->
 					<div class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
 					<!-- Logo container -->
-					<div class="relative bg-gradient-to-br from-zinc-900 to-black p-2 rounded-lg border border-red-900/50 group-hover:border-red-600 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-red-900/50">
-						<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="h-7 w-7 rounded transform group-hover:rotate-6 transition-transform duration-500" />
+					<div class="relative bg-gradient-to-br from-zinc-900 to-black p-1.5 sm:p-2 rounded-lg border border-red-900/50 group-hover:border-red-600 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-red-900/50">
+						<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="h-5 w-5 sm:h-7 sm:w-7 rounded transform group-hover:rotate-6 transition-transform duration-500" />
 					</div>
 				</div>
 				<div class="flex flex-col">
-					<span class="text-xl font-black tracking-tight text-white group-hover:text-red-500 transition-colors duration-300">
+					<span class="text-base sm:text-xl font-black tracking-tight text-white group-hover:text-red-500 transition-colors duration-300">
 						SPIKED<span class="text-red-600 group-hover:text-red-400 transition-colors">AI</span>
 					</span>
-					<span class="text-[10px] text-zinc-500 font-medium tracking-wider uppercase -mt-0.5 group-hover:text-zinc-400 transition-colors">Revenue Growth OS</span>
+					<span class="text-[8px] sm:text-[10px] text-zinc-500 font-medium tracking-wider uppercase -mt-0.5 group-hover:text-zinc-400 transition-colors">Revenue Growth OS</span>
 				</div>
 			</div>
 			
 		<div class="hidden md:flex items-center gap-1">
-			<button onclick={() => scrollToSection('products')} class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
+			<button onclick={() => scrollToSection('products')} class="px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
 				Products
 				<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
 			</button>
-			<a href="/features" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
+			<a href="/features" class="px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
 				Features
 				<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
 			</a>
-			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
+			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
 				Platform
 				<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
 			</a>
-			<a href="/contact-sales" class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
+			<a href="/contact-sales" class="px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium text-zinc-400 hover:text-red-500 transition-all duration-300 hover:scale-105 relative group">
 				Contact Sales
 				<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
 			</a>
 			
-			<div class="ml-4 flex items-center gap-3">
-					<button class="px-4 py-2 text-sm font-semibold text-white hover:text-red-500 transition-all duration-300 hover:scale-105">
+			<div class="ml-2 lg:ml-4 flex items-center gap-2 lg:gap-3">
+					<button class="px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold text-white hover:text-red-500 transition-all duration-300 hover:scale-105">
 						Log In
 					</button>
 					<button 
 						onclick={() => onboardingStore.start()}
-						class="group relative px-6 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded font-semibold text-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50 hover:scale-105 hover:-translate-y-0.5"
+						class="group relative px-4 lg:px-6 py-2 lg:py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded font-semibold text-xs lg:text-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50 hover:scale-105 hover:-translate-y-0.5"
 					>
 						<span class="relative z-10">Get Started</span>
 						<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -166,10 +172,21 @@
 	<!-- Mobile Menu -->
 	{#if mobileMenuOpen}
 		<div class="md:hidden mt-4 pb-4 space-y-2 border-t border-red-900/30 pt-4 animate-slide-down">
-			<button onclick={() => scrollToSection('products')} class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Products</button>
-			<a href="/features" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Features</a>
-			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Platform</a>
-			<a href="/contact-sales" class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Contact Sales</a>
+			<button onclick={() => scrollToSection('products')} class="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Products</button>
+			<a href="/features" class="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Features</a>
+			<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Platform</a>
+			<a href="/contact-sales" class="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-red-500 hover:bg-red-950/30 rounded transition-all duration-300 hover:translate-x-1">Contact Sales</a>
+			<div class="pt-2 space-y-2">
+				<button class="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white hover:text-red-500 border border-zinc-800 rounded transition-all duration-300">
+					Log In
+				</button>
+				<button 
+					onclick={() => onboardingStore.start()}
+					class="block w-full px-4 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50"
+				>
+					Get Started
+				</button>
+			</div>
 		</div>
 	{/if}
 	</div>
@@ -219,48 +236,48 @@
 		<div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/50"></div>
 	</div>
 
-	<div class="relative z-10 max-w-7xl mx-auto px-6 py-32">
+	<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 md:py-32">
 		<div class="transform transition-all duration-1000 {visibleSections.hero ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
 			<!-- Enhanced Status Badge with better visual hierarchy -->
-			<div class="inline-flex flex-col gap-3 mb-10 animate-slide-down">
-				<div class="inline-flex items-center gap-3 px-5 py-2.5 bg-zinc-950/90 backdrop-blur-xl rounded-full border border-red-900/50 group hover:border-red-600/70 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-900/30">
-					<div class="relative flex items-center gap-2.5">
+			<div class="inline-flex flex-col gap-2 sm:gap-3 mb-8 sm:mb-10 animate-slide-down">
+				<div class="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 bg-zinc-950/90 backdrop-blur-xl rounded-full border border-red-900/50 group hover:border-red-600/70 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-900/30">
+					<div class="relative flex items-center gap-1.5 sm:gap-2.5">
 						<div class="relative">
-							<div class="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></div>
-							<div class="absolute inset-0 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></div>
+							<div class="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-pulse"></div>
+							<div class="absolute inset-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-ping"></div>
 						</div>
-						<span class="text-lg font-extrabold text-zinc-300 tracking-widest uppercase">Revenue AI Agents built for the Global 2000</span>
+						<span class="text-sm sm:text-base md:text-lg font-extrabold text-zinc-300 tracking-wider sm:tracking-widest uppercase leading-tight">Revenue AI Agents built for the Global 2000</span>
 					</div>
 				</div>
-				<div class="px-5 py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
-					<span class="text-xl font-semibold text-red-400 tracking-wide leading-relaxed block">Combining conversational, computational, and contextual intelligence to drive reasoning, speed, and measurable ROI</span>
+				<div class="px-4 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
+					<span class="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-red-400 tracking-wide leading-relaxed block">Combining conversational, computational, and contextual intelligence to drive reasoning, speed, and measurable ROI</span>
 				</div>
 			</div>
 
 			<!-- Enhanced Headline with better spacing and effects -->
-			<div class="mb-10">
-				<h1 class="text-6xl md:text-8xl lg:text-[10rem] font-black leading-[0.9] tracking-tighter animate-fade-in-up">
-					<span class="block text-white mb-2 hover:scale-[1.02] transition-transform duration-300 inline-block">Sell Like</span>
-					<span class="block bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent hover:scale-[1.02] transition-transform duration-300 inline-block animate-gradient bg-[length:200%_auto]">
+			<div class="mb-6 sm:mb-8 md:mb-10">
+				<h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[10rem] font-black leading-[0.9] tracking-tighter animate-fade-in-up">
+					<span class="inline-block text-white mb-2 hover:scale-[1.02] transition-transform duration-300">Sell Like</span>
+					<span class="inline-block bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent hover:scale-[1.02] transition-transform duration-300 animate-gradient bg-[length:200%_auto]">
 						a CEO
 					</span>
 				</h1>
 			</div>
 			
 			<!-- Enhanced Description with better typography -->
-			<p class="text-xl md:text-2xl lg:text-3xl text-zinc-400 mb-14 max-w-4xl leading-[1.6] font-light animate-fade-in-up" style="animation-delay: 0.2s;">
+			<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-zinc-400 mb-10 sm:mb-12 md:mb-14 max-w-4xl leading-[1.6] font-light animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.2s;">
 				AI-Powered Revenue Generation Platform, <span class="text-red-400 font-semibold hover:text-red-300 transition-colors">Human and AI Revenue Agents, built to reason, act, and close.</span> <span class="text-white font-medium">Together, they transform every conversation into measurable growth.</span>
 			</p>
 			
 			<!-- Enhanced CTA Buttons -->
-			<div class="flex flex-col sm:flex-row gap-5 mb-20 animate-fade-in-up" style="animation-delay: 0.4s;">
+			<div class="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-16 sm:mb-20 animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.4s;">
 				<button 
 					onclick={() => onboardingStore.start()}
-					class="group relative px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1"
+					class="group relative px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-base sm:text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1"
 				>
 					<span class="relative z-10 flex items-center justify-center gap-2">
 						Start Now, Skip Demos
-						<svg class="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
 						</svg>
 					</span>
@@ -268,13 +285,13 @@
 					<div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
 					<div class="absolute inset-0 rounded-xl ring-2 ring-red-500/0 group-hover:ring-red-500/50 transition-all duration-300"></div>
 				</button>
-				<a href="/contact-sales" class="px-10 py-5 bg-zinc-950/50 backdrop-blur-sm text-white rounded-xl font-semibold text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/30 transition-all duration-300 text-center hover:scale-[1.05] hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/30">
+				<a href="/contact-sales" class="px-8 sm:px-10 py-4 sm:py-5 bg-zinc-950/50 backdrop-blur-sm text-white rounded-xl font-semibold text-base sm:text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/30 transition-all duration-300 text-center hover:scale-[1.05] hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/30">
 					Contact Sales
 				</a>
 			</div>
 
 			<!-- Enhanced Feature Metrics Bar with better design -->
-			<div class="grid md:grid-cols-3 gap-6 max-w-5xl">
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl px-2 sm:px-0">
 				{#each [
 					{ 
 						metric: '100%', 
@@ -293,24 +310,24 @@
 					}
 				] as feature, i}
 					<div 
-						class="group relative bg-gradient-to-br from-zinc-950/80 to-zinc-950/50 backdrop-blur-xl p-7 rounded-2xl border-2 border-zinc-900 hover:border-red-900/60 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-900/30 animate-fade-in-up cursor-pointer"
+						class="group relative bg-gradient-to-br from-zinc-950/80 to-zinc-950/50 backdrop-blur-xl p-5 sm:p-6 md:p-7 rounded-xl sm:rounded-2xl border-2 border-zinc-900 hover:border-red-900/60 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-900/30 animate-fade-in-up cursor-pointer"
 						style="animation-delay: {0.6 + i * 0.1}s; transform: translate3d(0, 0, 0);"
 					>
 						<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 via-red-950/10 to-red-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 						<div class="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/15 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 rounded-2xl"></div>
 						<div class="relative">
-							<div class="flex items-center gap-4 mb-4">
-								<div class="p-3 bg-gradient-to-br from-red-950/50 to-red-950/30 rounded-xl border border-red-900/40 group-hover:border-red-600/60 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-red-900/20">
-									<svg class="w-6 h-6 text-red-500 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+								<div class="p-2 sm:p-3 bg-gradient-to-br from-red-950/50 to-red-950/30 rounded-lg sm:rounded-xl border border-red-900/40 group-hover:border-red-600/60 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-red-900/20">
+									<svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-500 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d={feature.icon} />
 									</svg>
 								</div>
-								<span class="text-4xl font-black text-white group-hover:text-red-400 transition-colors duration-300">{feature.metric}</span>
+								<span class="text-3xl sm:text-4xl font-black text-white group-hover:text-red-400 transition-colors duration-300">{feature.metric}</span>
 							</div>
-							<p class="text-sm text-zinc-500 font-bold tracking-wider uppercase group-hover:text-zinc-300 transition-colors leading-relaxed">{feature.label}</p>
+							<p class="text-xs sm:text-sm text-zinc-500 font-bold tracking-wider uppercase group-hover:text-zinc-300 transition-colors leading-relaxed">{feature.label}</p>
 						</div>
 						<!-- Corner accent -->
-						<div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-red-600/0 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full"></div>
+						<div class="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-600/0 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full"></div>
 					</div>
 				{/each}
 			</div>

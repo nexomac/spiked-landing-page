@@ -239,7 +239,7 @@
 
 			<!-- Enhanced Headline with better spacing and effects -->
 			<div class="mb-10">
-				<h1 class="text-7xl md:text-8xl lg:text-[10rem] font-black leading-[0.9] tracking-tighter animate-fade-in-up">
+				<h1 class="text-6xl md:text-8xl lg:text-[10rem] font-black leading-[0.9] tracking-tighter animate-fade-in-up">
 					<span class="block text-white mb-2 hover:scale-[1.02] transition-transform duration-300 inline-block">Sell Like</span>
 					<span class="block bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent hover:scale-[1.02] transition-transform duration-300 inline-block animate-gradient bg-[length:200%_auto]">
 						a CEO

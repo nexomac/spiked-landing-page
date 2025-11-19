@@ -172,8 +172,8 @@
 			</div>
 			
 			<!-- Enhanced Description with better typography -->
-			<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-zinc-400 mb-10 sm:mb-12 md:mb-14 max-w-4xl leading-[1.6] font-light animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.2s;">
-				AI-Powered Revenue Generation Platform, <span class="text-red-400 font-semibold hover:text-red-300 transition-colors">Human and AI Revenue Agents, built to reason, act, and close.</span> <span class="text-white font-medium">Together, they transform every conversation into measurable growth.</span>
+			<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-zinc-300 mb-10 sm:mb-12 md:mb-14 max-w-4xl leading-[1.6] font-normal animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.2s;">
+				AI-Powered Revenue Generation Platform, <span class="text-zinc-300 font-normal">Human and AI Revenue Agents, built to reason, act, and close.</span> <span class="text-zinc-300 font-normal">Together, they transform every conversation into measurable growth.</span>
 			</p>
 			
 			<!-- Enhanced CTA Buttons -->

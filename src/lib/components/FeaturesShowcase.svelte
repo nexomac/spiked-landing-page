@@ -175,7 +175,7 @@
 	<!-- Grid Background -->
 	<div class="absolute inset-0" style="background-image: linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px); background-size: 40px 40px;"></div>
 
-	<div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+	<div class="relative w-full px-4 sm:px-6 lg:px-8">
 		<!-- Section Header -->
 		<div class="text-center mb-12 md:mb-16">
 			<div class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-zinc-950 backdrop-blur-sm rounded-full border border-red-900/50 shadow-lg mb-4 sm:mb-6">
@@ -198,20 +198,22 @@
 			</p>
 		</div>
 
-		<!-- Main Content Area: Description on Left, Grid on Right -->
-		<div class="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 md:gap-8 items-start max-w-6xl mx-auto mb-12 md:mb-16">
-			<!-- Left Side: Feature Description & Preview -->
+		<!-- Main Content Area: Three Column Layout - Text | Preview Widget | Selection Grid -->
+		<!-- Max width container to use ~80% of viewport with margins -->
+		<div class="max-w-[1600px] mx-auto">
+		<div class="grid lg:grid-cols-[0.9fr_1.4fr_0.7fr] gap-4 md:gap-6 xl:gap-8 items-start mb-12 md:mb-16">
+			<!-- Left Side: Feature Text Description -->
 			<div class="transition-all duration-500 ease-out {isBlurred ? 'blur-sm opacity-50' : 'blur-0 opacity-100'}" style="transform: translate3d(0, 0, 0);">
 				<div class={isDesktop ? 'sticky top-24' : ''}>
 					<!-- Feature Title & Description -->
-					<div class="mb-6 md:mb-8 transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'} px-4 lg:px-0">
-						<h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-white">
+					<div class="transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'}">
+						<h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-white">
 							{currentFeature.fullTitle}
 						</h3>
-						<p class="text-base sm:text-lg text-red-500 font-semibold mb-3 md:mb-4">
+						<p class="text-sm sm:text-base text-red-500 font-semibold mb-3 md:mb-4">
 							{currentFeature.subtitle}
 						</p>
-						<p class="text-sm sm:text-base text-zinc-400 leading-relaxed mb-4 md:mb-6">
+						<p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4 md:mb-6">
 							{currentFeature.description}
 						</p>
 						
@@ -219,7 +221,7 @@
 						<ul class="space-y-2 md:space-y-3 mb-6 md:mb-8">
 							{#each currentFeature.features as feature, i}
 								<li class="flex items-start gap-2 md:gap-3 transition-all duration-500 ease-out {showContent ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}" style="transition-delay: {i * 80}ms">
-									<svg class="w-4 h-4 md:w-5 md:h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<svg class="w-3 h-3 md:w-4 md:h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 									</svg>
 									<span class="text-xs sm:text-sm text-zinc-300">{feature}</span>
@@ -231,7 +233,7 @@
 						{#if currentFeature.href}
 							<a 
 								href={currentFeature.href}
-								class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-semibold text-sm sm:text-base hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 hover:scale-105 group"
+								class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-semibold text-xs sm:text-sm hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 hover:scale-105 group"
 							>
 								<span>Learn More</span>
 								<svg class="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +242,12 @@
 							</a>
 						{/if}
 					</div>
+				</div>
+			</div>
 
+			<!-- Center: Feature Preview/Demo Widget -->
+			<div class="transition-all duration-500 ease-out {isBlurred ? 'blur-sm opacity-50' : 'blur-0 opacity-100'}" style="transform: translate3d(0, 0, 0);">
+				<div class={isDesktop ? 'sticky top-24' : ''}>
 					<!-- Feature Preview/Demo UI - Hide on mobile for better performance -->
 					{#if !isMobile}
 					<div class="transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'}">
@@ -1746,9 +1753,9 @@
 				</div>
 			</div>
 
-			<!-- Right Side: Interactive Grid -->
+			<!-- Right Side: Interactive Feature Selection Grid -->
 			<div class={isDesktop ? 'lg:sticky lg:top-24' : ''}>
-				<div class="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto lg:max-w-none px-4 lg:px-0">
+				<div class="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto lg:max-w-none">
 					{#each features as feature, idx}
 						{@const Icon = feature.icon}
 						<div class="relative">
@@ -1811,7 +1818,7 @@
 				</div>
 
 				<!-- Get Started Button -->
-				<div class="text-center mt-4 sm:mt-6 px-4 lg:px-0">
+				<div class="text-center mt-4 sm:mt-6">
 					<button 
 						onclick={onboardingStore.start}
 						class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full font-semibold text-sm sm:text-base hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out flex items-center gap-2 sm:gap-3 mx-auto group shadow-lg shadow-red-500/30"
@@ -1824,6 +1831,7 @@
 					<p class="mt-2 sm:mt-3 text-[10px] sm:text-xs text-zinc-500">No credit card needed • Unlimited time on Free plan</p>
 				</div>
 			</div>
+		</div>
 		</div>
 	</div>
 </section>

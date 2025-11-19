@@ -329,7 +329,7 @@
 	}
 </style>
 
-<div class="min-h-screen bg-black">
+<div class="min-h-screen bg-black font-sans antialiased text-gray-50">
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="ai-assistance" />
 	
@@ -347,9 +347,9 @@
 					<Sparkles class="w-4 h-4 text-red-500" />
 					<span class="text-sm font-semibold text-red-400">Real-Time AI Assistance</span>
 				</div>
-				<h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+				<h1 class="heading-hero text-4xl md:text-6xl text-white mb-6">
 					Never Get Caught Off Guard<br/>
-					<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">During a Sales Call</span>
+					<span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">During a Sales Call</span>
 				</h1>
 				<p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
 					Instant, accurate answers from your entire knowledge base—delivered in under 2 seconds
@@ -360,8 +360,8 @@
 			</div>
 
 			<!-- Live Demo Section -->
-			<div class="max-w-5xl mx-auto">
-				<div class="bg-gradient-to-r from-zinc-900 via-zinc-900 to-zinc-950 rounded-xl border border-zinc-800 p-4 shadow-2xl">
+                <div class="max-w-5xl mx-auto">
+                	<div class="card-surface rounded-xl border border-zinc-800 p-4 shadow-2xl">
 					<!-- App Header Bar -->
 					<div class="bg-gradient-to-r from-zinc-900 to-zinc-950 rounded-t-xl border-b border-zinc-800 px-4 py-3 flex items-center justify-between">
 						<div class="flex items-center gap-2">
@@ -369,8 +369,8 @@
 								<Sparkles class="w-4 h-4 text-white" />
 							</div>
 							<div>
-								<h4 class="text-sm font-bold text-white">SpikedAI</h4>
-								<p class="text-xs text-zinc-500">Conversational AI Platform</p>
+										<h4 class="text-sm font-semibold text-white">SpikedAI</h4>
+										<p class="text-xs text-zinc-400">Conversational AI Platform</p>
 							</div>
 						</div>
 						<div class="flex items-center gap-2">
@@ -436,7 +436,7 @@
 								<div class="px-3 py-2 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
 									<div class="flex items-center gap-2">
 										<Brain class="w-4 h-4 text-red-500" />
-										<h5 class="text-xs font-bold text-white">AI Copilot</h5>
+										<h5 class="text-xs font-semibold text-white">AI Copilot</h5>
 									</div>
 									<div class="flex items-center gap-2">
 										<button class="px-2 py-1 text-[10px] font-medium text-zinc-400 hover:text-white border border-zinc-700 rounded hover:border-zinc-600 transition-colors">
@@ -474,16 +474,19 @@
 
 											<!-- AI Generated Answer -->
 											<div class="bg-zinc-900/80 rounded-lg p-3 border border-zinc-800 space-y-2">
-												<h6 class="text-xs font-bold text-white mb-1.5">{aiResponses[hoveredQuestion || selectedQuestion].title}</h6>
-												<p class="text-xs text-zinc-300 leading-relaxed mb-2">
+												<h6 class="text-sm font-semibold text-white mb-1.5">{aiResponses[hoveredQuestion || selectedQuestion].title}</h6>
+												<p class="text-sm text-zinc-300 leading-relaxed mb-2">
 													{aiResponses[hoveredQuestion || selectedQuestion].description}
 												</p>
 												
-												<ul class="space-y-1 text-[11px] text-zinc-400">
+												<ul class="space-y-2 text-sm text-zinc-300">
 													{#each aiResponses[hoveredQuestion || selectedQuestion].points as point}
-														<li class="flex items-start gap-1.5">
-															<span class="text-red-500 mt-0.5">•</span>
-															<span><span class="text-white font-semibold">{point.label}:</span> {point.value}</span>
+														<li class="flex items-start gap-2">
+															<span class="text-red-400 mt-0.5">•</span>
+															<div>
+																<div class="text-white font-semibold text-sm">{point.label}</div>
+																<div class="text-zinc-300 text-sm">{point.value}</div>
+															</div>
 														</li>
 													{/each}
 												</ul>
@@ -571,18 +574,18 @@
 
 	<!-- CTA Section -->
 	<section class="py-20">
-		<div class="max-w-4xl mx-auto px-6 text-center">
-			<h2 class="text-4xl font-bold text-white mb-6">Stop Winging It. Start Winning.</h2>
-			<p class="text-xl text-zinc-400 mb-8">Give your team instant access to perfect answers and watch your close rates soar.</p>
-			<button 
-				onclick={onboardingStore.start}
-				class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-all"
-			>
+			<div class="max-w-4xl mx-auto px-6 text-center">
+				<h2 class="text-4xl font-semibold text-white mb-6">Stop Winging It. Start Winning.</h2>
+				<p class="text-xl text-zinc-400 mb-8">Give your team instant access to perfect answers and watch your close rates soar.</p>
+				<button 
+					onclick={onboardingStore.start}
+					class="btn-primary"
+				>
 				Get Started Free
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
 				</svg>
-			</button>
+				</button>
 		</div>
 	</section>
 

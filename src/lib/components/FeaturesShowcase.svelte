@@ -271,7 +271,7 @@
 												<span class="text-xs font-medium text-amber-400">LISTENING</span>
 											</div>
 											<button class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-lg shadow-red-500/20">
-												Stop Bot
+												Stop Agent
 											</button>
 										</div>
 									</div>

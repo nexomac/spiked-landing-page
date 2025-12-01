@@ -1,283 +1,311 @@
 <script>
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import { Calendar, CheckCircle2, Clock, TrendingUp, FileText, Users, Star, ArrowRight, Video, Mic, Brain, Sparkles, MessageSquare, Target, Zap, Activity, Radio, Waves, Cpu, Network, Database, Shield, Lock, Eye, Scan } from 'lucide-svelte';
+	import { Calendar, CheckCircle2, Clock, TrendingUp, FileText, Users, Star, ArrowRight, Video, Mic, Brain, Sparkles, MessageSquare, Target, Zap, Activity, Radio, Waves, Cpu, Network, Database, Shield, Lock, Eye, Scan, Play, ChevronRight, BarChart3, Globe, Layers, RefreshCw } from 'lucide-svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { fly, fade, scale, slide, blur } from 'svelte/transition';
 	import { quintOut, elasticOut, cubicOut, backOut, expoOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
 
-	// Story progression states
-	let currentStage = $state(0);
-	let autoPlay = $state(true);
-	let showMeetingEnd = $state(false);
-	let showTranscription = $state(false);
-	let showProcessing = $state(false);
-	let showSummary = $state(false);
-	let showFollowUp = $state(false);
+	// Active feature for showcase
+	let activeFeature = $state(0);
+	let isAutoPlaying = $state(true);
 	
-	// Advanced animation states
-	let transcriptLines = $state([]);
-	let processingSteps = $state([]);
-	let summaryItems = $state([]);
-	let actionItems = $state([]);
-	let scanProgress = $state(0);
-	let aiConfidence = $state(0);
-	let dataPoints = $state(0);
-	let systemStatus = $state('INITIALIZING');
-	let neuralActivity = $state([]);
-	let waveformData = $state([]);
-	
-	// Holographic UI elements
-	let hologramRotation = $state(0);
-	let energyLevel = $state(0);
-	
-	// Meeting transcript data with enhanced metadata
-	const fullTranscript = [
-		{ speaker: "Sarah (Sales)", text: "Thanks everyone for joining. Let's discuss the Q1 implementation plan.", time: "0:00", sentiment: 0.85, confidence: 0.94 },
-		{ speaker: "John (CTO)", text: "We're concerned about the data migration timeline. Can we get more details?", time: "2:15", sentiment: 0.35, confidence: 0.91 },
-		{ speaker: "Sarah", text: "Absolutely. We can provide a detailed technical roadmap next week.", time: "2:45", sentiment: 0.92, confidence: 0.96 },
-		{ speaker: "Lisa (CFO)", text: "Budget is approved at $250K. We need to see ROI projections.", time: "5:30", sentiment: 0.78, confidence: 0.98 },
-		{ speaker: "Sarah", text: "Perfect! I'll prepare those for our next meeting.", time: "6:00", sentiment: 0.95, confidence: 0.97 },
-		{ speaker: "John", text: "Also, can you send us the security compliance documentation?", time: "8:20", sentiment: 0.65, confidence: 0.89 },
-		{ speaker: "Sarah", text: "Yes, I'll send that over by end of day.", time: "8:45", sentiment: 0.88, confidence: 0.95 }
-	];
+	// Parallax and animation states
+	let mouseX = $state(0);
+	let mouseY = $state(0);
+	let scrollY = $state(0);
 
-	const processingData = [
-		{ id: 1, title: "Neural Network Initialization", subtitle: "Loading conversation matrix", icon: Cpu, bgColor: "bg-cyan-500/20", textColor: "text-cyan-400", progress: 100 },
-		{ id: 2, title: "Deep Context Analysis", subtitle: "Processing 2,847 data points", icon: Brain, bgColor: "bg-purple-500/20", textColor: "text-purple-400", progress: 100 },
-		{ id: 3, title: "Sentiment Mapping", subtitle: "Analyzing emotional patterns", icon: Activity, bgColor: "bg-pink-500/20", textColor: "text-pink-400", progress: 100 },
-		{ id: 4, title: "Decision Point Detection", subtitle: "Identifying critical moments", icon: Target, bgColor: "bg-blue-500/20", textColor: "text-blue-400", progress: 100 },
-		{ id: 5, title: "Action Item Extraction", subtitle: "Cross-referencing commitments", icon: CheckCircle2, bgColor: "bg-green-500/20", textColor: "text-green-400", progress: 100 },
-		{ id: 6, title: "Predictive Analysis", subtitle: "Forecasting next steps", icon: Sparkles, bgColor: "bg-yellow-500/20", textColor: "text-yellow-400", progress: 100 }
-	];
-
-	const summaryData = [
-		{ title: "Budget Approved", detail: "$250K for Q1 implementation", type: "success", confidence: 98, priority: "critical" },
-		{ title: "Technical Concern", detail: "Data migration timeline needs clarification", type: "warning", confidence: 91, priority: "high" },
-		{ title: "Documentation Requested", detail: "Security compliance papers needed", type: "info", confidence: 95, priority: "medium" },
-		{ title: "Next Steps", detail: "ROI projections and technical roadmap", type: "action", confidence: 96, priority: "high" }
-	];
-
-	const actionData = [
-		{ text: "Send security compliance documentation", priority: "critical", due: "Today", status: "pending", assignee: "Sarah", risk: "high" },
-		{ text: "Prepare detailed ROI projections", priority: "high", due: "Next week", status: "pending", assignee: "Finance Team", risk: "medium" },
-		{ text: "Create technical migration roadmap", priority: "high", due: "Next week", status: "pending", assignee: "John", risk: "medium" },
-		{ text: "Schedule technical deep-dive session", priority: "medium", due: "Within 2 weeks", status: "ready", assignee: "Sarah", risk: "low" }
-	];
-
-	// Story progression logic
-	function startStory() {
-		currentStage = 0;
-		showMeetingEnd = false;
-		showTranscription = false;
-		showProcessing = false;
-		showSummary = false;
-		showFollowUp = false;
-		transcriptLines = [];
-		processingSteps = [];
-		summaryItems = [];
-		actionItems = [];
-		scanProgress = 0;
-		aiConfidence = 0;
-		dataPoints = 0;
-		systemStatus = 'INITIALIZING';
-		neuralActivity = [];
-		energyLevel = 0;
-		
-		// Generate neural activity
-		generateNeuralActivity();
-		
-		// Stage 1: Meeting ends with scan
-		setTimeout(() => {
-			showMeetingEnd = true;
-			currentStage = 1;
-			systemStatus = 'SCANNING';
-			animateScan();
-		}, 500);
-
-		// Stage 2: Transcription appears
-		setTimeout(() => {
-			showTranscription = true;
-			currentStage = 2;
-			systemStatus = 'TRANSCRIBING';
-			animateTranscript();
-		}, 4000);
-
-		// Stage 3: Processing begins
-		setTimeout(() => {
-			showProcessing = true;
-			currentStage = 3;
-			systemStatus = 'PROCESSING';
-			animateProcessing();
-		}, 9000);
-
-		// Stage 4: Summary generated
-		setTimeout(() => {
-			showSummary = true;
-			currentStage = 4;
-			systemStatus = 'ANALYZING';
-			animateSummary();
-		}, 16000);
-
-		// Stage 5: Follow-up briefing ready
-		setTimeout(() => {
-			showFollowUp = true;
-			currentStage = 5;
-			systemStatus = 'COMPLETE';
-			animateActions();
-		}, 21000);
-	}
-
-	function animateScan() {
-		const interval = setInterval(() => {
-			scanProgress += 2;
-			if (scanProgress >= 100) {
-				clearInterval(interval);
-			}
-		}, 30);
-	}
-
-	function animateTranscript() {
-		fullTranscript.forEach((line, index) => {
-			setTimeout(() => {
-				transcriptLines = [...transcriptLines, line];
-				dataPoints += 127;
-			}, index * 500);
-		});
-	}
-
-	function animateProcessing() {
-		processingData.forEach((step, index) => {
-			setTimeout(() => {
-				processingSteps = [...processingSteps, step];
-				aiConfidence = Math.min(99, aiConfidence + 16);
-			}, index * 700);
-		});
-	}
-
-	function animateSummary() {
-		summaryData.forEach((item, index) => {
-			setTimeout(() => {
-				summaryItems = [...summaryItems, item];
-			}, index * 500);
-		});
-	}
-
-	function animateActions() {
-		actionData.forEach((item, index) => {
-			setTimeout(() => {
-				actionItems = [...actionItems, item];
-				energyLevel = Math.min(100, energyLevel + 25);
-			}, index * 400);
-		});
-	}
-
-	function generateNeuralActivity() {
-		neuralActivity = Array.from({ length: 50 }, (_, i) => ({
-			id: i,
-			x: Math.random() * 100,
-			y: Math.random() * 100,
-			delay: Math.random() * 2000
-		}));
-	}
-
-	function generateWaveform() {
-		waveformData = Array.from({ length: 100 }, (_, i) => ({
-			x: i,
-			y: Math.sin(i * 0.1 + Date.now() * 0.001) * 20 + 50
-		}));
-	}
-
-	onMount(() => {
-		if (autoPlay) {
-			startStory();
+	// Features data matching the Writer.com style
+	const features = [
+		{
+			id: 0,
+			label: 'Smart Preparation',
+			title: 'Never walk in unprepared',
+			description: 'Automatically compile everything you need before every meeting'
+		},
+		{
+			id: 1,
+			label: 'Context Recall',
+			title: 'Full relationship history',
+			description: 'Instantly recall every past conversation, commitment, and detail'
+		},
+		{
+			id: 2,
+			label: 'Action Tracking',
+			title: 'Never drop the ball',
+			description: 'Track commitments automatically and get reminded before follow-ups'
 		}
+	];
+
+	// Mock UI data for the showcase panels
+	const upcomingMeetings = [
+		{ company: 'Enterprise Corp', contact: 'Sarah Chen', time: 'Today, 2:00 PM', type: 'Follow-up', priority: 'high', avatar: 'EC' },
+		{ company: 'TechStart Inc', contact: 'Mike Johnson', time: 'Tomorrow, 10:00 AM', type: 'Discovery', priority: 'medium', avatar: 'TS' },
+		{ company: 'GlobalFin', contact: 'Lisa Park', time: 'Tomorrow, 3:30 PM', type: 'Demo', priority: 'high', avatar: 'GF' }
+	];
+
+	const briefingItems = [
+		{ icon: FileText, label: 'Last meeting summary', status: 'Ready', color: 'green' },
+		{ icon: Target, label: 'Key objectives identified', status: '3 items', color: 'blue' },
+		{ icon: MessageSquare, label: 'Open questions', status: '2 pending', color: 'amber' },
+		{ icon: CheckCircle2, label: 'Action items due', status: '1 overdue', color: 'red' }
+	];
+
+	const contextHistory = [
+		{ date: 'Nov 15', event: 'Discovery Call', duration: '45 min', sentiment: 'positive' },
+		{ date: 'Nov 8', event: 'Email Exchange', duration: '—', sentiment: 'neutral' },
+		{ date: 'Oct 28', event: 'Initial Outreach', duration: '—', sentiment: 'positive' }
+	];
+
+	const actionItems = [
+		{ text: 'Send security compliance docs', due: 'Today', priority: 'critical', completed: false },
+		{ text: 'Prepare ROI projections', due: 'Nov 28', priority: 'high', completed: false },
+		{ text: 'Schedule technical deep-dive', due: 'Dec 2', priority: 'medium', completed: true },
+		{ text: 'Share case study', due: 'Completed', priority: 'low', completed: true }
+	];
+
+	const sessions = [
+		{ name: 'Enterprise Corp Q1 Planning', type: 'report', active: true },
+		{ name: 'TechStart Discovery Prep', type: 'strategy', active: false },
+		{ name: 'GlobalFin Demo Checklist', type: 'checklist', active: false },
+		{ name: 'Weekly Pipeline Review', type: 'review', active: false }
+	];
+
+	// Email and PDF briefing data
+	const emailSections = [
+		{ icon: Target, title: 'Key Objectives', content: 'Budget approved at $250K. Need to address data migration concerns and provide ROI projections.' },
+		{ icon: CheckCircle2, title: 'Action Items', content: '• Send security compliance documentation\n• Prepare detailed ROI projections\n• Create technical migration roadmap' },
+		{ icon: Users, title: 'Stakeholders', content: 'Sarah Chen (Champion), John Davis (CTO - Concerns), Lisa Park (CFO - Decision Maker)' },
+		{ icon: TrendingUp, title: 'Next Steps', content: 'Follow up by EOD with compliance docs. Schedule technical deep-dive for next week.' }
+	];
+
+	const pdfSections = [
+		{ title: 'Meeting Summary', items: ['32 min call with 4 participants', 'Budget approved: $250K', 'Timeline: Q1 implementation'] },
+		{ title: 'Stakeholder Mapper', items: ['Sarah Chen - VP Sales (Champion)', 'John Davis - CTO (Technical Blocker)', 'Lisa Park - CFO (Economic Buyer)'] },
+		{ title: 'Battle Card Intelligence', items: ['Competitor: Gong (mentioned 2x)', 'Key objection: Data migration timeline', 'Winning factors: ROI & Security'] },
+		{ title: 'PLAYBOOK Command Center', items: ['Discovery Phase: 75% complete', 'Technical Validation: Pending', 'Business Case: In Progress'] }
+	];
+
+	// Auto-rotate features
+	onMount(() => {
+		const interval = setInterval(() => {
+			if (isAutoPlaying) {
+				activeFeature = (activeFeature + 1) % features.length;
+			}
+		}, 5000);
 		
-		// Hologram rotation
-		const rotationInterval = setInterval(() => {
-			hologramRotation = (hologramRotation + 1) % 360;
-		}, 50);
+		// Handle mouse movement for parallax
+		const handleMouseMove = (e) => {
+			mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+			mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+		};
 		
-		// Waveform animation
-		const waveInterval = setInterval(() => {
-			generateWaveform();
-		}, 50);
+		// Handle scroll for parallax
+		const handleScroll = () => {
+			scrollY = window.scrollY;
+		};
+		
+		window.addEventListener('mousemove', handleMouseMove);
+		window.addEventListener('scroll', handleScroll);
 		
 		return () => {
-			clearInterval(rotationInterval);
-			clearInterval(waveInterval);
+			clearInterval(interval);
+			window.removeEventListener('mousemove', handleMouseMove);
+			window.removeEventListener('scroll', handleScroll);
 		};
 	});
+
+	function selectFeature(index) {
+		activeFeature = index;
+		isAutoPlaying = false;
+	}
 </script>
 
 <style>
-	@keyframes scan-line {
-		0% { transform: translateY(-100%); }
-		100% { transform: translateY(100%); }
+	/* Smooth scrollbar */
+	.scrollbar-thin::-webkit-scrollbar {
+		width: 4px;
+	}
+	.scrollbar-thin::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.scrollbar-thin::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 2px;
+	}
+	.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+		background: rgba(255, 255, 255, 0.2);
 	}
 
-	@keyframes pulse-glow {
-		0%, 100% { opacity: 1; filter: brightness(1); }
-		50% { opacity: 0.6; filter: brightness(1.5); }
+	/* Gradient text */
+	.gradient-text {
+		background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
-	@keyframes circuit-flow {
-		0% { stroke-dashoffset: 1000; }
-		100% { stroke-dashoffset: 0; }
+	/* Enhanced glass morphism with depth */
+	.glass {
+		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		box-shadow: 
+			0 8px 32px 0 rgba(0, 0, 0, 0.37),
+			inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
 	}
 
-	@keyframes hologram-flicker {
+	/* Enhanced hover lift with smooth shadows */
+	.hover-lift {
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+	.hover-lift:hover {
+		transform: translateY(-4px) scale(1.01);
+		box-shadow: 
+			0 20px 60px rgba(0, 0, 0, 0.4),
+			0 0 40px rgba(239, 68, 68, 0.1);
+	}
+
+	/* Feature selector active state with glow */
+	.feature-active {
+		background: linear-gradient(90deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 50%, transparent 100%);
+		border-left: 3px solid #ef4444;
+		box-shadow: -8px 0 24px rgba(239, 68, 68, 0.2);
+	}
+
+	/* Animated gradient border with shimmer */
+	.animated-border {
+		position: relative;
+		background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+		animation: borderShimmer 3s ease-in-out infinite;
+	}
+	.animated-border::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.1), transparent, rgba(239, 68, 68, 0.2));
+		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		animation: rotateBorder 4s linear infinite;
+	}
+
+	@keyframes borderShimmer {
 		0%, 100% { opacity: 1; }
-		50% { opacity: 0.8; }
+		50% { opacity: 0.7; }
 	}
 
-	@keyframes data-stream {
-		0% { transform: translateY(0) scaleY(0); opacity: 0; }
-		50% { opacity: 1; }
-		100% { transform: translateY(20px) scaleY(1); opacity: 0; }
+	@keyframes rotateBorder {
+		0% { background-position: 0% 50%; }
+		100% { background-position: 200% 50%; }
 	}
 
-	.scan-line {
-		animation: scan-line 2s linear infinite;
+	/* Pulse animation with ring */
+	@keyframes pulse-ring {
+		0% { transform: scale(1); opacity: 1; }
+		100% { transform: scale(1.5); opacity: 0; }
+	}
+	.pulse-ring::before {
+		content: '';
+		position: absolute;
+		inset: -2px;
+		border-radius: 50%;
+		border: 2px solid currentColor;
+		animation: pulse-ring 1.5s ease-out infinite;
 	}
 
-	.pulse-glow {
-		animation: pulse-glow 2s ease-in-out infinite;
+	/* Floating animation for decorative elements */
+	@keyframes float {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		33% { transform: translateY(-20px) rotate(5deg); }
+		66% { transform: translateY(-10px) rotate(-5deg); }
+	}
+	
+	@keyframes float-slow {
+		0%, 100% { transform: translateY(0px) translateX(0px); }
+		50% { transform: translateY(-30px) translateX(10px); }
 	}
 
-	.circuit-flow {
-		animation: circuit-flow 3s linear infinite;
+	.float {
+		animation: float 6s ease-in-out infinite;
+	}
+	
+	.float-slow {
+		animation: float-slow 8s ease-in-out infinite;
 	}
 
-	.hologram-flicker {
-		animation: hologram-flicker 0.1s steps(2, end) infinite;
+	/* Glow effect for icons and cards */
+	.glow-red {
+		box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+	}
+	
+	.glow-red:hover {
+		box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
 	}
 
-	.data-stream {
-		animation: data-stream 2s ease-out infinite;
+	/* Shimmer effect for text */
+	@keyframes shimmer {
+		0% { background-position: -1000px 0; }
+		100% { background-position: 1000px 0; }
+	}
+	
+	.shimmer {
+		background: linear-gradient(90deg, 
+			rgba(255, 255, 255, 0) 0%, 
+			rgba(255, 255, 255, 0.3) 50%, 
+			rgba(255, 255, 255, 0) 100%);
+		background-size: 1000px 100%;
+		animation: shimmer 3s infinite;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
-	.hexagon {
-		clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+	/* Particle background effect */
+	.particle-bg {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		pointer-events: none;
 	}
 
-	.neural-grid {
+	/* Enhanced grid pattern with depth */
+	.depth-grid {
 		background-image: 
-			linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
-		background-size: 20px 20px;
+			linear-gradient(rgba(239, 68, 68, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(239, 68, 68, 0.03) 1px, transparent 1px);
+		background-size: 50px 50px;
+		mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+		-webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
 	}
 
-	.holographic-border {
-		background: linear-gradient(45deg, transparent 30%, rgba(139, 92, 246, 0.3) 50%, transparent 70%);
-		background-size: 200% 200%;
-		animation: hologram-sweep 3s linear infinite;
+	/* Layered shadows for depth */
+	.depth-shadow {
+		box-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.2),
+			0 4px 8px rgba(0, 0, 0, 0.15),
+			0 8px 16px rgba(0, 0, 0, 0.1),
+			0 16px 32px rgba(0, 0, 0, 0.05);
 	}
 
-	@keyframes hologram-sweep {
-		0% { background-position: 0% 0%; }
-		100% { background-position: 200% 200%; }
+	/* Smooth transitions for all interactive elements */
+	* {
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	/* Tilt effect on hover */
+	.tilt-hover {
+		transform-style: preserve-3d;
+		transition: transform 0.3s ease;
+	}
+	
+	.tilt-hover:hover {
+		transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
 	}
 </style>
 
@@ -286,379 +314,843 @@
 	<meta name="description" content="Never miss important follow-up details. Automated preparation for your next meetings with context-aware briefings." />
 </svelte:head>
 
-<div class="min-h-screen bg-black text-white">
+<div class="min-h-screen bg-black text-white overflow-hidden">
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="followup" />
 	
-	<!-- Hero Section -->
-	<div class="relative overflow-hidden bg-gradient-to-b from-purple-950/20 to-black pt-32 pb-24">
-		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black"></div>
+	<!-- Animated Background Layer -->
+	<div class="particle-bg fixed inset-0">
+		<!-- Dynamic gradient orbs -->
+		<div 
+			class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl float"
+			style="transform: translate({mouseX * 20}px, {mouseY * 20}px)"
+		></div>
+		<div 
+			class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-3xl float-slow"
+			style="transform: translate({mouseX * -15}px, {mouseY * -15}px)"
+		></div>
+		<div 
+			class="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"
+			style="transform: translate({mouseX * 25}px, {mouseY * 25}px)"
+		></div>
+		
+		<!-- Grid overlay with parallax -->
+		<div 
+			class="depth-grid absolute inset-0"
+			style="transform: translateY({scrollY * 0.1}px)"
+		></div>
+	</div>
+	
+	<!-- Hero Section - Writer.com Style Split Layout -->
+	<section class="relative min-h-screen pt-32 pb-24">
+		<!-- Background gradient -->
+		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
 		
 		<div class="relative max-w-7xl mx-auto px-6">
-			<div class="text-center max-w-4xl mx-auto">
-				<div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 mb-8">
-					<Calendar class="w-10 h-10 text-purple-500" strokeWidth={1.5} />
-				</div>
+			<!-- Split Layout Container -->
+			<div class="grid lg:grid-cols-2 gap-16 items-start">
 				
-				<h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent">
-					Follow-Up Meeting Preparation
-				</h1>
-				
-				<p class="text-xl md:text-2xl text-zinc-400 mb-12">
-					Never walk into a meeting unprepared. Get AI-powered briefings with all the context you need.
-				</p>
-				
-				<div class="flex flex-wrap gap-4 justify-center">
-					<a href="#demo" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
-						See It In Action
-					</a>
-					<a href="/" class="px-8 py-4 bg-zinc-900 rounded-xl font-semibold border border-zinc-800 hover:border-purple-500 transition-all duration-300 hover:scale-105">
-						Back to Features
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
+				<!-- Left Column - Content -->
+				<div class="lg:sticky lg:top-32 z-10">
+					<!-- Label with subtle animation -->
+					<div 
+						class="inline-flex items-center gap-2 px-3 py-1.5 glass rounded-full mb-8 hover:scale-105 transition-transform"
+						in:fly={{ y: -20, duration: 600, delay: 100 }}
+					>
+						<Calendar class="w-4 h-4 text-red-500 animate-pulse" />
+						<span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Follow-Up Prep</span>
+					</div>
 
-	<!-- Interactive Story Section -->
-	<div id="demo" class="py-24 px-6 bg-gradient-to-b from-black to-zinc-950">
-		<div class="max-w-7xl mx-auto">
-			<!-- Story Header -->
-			<div class="text-center mb-12">
-				<h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-					Watch the Magic Happen
-				</h2>
-				<p class="text-xl text-zinc-400 mb-8">From meeting end to follow-up ready in seconds</p>
-				<button 
-					onclick={startStory}
-					class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
-				>
-					Replay Story
-				</button>
-			</div>
+					<!-- Main Headline with shimmer effect -->
+					<h1 
+						class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-8"
+						in:fly={{ y: 20, duration: 700, delay: 200 }}
+					>
+						<span class="gradient-text block mb-2">AI that prepares you</span>
+						<span class="text-white block">for every meeting</span>
+					</h1>
 
-			<!-- Story Stages -->
-			<div class="relative">
-				<!-- Stage Indicator -->
-				<div class="flex justify-center gap-3 mb-12">
-					{#each [1, 2, 3, 4, 5] as stage}
+					<!-- Three Feature Cards from Screenshot -->
+					<div class="space-y-4 mb-10">
+						<!-- Never walk in unprepared -->
 						<div 
-							class="w-3 h-3 rounded-full transition-all duration-300"
-							class:bg-purple-500={currentStage >= stage}
-							class:bg-zinc-700={currentStage < stage}
-							class:scale-125={currentStage === stage}
-						></div>
-					{/each}
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							in:fly={{ y: 20, duration: 600, delay: 300 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
+									<FileText class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Never walk in unprepared</h3>
+									<p class="text-sm text-zinc-400">Automatically compile everything you need before every meeting</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Full relationship history (highlighted) -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden border-l-2 border-red-500"
+							in:fly={{ y: 20, duration: 600, delay: 400 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-red-500/5 via-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+									<Brain class="w-5 h-5 text-red-500" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Full relationship history</h3>
+									<p class="text-sm text-zinc-400">Instantly recall every past conversation, commitment, and detail</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Never drop the ball -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							in:fly={{ y: 20, duration: 600, delay: 500 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
+									<CheckCircle2 class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Never drop the ball</h3>
+									<p class="text-sm text-zinc-400">Track commitments automatically and get reminded before follow-ups</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Feature Selector List - Writer.com Style -->
+					<div class="space-y-1 mb-10 hidden">
+						{#each features as feature, index}
+							<button
+								onclick={() => selectFeature(index)}
+								class="w-full text-left px-5 py-4 rounded-xl transition-all duration-500 group relative overflow-hidden {activeFeature === index ? 'feature-active' : 'hover:bg-zinc-900/50'}"
+								in:fly={{ x: -30, duration: 600, delay: 300 + index * 100 }}
+							>
+								<!-- Animated background on hover -->
+								<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+								
+								<div class="flex items-start gap-4 relative z-10">
+									<div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500 {activeFeature === index ? 'bg-red-500/20 glow-red scale-110' : 'bg-zinc-800/50 group-hover:bg-zinc-800 group-hover:scale-105'}">
+										{#if index === 0}
+											<FileText class="w-5 h-5 {activeFeature === index ? 'text-red-500' : 'text-zinc-500 group-hover:text-zinc-400'} transition-all duration-300" />
+										{:else if index === 1}
+											<Brain class="w-5 h-5 {activeFeature === index ? 'text-red-500' : 'text-zinc-500 group-hover:text-zinc-400'} transition-all duration-300" />
+										{:else}
+											<CheckCircle2 class="w-5 h-5 {activeFeature === index ? 'text-red-500' : 'text-zinc-500 group-hover:text-zinc-400'} transition-all duration-300" />
+										{/if}
+									</div>
+									<div>
+										<h3 class="text-lg font-semibold mb-1 transition-all duration-300 {activeFeature === index ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-300'}">
+											{feature.title}
+										</h3>
+										<p class="text-sm transition-all duration-300 {activeFeature === index ? 'text-zinc-400' : 'text-zinc-600 group-hover:text-zinc-500'}">
+											{feature.description}
+										</p>
+									</div>
+								</div>
+							</button>
+						{/each}
+					</div>
+
+					<!-- CTA Link with hover effect -->
+					<a 
+						href="#learn-more" 
+						class="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-medium group"
+						in:fly={{ y: 20, duration: 600, delay: 700 }}
+					>
+						<span>Learn more about follow-up preparation</span>
+						<ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
+					</a>
 				</div>
 
-				<!-- Stage 1: Meeting Ends -->
-				{#if showMeetingEnd}
-					<div 
-						class="mb-12"
-						in:fly={{ y: 50, duration: 800, easing: quintOut }}
-					>
-						<div class="bg-zinc-950 rounded-2xl p-8 border border-zinc-800 overflow-hidden">
-							<div class="flex items-center justify-between mb-6">
-								<div class="flex items-center gap-3">
-									<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center">
-										<Video class="w-6 h-6 text-red-500" />
-									</div>
-									<div>
-										<h3 class="text-2xl font-semibold text-white">Meeting Just Ended</h3>
-										<p class="text-zinc-400">Enterprise Corp - Q1 Planning Discussion</p>
-									</div>
+				<!-- Right Column - Product Showcase -->
+				<div 
+					class="relative tilt-hover"
+					in:fly={{ x: 30, duration: 800, delay: 400 }}
+					style="transform: perspective(1000px) rotateY({mouseX * -2}deg) rotateX({mouseY * 2}deg)"
+				>
+					<!-- Floating decorative elements -->
+					<div class="absolute -top-8 -right-8 w-32 h-32 bg-red-500/20 rounded-full blur-3xl float"></div>
+					<div class="absolute -bottom-8 -left-8 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl float-slow"></div>
+					
+					<!-- Main Product Interface with enhanced depth -->
+					<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
+						<!-- App Chrome -->
+						<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
+							<div class="flex items-center gap-3">
+								<div class="flex gap-1.5">
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-red-500 transition-colors cursor-pointer"></div>
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-yellow-500 transition-colors cursor-pointer"></div>
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-green-500 transition-colors cursor-pointer"></div>
 								</div>
-								<div class="flex items-center gap-2 px-4 py-2 bg-red-500/20 rounded-lg border border-red-500/30">
-									<div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-									<span class="text-red-400 text-sm font-medium">Recording Ended</span>
+								<div class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors">
+									<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
+									<span class="text-sm font-medium text-white">SpikedAI</span>
 								</div>
 							</div>
-							
-							<div class="grid grid-cols-3 gap-4 mt-6">
-								<div class="bg-zinc-900 rounded-lg p-4 border border-zinc-800">
-									<Clock class="w-5 h-5 text-purple-400 mb-2" />
-									<p class="text-2xl font-bold text-white">32:45</p>
-									<p class="text-sm text-zinc-400">Duration</p>
-								</div>
-								<div class="bg-zinc-900 rounded-lg p-4 border border-zinc-800">
-									<Users class="w-5 h-5 text-purple-400 mb-2" />
-									<p class="text-2xl font-bold text-white">4</p>
-									<p class="text-sm text-zinc-400">Participants</p>
-								</div>
-								<div class="bg-zinc-900 rounded-lg p-4 border border-zinc-800">
-									<Mic class="w-5 h-5 text-purple-400 mb-2" />
-									<p class="text-2xl font-bold text-white">127</p>
-									<p class="text-sm text-zinc-400">Exchanges</p>
-								</div>
+							<div class="flex items-center gap-2">
+								<span class="relative flex h-2 w-2 text-green-500 pulse-ring">
+									<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+								</span>
+								<span class="text-xs text-zinc-500">Synced</span>
 							</div>
 						</div>
-					</div>
-				{/if}
 
-				<!-- Stage 2: Transcription -->
-				{#if showTranscription}
-					<div 
-						class="mb-12"
-						in:fly={{ y: 50, duration: 800, easing: quintOut }}
-					>
-						<div class="bg-zinc-950 rounded-2xl p-8 border border-zinc-800">
-							<div class="flex items-center gap-3 mb-6">
-								<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center">
-									<FileText class="w-6 h-6 text-blue-500" />
-								</div>
-								<div>
-									<h3 class="text-2xl font-semibold text-white">Transcribing Conversation</h3>
-									<p class="text-zinc-400">Converting audio to text with speaker identification</p>
-								</div>
-							</div>
+						<!-- Main Content Area -->
+						<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-1 relative overflow-hidden">
+							<!-- Animated gradient overlay -->
+							<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
 							
-							<div class="bg-zinc-900 rounded-lg p-6 max-h-80 overflow-y-auto">
-								{#each transcriptLines as line, i (i)}
-									<div 
-										class="mb-4 pb-4 border-b border-zinc-800 last:border-0"
-										in:fly={{ x: -20, duration: 400, easing: cubicOut }}
-									>
-										<div class="flex items-start gap-3">
-											<span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded font-mono">
-												{line.time}
-											</span>
-											<div class="flex-1">
-												<p class="text-sm font-semibold text-purple-400 mb-1">{line.speaker}</p>
-												<p class="text-zinc-300">{line.text}</p>
-											</div>
-										</div>
-									</div>
-								{/each}
-							</div>
-						</div>
-					</div>
-				{/if}
-
-				<!-- Stage 3: AI Processing -->
-				{#if showProcessing}
-					<div 
-						class="mb-12"
-						in:fly={{ y: 50, duration: 800, easing: quintOut }}
-					>
-						<div class="bg-zinc-950 rounded-2xl p-8 border border-zinc-800">
-							<div class="flex items-center gap-3 mb-6">
-								<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center animate-pulse">
-									<Brain class="w-6 h-6 text-purple-500" />
-								</div>
-								<div>
-									<h3 class="text-2xl font-semibold text-white">AI Processing in Action</h3>
-									<p class="text-zinc-400">Understanding context, extracting insights</p>
-								</div>
-							</div>
-							
-							<div class="space-y-3">
-								{#each processingSteps as step (step.id)}
-									{@const Icon = step.icon}
-									<div 
-										class="flex items-center gap-4 p-4 bg-zinc-900 rounded-lg border border-zinc-800"
-										in:fly={{ x: -30, duration: 500, easing: elasticOut }}
-									>
-										<div class="w-10 h-10 rounded-lg {step.bgColor} flex items-center justify-center flex-shrink-0">
-											<Icon class="w-5 h-5 {step.textColor}" />
-										</div>
-										<div class="flex-1">
-											<p class="text-white font-medium">{step.title}</p>
-										</div>
-										<CheckCircle2 class="w-5 h-5 text-green-500" />
-									</div>
-								{/each}
-							</div>
-						</div>
-					</div>
-				{/if}
-
-				<!-- Stage 4: Meeting Summary -->
-				{#if showSummary}
-					<div 
-						class="mb-12"
-						in:fly={{ y: 50, duration: 800, easing: quintOut }}
-					>
-						<div class="bg-zinc-950 rounded-2xl p-8 border border-zinc-800">
-							<div class="flex items-center gap-3 mb-6">
-								<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-600/20 flex items-center justify-center">
-									<Sparkles class="w-6 h-6 text-green-500" />
-								</div>
-								<div>
-									<h3 class="text-2xl font-semibold text-white">Meeting Summary Generated</h3>
-									<p class="text-zinc-400">Key insights and decisions identified</p>
-								</div>
-							</div>
-							
-							<div class="grid md:grid-cols-2 gap-4">
-								{#each summaryItems as item, i (i)}
-									<div 
-										class="p-5 rounded-lg border transition-all duration-300 {item.type === 'success' ? 'bg-green-500/10 border-green-500/30' : item.type === 'warning' ? 'bg-yellow-500/10 border-yellow-500/30' : item.type === 'info' ? 'bg-blue-500/10 border-blue-500/30' : 'bg-purple-500/10 border-purple-500/30'}"
-										in:scale={{ duration: 500, easing: elasticOut, start: 0.8 }}
-									>
-										<h4 class="font-semibold text-white mb-2">{item.title}</h4>
-										<p class="text-sm text-zinc-300">{item.detail}</p>
-									</div>
-								{/each}
-							</div>
-						</div>
-					</div>
-				{/if}
-
-				<!-- Stage 5: Follow-up Briefing Ready -->
-				{#if showFollowUp}
-					<div 
-						in:fly={{ y: 50, duration: 800, easing: quintOut }}
-					>
-						<div class="bg-gradient-to-br from-purple-950/50 to-pink-950/50 rounded-2xl p-8 border-2 border-purple-500/50 relative overflow-hidden">
-							<!-- Animated background -->
-							<div class="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 animate-pulse"></div>
-							
-							<div class="relative">
-								<div class="flex items-center gap-3 mb-6">
-									<div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-										<Zap class="w-7 h-7 text-white" />
-									</div>
-									<div>
-										<h3 class="text-3xl font-bold text-white">Follow-up Briefing Ready!</h3>
-										<p class="text-purple-300">Your next meeting prep is complete</p>
-									</div>
-								</div>
+							<div class="grid grid-cols-[280px_1fr] min-h-[500px] relative z-10">
 								
-								<div class="bg-black/50 rounded-xl p-6 backdrop-blur-sm">
-									<h4 class="text-sm font-semibold text-purple-400 mb-4 uppercase tracking-wide">Action Items for Next Meeting</h4>
-									<div class="space-y-3">
-										{#each actionItems as item, i (i)}
-											<div 
-												class="flex items-start gap-4 p-4 bg-zinc-900/80 rounded-lg border border-zinc-700 hover:border-purple-500/50 transition-all duration-300"
-												in:fly={{ x: -20, duration: 400, delay: i * 100, easing: cubicOut }}
-											>
-												<div class="flex-shrink-0 mt-1">
-													<div 
-														class="w-5 h-5 rounded border-2 flex items-center justify-center {item.priority === 'high' ? 'border-red-500 bg-red-500/20' : 'border-yellow-500 bg-yellow-500/20'}"
-													>
-														{#if item.priority === 'high'}
-															<span class="text-red-500 text-xs">!</span>
-														{/if}
-													</div>
+								<!-- Left Sidebar -->
+								<div class="border-r border-zinc-800/50 p-4 space-y-6 backdrop-blur-sm">
+									<!-- Logo & New Session -->
+									<div class="flex items-center justify-between">
+										<div class="flex items-center gap-2 group cursor-pointer">
+											<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center glow-red group-hover:scale-110 transition-transform">
+												<Zap class="w-4 h-4 text-white" />
+											</div>
+											<span class="font-bold text-white group-hover:text-red-400 transition-colors">SPIKED</span>
+										</div>
+									</div>
+
+									<button class="w-full flex items-center gap-2 px-3 py-2 glass rounded-lg text-red-400 text-sm font-medium hover:bg-red-500/20 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/20">
+										<Sparkles class="w-4 h-4" />
+										<span>New session</span>
+									</button>
+
+									<!-- Nav Items -->
+									<div class="space-y-1">
+										<button class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all duration-300 text-sm group">
+											<Layers class="w-4 h-4 group-hover:scale-110 transition-transform" />
+											<span>Playbooks</span>
+										</button>
+										<button class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all duration-300 text-sm group">
+											<FileText class="w-4 h-4 group-hover:scale-110 transition-transform" />
+											<span>My work</span>
+										</button>
+										<button class="w-full flex items-center gap-3 px-3 py-2 rounded-lg glass text-white transition-all duration-300 text-sm shadow-lg">
+											<Calendar class="w-4 h-4 text-red-500 animate-pulse" />
+											<span>Meeting Prep</span>
+										</button>
+									</div>
+
+									<!-- Sessions -->
+									<div>
+										<p class="text-[10px] font-semibold text-zinc-600 uppercase tracking-wider mb-2 px-1">Sessions</p>
+										<div class="space-y-1">
+											{#each sessions as session, i}
+												<button 
+													class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group {session.active ? 'glass text-red-400 shadow-md' : 'text-zinc-500 hover:text-zinc-400 hover:bg-zinc-800/30'}"
+													in:fly={{ x: -10, delay: i * 50, duration: 300 }}
+												>
+													{#if session.type === 'report'}
+														<BarChart3 class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+													{:else if session.type === 'strategy'}
+														<Target class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+													{:else if session.type === 'checklist'}
+														<CheckCircle2 class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+													{:else}
+														<RefreshCw class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+													{/if}
+													<span class="truncate">{session.name}</span>
+												</button>
+											{/each}
+										</div>
+									</div>
+								</div>
+
+								<!-- Main Panel - Dynamic Content Based on Active Feature -->
+								<div class="p-5 overflow-hidden relative">
+									<!-- Background ambient glow -->
+									<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-transparent opacity-30"></div>
+									
+									{#if activeFeature === 0}
+										<!-- Smart Preparation View -->
+										<div in:fade={{ duration: 400 }} class="relative z-10">
+											<div class="flex items-center justify-between mb-5">
+												<div>
+													<h3 class="text-lg font-bold text-white">Meeting Prep Hub</h3>
+													<p class="text-xs text-zinc-500">Auto-generated briefings for your meetings</p>
 												</div>
-												<div class="flex-1">
-													<p class="text-white font-medium mb-1">{item.text}</p>
-													<div class="flex items-center gap-3">
-														<span 
-															class="text-xs px-2 py-1 rounded {item.priority === 'high' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}"
-														>
-															{item.priority.toUpperCase()}
-														</span>
-														<span class="text-xs text-zinc-400 flex items-center gap-1">
-															<Clock class="w-3 h-3" />
-															{item.due}
-														</span>
+												<div class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red animate-pulse">
+													<div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+													<span class="text-xs font-medium text-green-400">3 Ready</span>
+												</div>
+											</div>
+
+											<!-- Upcoming Meetings -->
+											<div class="space-y-3">
+												{#each upcomingMeetings as meeting, i}
+													<div 
+														class="glass rounded-xl p-4 hover-lift cursor-pointer group relative overflow-hidden"
+														in:fly={{ y: 20, delay: i * 100, duration: 400 }}
+													>
+														<!-- Hover glow effect -->
+														<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/10 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+														
+														<div class="flex items-start gap-3 relative z-10">
+															<div class="w-10 h-10 rounded-xl bg-gradient-to-br {meeting.priority === 'high' ? 'from-red-500/20 to-orange-500/20' : 'from-blue-500/20 to-cyan-500/20'} flex items-center justify-center text-sm font-bold {meeting.priority === 'high' ? 'text-red-400' : 'text-blue-400'} group-hover:scale-110 transition-transform">
+																{meeting.avatar}
+															</div>
+															<div class="flex-1 min-w-0">
+																<div class="flex items-center gap-2 mb-1">
+																	<h4 class="font-semibold text-white text-sm truncate group-hover:text-red-400 transition-colors">{meeting.company}</h4>
+																	<span class="px-2 py-0.5 rounded text-[10px] font-medium {meeting.type === 'Follow-up' ? 'bg-amber-500/20 text-amber-400' : meeting.type === 'Discovery' ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'}">
+																		{meeting.type}
+																	</span>
+																</div>
+																<p class="text-xs text-zinc-500">{meeting.contact}</p>
+																<div class="flex items-center gap-1.5 mt-2 text-xs text-zinc-600">
+																	<Clock class="w-3 h-3" />
+																	<span>{meeting.time}</span>
+																</div>
+															</div>
+															<ChevronRight class="w-4 h-4 text-zinc-600 group-hover:text-zinc-400 group-hover:translate-x-2 transition-all" />
+														</div>
+
+														<!-- Briefing Status -->
+														<div class="mt-4 pt-3 border-t border-zinc-800/50 grid grid-cols-4 gap-2 relative z-10">
+															{#each briefingItems as item}
+																{@const Icon = item.icon}
+																<div class="text-center group/item hover:scale-110 transition-transform cursor-pointer">
+																	<Icon class="w-4 h-4 mx-auto mb-1 {item.color === 'green' ? 'text-green-500' : item.color === 'blue' ? 'text-blue-500' : item.color === 'amber' ? 'text-amber-500' : 'text-red-500'} group-hover/item:animate-pulse" />
+																	<p class="text-[10px] text-zinc-500 truncate">{item.status}</p>
+																</div>
+															{/each}
+														</div>
+													</div>
+												{/each}
+											</div>
+										</div>
+
+									{:else if activeFeature === 1}
+										<!-- Context Recall View -->
+										<div in:fade={{ duration: 400 }} class="relative z-10">
+											<div class="flex items-center justify-between mb-5">
+												<div>
+													<h3 class="text-lg font-bold text-white">Relationship Timeline</h3>
+													<p class="text-xs text-zinc-500">Enterprise Corp • Sarah Chen</p>
+												</div>
+												<div class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red">
+													<Brain class="w-3.5 h-3.5 text-blue-400 animate-pulse" />
+													<span class="text-xs font-medium text-blue-400">Full Context</span>
+												</div>
+											</div>
+
+											<!-- Timeline with enhanced animations -->
+											<div class="relative pl-6 space-y-4 mb-6">
+												<div class="absolute left-2 top-2 bottom-2 w-px bg-gradient-to-b from-red-500 via-zinc-700 to-zinc-800"></div>
+												
+												{#each contextHistory as event, i}
+													<div 
+														class="relative group"
+														in:fly={{ x: -20, delay: i * 150, duration: 400 }}
+													>
+														<div class="absolute -left-4 w-3 h-3 rounded-full transition-all duration-300 {i === 0 ? 'bg-red-500 ring-4 ring-red-500/20 group-hover:scale-125' : 'bg-zinc-700 group-hover:bg-zinc-600 group-hover:scale-125'}"></div>
+														<div class="glass rounded-lg p-3 hover:bg-zinc-800/50 transition-all duration-300 cursor-pointer group-hover:scale-[1.02]">
+															<div class="flex items-center justify-between mb-2">
+																<span class="text-xs font-semibold text-white group-hover:text-red-400 transition-colors">{event.event}</span>
+																<span class="text-[10px] text-zinc-500">{event.date}</span>
+															</div>
+															<div class="flex items-center gap-3 text-xs">
+																{#if event.duration !== '—'}
+																	<span class="text-zinc-500">{event.duration}</span>
+																{/if}
+																<span class="flex items-center gap-1 {event.sentiment === 'positive' ? 'text-green-400' : 'text-zinc-500'}">
+																	{#if event.sentiment === 'positive'}
+																		<TrendingUp class="w-3 h-3 group-hover:animate-bounce" />
+																		Positive
+																	{:else}
+																		<Activity class="w-3 h-3" />
+																		Neutral
+																	{/if}
+																</span>
+															</div>
+														</div>
+													</div>
+												{/each}
+											</div>
+
+											<!-- Key Insights Card with glow -->
+											<div class="glass rounded-xl p-4 hover-lift relative overflow-hidden" in:fly={{ y: 20, delay: 400, duration: 400 }}>
+												<div class="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-blue-500/10 opacity-50"></div>
+												<h4 class="text-sm font-semibold text-white mb-3 flex items-center gap-2 relative z-10">
+													<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
+													AI-Generated Insights
+												</h4>
+												<div class="space-y-2 text-xs relative z-10">
+													<div class="flex items-start gap-2 group cursor-pointer">
+														<div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
+														<span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">Budget approved at <span class="text-white font-medium">$250K</span> during last call</span>
+													</div>
+													<div class="flex items-start gap-2 group cursor-pointer">
+														<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
+														<span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">CTO has concerns about <span class="text-white font-medium">data migration timeline</span></span>
+													</div>
+													<div class="flex items-start gap-2 group cursor-pointer">
+														<div class="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
+														<span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">Strong champion: <span class="text-white font-medium">Sarah Chen (VP Sales)</span></span>
 													</div>
 												</div>
 											</div>
-										{/each}
-									</div>
-									
-									<div class="mt-6 pt-6 border-t border-zinc-700">
-										<div class="flex items-center justify-between">
-											<p class="text-zinc-400">
-												<span class="text-green-400 font-semibold">Ready</span> for your next meeting
-											</p>
-											<button class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg font-semibold text-white hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 flex items-center gap-2">
-												<span>Open Full Briefing</span>
-												<ArrowRight class="w-4 h-4" />
-											</button>
 										</div>
-									</div>
+
+									{:else}
+										<!-- Action Tracking View -->
+										<div in:fade={{ duration: 400 }} class="relative z-10">
+											<div class="flex items-center justify-between mb-5">
+												<div>
+													<h3 class="text-lg font-bold text-white">Action Items</h3>
+													<p class="text-xs text-zinc-500">Commitments you've made across all meetings</p>
+												</div>
+												<div class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red animate-pulse">
+													<Clock class="w-3.5 h-3.5 text-amber-400" />
+													<span class="text-xs font-medium text-amber-400">2 Due Soon</span>
+												</div>
+											</div>
+
+											<!-- Action Items List -->
+											<div class="space-y-2">
+												{#each actionItems as item, i}
+													<div 
+														class="glass rounded-lg p-3 flex items-start gap-3 hover-lift group {item.completed ? 'opacity-60' : ''} relative overflow-hidden"
+														in:fly={{ y: 15, delay: i * 80, duration: 300 }}
+													>
+														<!-- Hover gradient effect -->
+														<div class="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+														
+														<button class="mt-0.5 flex-shrink-0 relative z-10 group-hover:scale-110 transition-transform">
+															{#if item.completed}
+																<CheckCircle2 class="w-5 h-5 text-green-500 group-hover:animate-spin" />
+															{:else}
+																<div class="w-5 h-5 rounded-full border-2 {item.priority === 'critical' ? 'border-red-500' : item.priority === 'high' ? 'border-amber-500' : 'border-zinc-600'} group-hover:bg-zinc-800/50 transition-colors"></div>
+															{/if}
+														</button>
+														<div class="flex-1 min-w-0 relative z-10">
+															<p class="text-sm {item.completed ? 'text-zinc-500 line-through' : 'text-white group-hover:text-red-400'} transition-colors">{item.text}</p>
+															<div class="flex items-center gap-2 mt-1.5">
+																<span class="px-1.5 py-0.5 rounded text-[10px] font-medium {item.priority === 'critical' ? 'bg-red-500/20 text-red-400' : item.priority === 'high' ? 'bg-amber-500/20 text-amber-400' : item.priority === 'medium' ? 'bg-blue-500/20 text-blue-400' : 'bg-zinc-700 text-zinc-400'}">
+																	{item.priority}
+																</span>
+																<span class="text-[10px] text-zinc-500 flex items-center gap-1">
+																	<Clock class="w-3 h-3" />
+																	{item.due}
+																</span>
+															</div>
+														</div>
+													</div>
+												{/each}
+											</div>
+
+											<!-- Summary Stats with hover effects -->
+											<div class="grid grid-cols-3 gap-3 mt-5" in:fly={{ y: 20, delay: 350, duration: 300 }}>
+												<div class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group">
+													<p class="text-2xl font-bold text-white group-hover:text-red-400 transition-colors">12</p>
+													<p class="text-[10px] text-zinc-500">Total Items</p>
+												</div>
+												<div class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group">
+													<p class="text-2xl font-bold text-green-400 group-hover:scale-125 transition-transform">8</p>
+													<p class="text-[10px] text-zinc-500">Completed</p>
+												</div>
+												<div class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group">
+													<p class="text-2xl font-bold text-amber-400 animate-pulse">2</p>
+													<p class="text-[10px] text-zinc-500">Due Today</p>
+												</div>
+											</div>
+										</div>
+									{/if}
 								</div>
 							</div>
 						</div>
 					</div>
-				{/if}
+
+					<!-- Floating Elements for Visual Interest -->
+					<div class="absolute -top-6 -right-6 w-24 h-24 bg-red-500/10 rounded-full blur-2xl"></div>
+					<div class="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl"></div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
-	<!-- Key Features -->
-	<div class="py-24 px-6 bg-zinc-950">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl font-bold mb-4">Never Miss Important Context</h2>
-				<p class="text-xl text-zinc-400">Everything you need to prepare for success</p>
+	<!-- Automated Deliverables Section - Email & PDF Showcase -->
+	<section class="py-24 px-6 relative overflow-hidden border-t border-zinc-900">
+		<!-- Background effects -->
+		<div class="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black"></div>
+		<div class="depth-grid absolute inset-0 opacity-30"></div>
+		
+		<div class="max-w-7xl mx-auto relative z-10">
+			<!-- Section Header -->
+			<div 
+				class="text-center mb-16"
+				in:fly={{ y: 30, duration: 700 }}
+			>
+				<div class="inline-flex items-center gap-2 px-3 py-1.5 glass rounded-full mb-6">
+					<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
+					<span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Automated Deliverables</span>
+				</div>
+				<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+					Professional Briefings, <span class="text-red-500">Instantly Generated</span>
+				</h2>
+				<p class="text-lg text-zinc-400 max-w-2xl mx-auto">
+					Every meeting automatically generates follow-up emails and executive briefing PDFs
+				</p>
+			</div>
+
+			<!-- Email & PDF Grid -->
+			<div class="grid lg:grid-cols-2 gap-8 items-start">
+				
+				<!-- Email Preview -->
+				<div 
+					class="relative"
+					in:fly={{ x: -30, duration: 800, delay: 200 }}
+				>
+					<div class="absolute -top-6 -left-6 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl float"></div>
+					
+					<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
+						<!-- Email Header -->
+						<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 backdrop-blur-xl">
+							<div class="flex items-center gap-3">
+								<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+									<MessageSquare class="w-4 h-4 text-white" />
+								</div>
+								<div class="flex-1">
+									<p class="text-sm font-semibold text-white">Follow-Up Email</p>
+									<p class="text-xs text-zinc-500">Auto-sent after meeting ends</p>
+								</div>
+								<div class="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-medium">
+									Sent
+								</div>
+							</div>
+						</div>
+
+						<!-- Email Content -->
+						<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-6">
+							<!-- Email Meta -->
+							<div class="mb-6 pb-4 border-b border-zinc-800/50">
+								<div class="flex items-center gap-2 text-sm mb-2">
+									<span class="text-zinc-500">To:</span>
+									<span class="text-white">sarah.chen@enterprisecorp.com</span>
+								</div>
+								<div class="flex items-center gap-2 text-sm mb-2">
+									<span class="text-zinc-500">Subject:</span>
+									<span class="text-white font-medium">Q1 Implementation Discussion - Next Steps</span>
+								</div>
+								<div class="flex items-center gap-2 text-sm">
+									<span class="text-zinc-500">Generated:</span>
+									<span class="text-zinc-400">26 Nov 2025, 21:42:31</span>
+								</div>
+							</div>
+
+							<!-- Email Body -->
+							<div class="space-y-5">
+								<div class="glass rounded-lg p-4">
+									<p class="text-sm text-zinc-300 leading-relaxed">
+										Hi Sarah,
+										<br/><br/>
+										Thank you for the productive call today regarding your Q1 implementation. Here's a summary of our discussion and next steps.
+									</p>
+								</div>
+
+								{#each emailSections as section, i}
+									{@const Icon = section.icon}
+									<div 
+										class="glass rounded-lg p-4 hover-lift group cursor-pointer relative overflow-hidden"
+										in:fly={{ y: 15, delay: i * 100, duration: 400 }}
+									>
+										<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+										
+										<div class="flex items-start gap-3 relative z-10">
+											<div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+												<Icon class="w-4 h-4 text-red-500" />
+											</div>
+											<div>
+												<h4 class="text-sm font-semibold text-white mb-2 group-hover:text-red-400 transition-colors">{section.title}</h4>
+												<p class="text-xs text-zinc-400 leading-relaxed whitespace-pre-line">{section.content}</p>
+											</div>
+										</div>
+									</div>
+								{/each}
+
+								<div class="glass rounded-lg p-4">
+									<p class="text-sm text-zinc-300 leading-relaxed">
+										Looking forward to moving this forward together.
+										<br/><br/>
+										Best regards,
+										<br/>
+										<span class="font-semibold text-white">Your SpikedAI Assistant</span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- PDF Preview -->
+				<div 
+					class="relative"
+					in:fly={{ x: 30, duration: 800, delay: 400 }}
+				>
+					<div class="absolute -top-6 -right-6 w-32 h-32 bg-red-500/10 rounded-full blur-3xl float-slow"></div>
+					
+					<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
+						<!-- PDF Header -->
+						<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 backdrop-blur-xl">
+							<div class="flex items-center gap-3">
+								<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
+									<FileText class="w-4 h-4 text-white" />
+								</div>
+								<div class="flex-1">
+									<p class="text-sm font-semibold text-white">Executive Briefing PDF</p>
+									<p class="text-xs text-zinc-500">Comprehensive meeting intelligence</p>
+								</div>
+								<button class="px-3 py-1 glass rounded-lg text-xs text-white hover:bg-zinc-800/70 transition-colors font-medium flex items-center gap-1">
+									<span>Download</span>
+									<ArrowRight class="w-3 h-3" />
+								</button>
+							</div>
+						</div>
+
+						<!-- PDF Content -->
+						<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-6">
+							<!-- PDF Cover -->
+							<div class="glass rounded-xl p-6 mb-4 relative overflow-hidden">
+								<div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/20 to-transparent rounded-bl-full"></div>
+								<div class="relative z-10">
+									<div class="flex items-center gap-3 mb-4">
+										<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center glow-red">
+											<Zap class="w-5 h-5 text-white" />
+										</div>
+										<div>
+											<h3 class="text-xl font-bold text-white">SpikedAI</h3>
+											<p class="text-xs text-zinc-500">Meeting Intelligence Report</p>
+										</div>
+									</div>
+									<div class="space-y-2">
+										<div class="flex justify-between text-sm">
+											<span class="text-zinc-500">Account:</span>
+											<span class="text-white font-medium">Enterprise Corp</span>
+										</div>
+										<div class="flex justify-between text-sm">
+											<span class="text-zinc-500">Date:</span>
+											<span class="text-white font-medium">26 Nov 2025</span>
+										</div>
+										<div class="flex justify-between text-sm">
+											<span class="text-zinc-500">Duration:</span>
+											<span class="text-white font-medium">32 minutes</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- PDF Sections with data from image -->
+							<div class="space-y-3">
+								{#each pdfSections as section, i}
+									<div 
+										class="glass rounded-lg p-4 hover-lift group cursor-pointer relative overflow-hidden"
+										in:fly={{ y: 15, delay: i * 100, duration: 400 }}
+									>
+										<div class="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+										
+										<div class="relative z-10">
+											<h4 class="text-sm font-bold text-white mb-3 group-hover:text-red-400 transition-colors flex items-center gap-2">
+												{#if section.title === 'Meeting Summary'}
+													<FileText class="w-4 h-4" />
+												{:else if section.title === 'Stakeholder Mapper'}
+													<Users class="w-4 h-4" />
+												{:else if section.title === 'Battle Card Intelligence'}
+													<Shield class="w-4 h-4" />
+												{:else}
+													<Target class="w-4 h-4" />
+												{/if}
+												{section.title}
+											</h4>
+											<div class="space-y-2">
+												{#each section.items as item}
+													<div class="flex items-start gap-2 text-xs">
+														<div class="w-1 h-1 rounded-full bg-red-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
+														<span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">{item}</span>
+													</div>
+												{/each}
+											</div>
+										</div>
+									</div>
+								{/each}
+
+								<!-- PDF Footer -->
+								<div class="glass rounded-lg p-3 flex items-center justify-between">
+									<span class="text-xs text-zinc-500">Generated by SpikedAI</span>
+									<span class="text-xs text-zinc-600 font-mono">Page 1 of 4</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Feature Highlights -->
+			<div 
+				class="mt-16 grid md:grid-cols-3 gap-6"
+				in:fly={{ y: 30, duration: 700, delay: 600 }}
+			>
+				<div class="glass rounded-xl p-6 hover-lift group text-center">
+					<div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+						<Zap class="w-6 h-6 text-blue-500" />
+					</div>
+					<h4 class="font-semibold text-white mb-2">Instant Delivery</h4>
+					<p class="text-sm text-zinc-400">Follow-up emails sent within 60 seconds of meeting end</p>
+				</div>
+
+				<div class="glass rounded-xl p-6 hover-lift group text-center">
+					<div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+						<Brain class="w-6 h-6 text-red-500 animate-pulse" />
+					</div>
+					<h4 class="font-semibold text-white mb-2">AI-Powered Insights</h4>
+					<p class="text-sm text-zinc-400">Every section auto-generated from conversation analysis</p>
+				</div>
+
+				<div class="glass rounded-xl p-6 hover-lift group text-center">
+					<div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+						<CheckCircle2 class="w-6 h-6 text-green-500" />
+					</div>
+					<h4 class="font-semibold text-white mb-2">Fully Customizable</h4>
+					<p class="text-sm text-zinc-400">Edit, approve, or auto-send based on your preferences</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonial Quote Section -->
+	<section class="py-20 px-6 border-t border-zinc-900 relative overflow-hidden">
+		<!-- Background effects -->
+		<div class="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black"></div>
+		<div 
+			class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-red-600/5 rounded-full blur-3xl"
+			style="transform: translate(calc(-50% + {mouseX * 30}px), calc(-50% + {mouseY * 30}px))"
+		></div>
+		
+		<div class="max-w-4xl mx-auto text-center relative z-10">
+			<blockquote 
+				class="text-2xl md:text-3xl font-medium text-zinc-300 leading-relaxed mb-8 hover:text-white transition-colors duration-500"
+				in:fly={{ y: 30, duration: 800 }}
+			>
+				"SpikedAI transforms how our team prepares for meetings—from scrambling to find context to walking in fully prepared with every detail at our fingertips."
+			</blockquote>
+			<div 
+				class="flex items-center justify-center gap-4"
+				in:fly={{ y: 20, duration: 600, delay: 200 }}
+			>
+				<div class="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white font-bold glow-red hover:scale-110 transition-transform cursor-pointer">
+					JM
+				</div>
+				<div class="text-left">
+					<p class="font-semibold text-white">Jennifer Martinez</p>
+					<p class="text-sm text-zinc-500">VP of Sales, TechScale Inc.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Features Grid Section -->
+	<section id="learn-more" class="py-24 px-6 relative overflow-hidden">
+		<!-- Animated background -->
+		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-zinc-950"></div>
+		<div class="depth-grid absolute inset-0 opacity-50"></div>
+		
+		<div class="max-w-7xl mx-auto relative z-10">
+			<div 
+				class="text-center mb-16"
+				in:fly={{ y: 30, duration: 700 }}
+			>
+				<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Everything You Need to Stay Prepared</h2>
+				<p class="text-lg text-zinc-400 max-w-2xl mx-auto">Stop scrambling before meetings. Let AI do the heavy lifting.</p>
 			</div>
 
 			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-				<div class="bg-black rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-					<div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
-						<FileText class="w-6 h-6 text-purple-500" />
+				{#each [
+					{ icon: FileText, title: 'Auto-Generated Briefings', desc: 'Comprehensive meeting prep documents created automatically from your conversation history.', color: 'red' },
+					{ icon: CheckCircle2, title: 'Action Item Tracking', desc: 'Never forget a commitment. Track and follow up on all action items automatically.', color: 'green' },
+					{ icon: TrendingUp, title: 'Context Awareness', desc: 'AI understands the full relationship history and surfaces relevant insights.', color: 'blue' },
+					{ icon: Star, title: 'Smart Recommendations', desc: 'Get AI-suggested talking points tailored to each prospect\'s specific needs.', color: 'amber' },
+					{ icon: Clock, title: 'Meeting Timeline', desc: 'Visual timeline of all interactions to quickly understand the relationship stage.', color: 'purple' },
+					{ icon: Users, title: 'Stakeholder Insights', desc: 'Track key contacts, their concerns, and engagement levels across meetings.', color: 'cyan' }
+				] as feature, i}
+					<div 
+						class="glass rounded-2xl p-6 hover-lift group relative overflow-hidden cursor-pointer"
+						in:fly={{ y: 30, delay: i * 100, duration: 600 }}
+					>
+						<!-- Hover gradient overlay -->
+						<div class="absolute inset-0 bg-gradient-to-br from-red-500/0 via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+						
+						<div class="relative z-10">
+							<div class="w-12 h-12 rounded-xl bg-{feature.color}-500/10 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 {feature.color === 'red' ? 'group-hover:shadow-lg group-hover:shadow-red-500/30' : ''}">
+								<feature.icon class="w-6 h-6 text-{feature.color}-500 group-hover:animate-pulse" />
+							</div>
+							<h3 class="text-lg font-semibold text-white mb-2 group-hover:text-red-400 transition-colors">{feature.title}</h3>
+							<p class="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">{feature.desc}</p>
+						</div>
 					</div>
-					<h3 class="text-xl font-semibold mb-3">Auto-Generated Briefings</h3>
-					<p class="text-zinc-400">Comprehensive meeting prep documents created automatically from your conversation history.</p>
-				</div>
-
-				<div class="bg-black rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-					<div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
-						<CheckCircle2 class="w-6 h-6 text-purple-500" />
-					</div>
-					<h3 class="text-xl font-semibold mb-3">Action Item Tracking</h3>
-					<p class="text-zinc-400">Never forget a commitment. Track and follow up on all action items automatically.</p>
-				</div>
-
-				<div class="bg-black rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-					<div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
-						<TrendingUp class="w-6 h-6 text-purple-500" />
-					</div>
-					<h3 class="text-xl font-semibold mb-3">Context Awareness</h3>
-					<p class="text-zinc-400">AI understands the full relationship history and surfaces relevant insights.</p>
-				</div>
-
-				<div class="bg-black rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-					<div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
-						<Star class="w-6 h-6 text-purple-500" />
-					</div>
-					<h3 class="text-xl font-semibold mb-3">Smart Recommendations</h3>
-					<p class="text-zinc-400">Get AI-suggested talking points tailored to each prospect's specific needs.</p>
-				</div>
-
-				<div class="bg-black rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-					<div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
-						<Clock class="w-6 h-6 text-purple-500" />
-					</div>
-					<h3 class="text-xl font-semibold mb-3">Meeting Timeline</h3>
-					<p class="text-zinc-400">Visual timeline of all interactions to quickly understand the relationship stage.</p>
-				</div>
-
-				<div class="bg-black rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-					<div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
-						<Users class="w-6 h-6 text-purple-500" />
-					</div>
-					<h3 class="text-xl font-semibold mb-3">Stakeholder Insights</h3>
-					<p class="text-zinc-400">Track key contacts, their concerns, and engagement levels across meetings.</p>
-				</div>
+				{/each}
 			</div>
 		</div>
-	</div>
+	</section>
 
 	<!-- CTA Section -->
-	<div class="py-24 px-6">
-		<div class="max-w-4xl mx-auto text-center">
-			<h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Never Miss a Beat?</h2>
-			<p class="text-xl text-zinc-400 mb-12">Join sales teams using AI to prepare for every conversation</p>
+	<section class="py-24 px-6 relative overflow-hidden">
+		<!-- Animated background with parallax -->
+		<div class="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black"></div>
+		<div 
+			class="absolute top-1/2 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl float"
+			style="transform: translate({mouseX * -20}px, {mouseY * -20}px)"
+		></div>
+		<div 
+			class="absolute bottom-1/2 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl float-slow"
+			style="transform: translate({mouseX * 15}px, {mouseY * 15}px)"
+		></div>
+		
+		<div class="max-w-4xl mx-auto text-center relative z-10">
+			<h2 
+				class="text-4xl md:text-5xl font-bold text-white mb-6 hover:scale-105 transition-transform duration-300"
+				in:fly={{ y: 30, duration: 700 }}
+			>
+				Ready to Never Miss a Beat?
+			</h2>
+			<p 
+				class="text-xl text-zinc-400 mb-12"
+				in:fly={{ y: 20, duration: 600, delay: 100 }}
+			>
+				Join sales teams using AI to prepare for every conversation
+			</p>
 			
-			<div class="flex flex-wrap gap-4 justify-center">
+			<div 
+				class="flex flex-wrap gap-4 justify-center"
+				in:fly={{ y: 20, duration: 600, delay: 200 }}
+			>
 				<button 
 					onclick={onboardingStore.start}
-					class="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 inline-flex items-center gap-2"
+					class="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-xl font-semibold hover:shadow-2xl hover:shadow-red-500/40 transition-all duration-300 hover:scale-110 inline-flex items-center gap-2 glow-red group relative overflow-hidden"
 				>
-					<span>Get Started Free</span>
-					<ArrowRight class="w-5 h-5" />
+					<!-- Shimmer effect on hover -->
+					<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+					<span class="relative z-10">Get Started Free</span>
+					<ArrowRight class="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
 				</button>
-				<a href="/features" class="px-8 py-4 bg-zinc-900 rounded-xl font-semibold border border-zinc-800 hover:border-purple-500 transition-all duration-300 hover:scale-105">
-					Explore All Features
+				<a 
+					href="/features" 
+					class="px-8 py-4 glass rounded-xl font-semibold border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:scale-110 hover-lift group"
+				>
+					<span class="group-hover:text-red-400 transition-colors">Explore All Features</span>
 				</a>
 			</div>
 		</div>
-	</div>
+	</section>
 
 	<!-- Footer with navigation to other features -->
 	<FeatureFooter currentFeature="followup" />

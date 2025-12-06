@@ -15,7 +15,7 @@ Successfully implemented comprehensive navigation and "Learn More" functionality
   - Notetaker → `/features/notetaker`
   - Follow-Up → `/features/followup`
   - Simulator → `/features/simulator`
-  - Dev Tools → `/features/dev-tools`
+  - Enterprise Ready → `/features/dev-tools`
   - CRM → `/features/crm`
   - Sentiment → `/features/sentiment`
   - Custom Goals → `/features/custom-goals`

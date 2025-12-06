@@ -8,7 +8,7 @@
 		{ id: 'notetaker', title: 'Notetaker', icon: MessageSquare, href: '/features/notetaker', color: 'blue' },
 		{ id: 'followup', title: 'Follow-Up', icon: Calendar, href: '/features/followup', color: 'green' },
 		{ id: 'simulator', title: 'Simulator', icon: Users, href: '/features/simulator', color: 'purple' },
-		{ id: 'dev-tools', title: 'Dev Tools', icon: GitBranch, href: '/features/dev-tools', color: 'orange' },
+		{ id: 'dev-tools', title: 'Enterprise Ready', icon: GitBranch, href: '/features/dev-tools', color: 'orange' },
 		{ id: 'crm', title: 'CRM', icon: BarChart3, href: '/features/crm', color: 'blue' },
 		{ id: 'sentiment', title: 'Sentiment', icon: Heart, href: '/features/sentiment', color: 'pink' },
 		{ id: 'custom-goals', title: 'Custom Goals', icon: Settings, href: '/features/custom-goals', color: 'gray' }

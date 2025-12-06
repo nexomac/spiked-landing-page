@@ -9,7 +9,7 @@
 		{ id: 'notetaker', title: 'Notetaker', href: '/features/notetaker' },
 		{ id: 'followup', title: 'Follow-Up', href: '/features/followup' },
 		{ id: 'simulator', title: 'Simulator', href: '/features/simulator' },
-		{ id: 'dev-tools', title: 'Dev Tools', href: '/features/dev-tools' },
+		{ id: 'dev-tools', title: 'Enterprise Ready', href: '/features/dev-tools' },
 		{ id: 'crm', title: 'CRM', href: '/features/crm' },
 		{ id: 'sentiment', title: 'Sentiment', href: '/features/sentiment' },
 		{ id: 'custom-goals', title: 'Custom Goals', href: '/features/custom-goals' }

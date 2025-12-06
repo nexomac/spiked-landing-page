@@ -1,10 +1,22 @@
 <script>
 	import FeatureCard from './FeatureCard.svelte';
 	import FeatureGridCard from './FeatureGridCard.svelte';
-	import { TrendingUp, Activity, Zap, FileText, Brain, Target } from 'lucide-svelte';
+	import { TrendingUp, Activity, Zap, FileText, Brain, Target, Sparkles, MessageSquare, Calendar, Users, GitBranch, BarChart3, Heart, Settings } from 'lucide-svelte';
 	import { innerWidth } from 'svelte/reactivity/window';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { features } from '$lib/data/features.js';
+	
+	// Icon mapping
+	const iconMap = {
+		Sparkles,
+		MessageSquare,
+		Calendar,
+		Users,
+		GitBranch,
+		BarChart3,
+		Heart,
+		Settings
+	};
 	
 	let selectedFeature = $state('ai-assistance');
 	let showContent = $state(true);
@@ -1627,7 +1639,7 @@
 			<div class={isDesktop ? 'lg:sticky lg:top-24' : ''}>
 				<div class="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto lg:max-w-none">
 					{#each features as feature, idx}
-						{@const Icon = feature.icon}
+						{@const Icon = iconMap[feature.icon]}
 						<div class="relative">
 							<button
 								onmouseenter={() => {

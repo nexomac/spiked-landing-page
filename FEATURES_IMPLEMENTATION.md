@@ -39,7 +39,7 @@ Created reusable tab components in `/src/lib/components/`:
 2. **Notetaker** - With conversational intelligence
 3. **Follow-Up Preparation** - Using AI Memory and RAG
 4. **Meeting Simulator** - And coaching features
-5. **Dev Tools Integration** - Jira, Asana
+5. **Enterprise Ready Integration** - Jira, Asana
 6. **CRM Integration** - Zoho, Salesforce
 7. **Sentiment Analysis** - Real-time feedback
 8. **Custom Goals** - And more customization

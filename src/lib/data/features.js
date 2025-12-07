@@ -3,8 +3,8 @@ export const features = [
         id: 'ai-assistance',
         title: 'AI Assistant',
         icon: 'Sparkles',
-        fullTitle: 'AI Assistant',
-        subtitle: 'Real-Time Answers From Your Sales & Solutions Docs',
+        fullTitle: 'Revenue Intelligence Agent',
+        subtitle: 'Real Time Assistance',
         description: 'Get precise, contextual answers while you\'re on the call. SpikedAI pulls directly from your product docs, case studies, FAQs, pricing sheets, and playbooks—no generic snippets, no hallucinations, no lag.',
         features: [
             'Instant, context-aware answers - Accurate responses in real time, tailored to the prospect and their use case',
@@ -35,8 +35,8 @@ export const features = [
         id: 'followup',
         title: 'Follow-Up',
         icon: 'Calendar',
-        fullTitle: 'Follow-Up',
-        subtitle: 'Never Walk Into a Follow-Up Meeting Unprepared',
+        fullTitle: 'Follow-Up & Meeting Prep',
+        subtitle: 'In person or remote meeting, Never walk into a meeting unprepared',
         description: 'SpikedAI summarizes notes, extracts action items, updates your CRM, and creates personalized prep templates so your next conversation is based on what\'s happening now, not yesterday.',
         features: [
             'Automatic summaries & action items - Every meeting and follow-up starts with clarity',
@@ -52,8 +52,8 @@ export const features = [
         id: 'simulator',
         title: 'Simulator',
         icon: 'Users',
-        fullTitle: 'Meeting Simulator',
-        subtitle: 'Practice Your Pitch With AI-Powered Prospect Personas',
+        fullTitle: 'Train, Simulate, and Coach',
+        subtitle: 'Meeting Simulator and Coach helps you practice, perfect, and perform with confidence',
         description: 'SpikedAI helps reps train like your top performers, sharpening messaging, improving objection handling, and increasing close-rate readiness with instant, actionable feedback.',
         features: [
             'AI-powered prospect simulations - Practice real scenarios with realistic buyer behaviors',

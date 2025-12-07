@@ -157,7 +157,7 @@
 					</div>
 				</div>
 				<div class="px-4 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
-					<span class="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-red-400 tracking-wide leading-relaxed block">Combining conversational, computational, and contextual intelligence to drive reasoning, speed, and measurable ROI</span>
+					<span class="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-red-400 tracking-wide leading-relaxed block">Redefining the sales workforce, enabling high performance through AI-orchestration and reasoning models</span>
 				</div>
 			</div>
 
@@ -173,7 +173,10 @@
 			
 			<!-- Enhanced Description with better typography -->
 			<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-zinc-300 mb-10 sm:mb-12 md:mb-14 max-w-4xl leading-[1.6] font-normal animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.2s;">
-				AI-Powered Revenue Generation Platform, <span class="text-zinc-300 font-normal">Human and AI Revenue Agents, built to reason, act, and close.</span> <span class="text-zinc-300 font-normal">Together, they transform every conversation into measurable growth.</span>
+				The rise of the singular rep starts here. <span class="text-zinc-300 font-normal">With SpikedAI, every seller operates as a micro-business unit, thinking,
+deciding, and selling like a CEO.</span> <span class="text-zinc-300 font-normal">Real-time intelligence powers every
+conversation, accelerates every deal cycle, and turns individual performance
+into revenue acceleration.</span>
 			</p>
 			
 			<!-- Enhanced CTA Buttons -->

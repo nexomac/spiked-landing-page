@@ -8,6 +8,21 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+		<script>
+			// Avoid theme flash by setting the theme before hydration
+			(() => {
+				try {
+					const stored = localStorage.getItem('spiked-theme');
+					const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)')?.matches;
+					const theme = stored || (prefersDark ? 'dark' : 'light');
+					const root = document.documentElement;
+					root.dataset.theme = theme;
+					root.classList.toggle('dark', theme === 'dark');
+				} catch (error) {
+					// No-op on SSR or restricted storage
+				}
+			})();
+		</script>
 		<title>Spiked AI</title>
 		%sveltekit.head%
 	</head>

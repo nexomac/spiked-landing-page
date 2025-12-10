@@ -408,20 +408,6 @@
 		100% { background-position: 200% 50%; }
 	}
 
-	/* Pulse animation with ring */
-	@keyframes pulse-ring {
-		0% { transform: scale(1); opacity: 1; }
-		100% { transform: scale(1.5); opacity: 0; }
-	}
-	.pulse-ring::before {
-		content: '';
-		position: absolute;
-		inset: -2px;
-		border-radius: 50%;
-		border: 2px solid currentColor;
-		animation: pulse-ring 1.5s ease-out infinite;
-	}
-
 	/* Floating animation for decorative elements */
 	@keyframes float {
 		0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -440,15 +426,6 @@
 	
 	.float-slow {
 		animation: float-slow 8s ease-in-out infinite;
-	}
-
-	/* Glow effect for icons and cards */
-	.glow-red {
-		box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-	}
-	
-	.glow-red:hover {
-		box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
 	}
 
 	/* Enhanced grid pattern with depth */

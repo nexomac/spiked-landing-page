@@ -404,7 +404,7 @@
 
 						<!-- Phone -->
 						<div class="space-y-2">
-							<label class="block text-sm font-semibold text-zinc-300">
+							<label for="international_PhoneNumber_countrycode" class="block text-sm font-semibold text-zinc-300">
 								Phone <span class="text-red-500">*</span>
 							</label>
 							<div class="grid grid-cols-3 gap-4">
@@ -422,7 +422,7 @@
 										placeholder="+1"
 										class="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg text-white placeholder-zinc-600 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
 									/>
-									<label class="block text-xs text-zinc-500 mt-1">Code</label>
+									<label for="international_PhoneNumber_countrycodeval" class="block text-xs text-zinc-500 mt-1">Code</label>
 								</div>
 								<div class="col-span-2">
 									<input
@@ -440,7 +440,7 @@
 										placeholder="555-123-4567"
 										class="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg text-white placeholder-zinc-600 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
 									/>
-									<label class="block text-xs text-zinc-500 mt-1">Number</label>
+									<label for="international_PhoneNumber_countrycode" class="block text-xs text-zinc-500 mt-1">Number</label>
 								</div>
 							</div>
 							<p id="PhoneNumber_error" class="zf-errorMessage text-xs text-red-500" style="display:none;">Please enter valid phone</p>
@@ -497,8 +497,8 @@
 
 						<p class="text-xs text-zinc-600 text-center">
 							By submitting this form, you agree to our 
-							<a href="#" class="text-red-500 hover:text-red-400 underline">Privacy Policy</a> and 
-							<a href="#" class="text-red-500 hover:text-red-400 underline">Terms of Service</a>
+							<a href="/privacy" class="text-red-500 hover:text-red-400 underline">Privacy Policy</a> and 
+							<a href="/terms" class="text-red-500 hover:text-red-400 underline">Terms of Service</a>
 						</p>
 					</form>
 				</div>

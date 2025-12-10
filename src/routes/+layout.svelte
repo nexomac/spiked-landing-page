@@ -2,13 +2,14 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import { themeStore } from '$lib/stores/theme.js';
 
 	let { children } = $props();
 	let enableScale = $state(false);
 
 	onMount(() => {
-		// Force dark theme
-		document.documentElement.classList.add('dark');
+		// Initialize theme based on saved preference or system settings
+		themeStore.init();
 
 		// Enable scaling automatically when running on vercel.app hosts
 		// or when ?scale=0.8 is present (handy for testing locally)

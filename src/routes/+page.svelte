@@ -5,7 +5,6 @@
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { innerWidth } from 'svelte/reactivity/window';
 	
-	let isDark = $state(true); // Default to dark theme
 	let activeTab = $state('simulator');
 	let activeFeatureTab = $state('transcription');
 	let transcriptIndex = $state(0);
@@ -39,9 +38,6 @@
 	];
 
 	onMount(() => {
-		// Force dark theme
-		document.documentElement.classList.add('dark');
-
 		const handleScroll = () => {
 			scrollY = window.scrollY;
 		};
@@ -89,11 +85,6 @@
 		};
 	});
 
-	function toggleTheme() {
-		// Theme locked to dark mode
-		return;
-	}
-
 	function scrollToSection(id) {
 		document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 	}
@@ -102,26 +93,26 @@
 <!-- Hero Section -->
 <section 
 	data-section="hero" 
-	class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+	class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black hero-shell"
 >
 	<!-- Enhanced Animated Grid Background with Parallax -->
-	<div class="absolute inset-0" style="transform: translateY({scrollY * 0.5}px);">
+	<div class="absolute inset-0 hero-overlay" style="transform: translateY({scrollY * 0.5}px);">
 		<div class="absolute inset-0 bg-gradient-to-b from-red-950/30 via-black via-50% to-black"></div>
-		<div class="absolute inset-0 animate-grid-pulse" style="background-image: linear-gradient(rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px); background-size: 60px 60px;"></div>
+		<div class="absolute inset-0 animate-grid-pulse hero-grid" style="background-image: linear-gradient(rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px); background-size: 60px 60px;"></div>
 		
 		<!-- Enhanced Animated Red Orbs with Mouse Interaction -->
 		<div 
-			class="absolute w-[600px] h-[600px] bg-red-600/25 rounded-full blur-3xl animate-float transition-transform duration-1000"
+			class="absolute w-[600px] h-[600px] bg-red-600/25 rounded-full blur-3xl animate-float transition-transform duration-1000 hero-orb"
 			style="top: 15%; left: 20%; transform: translate({mouseX * 0.03}px, {mouseY * 0.03}px);"
 		></div>
 		<div 
-			class="absolute w-[500px] h-[500px] bg-red-800/15 rounded-full blur-3xl animate-float-delayed transition-transform duration-1000"
+			class="absolute w-[500px] h-[500px] bg-red-800/15 rounded-full blur-3xl animate-float-delayed transition-transform duration-1000 hero-orb"
 			style="bottom: 15%; right: 20%; transform: translate({-mouseX * 0.02}px, {-mouseY * 0.02}px);"
 		></div>
 		
 		<!-- Additional floating orbs with better positioning -->
-		<div class="absolute top-1/3 left-1/4 w-80 h-80 bg-red-500/15 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
-		<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-700/20 rounded-full blur-3xl animate-float-delayed" style="animation-delay: 1s;"></div>
+		<div class="absolute top-1/3 left-1/4 w-80 h-80 bg-red-500/15 rounded-full blur-3xl animate-float hero-orb" style="animation-delay: 2s;"></div>
+		<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-700/20 rounded-full blur-3xl animate-float-delayed hero-orb" style="animation-delay: 1s;"></div>
 		
 		<!-- Multiple Scanning Line Effects -->
 		<div class="absolute inset-0 overflow-hidden">
@@ -140,7 +131,7 @@
 		</div>
 		
 		<!-- Radial gradient spotlight -->
-		<div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/50"></div>
+		<div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/50 hero-spotlight"></div>
 	</div>
 
 	<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 md:py-32">
@@ -183,7 +174,7 @@ into revenue acceleration.</span>
 			<div class="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-16 sm:mb-20 animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.4s;">
 				<button 
 					onclick={onboardingStore.start}
-					class="group relative px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-base sm:text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1"
+					class="group relative px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-base sm:text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1 primary-cta"
 				>
 					<span class="relative z-10 flex items-center justify-center gap-2">
 						Start Now, Skip Demos
@@ -195,7 +186,7 @@ into revenue acceleration.</span>
 					<div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
 					<div class="absolute inset-0 rounded-xl ring-2 ring-red-500/0 group-hover:ring-red-500/50 transition-all duration-300"></div>
 				</button>
-				<a href="/contact-sales" class="px-8 sm:px-10 py-4 sm:py-5 bg-zinc-950/50 backdrop-blur-sm text-white rounded-xl font-semibold text-base sm:text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/30 transition-all duration-300 text-center hover:scale-[1.05] hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/30">
+				<a href="/contact-sales" class="px-8 sm:px-10 py-4 sm:py-5 bg-zinc-950/50 backdrop-blur-sm text-white rounded-xl font-semibold text-base sm:text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/30 transition-all duration-300 text-center hover:scale-[1.05] hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/30 secondary-cta">
 					Contact Sales
 				</a>
 			</div>

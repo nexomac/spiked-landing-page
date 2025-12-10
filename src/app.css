@@ -56,6 +56,154 @@ body {
 	--glass: rgba(255,255,255,0.03);
 }
 
+:root[data-theme="light"] {
+	color-scheme: light;
+	--accent-red: #e11d48;
+	--muted: #334155;
+	--glass: rgba(255, 255, 255, 0.65);
+}
+
+:root[data-theme="light"] body {
+	background-color: #f8fafc;
+	color: #0f172a;
+}
+
+:root[data-theme="light"] [class*="bg-black"],
+:root[data-theme="light"] [class*="bg-zinc-9"] {
+	background-color: #f8fafc !important;
+}
+
+:root[data-theme="light"] [class*="bg-zinc-8"],
+:root[data-theme="light"] [class*="bg-gray-8"] {
+	background-color: #ffffff !important;
+}
+
+:root[data-theme="light"] .bg-red-950,
+:root[data-theme="light"] .bg-red-950\/30,
+:root[data-theme="light"] .bg-red-950\/20,
+:root[data-theme="light"] .bg-red-950\/15,
+:root[data-theme="light"] .bg-red-950\/10,
+:root[data-theme="light"] .bg-red-900\/50,
+:root[data-theme="light"] .bg-red-900\/30 {
+	background-color: #fff1f2 !important;
+}
+
+:root[data-theme="light"] [class*="border-zinc-8"],
+:root[data-theme="light"] [class*="border-zinc-9"],
+:root[data-theme="light"] [class*="border-red-900"],
+:root[data-theme="light"] [class*="border-gray-8"] {
+	border-color: #e2e8f0 !important;
+}
+
+:root[data-theme="light"] .text-white {
+	color: #0f172a !important;
+}
+
+:root[data-theme="light"] .text-white[class*="bg-"]:not([class*="bg-black"]):not([class*="bg-white"]):not([class*="bg-gray"]):not([class*="bg-zinc"]) {
+	color: #ffffff !important;
+}
+
+:root[data-theme="light"] [class*="bg-"].text-white:not([class*="bg-black"]):not([class*="bg-white"]):not([class*="bg-gray"]):not([class*="bg-zinc"]) {
+	color: #ffffff !important;
+}
+
+/* Light gradients to replace dark hero overlays */
+:root[data-theme="light"] [class*="from-black"],
+:root[data-theme="light"] [class*="from-zinc-9"] {
+	--tw-gradient-from: #f8fafc !important;
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(248 250 252 / 0));
+}
+
+:root[data-theme="light"] [class*="via-black"],
+:root[data-theme="light"] [class*="via-zinc-9"] {
+	--tw-gradient-stops: var(--tw-gradient-from), #e2e8f0, var(--tw-gradient-to, rgba(255, 255, 255, 0));
+}
+
+:root[data-theme="light"] [class*="to-black"],
+:root[data-theme="light"] [class*="to-zinc-9"] {
+	--tw-gradient-to: #f8fafc !important;
+}
+
+:root[data-theme="light"] [class*="from-red-950"] {
+	--tw-gradient-from: #fee2e2 !important;
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(254, 226, 226, 0));
+}
+
+:root[data-theme="light"] [class*="bg-red-950"],
+:root[data-theme="light"] [class*="bg-red-900"] {
+	background-color: #fff1f2 !important;
+}
+
+:root[data-theme="light"] [class*="bg-zinc-900\/"],
+:root[data-theme="light"] [class*="bg-zinc-950\/"],
+:root[data-theme="light"] [class*="bg-gray-900\/"],
+:root[data-theme="light"] [class*="bg-gray-950\/"] {
+	background-color: rgba(255, 255, 255, 0.9) !important;
+	backdrop-filter: blur(8px);
+}
+
+:root[data-theme="light"] .shadow-red-900\/20,
+:root[data-theme="light"] .shadow-red-900\/30,
+:root[data-theme="light"] .shadow-red-900\/50 {
+	--tw-shadow-color: rgba(220, 38, 38, 0.12);
+}
+
+/* Hero polish */
+.hero-shell {
+	background: #05070c;
+	isolation: isolate;
+}
+
+.hero-overlay {
+	pointer-events: none;
+}
+
+:root[data-theme="light"] .hero-shell {
+	background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 55%, #ffffff 100%);
+}
+
+:root[data-theme="light"] .hero-overlay > div:first-child {
+	background: radial-gradient(circle at 20% 10%, rgba(225, 29, 72, 0.14), transparent 42%), linear-gradient(180deg, #f8fafc 0%, #e2e8f0 45%, #eef2ff 100%);
+}
+
+:root[data-theme="light"] .hero-grid {
+	opacity: 0.18 !important;
+	filter: saturate(0.55);
+}
+
+:root[data-theme="light"] .hero-orb {
+	opacity: 0.5 !important;
+	mix-blend-mode: multiply;
+	filter: saturate(0.75);
+}
+
+:root[data-theme="light"] .hero-spotlight {
+	background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.4), transparent 55%);
+}
+
+:root[data-theme="light"] .primary-cta {
+	box-shadow: 0 20px 60px rgba(225, 29, 72, 0.25), 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .secondary-cta {
+	background: #ffffff !important;
+	color: #0f172a !important;
+	border-color: #e2e8f0 !important;
+	box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="light"] .secondary-cta:hover {
+	border-color: #e11d48 !important;
+	color: #e11d48 !important;
+	box-shadow: 0 16px 45px rgba(225, 29, 72, 0.18);
+}
+
+:root[data-theme="light"] .text-zinc-300 { color: #1f2937 !important; }
+:root[data-theme="light"] .text-zinc-400 { color: #334155 !important; }
+:root[data-theme="light"] .text-zinc-500 { color: #475569 !important; }
+:root[data-theme="light"] .text-zinc-600 { color: #64748b !important; }
+:root[data-theme="light"] .text-zinc-900 { color: #0f172a !important; }
+
 /* Headings: consistent typographic scale and letter spacing */
 h1, h2, h3 {
 	letter-spacing: -0.02em;

@@ -53,7 +53,7 @@
 		{
 			id: 'crm',
 			title: 'CRM Integration',
-			subtitle: 'Zoho, Salesforce, and More',
+			subtitle: 'Salesforce, HubSpot, monday.com',
 			description: 'Keep your CRM updated automatically in real-time.',
 			icon: BarChart3,
 			color: 'blue',

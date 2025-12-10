@@ -1,7 +1,34 @@
 <script>
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import { CheckCircle2, TrendingUp, Target, Activity, Users, Clock, ArrowRight, FileText, AlertCircle, Zap } from 'lucide-svelte';
+	import { CheckCircle2, TrendingUp, Target, Activity, Users, Clock, ArrowRight, FileText, AlertCircle, Zap, Sparkles, ExternalLink } from 'lucide-svelte';
+	import { fly, fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
+
+	let mouseX = $state(0);
+	let mouseY = $state(0);
+
+	onMount(() => {
+		const handleMouseMove = (e) => {
+			mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+			mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+		};
+		window.addEventListener('mousemove', handleMouseMove);
+		return () => window.removeEventListener('mousemove', handleMouseMove);
+	});
+
+	const recentTickets = [
+		{ id: 'SALES-127', title: 'Add bulk export feature', status: 'created', platform: 'Jira', priority: 'high', time: '2m ago', color: 'blue' },
+		{ id: 'SALES-126', title: 'Custom dashboard widgets', status: 'synced', platform: 'Asana', priority: 'medium', time: '15m ago', color: 'purple' },
+		{ id: 'SALES-125', title: 'Mobile app dark mode', status: 'in-progress', platform: 'Jira', priority: 'low', time: '1h ago', color: 'emerald' },
+		{ id: 'SALES-124', title: 'API rate limit increase', status: 'completed', platform: 'Jira', priority: 'high', time: '3h ago', color: 'green' }
+	];
+
+	const stats = [
+		{ label: 'Tickets Created', value: '47', period: 'This Week', color: 'blue' },
+		{ label: 'Avg Response Time', value: '2.3h', period: 'Last 30 Days', color: 'emerald' },
+		{ label: 'Features Shipped', value: '12', period: 'This Month', color: 'purple' }
+	];
 </script>
 
 <svelte:head>
@@ -9,41 +36,208 @@
 	<meta name="description" content="Automatically sync customer requests to Jira, Asana, and your project management tools. Never miss a feature request again." />
 </svelte:head>
 
+<style>
+	@keyframes float {
+		0%, 100% { transform: translateY(0px); }
+		50% { transform: translateY(-20px); }
+	}
+
+	@keyframes float-slow {
+		0%, 100% { transform: translateY(0px) translateX(0px); }
+		50% { transform: translateY(-15px) translateX(10px); }
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; transform: translateY(10px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.float {
+		animation: float 6s ease-in-out infinite;
+	}
+
+	.float-slow {
+		animation: float-slow 8s ease-in-out infinite;
+	}
+
+	.animate-fadeIn {
+		animation: fadeIn 0.5s ease-out forwards;
+	}
+</style>
+
 <div class="min-h-screen bg-black text-white">
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="dev-tools" />
 	
-	<!-- Hero Section -->
-	<div class="relative overflow-hidden bg-gradient-to-b from-blue-950/20 to-black pt-32 pb-24">
-		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black"></div>
-		
-		<div class="relative max-w-7xl mx-auto px-6">
-			<div class="text-center max-w-4xl mx-auto">
-				<div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 mb-8">
-					<svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-					</svg>
+	<!-- Hero Section - Writer.com Style -->
+	<section class="relative min-h-screen pt-32 pb-24">
+		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
+		<div class="fixed inset-0 pointer-events-none">
+			<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse"></div>
+			<div class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl" style="animation-delay: 1s"></div>
+		</div>
+
+		<div class="max-w-7xl mx-auto px-6 relative">
+			<div class="grid lg:grid-cols-2 gap-16 items-start">
+				<!-- Left Column -->
+				<div class="lg:sticky lg:top-32 z-10">
+					<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full mb-8">
+						<svg class="w-4 h-4 text-blue-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+						</svg>
+						<span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Dev Tools</span>
+					</div>
+
+					<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-8">
+						<span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent block mb-2">Sync to Jira & Asana</span>
+						<span class="text-white block">automatically</span>
+					</h1>
+
+					<div class="space-y-4 mb-10">
+						<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-zinc-700 transition-all">
+							<div class="flex items-start gap-4">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0">
+									<CheckCircle2 class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1">Auto-create tickets</h3>
+									<p class="text-sm text-zinc-400">Customer requests become tracked tasks instantly</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="bg-zinc-900/50 border-l-2 border-blue-500 rounded-xl p-4 hover:bg-blue-500/5 transition-all">
+							<div class="flex items-start gap-4">
+								<div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+									<Activity class="w-5 h-5 text-blue-500" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1">Close the feedback loop</h3>
+									<p class="text-sm text-zinc-400">Connect customer needs directly to engineering</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-zinc-700 transition-all">
+							<div class="flex items-start gap-4">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0">
+									<Zap class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1">Never lose a request</h3>
+									<p class="text-sm text-zinc-400">Every feature idea is captured and tracked</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<a href="#integrations" class="inline-flex items-center gap-2 text-blue-500 hover:text-blue-400 font-medium group">
+						<span>View integrations</span>
+						<ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+					</a>
 				</div>
-				
-				<h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
-					Developer Tools Integration
-				</h1>
-				
-				<p class="text-xl md:text-2xl text-zinc-400 mb-12">
-					Turn customer requests into tracked development tasks automatically. Sync with Jira, Asana, and your project management tools.
-				</p>
-				
-				<div class="flex flex-wrap gap-4 justify-center">
-					<a href="#integrations" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105">
-						See Integrations
-					</a>
-					<a href="/features" class="px-8 py-4 bg-zinc-900 rounded-xl font-semibold border border-zinc-800 hover:border-blue-500 transition-all duration-300 hover:scale-105">
-						Back to Features
-					</a>
+
+				<!-- Right Column - Dev Tools Widget -->
+				<div 
+					class="relative"
+					in:fly={{ x: 30, duration: 800, delay: 400 }}
+					style="transform: perspective(1000px) rotateY({mouseX * -2}deg) rotateX({mouseY * 2}deg)"
+				>
+					<!-- Floating decorative elements -->
+					<div class="absolute -top-8 -right-8 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+					<div class="absolute -bottom-8 -left-8 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl" style="animation: float-slow 6s ease-in-out infinite"></div>
+					
+					<div class="bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 backdrop-blur-xl border border-zinc-800/50 rounded-2xl overflow-hidden shadow-2xl">
+						<!-- Header -->
+						<div class="px-4 py-3 border-b border-zinc-800/50 flex items-center justify-between bg-zinc-900/50">
+							<div class="flex items-center gap-2">
+								<FileText class="w-4 h-4 text-blue-500" />
+								<span class="text-sm font-semibold text-white">Recent Tickets</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<div class="flex items-center gap-1.5 px-2 py-1 bg-green-500/10 border border-green-500/30 rounded-lg">
+									<div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+									<span class="text-xs font-semibold text-green-400">Synced</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Main Content -->
+						<div class="p-5">
+							<!-- Stats Grid -->
+							<div class="grid grid-cols-3 gap-3 mb-5">
+								{#each stats as stat, i}
+									<div class="p-3 bg-zinc-900/50 border border-zinc-800/50 rounded-xl text-center" in:fade={{ delay: i * 100 }}>
+										<div class="text-2xl font-bold text-{stat.color}-500 mb-1">{stat.value}</div>
+										<div class="text-[10px] font-semibold text-white mb-0.5">{stat.label}</div>
+										<div class="text-[9px] text-zinc-500">{stat.period}</div>
+									</div>
+								{/each}
+							</div>
+
+							<!-- Ticket List -->
+							<div class="space-y-2">
+								{#each recentTickets as ticket, i}
+									<div 
+										class="p-3 bg-zinc-900/50 border border-zinc-800/50 rounded-xl hover:border-{ticket.color}-500/30 hover:bg-{ticket.color}-500/5 transition-all group"
+										in:fly={{ y: 20, delay: i * 100 }}
+									>
+										<div class="flex items-start gap-3">
+											<div class="w-8 h-8 rounded-lg bg-{ticket.color}-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+												{#if ticket.status === 'completed'}
+													<CheckCircle2 class="w-4 h-4 text-{ticket.color}-500" />
+												{:else if ticket.status === 'in-progress'}
+													<Activity class="w-4 h-4 text-{ticket.color}-500" />
+												{:else}
+													<Zap class="w-4 h-4 text-{ticket.color}-500" />
+												{/if}
+											</div>
+											<div class="flex-1 min-w-0">
+												<div class="flex items-center gap-2 mb-1">
+													<span class="text-xs font-mono text-{ticket.color}-500">{ticket.id}</span>
+													<span class="px-1.5 py-0.5 bg-zinc-800 border border-zinc-700 rounded text-[9px] text-zinc-400">{ticket.platform}</span>
+													<span class="px-1.5 py-0.5 bg-{ticket.color}-500/10 border border-{ticket.color}-500/30 rounded text-[9px] text-{ticket.color}-400">{ticket.priority}</span>
+												</div>
+												<div class="text-xs font-semibold text-white mb-1 truncate">{ticket.title}</div>
+												<div class="flex items-center gap-2 text-[10px] text-zinc-500">
+													<Clock class="w-3 h-3" />
+													<span>{ticket.time}</span>
+													<span class="capitalize text-{ticket.color}-500">• {ticket.status.replace('-', ' ')}</span>
+												</div>
+											</div>
+											<ExternalLink class="w-4 h-4 text-zinc-600 group-hover:text-{ticket.color}-500 transition-colors" />
+										</div>
+									</div>
+								{/each}
+							</div>
+
+							<!-- Integration Status -->
+							<div class="mt-4 p-3 bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/30 rounded-xl">
+								<div class="flex items-center gap-2 mb-2">
+									<Sparkles class="w-4 h-4 text-blue-400" />
+									<span class="text-xs font-semibold text-blue-400">Connected Platforms</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<div class="flex items-center gap-1.5 px-2 py-1 bg-blue-500/10 border border-blue-500/30 rounded">
+										<CheckCircle2 class="w-3 h-3 text-blue-500" />
+										<span class="text-[10px] font-semibold text-blue-400">Jira</span>
+									</div>
+									<div class="flex items-center gap-1.5 px-2 py-1 bg-purple-500/10 border border-purple-500/30 rounded">
+										<CheckCircle2 class="w-3 h-3 text-purple-500" />
+										<span class="text-[10px] font-semibold text-purple-400">Asana</span>
+									</div>
+									<div class="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded">
+										<CheckCircle2 class="w-3 h-3 text-emerald-500" />
+										<span class="text-[10px] font-semibold text-emerald-400">Linear</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
 	<!-- Integration Platforms -->
 	<div id="integrations" class="py-24 px-6">

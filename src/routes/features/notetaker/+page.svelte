@@ -1,167 +1,141 @@
 <script>
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import { MessageSquare, Activity, Users, Calendar, FileText, Brain, Sparkles, Mail, Download, Zap, Target, TrendingUp, Clock, CheckCircle, AlertCircle, Send, FileSearch, BarChart3, Lightbulb, Settings, Bot, Share } from 'lucide-svelte';
+	import { MessageSquare, Activity, Users, Calendar, FileText, Brain, Sparkles, Mail, Download, Zap, Target, TrendingUp, Clock, CheckCircle, AlertCircle, Send, FileSearch, BarChart3, Lightbulb, Settings, Bot, Share, ArrowRight, CheckCircle2, Layers, RefreshCw, Plus } from 'lucide-svelte';
+	import { onboardingStore } from '$lib/stores/onboarding.js';
+	import { fly, fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
-	let activeTab = 'templates';
-	let selectedTemplate = 'summary';
-	let hoveredTemplate = null;
-	let selectedCustomGoal = 'status of jira';
-	let showAIChat = false;
+	let activeTab = $state('templates');
+	let selectedTemplate = $state(null);
+	let hoveredTemplate = $state(null);
+	let selectedCustomGoal = $state('status of jira');
+	let showAIChat = $state(false);
+	
+	// Parallax and animation states
+	let mouseX = $state(0);
+	let mouseY = $state(0);
+	let scrollY = $state(0);
+	let isAutoPlaying = $state(true);
+	
+	onMount(() => {
+		selectedTemplate = templates[0];
+		
+		const interval = setInterval(() => {
+			if (isAutoPlaying && templates.length > 0) {
+				const currentIndex = templates.findIndex(t => t.id === selectedTemplate?.id);
+				selectedTemplate = templates[(currentIndex + 1) % templates.length];
+			}
+		}, 5000);
+		
+		// Handle mouse movement for parallax
+		const handleMouseMove = (e) => {
+			mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+			mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+		};
+		
+		// Handle scroll for parallax
+		const handleScroll = () => {
+			scrollY = window.scrollY;
+		};
+		
+		window.addEventListener('mousemove', handleMouseMove);
+		window.addEventListener('scroll', handleScroll);
+		
+		return () => {
+			clearInterval(interval);
+			window.removeEventListener('mousemove', handleMouseMove);
+			window.removeEventListener('scroll', handleScroll);
+		};
+	});
 
-	// AI Templates from the screenshots
-	const prebuiltTemplates = [
+	// AI Templates
+	const templates = [
 		{
 			id: 'summary',
 			icon: FileText,
-			name: 'Summary',
-			description: 'Quickly summarize the meeting highlights, action items, and next steps.',
-			color: 'blue'
+			title: 'Meeting Summary',
+			description: 'Generate comprehensive meeting summaries with action items',
+			color: 'from-blue-500 to-blue-600'
 		},
 		{
 			id: 'stakeholder',
 			icon: Users,
-			name: 'Stakeholder Mapper',
+			title: 'Stakeholder Mapping',
 			description: 'Map and analyze key stakeholder relationships',
-			color: 'green'
+			color: 'from-green-500 to-green-600'
 		},
 		{
 			id: 'battle-card',
 			icon: Target,
-			name: 'Battle Card Intelligence',
+			title: 'Battle Card Intelligence',
 			description: 'Competitive intelligence and positioning',
-			color: 'red'
+			color: 'from-red-500 to-red-600'
 		},
 		{
 			id: 'playbook',
 			icon: Brain,
-			name: 'PLAYBOOK Command Center',
-			description: 'MEDDIC qualification framework',
-			color: 'purple'
+			title: 'MEDDIC Framework',
+			description: 'Qualification framework analysis',
+			color: 'from-purple-500 to-purple-600'
 		},
 		{
 			id: 'crm-sync',
 			icon: Activity,
-			name: 'CRM Sync Studio',
+			title: 'CRM Sync Studio',
 			description: 'Synchronize and optimize CRM data',
-			color: 'cyan'
+			color: 'from-cyan-500 to-cyan-600'
 		},
 		{
 			id: 'deal-health',
 			icon: TrendingUp,
-			name: 'Deal Health Monitor',
+			title: 'Deal Health Monitor',
 			description: 'Track and monitor deal progression',
-			color: 'orange'
+			color: 'from-orange-500 to-orange-600'
 		},
 		{
 			id: 'followup',
 			icon: Mail,
-			name: 'Follow-Up Email Composer',
+			title: 'Follow-Up Email',
 			description: 'Craft personalized follow-up emails',
-			color: 'pink'
+			color: 'from-pink-500 to-pink-600'
 		},
 		{
 			id: 'executive',
 			icon: FileSearch,
-			name: 'Executive Briefing',
+			title: 'Executive Briefing',
 			description: 'Generate executive summaries and briefs',
-			color: 'indigo'
-		},
-		{
-			id: 'participant',
-			icon: Users,
-			name: 'Participant Analysis',
-			description: 'Individual analysis for each meeting participant',
-			color: 'teal'
+			color: 'from-indigo-500 to-indigo-600'
 		}
 	];
 
-	// Custom Goals from the screenshots
+	// Custom Goals
 	const customGoals = [
-		{ id: 'status of jira', text: 'status of jira', status: 'No detected evidence' },
-		{ id: 'economic buyer', text: 'economic buyer', status: 'No detected evidence' },
-		{ id: 'dhruv chirag working', text: 'what are dhruv and chirag working on', status: 'No detected evidence' },
-		{ id: 'owner notetaker', text: 'can you tell who is the owner of notetaker', status: 'No detected evidence' },
-		{ id: 'mumbai status', text: 'Check the status of Mumbai', status: 'No detected evidence' }
-	];
-
-	// Template output data
-	const templateOutputs = {
-		summary: {
-			title: 'Meeting Summary Analysis',
-			sections: [
-				{
-					heading: 'Key Discussion Points',
-					items: [
-						'High latency issues with the current system',
-						'The need for custom templates to improve the summary generation process',
-						'Issues with the selection of custom templates and their impact on the output',
-						'The desire to generate a PDF summary and share it via a button'
-					]
-				},
-				{
-					heading: 'Action Items and Owners',
-					items: [
-						'<strong>Chirag Chintaal:</strong> Remove a button from the interface, potentially related to the PDF generation and sharing process',
-						'<strong>Smruthi S Kadagadkai:</strong> Investigate and resolve the high latency issue, explore custom template options, and refine the summary generation process'
-					]
-				},
-				{
-					heading: 'Next Steps',
-					content: 'The next steps in this process are not clearly defined in the transcript, but it appears that Chirag Chintaal will work on removing the button, while Smruthi S Kadagadkai will focus on addressing the technical issues and improving the summary generation process.'
-				},
-				{
-					heading: 'Follow-up Questions',
-					items: [
-						'What is the root cause of the high latency issue, and what steps can be taken to resolve it?',
-						'How will the custom templates be designed and implemented to improve the summary generation process?'
-					]
-				}
-			]
+		{ 
+			id: 'status of jira',
+			title: 'Jira Status Tracker',
+			description: 'Monitor project status and ticket progress',
+			triggers: ['jira', 'tickets', 'status']
 		},
-		stakeholder: {
-			title: 'Stakeholder Relationship Map',
-			sections: [
-				{
-					heading: 'Primary Stakeholders',
-					items: [
-						'<strong>Chirag Chintaal:</strong> Technical Lead - High influence, focused on implementation',
-						'<strong>Smruthi S Kadagadkai:</strong> Product Manager - High influence, decision maker'
-					]
-				}
-			]
-		}
-	};
-
-	// AI Chat messages
-	const aiChatMessages = [
-		{
-			type: 'user',
-			text: 'What is kore.ai?',
-			time: '21:18'
+		{ 
+			id: 'economic buyer',
+			title: 'Economic Buyer Identification',
+			description: 'Identify decision makers and budget holders',
+			triggers: ['budget', 'decision', 'authority']
 		},
-		{
-			type: 'ai',
-			text: `Kore.ai is not explicitly mentioned in the provided meeting transcript, as there is no transcript given. However, based on general knowledge, kore.ai is a platform that provides conversational AI solutions for businesses, enabling them to build and deploy AI-powered chatbots and virtual assistants.
-
-To provide a more accurate answer, I would need access to the meeting transcript.
-
-Follow-up questions:
-1. What are the key features of Kore.ai?
-2. How can Kore.ai be applied in business settings?
-3. What are the benefits of using Kore.ai for conversational AI solutions?`,
-			time: '21:18'
+		{ 
+			id: 'dhruv chirag working',
+			title: 'Team Activity Monitor',
+			description: 'Track what team members are working on',
+			triggers: ['working on', 'assigned', 'task']
+		},
+		{ 
+			id: 'owner notetaker',
+			title: 'Project Ownership',
+			description: 'Identify project owners and stakeholders',
+			triggers: ['owner', 'responsible', 'lead']
 		}
 	];
-
-	function selectTemplate(templateId) {
-		selectedTemplate = templateId;
-		activeTab = 'output';
-	}
-
-	function selectCustomGoal(goalId) {
-		selectedCustomGoal = goalId;
-	}
 </script>
 
 <svelte:head>
@@ -170,357 +144,662 @@ Follow-up questions:
 </svelte:head>
 
 <style>
-	/* Custom scrollbar styles */
-	.scrollbar-thin::-webkit-scrollbar {
+	/* Custom scrollbar for template list */
+	.custom-scrollbar::-webkit-scrollbar {
 		width: 6px;
 	}
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: rgba(255, 255, 255, 0.02);
+		border-radius: 3px;
+	}
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background: rgba(239, 68, 68, 0.3);
+		border-radius: 3px;
+	}
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: rgba(239, 68, 68, 0.5);
+	}
 
+	/* Smooth scrollbar */
+	.scrollbar-thin::-webkit-scrollbar {
+		width: 4px;
+	}
 	.scrollbar-thin::-webkit-scrollbar-track {
-		background: #18181b;
-		border-radius: 3px;
+		background: transparent;
 	}
-
 	.scrollbar-thin::-webkit-scrollbar-thumb {
-		background: #3f3f46;
-		border-radius: 3px;
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 2px;
 	}
-
 	.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-		background: #52525b;
+		background: rgba(255, 255, 255, 0.2);
 	}
 
-	/* Fade in animation */
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	/* Gradient text */
+	.gradient-text {
+		background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
-	.animate-fadeIn {
-		animation: fadeIn 0.3s ease-out;
+	/* Enhanced glass morphism with depth */
+	.glass {
+		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		box-shadow: 
+			0 8px 32px 0 rgba(0, 0, 0, 0.37),
+			inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
 	}
 
-	/* Pulse animation */
-	@keyframes pulse-slow {
-		0%, 100% {
-			opacity: 1;
-		}
-		50% {
-			opacity: 0.6;
-		}
+	.glass-subtle {
+		background: rgba(255, 255, 255, 0.02);
+		backdrop-filter: blur(8px);
+		border: 1px solid rgba(255, 255, 255, 0.03);
 	}
 
-	.animate-pulse-slow {
-		animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	/* Enhanced hover lift with smooth shadows */
+	.hover-lift {
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+	.hover-lift:hover {
+		transform: translateY(-4px) scale(1.01);
+		box-shadow: 
+			0 20px 60px rgba(0, 0, 0, 0.4),
+			0 0 40px rgba(239, 68, 68, 0.1);
 	}
 
-	/* Slide up animation */
-	@keyframes slideUp {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	/* Animated gradient border with shimmer */
+	.animated-border {
+		position: relative;
+		background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+		animation: borderShimmer 3s ease-in-out infinite;
+	}
+	.animated-border::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.1), transparent, rgba(239, 68, 68, 0.2));
+		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		animation: rotateBorder 4s linear infinite;
 	}
 
-	.animate-slideUp {
-		animation: slideUp 0.5s ease-out;
+	@keyframes borderShimmer {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.7; }
+	}
+
+	@keyframes rotateBorder {
+		0% { background-position: 0% 50%; }
+		100% { background-position: 200% 50%; }
+	}
+
+	/* Pulse animation with ring */
+	@keyframes pulse-ring {
+		0% { transform: scale(1); opacity: 1; }
+		100% { transform: scale(1.5); opacity: 0; }
+	}
+	.pulse-ring::before {
+		content: '';
+		position: absolute;
+		inset: -2px;
+		border-radius: 50%;
+		border: 2px solid currentColor;
+		animation: pulse-ring 1.5s ease-out infinite;
+	}
+
+	/* Floating animation for decorative elements */
+	@keyframes float {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		33% { transform: translateY(-20px) rotate(5deg); }
+		66% { transform: translateY(-10px) rotate(-5deg); }
+	}
+	
+	@keyframes float-slow {
+		0%, 100% { transform: translateY(0px) translateX(0px); }
+		50% { transform: translateY(-30px) translateX(10px); }
+	}
+
+	.float {
+		animation: float 6s ease-in-out infinite;
+	}
+	
+	.float-slow {
+		animation: float-slow 8s ease-in-out infinite;
+	}
+
+	/* Glow effect for icons and cards */
+	.glow-red {
+		box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+	}
+	
+	.glow-red:hover {
+		box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+	}
+
+	/* Enhanced grid pattern with depth */
+	.depth-grid {
+		background-image: 
+			linear-gradient(rgba(239, 68, 68, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(239, 68, 68, 0.03) 1px, transparent 1px);
+		background-size: 50px 50px;
+		mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+		-webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+	}
+
+	/* Layered shadows for depth */
+	.depth-shadow {
+		box-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.2),
+			0 4px 8px rgba(0, 0, 0, 0.15),
+			0 8px 16px rgba(0, 0, 0, 0.1),
+			0 16px 32px rgba(0, 0, 0, 0.05);
+	}
+
+	/* Tilt effect on hover */
+	.tilt-hover {
+		transform-style: preserve-3d;
+		transition: transform 0.3s ease;
+	}
+	
+	.tilt-hover:hover {
+		transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+	}
+
+	/* Particle background effect */
+	.particle-bg {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		pointer-events: none;
 	}
 </style>
 
-<div class="min-h-screen bg-black">
+<div class="min-h-screen bg-black text-white overflow-hidden">
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="notetaker" />
 	
-	<!-- Hero Section -->
-	<section class="relative pt-40 pb-20 overflow-hidden">
-		<div class="absolute inset-0 overflow-hidden pointer-events-none">
-			<div class="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-1/4 -right-48 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
-		</div>
+	<!-- Animated Background Layer -->
+	<div class="particle-bg fixed inset-0">
+		<!-- Dynamic gradient orbs -->
+		<div 
+			class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl float"
+			style="transform: translate({mouseX * 20}px, {mouseY * 20}px)"
+		></div>
+		<div 
+			class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-3xl float-slow"
+			style="transform: translate({mouseX * -15}px, {mouseY * -15}px)"
+		></div>
+		<div 
+			class="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"
+			style="transform: translate({mouseX * 25}px, {mouseY * 25}px)"
+		></div>
+		
+		<!-- Grid overlay with parallax -->
+		<div 
+			class="depth-grid absolute inset-0"
+			style="transform: translateY({scrollY * 0.1}px)"
+		></div>
+	</div>
+	
+	<!-- Hero Section - Writer.com Style Split Layout -->
+	<section class="relative min-h-screen pt-32 pb-24">
+		<!-- Background gradient -->
+		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
+		
+		<div class="relative max-w-7xl mx-auto px-6">
+			<!-- Split Layout Container -->
+			<div class="grid lg:grid-cols-2 gap-16 items-start">
+				
+				<!-- Left Column - Content -->
+				<div class="lg:sticky lg:top-32 z-10">
+					<!-- Label with subtle animation -->
+					<div 
+						class="inline-flex items-center gap-2 px-3 py-1.5 glass rounded-full mb-8 hover:scale-105 transition-transform"
+						in:fly={{ y: -20, duration: 600, delay: 100 }}
+					>
+						<MessageSquare class="w-4 h-4 text-red-500 animate-pulse" />
+						<span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">AI-Powered Notetaker</span>
+					</div>
 
-		<div class="max-w-7xl mx-auto px-6 relative">
-			<div class="text-center mb-16">
-				<div class="inline-flex items-center gap-2 px-4 py-2 bg-red-950/30 border border-red-900/50 rounded-full mb-6">
-					<MessageSquare class="w-4 h-4 text-red-500" />
-					<span class="text-sm font-semibold text-red-400">AI-Powered Notetaker</span>
-				</div>
-				<h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
-					Your Meetings,<br/>
-					<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Supercharged by AI</span>
-				</h1>
-				<p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
-					Go Beyond Transcription—Generate Reports, Send Follow-Ups, Take Actions
-				</p>
-				<p class="text-lg text-zinc-500 max-w-2xl mx-auto">
-					While tools like Otter and Fireflies just transcribe, SpikedAI takes action. Auto-generate executive summaries, send personalized follow-up emails, sync to CRM, analyze stakeholders, and run custom AI analysis—all from your meeting transcript.
-				</p>
-			</div>
+					<!-- Main Headline with shimmer effect -->
+					<h1 
+						class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-8"
+						in:fly={{ y: 20, duration: 700, delay: 200 }}
+					>
+						<span class="text-white block mb-2">Your Meetings,</span>
+						<span class="gradient-text block">Supercharged by AI</span>
+					</h1>
 
-			<!-- Interactive Notetaker Demo -->
-			<div class="max-w-6xl mx-auto">
-				<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 rounded-xl border border-zinc-800 shadow-2xl overflow-hidden">
-					<!-- App Header -->
-					<div class="bg-gradient-to-r from-zinc-900 via-zinc-900 to-zinc-950 border-b border-zinc-800 px-4 py-3 flex items-center justify-between">
-						<div class="flex items-center gap-3">
-							<div class="w-9 h-9 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg">
-								<MessageSquare class="w-5 h-5 text-white" />
-							</div>
-							<div>
-								<h4 class="text-sm font-bold text-white">AI Templates</h4>
-								<p class="text-xs text-zinc-500">Analysis Frameworks</p>
+					<!-- Three Feature Cards -->
+					<div class="space-y-4 mb-10">
+						<!-- Auto-generate reports -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							in:fly={{ y: 20, duration: 600, delay: 300 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
+									<FileText class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Auto-generate executive summaries</h3>
+									<p class="text-sm text-zinc-400">Transform transcripts into actionable insights instantly</p>
+								</div>
 							</div>
 						</div>
-						<div class="flex items-center gap-2">
-							<button class="flex items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition-all shadow-lg shadow-red-500/20">
-								<Download class="w-3.5 h-3.5" />
-								Save PDF
-							</button>
-							<button class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-all shadow-lg shadow-blue-500/20">
-								<Share class="w-3.5 h-3.5" />
-								Share
-							</button>
+
+						<!-- AI-powered analysis (highlighted) -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden border-l-2 border-red-500"
+							in:fly={{ y: 20, duration: 600, delay: 400 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-red-500/5 via-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+									<Brain class="w-5 h-5 text-red-500" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Run custom AI analysis</h3>
+									<p class="text-sm text-zinc-400">Build frameworks tailored to your specific needs</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Automated actions -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							in:fly={{ y: 20, duration: 600, delay: 500 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
+									<Zap class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Take automatic actions</h3>
+									<p class="text-sm text-zinc-400">Send follow-ups, sync to CRM, track stakeholders</p>
+								</div>
+							</div>
 						</div>
 					</div>
 
-					<!-- Main Content Area -->
-					<div class="grid grid-cols-[1fr_1.5fr] h-[700px]">
-						<!-- Left Sidebar: Templates & Goals -->
-						<div class="border-r border-zinc-800 bg-zinc-950/50 flex flex-col">
-							<!-- Tab Switcher -->
-							<div class="flex border-b border-zinc-800 bg-zinc-900/50">
-								<button 
-									on:click={() => activeTab = 'templates'}
-									class="flex-1 px-4 py-2.5 text-xs font-semibold transition-all {activeTab === 'templates' ? 'text-white bg-zinc-950 border-b-2 border-red-500' : 'text-zinc-500 hover:text-zinc-300'}"
-								>
-									PREBUILT TEMPLATES
+					<!-- CTA Link with hover effect -->
+					<a 
+						href="/" 
+						class="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-medium group"
+						in:fly={{ y: 20, duration: 600, delay: 700 }}
+					>
+						<span>Get started with AI Notetaker</span>
+						<ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
+					</a>
+				</div>
+
+				<!-- Right Column - Product Showcase -->
+				<div 
+					class="relative tilt-hover"
+					in:fly={{ x: 30, duration: 800, delay: 400 }}
+					style="transform: perspective(1000px) rotateY({mouseX * -2}deg) rotateX({mouseY * 2}deg)"
+				>
+					<!-- Floating decorative elements -->
+					<div class="absolute -top-8 -right-8 w-32 h-32 bg-red-500/20 rounded-full blur-3xl float"></div>
+					<div class="absolute -bottom-8 -left-8 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl float-slow"></div>
+					<!-- Floating decorative elements -->
+					<div class="absolute -top-8 -right-8 w-32 h-32 bg-red-500/20 rounded-full blur-3xl float"></div>
+					<div class="absolute -bottom-8 -left-8 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl float-slow"></div>
+					
+					<!-- Main Product Interface with enhanced depth -->
+					<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
+						<!-- App Chrome -->
+						<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
+							<div class="flex items-center gap-3">
+								<div class="flex gap-1.5">
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-red-500 transition-colors cursor-pointer"></div>
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-yellow-500 transition-colors cursor-pointer"></div>
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-green-500 transition-colors cursor-pointer"></div>
+								</div>
+								<div class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors">
+									<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
+									<span class="text-sm font-black tracking-tight text-white">
+										SPIKED<span class="text-red-500">AI</span>
+									</span>
+								</div>
+							</div>
+							<div class="flex items-center gap-2">
+								<button class="flex items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition-all shadow-lg shadow-red-500/20">
+									<Download class="w-3.5 h-3.5" />
+									Save PDF
 								</button>
-								<button 
-									on:click={() => activeTab = 'custom'}
-									class="flex-1 px-4 py-2.5 text-xs font-semibold transition-all {activeTab === 'custom' ? 'text-white bg-zinc-950 border-b-2 border-red-500' : 'text-zinc-500 hover:text-zinc-300'}"
-								>
-									CUSTOM GOALS ({customGoals.length})
+								<button class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-all shadow-lg shadow-blue-500/20">
+									<Share class="w-3.5 h-3.5" />
+									Share
 								</button>
 							</div>
+						</div>
 
-							<!-- Content Area -->
-							<div class="flex-1 overflow-y-auto scrollbar-thin">
-								{#if activeTab === 'templates'}
-									<div class="p-3 space-y-2">
-										{#each prebuiltTemplates as template}
-											<button
-												on:click={() => selectTemplate(template.id)}
-												on:mouseenter={() => hoveredTemplate = template.id}
-												on:mouseleave={() => hoveredTemplate = null}
-												class="w-full flex items-start gap-3 p-3 rounded-lg border transition-all text-left group {selectedTemplate === template.id ? 'bg-' + template.color + '-950/40 border-' + template.color + '-900/70 shadow-lg' : 'bg-zinc-900/40 border-zinc-800 hover:bg-zinc-900 hover:border-zinc-700'}"
-											>
-												<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-{template.color}-600 to-{template.color}-700 flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
-													<svelte:component this={template.icon} class="w-4 h-4 text-white" />
-												</div>
-												<div class="flex-1 min-w-0">
-													<h5 class="text-xs font-bold text-white mb-0.5">{template.name}</h5>
-													<p class="text-[10px] text-zinc-400 leading-relaxed">{template.description}</p>
-												</div>
-												{#if selectedTemplate === template.id}
-													<CheckCircle class="w-4 h-4 text-{template.color}-500 flex-shrink-0 animate-pulse" />
-												{:else}
-													<Sparkles class="w-4 h-4 text-zinc-600 group-hover:text-red-500 flex-shrink-0 transition-colors" />
-												{/if}
-											</button>
-										{/each}
+						<!-- Main Content Area -->
+						<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-1 relative overflow-hidden">
+							<!-- Animated gradient overlay -->
+							<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
+							
+							<div class="grid grid-cols-[280px_1fr] h-[600px] relative z-10">
+								
+								<!-- Left Sidebar -->
+								<div class="border-r border-zinc-800/50 p-4 space-y-6 backdrop-blur-sm">
+									<!-- Logo & New Session -->
+									<div class="flex items-center justify-between">
+										<div class="flex items-center gap-2 group cursor-pointer">
+											<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center glow-red group-hover:scale-110 transition-transform">
+												<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
+											</div>
+											<span class="text-sm font-black tracking-tight text-white group-hover:text-red-400 transition-colors">
+												SPIKED<span class="text-red-500 group-hover:text-red-400">AI</span>
+											</span>
+										</div>
 									</div>
-								{:else if activeTab === 'custom'}
-									<div class="p-3">
-										<!-- Create Custom Template Button -->
-										<button class="w-full flex items-center gap-2 p-3 mb-3 bg-gradient-to-r from-red-950/40 to-red-900/20 border border-red-900/50 rounded-lg hover:from-red-950/60 hover:to-red-900/40 transition-all group">
-											<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
-												<span class="text-white text-lg font-bold">+</span>
-											</div>
-											<div class="flex-1 text-left">
-												<h5 class="text-xs font-bold text-white">Create Custom Template</h5>
-												<p class="text-[10px] text-red-400">Build your own analysis framework</p>
-											</div>
+
+									<button class="w-full flex items-center gap-2 px-3 py-2 glass rounded-lg text-red-400 text-sm font-medium hover:bg-red-500/20 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/20">
+										<Sparkles class="w-4 h-4" />
+										<span>New Analysis</span>
+									</button>
+
+									<!-- Tab Switcher -->
+									<div class="space-y-1">
+										<button 
+											onclick={() => activeTab = 'templates'}
+											class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 text-sm group {activeTab === 'templates' ? 'glass text-white shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'}"
+										>
+											<Layers class="w-4 h-4 {activeTab === 'templates' ? 'text-red-500 animate-pulse' : ''} group-hover:scale-110 transition-transform" />
+											<span>Templates</span>
 										</button>
+										<button 
+											onclick={() => activeTab = 'custom'}
+											class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 text-sm group {activeTab === 'custom' ? 'glass text-white shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'}"
+										>
+											<Target class="w-4 h-4 {activeTab === 'custom' ? 'text-red-500 animate-pulse' : ''} group-hover:scale-110 transition-transform" />
+											<span>Custom Goals ({customGoals.length})</span>
+										</button>
+									</div>
 
-										<!-- Custom Goals List -->
-										<div class="space-y-2">
-											{#each customGoals as goal}
-												<button
-													on:click={() => selectCustomGoal(goal.id)}
-													class="w-full flex items-start gap-2.5 p-3 rounded-lg border transition-all text-left group {selectedCustomGoal === goal.id ? 'bg-zinc-900 border-zinc-700' : 'bg-zinc-900/40 border-zinc-800 hover:bg-zinc-900/60'}"
-												>
-													<div class="w-7 h-7 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0 shadow-md">
-														<Target class="w-3.5 h-3.5 text-white" />
+									<!-- Sessions -->
+									<div>
+										<p class="text-[10px] font-semibold text-zinc-600 uppercase tracking-wider mb-2 px-1">Recent</p>
+										<div class="space-y-1">
+											<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group glass text-red-400 shadow-md">
+												<BarChart3 class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+												<span class="truncate">Q4 Analysis</span>
+											</button>
+											<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group text-zinc-500 hover:text-zinc-400 hover:bg-zinc-800/30">
+												<FileText class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+												<span class="truncate">Client Meeting</span>
+											</button>
+											<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group text-zinc-500 hover:text-zinc-400 hover:bg-zinc-800/30">
+												<RefreshCw class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+												<span class="truncate">Weekly Sync</span>
+											</button>
+										</div>
+									</div>
+								</div>
+
+								<!-- Main Panel - Dynamic Content Based on Active Tab -->
+								<div class="p-5 overflow-hidden relative">
+									<!-- Background ambient glow -->
+									<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-transparent opacity-30"></div>
+									
+									{#if activeTab === 'templates'}
+										<!-- Templates View -->
+										<div class="relative h-full flex flex-col">
+											<div class="mb-4">
+												<h3 class="text-sm font-semibold text-white mb-1">Template Library</h3>
+												<p class="text-xs text-zinc-500">Choose a pre-built analysis template</p>
+											</div>
+
+											<div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+												{#each templates as template}
+													<button
+														onclick={() => selectedTemplate = template}
+														class="w-full text-left p-4 rounded-xl transition-all duration-300 group hover:scale-[1.02] {selectedTemplate?.id === template.id ? 'glass border border-red-500/30 shadow-lg shadow-red-500/10' : 'glass-subtle hover:glass'}"
+													>
+														<div class="flex items-start gap-3">
+															<div class="w-10 h-10 rounded-lg bg-gradient-to-br {template.color} flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+																{#if template.icon}
+																	<template.icon class="w-5 h-5 text-white" />
+																{/if}
+															</div>
+															<div class="flex-1 min-w-0">
+																<div class="flex items-center gap-2 mb-1">
+																	<h4 class="font-semibold text-white text-sm group-hover:text-red-400 transition-colors">{template.title}</h4>
+																	{#if selectedTemplate?.id === template.id}
+																		<CheckCircle2 class="w-4 h-4 text-red-500 animate-pulse" />
+																	{/if}
+																</div>
+																<p class="text-xs text-zinc-400 leading-relaxed">{template.description}</p>
+															</div>
+														</div>
+													</button>
+												{/each}
+											</div>
+										</div>
+									{:else}
+										<!-- Custom Goals View -->
+										<div class="relative h-full flex flex-col">
+											<div class="mb-4">
+												<h3 class="text-sm font-semibold text-white mb-1">Custom Analysis Goals</h3>
+												<p class="text-xs text-zinc-500">Personalized objectives for your team</p>
+											</div>
+
+											<div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+												{#each customGoals as goal}
+													<div class="p-4 glass-subtle rounded-xl border border-zinc-800/50 hover:border-red-500/20 transition-all duration-300 group hover:glass">
+														<div class="flex items-start gap-3">
+															<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
+																<Target class="w-4 h-4 text-white" />
+															</div>
+															<div class="flex-1 min-w-0">
+																<h4 class="font-semibold text-white text-sm mb-1 group-hover:text-red-400 transition-colors">{goal.title}</h4>
+																<p class="text-xs text-zinc-400 leading-relaxed mb-2">{goal.description}</p>
+																<div class="flex flex-wrap gap-1.5">
+																	{#each goal.triggers as trigger}
+																		<span class="text-[10px] px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
+																			{trigger}
+																		</span>
+																	{/each}
+																</div>
+															</div>
+														</div>
 													</div>
-													<div class="flex-1 min-w-0">
-														<h5 class="text-xs font-semibold text-white mb-1">{goal.text}</h5>
-														<p class="text-[10px] text-zinc-500 flex items-center gap-1">
-															<span class="font-medium">Status:</span>
-															<span class="text-zinc-400">{goal.status}</span>
-														</p>
+												{/each}
+
+												<!-- Add New Goal Button -->
+												<button class="w-full p-4 rounded-xl border-2 border-dashed border-zinc-800 hover:border-red-500/50 transition-all duration-300 group hover:bg-zinc-900/50">
+													<div class="flex items-center justify-center gap-2 text-zinc-500 group-hover:text-red-400">
+														<Plus class="w-5 h-5 group-hover:scale-110 transition-transform" />
+														<span class="text-sm font-medium">Add Custom Goal</span>
 													</div>
-													<AlertCircle class="w-4 h-4 text-zinc-600 flex-shrink-0 mt-0.5" />
 												</button>
-											{/each}
+											</div>
 										</div>
-									</div>
-								{/if}
-							</div>
-						</div>
-
-						<!-- Right Panel: Template Output / AI Assistant -->
-						<div class="flex flex-col bg-gradient-to-br from-zinc-950 to-zinc-900">
-							<!-- Action Bar -->
-							<div class="px-4 py-2.5 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
-								<div class="flex items-center gap-2">
-									<Brain class="w-4 h-4 text-red-500" />
-									<h5 class="text-xs font-bold text-white">
-										{#if showAIChat}
-											AI Assistant
-										{:else}
-											Selected Templates Output
-										{/if}
-									</h5>
-								</div>
-								<div class="flex items-center gap-2">
-									<button 
-										on:click={() => showAIChat = !showAIChat}
-										class="flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-semibold rounded-lg transition-all {showAIChat ? 'bg-red-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'}"
-									>
-										<Bot class="w-3 h-3" />
-										AI Chat
-									</button>
-									<button class="px-2.5 py-1 text-[10px] font-semibold text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-all">
-										<Settings class="w-3 h-3" />
-									</button>
-									<button class="flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 rounded-lg transition-all shadow-lg shadow-blue-500/20">
-										<Zap class="w-3 h-3" />
-										Run & Generate PDF
-									</button>
-								</div>
+									{/if}
 							</div>
 
-							<!-- Output Content -->
-							<div class="flex-1 overflow-y-auto p-4 scrollbar-thin">
-								{#if showAIChat}
-									<!-- AI Assistant Chat Interface -->
-									<div class="h-full flex flex-col">
-										<div class="flex-1 space-y-3 mb-4">
-											{#each aiChatMessages as message}
-												{#if message.type === 'user'}
-													<div class="flex justify-end">
-														<div class="bg-red-600 text-white px-4 py-2 rounded-2xl rounded-tr-sm max-w-[80%]">
-															<p class="text-xs">{message.text}</p>
-															<span class="text-[9px] text-red-200 mt-1 block">{message.time}</span>
-														</div>
-													</div>
-												{:else}
-													<div class="flex gap-2">
-														<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-															<Brain class="w-4 h-4 text-white" />
-														</div>
-														<div class="flex-1 bg-zinc-900 border border-zinc-800 px-4 py-3 rounded-2xl rounded-tl-sm">
-															<p class="text-xs text-zinc-300 leading-relaxed whitespace-pre-line mb-2">{message.text}</p>
-															<span class="text-[9px] text-zinc-500">{message.time}</span>
-														</div>
-													</div>
-												{/if}
-											{/each}
+							<!-- Right Panel - Output Display -->
+							<div class="flex flex-col h-full">
+								<!-- Header -->
+								<div class="p-4 border-b border-zinc-800/50 backdrop-blur-sm">
+									<div class="flex items-center justify-between mb-2">
+										<div class="flex items-center gap-2">
+											<Brain class="w-4 h-4 text-red-500 animate-pulse" />
+											<h3 class="text-sm font-semibold text-white">AI Analysis Output</h3>
 										</div>
-										<div class="flex gap-2">
-											<input 
-												type="text" 
-												placeholder="Ask me anything about this meeting..."
-												class="flex-1 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-red-500/50"
-											/>
-											<button class="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:shadow-lg hover:shadow-red-500/50 transition-all">
-												<Send class="w-4 h-4" />
+										<div class="flex items-center gap-2">
+											<button class="px-3 py-1.5 glass rounded-lg text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5">
+												<Download class="w-3.5 h-3.5" />
+												<span>Export PDF</span>
+											</button>
+											<button class="px-3 py-1.5 glass rounded-lg text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5">
+												<Share class="w-3.5 h-3.5" />
+												<span>Share</span>
 											</button>
 										</div>
 									</div>
-								{:else if selectedTemplate && templateOutputs[selectedTemplate]}
-									<!-- Template Output Display -->
-									<div class="animate-fadeIn">
-										<!-- Header -->
-										<div class="bg-gradient-to-r from-red-950/40 to-red-900/20 border border-red-900/50 rounded-xl p-4 mb-4">
-											<div class="flex items-start justify-between mb-3">
-												<div class="flex items-center gap-2">
-													<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg">
-														<Sparkles class="w-4 h-4 text-white" />
-													</div>
-													<div>
-														<h3 class="text-sm font-bold text-white">SpikedAI</h3>
-														<p class="text-[10px] text-red-400">Selected Templates Report</p>
-													</div>
-												</div>
-												<span class="text-[10px] text-zinc-500">Generated: {new Date().toLocaleDateString()}</span>
-											</div>
-											<h2 class="text-lg font-bold text-white">{templateOutputs[selectedTemplate].title}</h2>
-										</div>
+									{#if selectedTemplate}
+										<p class="text-xs text-zinc-500">Template: <span class="text-red-400">{selectedTemplate.title}</span></p>
+									{/if}
+								</div>
 
-										<!-- Content Sections -->
+								<!-- Content -->
+								<div class="flex-1 overflow-y-auto p-5 custom-scrollbar">
+									{#if selectedTemplate}
+										<!-- Template output content -->
 										<div class="space-y-4">
-											{#each templateOutputs[selectedTemplate].sections as section}
-												<div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 hover:border-zinc-700 transition-all">
-													<h4 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
-														<Lightbulb class="w-4 h-4 text-red-500" />
-														{section.heading}
-													</h4>
-													{#if section.items}
-														<ul class="space-y-2">
-															{#each section.items as item}
-																<li class="flex items-start gap-2 text-xs text-zinc-300 leading-relaxed">
-																	<span class="text-red-500 mt-1">•</span>
-																	<span>{@html item}</span>
-																</li>
-															{/each}
-														</ul>
-													{:else if section.content}
-														<p class="text-xs text-zinc-300 leading-relaxed">{section.content}</p>
-													{/if}
+											<!-- Summary Card -->
+											<div class="glass rounded-xl p-4 border border-zinc-800/50">
+												<div class="flex items-center gap-2 mb-3">
+													<div class="w-8 h-8 rounded-lg bg-gradient-to-br {selectedTemplate.color} flex items-center justify-center">
+														{#if selectedTemplate.icon}
+															<selectedTemplate.icon class="w-4 h-4 text-white" />
+														{/if}
+													</div>
+													<h4 class="font-semibold text-white text-sm">{selectedTemplate.title}</h4>
 												</div>
-											{/each}
-										</div>
+												<p class="text-xs text-zinc-400 leading-relaxed mb-4">
+													AI-generated analysis based on meeting transcript using the <span class="text-red-400">{selectedTemplate.title}</span> template framework.
+												</p>
 
-										<!-- Action Buttons -->
-										<div class="mt-6 flex gap-3">
-											<button class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-red-500/30">
-												<Mail class="w-4 h-4" />
-												Send Follow-Up Email
-											</button>
-											<button class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-zinc-800 hover:bg-zinc-700 text-white text-sm font-semibold rounded-xl transition-all">
-												<Activity class="w-4 h-4" />
-												Sync to CRM
-											</button>
-										</div>
-									</div>
-								{:else}
-									<!-- Empty State -->
-									<div class="h-full flex items-center justify-center">
-										<div class="text-center max-w-sm">
-											<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600/20 to-red-700/20 border border-red-900/50 flex items-center justify-center mx-auto mb-4">
-												<FileText class="w-8 h-8 text-red-500" />
+												<!-- Key Insights -->
+												<div class="space-y-3">
+													<div class="flex items-start gap-3">
+														<div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+															<CheckCircle2 class="w-3.5 h-3.5 text-red-400" />
+														</div>
+														<div>
+															<h5 class="text-xs font-semibold text-white mb-1">Key Discussion Points</h5>
+															<p class="text-xs text-zinc-400 leading-relaxed">
+																Product roadmap priorities for Q4, technical architecture review, and customer feedback integration strategy.
+															</p>
+														</div>
+													</div>
+
+													<div class="flex items-start gap-3">
+														<div class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+															<CheckCircle2 class="w-3.5 h-3.5 text-blue-400" />
+														</div>
+														<div>
+															<h5 class="text-xs font-semibold text-white mb-1">Action Items</h5>
+															<ul class="space-y-1.5">
+																<li class="text-xs text-zinc-400 flex items-start gap-2">
+																	<span class="text-red-500">•</span>
+																	<span><strong class="text-white">John:</strong> Finalize API documentation by Friday</span>
+																</li>
+																<li class="text-xs text-zinc-400 flex items-start gap-2">
+																	<span class="text-red-500">•</span>
+																	<span><strong class="text-white">Sarah:</strong> Schedule follow-up with design team</span>
+																</li>
+																<li class="text-xs text-zinc-400 flex items-start gap-2">
+																	<span class="text-red-500">•</span>
+																	<span><strong class="text-white">Team:</strong> Review pricing strategy proposal</span>
+																</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="flex items-start gap-3">
+														<div class="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+															<CheckCircle2 class="w-3.5 h-3.5 text-green-400" />
+														</div>
+														<div>
+															<h5 class="text-xs font-semibold text-white mb-1">Decisions Made</h5>
+															<p class="text-xs text-zinc-400 leading-relaxed">
+																Approved migration to new infrastructure Q4. Budget allocated for additional engineering resources. Go-live date set for October 15th.
+															</p>
+														</div>
+													</div>
+
+													<div class="flex items-start gap-3">
+														<div class="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+															<Target class="w-3.5 h-3.5 text-purple-400" />
+														</div>
+														<div>
+															<h5 class="text-xs font-semibold text-white mb-1">Next Steps</h5>
+															<p class="text-xs text-zinc-400 leading-relaxed">
+																Schedule technical deep-dive session next week. Prepare stakeholder presentation for board meeting. Update project timeline based on new requirements.
+															</p>
+														</div>
+													</div>
+												</div>
 											</div>
-											<h3 class="text-lg font-bold text-white mb-2">No Template Selected</h3>
-											<p class="text-sm text-zinc-400 leading-relaxed">
-												Select a prebuilt template or custom goal from the left sidebar to generate AI-powered insights from your meeting transcript.
-											</p>
+
+											<!-- Stakeholder Analysis (if applicable) -->
+											{#if selectedTemplate.id === 'stakeholder'}
+												<div class="glass rounded-xl p-4 border border-zinc-800/50">
+													<div class="flex items-center gap-2 mb-3">
+														<Users class="w-4 h-4 text-green-500" />
+														<h4 class="font-semibold text-white text-sm">Stakeholder Map</h4>
+													</div>
+													<div class="space-y-2">
+														<div class="flex items-center gap-3 p-2 rounded-lg bg-zinc-900/50">
+															<div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-xs font-bold text-white">
+																JD
+															</div>
+															<div class="flex-1">
+																<p class="text-xs font-semibold text-white">John Doe</p>
+																<p class="text-[10px] text-zinc-500">Decision Maker • High Influence</p>
+															</div>
+														</div>
+														<div class="flex items-center gap-3 p-2 rounded-lg bg-zinc-900/50">
+															<div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-xs font-bold text-white">
+																SM
+															</div>
+															<div class="flex-1">
+																<p class="text-xs font-semibold text-white">Sarah Miller</p>
+																<p class="text-[10px] text-zinc-500">Technical Champion • Medium Influence</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											{/if}
+
+											<!-- Action Buttons -->
+											<div class="flex gap-2">
+												<button class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-xs font-semibold rounded-xl transition-all shadow-lg shadow-red-500/20 hover:shadow-red-500/40">
+													<Mail class="w-4 h-4" />
+													<span>Send Follow-Up</span>
+												</button>
+												<button class="flex-1 flex items-center justify-center gap-2 px-4 py-3 glass hover:bg-zinc-800/50 text-white text-xs font-semibold rounded-xl transition-all">
+													<Activity class="w-4 h-4" />
+													<span>Sync to CRM</span>
+												</button>
+											</div>
 										</div>
-									</div>
-								{/if}
+									{:else}
+										<!-- Empty state -->
+										<div class="h-full flex items-center justify-center">
+											<div class="text-center max-w-xs">
+												<div class="w-16 h-16 rounded-2xl glass mx-auto mb-4 flex items-center justify-center">
+													<FileText class="w-8 h-8 text-zinc-600" />
+												</div>
+												<h4 class="font-semibold text-white text-sm mb-2">No Template Selected</h4>
+												<p class="text-xs text-zinc-500 leading-relaxed">
+													Choose a template or custom goal from the sidebar to generate AI-powered insights.
+												</p>
+											</div>
+										</div>
+									{/if}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 		</div>
 	</section>
 
@@ -569,7 +848,7 @@ Follow-up questions:
 					</div>
 					<h3 class="text-lg font-bold text-white mb-2">Auto-Sync to CRM</h3>
 					<p class="text-zinc-400 text-sm leading-relaxed">
-						Meeting insights automatically populate your CRM. Salesforce, HubSpot, or custom systems—no manual data entry ever again.
+						Meeting insights automatically populate your CRM. Salesforce, HubSpot, monday.com, or custom systems—no manual data entry ever again.
 					</p>
 				</div>
 

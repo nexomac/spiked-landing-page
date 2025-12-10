@@ -1,13 +1,53 @@
 <script>
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import { Sparkles, MessageSquare, Brain, FileText, Users, Calendar } from 'lucide-svelte';
+	import { Sparkles, MessageSquare, Brain, FileText, Users, Calendar, ArrowRight, Zap, Target, CheckCircle2, TrendingUp, Clock, BarChart3 } from 'lucide-svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
+	import { fly, fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 	// Track selected question - default to 'roi'
-	let selectedQuestion = 'roi';
+	let selectedQuestion = $state('roi');
 	// Track hovered question for preview
-	let hoveredQuestion = null;
+	let hoveredQuestion = $state(null);
+	
+	// Parallax and animation states
+	let mouseX = $state(0);
+	let mouseY = $state(0);
+	let scrollY = $state(0);
+
+	// Auto-rotate questions for demo
+	let isAutoPlaying = $state(true);
+	
+	onMount(() => {
+		const questionTypes = ['roi', 'pricing', 'security', 'customization', 'integrations'];
+		const interval = setInterval(() => {
+			if (isAutoPlaying) {
+				const currentIndex = questionTypes.indexOf(selectedQuestion);
+				selectedQuestion = questionTypes[(currentIndex + 1) % questionTypes.length];
+			}
+		}, 5000);
+		
+		// Handle mouse movement for parallax
+		const handleMouseMove = (e) => {
+			mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+			mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+		};
+		
+		// Handle scroll for parallax
+		const handleScroll = () => {
+			scrollY = window.scrollY;
+		};
+		
+		window.addEventListener('mousemove', handleMouseMove);
+		window.addEventListener('scroll', handleScroll);
+		
+		return () => {
+			clearInterval(interval);
+			window.removeEventListener('mousemove', handleMouseMove);
+			window.removeEventListener('scroll', handleScroll);
+		};
+	});
 
 	// Dialogue data with questions and AI responses
 	const dialogues = [
@@ -262,7 +302,7 @@
 			title: 'Native Integrations Available',
 			description: 'Seamless connections with your existing tech stack:',
 			points: [
-				{ label: 'CRM platforms', value: 'Salesforce, HubSpot, Pipedrive' },
+				{ label: 'CRM platforms', value: 'Salesforce, HubSpot, monday.com' },
 				{ label: 'Communication', value: 'Slack, MS Teams, Zoom' },
 				{ label: 'Setup time', value: 'OAuth connection in under 5 minutes' },
 				{ label: 'Custom API', value: 'REST API for custom integrations' }
@@ -274,6 +314,7 @@
 
 	function selectQuestion(questionType) {
 		selectedQuestion = questionType;
+		isAutoPlaying = false;
 	}
 
 	function handleMouseEnter(questionType) {
@@ -293,217 +334,471 @@
 </svelte:head>
 
 <style>
-	/* Custom scrollbar styles */
+	/* Smooth scrollbar */
 	.scrollbar-thin::-webkit-scrollbar {
-		width: 6px;
+		width: 4px;
 	}
-
 	.scrollbar-thin::-webkit-scrollbar-track {
-		background: #18181b;
-		border-radius: 3px;
+		background: transparent;
 	}
-
 	.scrollbar-thin::-webkit-scrollbar-thumb {
-		background: #3f3f46;
-		border-radius: 3px;
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 2px;
 	}
-
 	.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-		background: #52525b;
+		background: rgba(255, 255, 255, 0.2);
 	}
 
-	/* Fade in animation for AI response */
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	/* Gradient text */
+	.gradient-text {
+		background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
-	.animate-fadeIn {
-		animation: fadeIn 0.3s ease-out;
+	/* Enhanced glass morphism with depth */
+	.glass {
+		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		box-shadow: 
+			0 8px 32px 0 rgba(0, 0, 0, 0.37),
+			inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+	}
+
+	/* Enhanced hover lift with smooth shadows */
+	.hover-lift {
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+	.hover-lift:hover {
+		transform: translateY(-4px) scale(1.01);
+		box-shadow: 
+			0 20px 60px rgba(0, 0, 0, 0.4),
+			0 0 40px rgba(239, 68, 68, 0.1);
+	}
+
+	/* Animated gradient border with shimmer */
+	.animated-border {
+		position: relative;
+		background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+		animation: borderShimmer 3s ease-in-out infinite;
+	}
+	.animated-border::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.1), transparent, rgba(239, 68, 68, 0.2));
+		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		animation: rotateBorder 4s linear infinite;
+	}
+
+	@keyframes borderShimmer {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.7; }
+	}
+
+	@keyframes rotateBorder {
+		0% { background-position: 0% 50%; }
+		100% { background-position: 200% 50%; }
+	}
+
+	/* Pulse animation with ring */
+	@keyframes pulse-ring {
+		0% { transform: scale(1); opacity: 1; }
+		100% { transform: scale(1.5); opacity: 0; }
+	}
+	.pulse-ring::before {
+		content: '';
+		position: absolute;
+		inset: -2px;
+		border-radius: 50%;
+		border: 2px solid currentColor;
+		animation: pulse-ring 1.5s ease-out infinite;
+	}
+
+	/* Floating animation for decorative elements */
+	@keyframes float {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		33% { transform: translateY(-20px) rotate(5deg); }
+		66% { transform: translateY(-10px) rotate(-5deg); }
+	}
+	
+	@keyframes float-slow {
+		0%, 100% { transform: translateY(0px) translateX(0px); }
+		50% { transform: translateY(-30px) translateX(10px); }
+	}
+
+	.float {
+		animation: float 6s ease-in-out infinite;
+	}
+	
+	.float-slow {
+		animation: float-slow 8s ease-in-out infinite;
+	}
+
+	/* Glow effect for icons and cards */
+	.glow-red {
+		box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+	}
+	
+	.glow-red:hover {
+		box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+	}
+
+	/* Enhanced grid pattern with depth */
+	.depth-grid {
+		background-image: 
+			linear-gradient(rgba(239, 68, 68, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(239, 68, 68, 0.03) 1px, transparent 1px);
+		background-size: 50px 50px;
+		mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+		-webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+	}
+
+	/* Layered shadows for depth */
+	.depth-shadow {
+		box-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.2),
+			0 4px 8px rgba(0, 0, 0, 0.15),
+			0 8px 16px rgba(0, 0, 0, 0.1),
+			0 16px 32px rgba(0, 0, 0, 0.05);
+	}
+
+	/* Tilt effect on hover */
+	.tilt-hover {
+		transform-style: preserve-3d;
+		transition: transform 0.3s ease;
+	}
+	
+	.tilt-hover:hover {
+		transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+	}
+
+	/* Particle background effect */
+	.particle-bg {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		pointer-events: none;
 	}
 </style>
 
-<div class="min-h-screen bg-black font-sans antialiased text-gray-50">
+<div class="min-h-screen bg-black text-white overflow-hidden">
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="ai-assistance" />
 	
-	<!-- Hero Section -->
-	<section class="relative pt-40 pb-20 overflow-hidden">
-		<!-- Background Effects -->
-		<div class="absolute inset-0 overflow-hidden pointer-events-none">
-			<div class="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-1/4 -right-48 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
-		</div>
+	<!-- Animated Background Layer -->
+	<div class="particle-bg fixed inset-0">
+		<!-- Dynamic gradient orbs -->
+		<div 
+			class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl float"
+			style="transform: translate({mouseX * 20}px, {mouseY * 20}px)"
+		></div>
+		<div 
+			class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-3xl float-slow"
+			style="transform: translate({mouseX * -15}px, {mouseY * -15}px)"
+		></div>
+		<div 
+			class="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"
+			style="transform: translate({mouseX * 25}px, {mouseY * 25}px)"
+		></div>
+		
+		<!-- Grid overlay with parallax -->
+		<div 
+			class="depth-grid absolute inset-0"
+			style="transform: translateY({scrollY * 0.1}px)"
+		></div>
+	</div>
+	
+	<!-- Hero Section - Writer.com Style Split Layout -->
+	<section class="relative min-h-screen pt-32 pb-24">
+		<!-- Background gradient -->
+		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
+		
+		<div class="relative max-w-7xl mx-auto px-6">
+			<!-- Split Layout Container -->
+			<div class="grid lg:grid-cols-2 gap-16 items-start">
+				
+				<!-- Left Column - Content -->
+				<div class="lg:sticky lg:top-32 z-10">
+					<!-- Label with subtle animation -->
+					<div 
+						class="inline-flex items-center gap-2 px-3 py-1.5 glass rounded-full mb-8 hover:scale-105 transition-transform"
+						in:fly={{ y: -20, duration: 600, delay: 100 }}
+					>
+						<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
+						<span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">AI Assistance</span>
+					</div>
 
-		<div class="max-w-7xl mx-auto px-6 relative">
-			<div class="text-center mb-16">
-				<div class="inline-flex items-center gap-2 px-4 py-2 bg-red-950/30 border border-red-900/50 rounded-full mb-6">
-					<Sparkles class="w-4 h-4 text-red-500" />
-					<span class="text-sm font-semibold text-red-400">Real-Time AI Assistance</span>
-				</div>
-				<h1 class="heading-hero text-4xl md:text-6xl text-white mb-6">
-					Never Get Caught Off Guard<br/>
-					<span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">During a Sales Call</span>
-				</h1>
-				<p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
-					Instant, accurate answers from your entire knowledge base—delivered in under 2 seconds
-				</p>
-				<p class="text-lg text-zinc-500 max-w-2xl mx-auto">
-					Stop scrambling for information mid-call. SpikedAI analyzes your product docs, pricing sheets, case studies, and competitive intel in real-time, giving you the perfect answer exactly when you need it.
-				</p>
-			</div>
+					<!-- Main Headline with shimmer effect -->
+					<h1 
+						class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-8"
+						in:fly={{ y: 20, duration: 700, delay: 200 }}
+					>
+						<span class="gradient-text block mb-2">Real-time AI answers</span>
+						<span class="text-white block">from your sales docs</span>
+					</h1>
 
-			<!-- Live Demo Section -->
-                <div class="max-w-5xl mx-auto">
-                	<div class="card-surface rounded-xl border border-zinc-800 p-4 shadow-2xl">
-					<!-- App Header Bar -->
-					<div class="bg-gradient-to-r from-zinc-900 to-zinc-950 rounded-t-xl border-b border-zinc-800 px-4 py-3 flex items-center justify-between">
-						<div class="flex items-center gap-2">
-							<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg">
-								<Sparkles class="w-4 h-4 text-white" />
-							</div>
-							<div>
-										<h4 class="text-sm font-semibold text-white">SpikedAI</h4>
-										<p class="text-xs text-zinc-400">Conversational AI Platform</p>
+					<!-- Three Feature Cards -->
+					<div class="space-y-4 mb-10">
+						<!-- Instant answers during calls -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							in:fly={{ y: 20, duration: 600, delay: 300 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
+									<Brain class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Instant answers during calls</h3>
+									<p class="text-sm text-zinc-400">Get contextual responses from your sales docs in real-time</p>
+								</div>
 							</div>
 						</div>
-						<div class="flex items-center gap-2">
-							<div class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-950/40 border border-amber-900/50 rounded-full">
-								<div class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
-								<span class="text-xs font-medium text-amber-400">LISTENING</span>
+
+						<!-- Powered by your knowledge base (highlighted) -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden border-l-2 border-red-500"
+							in:fly={{ y: 20, duration: 600, delay: 400 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-red-500/5 via-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+									<MessageSquare class="w-5 h-5 text-red-500" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Powered by your knowledge base</h3>
+									<p class="text-sm text-zinc-400">AI trained on your specific sales and solutions documentation</p>
+								</div>
 							</div>
-							<button class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-lg shadow-red-500/20">
-								Stop Agent
-							</button>
+						</div>
+
+						<!-- Never miss a detail -->
+						<div 
+							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							in:fly={{ y: 20, duration: 600, delay: 500 }}
+						>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="flex items-start gap-4 relative z-10">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
+									<FileText class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Never miss a detail</h3>
+									<p class="text-sm text-zinc-400">Handle objections and technical questions with confidence</p>
+								</div>
+							</div>
 						</div>
 					</div>
 
-					<!-- Main Content Area with Two Panels -->
-					<div class="bg-zinc-950 rounded-b-xl border border-t-0 border-zinc-800 overflow-hidden">
-						<div class="grid grid-cols-[1fr_1.2fr] h-[600px]">
-							<!-- Left Panel: Live Transcription -->
-							<div class="border-r border-zinc-800 flex flex-col bg-zinc-950/50">
-								<div class="px-3 py-2 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
-									<div class="flex items-center gap-2">
-										<MessageSquare class="w-4 h-4 text-zinc-400" />
-										<h5 class="text-xs font-bold text-white">Live Transcription</h5>
-									</div>
-									<span class="text-xs text-zinc-500">Real-time meeting insights</span>
+					<!-- CTA Link with hover effect -->
+					<a 
+						href="/" 
+						class="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-medium group"
+						in:fly={{ y: 20, duration: 600, delay: 700 }}
+					>
+						<span>Get started with AI assistance</span>
+						<ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
+					</a>
+				</div>
+
+				<!-- Right Column - Product Showcase -->
+				<div 
+					class="relative tilt-hover"
+					in:fly={{ x: 30, duration: 800, delay: 400 }}
+					style="transform: perspective(1000px) rotateY({mouseX * -2}deg) rotateX({mouseY * 2}deg)"
+				>
+					<!-- Floating decorative elements -->
+					<div class="absolute -top-8 -right-8 w-32 h-32 bg-red-500/20 rounded-full blur-3xl float"></div>
+					<div class="absolute -bottom-8 -left-8 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl float-slow"></div>
+					
+					<!-- Main Product Interface with enhanced depth -->
+					<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
+						<!-- App Chrome -->
+						<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
+							<div class="flex items-center gap-3">
+								<div class="flex gap-1.5">
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-red-500 transition-colors cursor-pointer"></div>
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-yellow-500 transition-colors cursor-pointer"></div>
+									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-green-500 transition-colors cursor-pointer"></div>
 								</div>
-								
-								<div class="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
-									<!-- Transcription entries -->
-									{#each dialogues as dialogue}
-										<button
-											onclick={() => dialogue.isQuestion && selectQuestion(dialogue.questionType)}
-											onmouseenter={() => handleMouseEnter(dialogue.questionType)}
-											onmouseleave={handleMouseLeave}
-											class="flex gap-2 group p-2 rounded-lg transition-all w-full text-left relative {dialogue.isQuestion ? 'bg-blue-950/20 border border-blue-900/50 hover:bg-blue-950/40 hover:border-blue-800/70 cursor-pointer hover:scale-[1.02]' : 'hover:bg-zinc-900/30'} {selectedQuestion === dialogue.questionType ? 'ring-2 ring-red-500/50 bg-blue-950/30' : ''}"
-										>
-											{#if dialogue.color === 'blue'}
-												<div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">{dialogue.initials}</div>
-											{:else}
-												<div class="w-6 h-6 rounded-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">{dialogue.initials}</div>
-											{/if}
-											<div class="flex-1 min-w-0">
-												<div class="flex items-center gap-2 mb-0.5">
-													<span class="text-xs font-semibold text-white">{dialogue.speaker}</span>
-													<span class="text-[10px] text-zinc-600">{dialogue.time}</span>
-													{#if dialogue.isQuestion}
-														<span class="px-1.5 py-0.5 bg-blue-600/40 border border-blue-500/50 text-[9px] font-bold text-blue-300 rounded animate-pulse">QUESTION</span>
-													{/if}
-												</div>
-												<p class="text-xs {dialogue.isQuestion ? 'text-zinc-200 font-medium' : 'text-zinc-400'} leading-relaxed">{dialogue.text}</p>
-											</div>
-											{#if dialogue.isQuestion}
-												<div class="absolute -right-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-													<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
-												</div>
-											{/if}
-										</button>
-									{/each}
+								<div class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors">
+									<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
+									<span class="text-sm font-black tracking-tight text-white">
+										SPIKED<span class="text-red-500">AI</span>
+									</span>
 								</div>
 							</div>
+							<div class="flex items-center gap-2">
+								<div class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-950/40 border border-amber-900/50 rounded-full">
+									<div class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
+									<span class="text-xs font-medium text-amber-400">LISTENING</span>
+								</div>
+							</div>
+						</div>
 
-							<!-- Right Panel: AI Copilot -->
-							<div class="flex flex-col bg-gradient-to-br from-zinc-950 to-zinc-900">
-								<div class="px-3 py-2 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
-									<div class="flex items-center gap-2">
-										<Brain class="w-4 h-4 text-red-500" />
-										<h5 class="text-xs font-semibold text-white">AI Copilot</h5>
+						<!-- Main Content Area -->
+						<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-1 relative overflow-hidden">
+							<!-- Animated gradient overlay -->
+							<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
+							
+							<div class="grid grid-cols-[1fr_1.2fr] h-[600px] relative z-10">
+								
+								<!-- Left Panel: Live Transcription -->
+								<div class="border-r border-zinc-800/50 flex flex-col bg-zinc-950/50">
+									<div class="px-3 py-2 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
+										<div class="flex items-center gap-2">
+											<MessageSquare class="w-4 h-4 text-blue-400" />
+											<span class="text-xs font-semibold text-white">Live Transcription</span>
+										</div>
+										<span class="text-xs text-zinc-500">Real-time</span>
 									</div>
-									<div class="flex items-center gap-2">
-										<button class="px-2 py-1 text-[10px] font-medium text-zinc-400 hover:text-white border border-zinc-700 rounded hover:border-zinc-600 transition-colors">
-											Manual Mode: OFF
-										</button>
-										<button class="px-2 py-1 text-[10px] font-medium text-white bg-red-600 hover:bg-red-700 rounded transition-colors">
-											Auto-Answer: ON
-										</button>
+									
+									<div class="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin">
+										<!-- Show only the last few relevant dialogues -->
+										{#each dialogues.slice(-8) as dialogue, i}
+											<button
+												onclick={() => dialogue.isQuestion && selectQuestion(dialogue.questionType)}
+												class="flex gap-2 group p-2 rounded-lg transition-all w-full text-left relative {dialogue.isQuestion ? 'bg-blue-950/20 border border-blue-900/50 hover:bg-blue-950/40 hover:border-blue-800/70 cursor-pointer hover:scale-[1.02]' : 'bg-zinc-800/20 hover:bg-zinc-800/30 cursor-default'} {selectedQuestion === dialogue.questionType ? 'ring-2 ring-red-500/50 bg-blue-950/30' : ''}"
+												in:fly={{ y: 10, delay: i * 50, duration: 300 }}
+											>
+												<div class="w-6 h-6 rounded-full bg-gradient-to-br {dialogue.isUser ? 'from-green-600 to-green-700' : 'from-blue-600 to-blue-700'} flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">
+													{dialogue.initials}
+												</div>
+												<div class="flex-1 min-w-0">
+													<div class="flex items-center gap-2 mb-0.5">
+														<span class="text-xs font-semibold text-white">{dialogue.speaker}</span>
+														<span class="text-[10px] text-zinc-600">{dialogue.time}</span>
+														{#if dialogue.isQuestion}
+															<span class="px-1.5 py-0.5 bg-blue-600/40 border border-blue-500/50 text-[9px] font-bold text-blue-300 rounded animate-pulse">QUESTION</span>
+														{/if}
+													</div>
+													<p class="text-xs {dialogue.isQuestion ? 'text-zinc-200 font-medium' : 'text-zinc-400'} leading-relaxed">{dialogue.text}</p>
+												</div>
+												{#if dialogue.isQuestion}
+													<div class="absolute -right-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+														<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
+													</div>
+												{/if}
+											</button>
+										{/each}
 									</div>
 								</div>
 
-								<div class="flex-1 overflow-y-auto p-3 space-y-2.5 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
-									<!-- Debug info (remove in production) -->
-									<!-- <div class="text-xs text-zinc-500 mb-2">Hovered: {hoveredQuestion || 'none'} | Selected: {selectedQuestion || 'none'}</div> -->
-									
-									{#if (hoveredQuestion || selectedQuestion) && aiResponses[hoveredQuestion || selectedQuestion]}
-										<!-- Active AI Response Card -->
-										<div class="bg-gradient-to-br from-red-950/40 to-red-900/20 border border-red-900/60 rounded-xl p-3 shadow-xl animate-fadeIn">
-											<div class="flex items-start gap-2 mb-2">
-												<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-													<Sparkles class="w-4 h-4 text-white" />
-												</div>
-												<div class="flex-1">
-													<div class="flex items-center gap-2 mb-1">
-														<span class="text-xs font-bold text-white">Copilot</span>
-														<span class="px-1.5 py-0.5 bg-red-600/40 border border-red-500/50 text-[9px] font-bold text-red-300 rounded">
-															{hoveredQuestion ? 'PREVIEW' : 'ACTIVE'}
-														</span>
-													</div>
-													<p class="text-xs font-semibold text-red-300 mb-2">
-														Your Question: {aiResponses[hoveredQuestion || selectedQuestion].question}
-													</p>
-												</div>
-											</div>
-
-											<!-- AI Generated Answer -->
-											<div class="bg-zinc-900/80 rounded-lg p-3 border border-zinc-800 space-y-2">
-												<h6 class="text-sm font-semibold text-white mb-1.5">{aiResponses[hoveredQuestion || selectedQuestion].title}</h6>
-												<p class="text-sm text-zinc-300 leading-relaxed mb-2">
-													{aiResponses[hoveredQuestion || selectedQuestion].description}
-												</p>
-												
-												<ul class="space-y-2 text-sm text-zinc-300">
-													{#each aiResponses[hoveredQuestion || selectedQuestion].points as point}
-														<li class="flex items-start gap-2">
-															<span class="text-red-400 mt-0.5">•</span>
-															<div>
-																<div class="text-white font-semibold text-sm">{point.label}</div>
-																<div class="text-zinc-300 text-sm">{point.value}</div>
-															</div>
-														</li>
-													{/each}
-												</ul>
-
-												<!-- Source Reference -->
-												<div class="mt-3 pt-2 border-t border-zinc-800 flex items-center justify-between">
-													<div class="flex items-center gap-1.5 text-[10px] text-red-400">
-														<FileText class="w-3 h-3" />
-														<span class="font-medium">{aiResponses[hoveredQuestion || selectedQuestion].source}</span>
-													</div>
-													<button class="flex items-center gap-1 px-2 py-1 bg-red-600 hover:bg-red-700 text-white text-[10px] font-semibold rounded transition-colors">
-														Use
-													</button>
-												</div>
-											</div>
+								<!-- Right Panel: AI Copilot -->
+								<div class="flex flex-col bg-gradient-to-br from-zinc-950 to-zinc-900">
+									<div class="px-3 py-2 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
+										<div class="flex items-center gap-2">
+											<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
+											<span class="text-xs font-semibold text-white">AI Copilot</span>
 										</div>
-									{/if}
+										<div class="flex items-center gap-1.5 px-2 py-1 glass rounded-full">
+											<Brain class="w-3 h-3 text-red-400" />
+											<span class="text-[10px] font-medium text-red-400">Auto-Answer: ON</span>
+										</div>
+									</div>
+
+									<div class="flex-1 overflow-y-auto p-3 space-y-2.5 scrollbar-thin">
+										<!-- Question Selector Tabs -->
+										<div class="flex gap-1.5 flex-wrap mb-3">
+											<button 
+												onclick={() => selectQuestion('roi')}
+												class="px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all {selectedQuestion === 'roi' ? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/50' : 'glass text-zinc-500 hover:text-zinc-300'}"
+											>
+												ROI
+											</button>
+											<button 
+												onclick={() => selectQuestion('pricing')}
+												class="px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all {selectedQuestion === 'pricing' ? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/50' : 'glass text-zinc-500 hover:text-zinc-300'}"
+											>
+												Pricing
+											</button>
+											<button 
+												onclick={() => selectQuestion('security')}
+												class="px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all {selectedQuestion === 'security' ? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/50' : 'glass text-zinc-500 hover:text-zinc-300'}"
+											>
+												Security
+											</button>
+											<button 
+												onclick={() => selectQuestion('customization')}
+												class="px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all {selectedQuestion === 'customization' ? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/50' : 'glass text-zinc-500 hover:text-zinc-300'}"
+											>
+												Custom
+											</button>
+											<button 
+												onclick={() => selectQuestion('integrations')}
+												class="px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all {selectedQuestion === 'integrations' ? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/50' : 'glass text-zinc-500 hover:text-zinc-300'}"
+											>
+												Integrations
+											</button>
+										</div>
+
+										<!-- AI Response Card -->
+										{#if aiResponses[selectedQuestion]}
+											{@const response = aiResponses[selectedQuestion]}
+											<div class="glass rounded-xl p-3 hover-lift relative overflow-hidden" in:fade={{ duration: 300 }}>
+												<div class="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent opacity-50"></div>
+												
+												<div class="relative z-10">
+													<!-- Question Header -->
+													<div class="flex items-start gap-2 mb-3 pb-2 border-b border-zinc-800/50">
+														<Target class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+														<div class="flex-1">
+															<p class="text-xs font-semibold text-white mb-1">{response.question}</p>
+															<p class="text-[10px] text-zinc-500">AI-generated from knowledge base</p>
+														</div>
+													</div>
+
+													<!-- Response Title -->
+													<h4 class="text-xs font-bold text-red-400 mb-2">{response.title}</h4>
+													<p class="text-[10px] text-zinc-400 mb-3">{response.description}</p>
+
+													<!-- Data Points -->
+													<div class="space-y-2">
+														{#each response.points as point, i}
+															<div 
+																class="glass rounded-lg p-2 group hover:bg-zinc-800/50 transition-all cursor-pointer"
+																in:fly={{ x: -10, delay: i * 50, duration: 300 }}
+															>
+																<div class="flex items-start justify-between gap-2">
+																	<span class="text-[10px] text-zinc-500 group-hover:text-zinc-400 transition-colors">{point.label}</span>
+																	<span class="text-[10px] font-semibold text-white flex-shrink-0">{point.value}</span>
+																</div>
+															</div>
+														{/each}
+													</div>
+
+													<!-- Source Footer -->
+													<div class="flex items-center gap-2 mt-3 pt-2 border-t border-zinc-800/50">
+														<FileText class="w-3 h-3 text-zinc-600" />
+														<span class="text-[9px] text-zinc-600">{response.source}</span>
+														<span class="ml-auto text-[9px] text-zinc-700">{response.timestamp}</span>
+													</div>
+												</div>
+											</div>
+										{/if}
+
+										<!-- Quick Actions -->
+										<div class="grid grid-cols-2 gap-2 mt-3">
+											<button class="glass rounded-lg p-2 text-[10px] font-medium text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all flex items-center justify-center gap-1.5 group">
+												<CheckCircle2 class="w-3 h-3 group-hover:scale-110 transition-transform" />
+												Copy to Clipboard
+											</button>
+											<button class="glass rounded-lg p-2 text-[10px] font-medium text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all flex items-center justify-center gap-1.5 group">
+												<TrendingUp class="w-3 h-3 group-hover:scale-110 transition-transform" />
+												View Full Report
+											</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -516,7 +811,7 @@
 	<!-- Features Section -->
 	<section class="py-20 bg-zinc-950/50">
 		<div class="max-w-7xl mx-auto px-6">
-			<div class="text-center mb-12">
+			<div class="text-center mb-16">
 				<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Why Sales Teams Love AI Assistance</h2>
 				<p class="text-lg text-zinc-400 max-w-2xl mx-auto">Transform every rep into your top performer with instant access to perfect answers</p>
 			</div>

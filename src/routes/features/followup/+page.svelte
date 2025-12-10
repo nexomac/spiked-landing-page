@@ -82,7 +82,7 @@
 
 	const pdfSections = [
 		{ title: 'Meeting Summary', items: ['32 min call with 4 participants', 'Budget approved: $250K', 'Timeline: Q1 implementation'] },
-		{ title: 'Stakeholder Mapper', items: ['Sarah Chen - VP Sales (Champion)', 'John Davis - CTO (Technical Blocker)', 'Lisa Park - CFO (Economic Buyer)'] },
+		{ title: 'Stakeholder Mapping', items: ['Sarah Chen - VP Sales (Champion)', 'John Davis - CTO (Technical Blocker)', 'Lisa Park - CFO (Economic Buyer)'] },
 		{ title: 'Battle Card Intelligence', items: ['Competitor: Gong (mentioned 2x)', 'Key objection: Data migration timeline', 'Winning factors: ROI & Security'] },
 		{ title: 'PLAYBOOK Command Center', items: ['Discovery Phase: 75% complete', 'Technical Validation: Pending', 'Business Case: In Progress'] }
 	];
@@ -490,8 +490,10 @@
 									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-green-500 transition-colors cursor-pointer"></div>
 								</div>
 								<div class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors">
-									<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
-									<span class="text-sm font-medium text-white">SpikedAI</span>
+									<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
+									<span class="text-sm font-black tracking-tight text-white">
+										SPIKED<span class="text-red-500">AI</span>
+									</span>
 								</div>
 							</div>
 							<div class="flex items-center gap-2">
@@ -515,9 +517,11 @@
 									<div class="flex items-center justify-between">
 										<div class="flex items-center gap-2 group cursor-pointer">
 											<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center glow-red group-hover:scale-110 transition-transform">
-												<Zap class="w-4 h-4 text-white" />
+												<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
 											</div>
-											<span class="font-bold text-white group-hover:text-red-400 transition-colors">SPIKED</span>
+											<span class="text-sm font-black tracking-tight text-white group-hover:text-red-400 transition-colors">
+												SPIKED<span class="text-red-500 group-hover:text-red-400">AI</span>
+											</span>
 										</div>
 									</div>
 
@@ -963,7 +967,7 @@
 											<h4 class="text-sm font-bold text-white mb-3 group-hover:text-red-400 transition-colors flex items-center gap-2">
 												{#if section.title === 'Meeting Summary'}
 													<FileText class="w-4 h-4" />
-												{:else if section.title === 'Stakeholder Mapper'}
+												{:else if section.title === 'Stakeholder Mapping'}
 													<Users class="w-4 h-4" />
 												{:else if section.title === 'Battle Card Intelligence'}
 													<Shield class="w-4 h-4" />

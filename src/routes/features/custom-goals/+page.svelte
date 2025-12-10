@@ -1,7 +1,37 @@
 <script>
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import { Target, TrendingUp, Award, Zap, CheckCircle2, BarChart3, Trophy, ArrowRight, Star } from 'lucide-svelte';
+	import { Target, TrendingUp, Award, Zap, CheckCircle2, BarChart3, Trophy, ArrowRight, Star, Clock, Calendar } from 'lucide-svelte';
+	import { fly, fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
+
+	let mouseX = $state(0);
+	let mouseY = $state(0);
+
+	onMount(() => {
+		const handleMouseMove = (e) => {
+			mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+			mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+		};
+		window.addEventListener('mousemove', handleMouseMove);
+		return () => window.removeEventListener('mousemove', handleMouseMove);
+	});
+
+	const goals = [
+		{ id: 1, name: 'Monthly Revenue Target', current: 847000, target: 1000000, unit: '$', color: 'emerald', icon: Trophy },
+		{ id: 2, name: 'Deals Closed This Quarter', current: 42, target: 50, unit: '', color: 'blue', icon: Target },
+		{ id: 3, name: 'Demo Completion Rate', current: 78, target: 85, unit: '%', color: 'purple', icon: BarChart3 },
+		{ id: 4, name: 'Average Deal Size', current: 52000, target: 60000, unit: '$', color: 'orange', icon: TrendingUp }
+	];
+
+	function getProgress(goal) {
+		return Math.min((goal.current / goal.target) * 100, 100);
+	}
+
+	function formatValue(value, unit) {
+		if (unit === '$') return `$${(value / 1000).toFixed(0)}K`;
+		return `${value}${unit}`;
+	}
 </script>
 
 <svelte:head>
@@ -9,39 +39,202 @@
 	<meta name="description" content="Define custom sales goals and track performance in real-time. Achieve more with AI-powered goal management." />
 </svelte:head>
 
+<style>
+	@keyframes float {
+		0%, 100% { transform: translateY(0px); }
+		50% { transform: translateY(-20px); }
+	}
+
+	@keyframes float-slow {
+		0%, 100% { transform: translateY(0px) translateX(0px); }
+		50% { transform: translateY(-15px) translateX(10px); }
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; transform: translateY(10px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.float {
+		animation: float 6s ease-in-out infinite;
+	}
+
+	.float-slow {
+		animation: float-slow 8s ease-in-out infinite;
+	}
+
+	.animate-fadeIn {
+		animation: fadeIn 0.5s ease-out forwards;
+	}
+</style>
+
 <div class="min-h-screen bg-black text-white">
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="custom-goals" />
 	
-	<!-- Hero Section -->
-	<div class="relative overflow-hidden bg-gradient-to-b from-indigo-950/20 to-black pt-32 pb-24">
-		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-black to-black"></div>
-		
-		<div class="relative max-w-7xl mx-auto px-6">
-			<div class="text-center max-w-4xl mx-auto">
-				<div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 border border-indigo-500/30 mb-8">
-					<Target class="w-10 h-10 text-indigo-500" strokeWidth={1.5} />
+	<!-- Hero Section - Writer.com Style -->
+	<section class="relative min-h-screen pt-32 pb-24">
+		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
+		<div class="fixed inset-0 pointer-events-none">
+			<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl animate-pulse"></div>
+			<div class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl" style="animation-delay: 1s"></div>
+		</div>
+
+		<div class="max-w-7xl mx-auto px-6 relative">
+			<div class="grid lg:grid-cols-2 gap-16 items-start">
+				<!-- Left Column -->
+				<div class="lg:sticky lg:top-32 z-10">
+					<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full mb-8">
+						<Target class="w-4 h-4 text-indigo-500 animate-pulse" />
+						<span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Custom Goals</span>
+					</div>
+
+					<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-8">
+						<span class="bg-gradient-to-r from-indigo-400 to-indigo-600 bg-clip-text text-transparent block mb-2">Track what matters</span>
+						<span class="text-white block">to your business</span>
+					</h1>
+
+					<div class="space-y-4 mb-10">
+						<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-zinc-700 transition-all">
+							<div class="flex items-start gap-4">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0">
+									<Target class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1">Custom metrics</h3>
+									<p class="text-sm text-zinc-400">Define any goal that matters to your sales process</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="bg-zinc-900/50 border-l-2 border-indigo-500 rounded-xl p-4 hover:bg-indigo-500/5 transition-all">
+							<div class="flex items-start gap-4">
+								<div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+									<TrendingUp class="w-5 h-5 text-indigo-500" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1">Real-time tracking</h3>
+									<p class="text-sm text-zinc-400">Watch your progress update live as you hit milestones</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-zinc-700 transition-all">
+							<div class="flex items-start gap-4">
+								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0">
+									<BarChart3 class="w-5 h-5 text-zinc-400" />
+								</div>
+								<div>
+									<h3 class="font-semibold text-white mb-1">AI insights</h3>
+									<p class="text-sm text-zinc-400">Get recommendations to optimize your performance</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<a href="#demo" class="inline-flex items-center gap-2 text-indigo-500 hover:text-indigo-400 font-medium group">
+						<span>Explore goal tracking</span>
+						<ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+					</a>
 				</div>
-				
-				<h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 bg-clip-text text-transparent">
-					Custom Goals & Tracking
-				</h1>
-				
-				<p class="text-xl md:text-2xl text-zinc-400 mb-12">
-					Set personalized goals, track progress in real-time, and optimize performance with AI insights.
-				</p>
-				
-				<div class="flex flex-wrap gap-4 justify-center">
-					<a href="#demo" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 hover:scale-105">
-						See Goal Tracking
-					</a>
-					<a href="/" class="px-8 py-4 bg-zinc-900 rounded-xl font-semibold border border-zinc-800 hover:border-indigo-500 transition-all duration-300 hover:scale-105">
-						Back to Features
-					</a>
+
+				<!-- Right Column - Goals Widget -->
+				<div 
+					class="relative"
+					in:fly={{ x: 30, duration: 800, delay: 400 }}
+					style="transform: perspective(1000px) rotateY({mouseX * -2}deg) rotateX({mouseY * 2}deg)"
+				>
+					<!-- Floating decorative elements -->
+					<div class="absolute -top-8 -right-8 w-32 h-32 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+					<div class="absolute -bottom-8 -left-8 w-40 h-40 bg-indigo-600/10 rounded-full blur-3xl" style="animation: float-slow 6s ease-in-out infinite"></div>
+					
+					<div class="bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 backdrop-blur-xl border border-zinc-800/50 rounded-2xl overflow-hidden shadow-2xl">
+						<!-- Header -->
+						<div class="px-4 py-3 border-b border-zinc-800/50 flex items-center justify-between bg-zinc-900/50">
+							<div class="flex items-center gap-2">
+								<Target class="w-4 h-4 text-indigo-500" />
+								<span class="text-sm font-semibold text-white">Your Goals Dashboard</span>
+							</div>
+							<div class="flex items-center gap-1.5 px-2 py-1 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
+								<Calendar class="w-3 h-3 text-indigo-400" />
+								<span class="text-xs font-semibold text-indigo-400">Q4 2024</span>
+							</div>
+						</div>
+
+						<!-- Main Content -->
+						<div class="p-5">
+							<!-- Overall Progress Summary -->
+							<div class="mb-5 p-4 bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border border-indigo-500/30 rounded-xl">
+								<div class="flex items-center justify-between mb-2">
+									<div>
+										<div class="text-xs text-zinc-400 mb-1">Overall Performance</div>
+										<div class="text-2xl font-bold text-white">82%</div>
+									</div>
+									<div class="w-16 h-16 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-lg">
+										<Trophy class="w-8 h-8 text-white" />
+									</div>
+								</div>
+								<div class="flex items-center gap-2 text-xs text-zinc-400">
+									<TrendingUp class="w-3.5 h-3.5 text-green-500" />
+									<span>On track to exceed 3 of 4 goals this quarter</span>
+								</div>
+							</div>
+
+							<!-- Individual Goals -->
+							<div class="space-y-3">
+								{#each goals as goal, i}
+									{@const progress = getProgress(goal)}
+									<div 
+										class="p-3 bg-zinc-900/50 border border-zinc-800/50 rounded-xl hover:border-{goal.color}-500/30 hover:bg-{goal.color}-500/5 transition-all group"
+										in:fade={{ delay: i * 100 }}
+									>
+										<div class="flex items-center gap-3 mb-2">
+											<div class="w-8 h-8 rounded-lg bg-{goal.color}-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+												{#if goal.icon === Trophy}
+													<Trophy class="w-4 h-4 text-{goal.color}-500" />
+												{:else if goal.icon === Target}
+													<Target class="w-4 h-4 text-{goal.color}-500" />
+												{:else if goal.icon === BarChart3}
+													<BarChart3 class="w-4 h-4 text-{goal.color}-500" />
+												{:else if goal.icon === TrendingUp}
+													<TrendingUp class="w-4 h-4 text-{goal.color}-500" />
+												{/if}
+											</div>
+											<div class="flex-1">
+												<div class="text-xs font-semibold text-white mb-0.5">{goal.name}</div>
+												<div class="flex items-center gap-2">
+													<div class="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+														<div class="h-full bg-gradient-to-r from-{goal.color}-600 to-{goal.color}-500 rounded-full transition-all duration-1000" style="width: {progress}%"></div>
+													</div>
+													<span class="text-[10px] font-semibold text-{goal.color}-500">{progress.toFixed(0)}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="flex items-center justify-between text-xs">
+											<span class="text-zinc-400">Current: <span class="font-semibold text-white">{formatValue(goal.current, goal.unit)}</span></span>
+											<span class="text-zinc-500">Target: {formatValue(goal.target, goal.unit)}</span>
+										</div>
+									</div>
+								{/each}
+							</div>
+
+							<!-- Action Button -->
+							<div class="mt-4 p-3 bg-gradient-to-r from-indigo-500/10 to-indigo-600/10 border border-indigo-500/30 rounded-xl">
+								<div class="flex items-center justify-between">
+									<div class="flex items-center gap-2">
+										<Star class="w-4 h-4 text-indigo-400" />
+										<span class="text-xs font-semibold text-indigo-400">AI Recommendation</span>
+									</div>
+									<ArrowRight class="w-4 h-4 text-indigo-400" />
+								</div>
+								<p class="text-xs text-zinc-400 mt-2">Focus on demo conversion to hit all Q4 targets</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
 	<!-- Live Demo Section -->
 	<div id="demo" class="py-24 px-6">

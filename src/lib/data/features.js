@@ -88,7 +88,7 @@ export const features = [
         subtitle: 'Keep Your CRM Accurate Without Manual Work',
         description: 'SpikedAI syncs every conversation, insight, and action item in real time so your sales data stays clean, current, and actionable.',
         features: [
-            'Bi-directional CRM sync - Connect with Salesforce, HubSpot, Zoho, and more—always up to date',
+            'Bi-directional CRM sync - Connect with Salesforce, HubSpot, monday.com, Zoho, and more—always up to date',
             'Automatic contact & deal updates - Pipeline, stages, and fields update as conversations happen',
             'Meeting notes & transcripts in CRM - Summaries, transcripts, and insights log automatically after the conversation',
             'AI-generated next steps & tasks - Clear follow-ups pushed directly into your CRM',

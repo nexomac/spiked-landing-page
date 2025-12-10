@@ -8,19 +8,31 @@
 			id: 'salesforce',
 			label: 'Salesforce',
 			category: 'CRM',
-			logo: '☁️'
+			logo: '/Salesforce.com_logo.svg.png',
+			logoType: 'image',
+			logoBg: 'bg-white'
 		},
 		{
 			id: 'hubspot',
 			label: 'HubSpot',
 			category: 'CRM',
-			logo: '🟠'
+			logo: '/hubspot.png',
+			logoType: 'image',
+			logoBg: 'bg-white'
 		},
 		{
 			id: 'pipedrive',
 			label: 'Pipedrive',
 			category: 'CRM',
 			logo: '🟢'
+		},
+		{
+			id: 'monday',
+			label: 'monday.com',
+			category: 'CRM',
+			logo: '/monday.svg',
+			logoType: 'image',
+			logoBg: 'bg-white'
 		},
 		{
 			id: 'zoom',
@@ -102,7 +114,13 @@
 				class="group relative bg-zinc-950 border-2 {selectedIntegrations.includes(integration.id) ? 'border-red-600' : 'border-zinc-900'} hover:border-red-900/50 rounded-xl p-5 text-center transition-all duration-300 transform hover:-translate-y-1 {integration.id === 'none' ? 'col-span-2 md:col-span-3' : ''}"
 			>
 				<div class="flex flex-col items-center gap-3">
-					<div class="text-4xl">{integration.logo}</div>
+					<div class="w-16 h-16 rounded-lg border border-zinc-800 flex items-center justify-center {integration.logoBg ?? 'bg-zinc-900'}">
+						{#if integration.logoType === 'image'}
+							<img src={integration.logo} alt={`${integration.label} logo`} class="max-h-10 w-auto object-contain" />
+						{:else}
+							<div class="text-4xl">{integration.logo}</div>
+						{/if}
+					</div>
 					<div>
 						<h3 class="text-base font-bold text-white group-hover:text-red-500 transition-colors">
 							{integration.label}

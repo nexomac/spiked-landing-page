@@ -350,7 +350,7 @@ into revenue acceleration.</span>
 			{#each [
 				{
 					label: 'CRM Integration',
-					title: 'Salesforce • HubSpot • Pipedrive',
+					title: 'Salesforce • HubSpot • monday.com',
 					icon: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4'
 				},
 				{
@@ -493,7 +493,7 @@ into revenue acceleration.</span>
 					{
 						number: '01',
 						title: 'Universal Integrations',
-						description: 'Connects with Salesforce, HubSpot, Jira, Asana, Slack, Teams & more'
+						description: 'Connects with Salesforce, HubSpot, monday.com, Jira, Asana, Slack, Teams & more'
 					},
 					{
 						number: '02',
@@ -585,7 +585,7 @@ into revenue acceleration.</span>
 					<div class="relative">
 						<div class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
 						<div class="relative bg-gradient-to-br from-zinc-900 to-black p-1.5 rounded-lg border border-red-900/50 group-hover:border-red-600 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
-							<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="h-6 w-6 rounded" />
+							<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="h-6 w-6 object-contain" />
 						</div>
 					</div>
 					<span class="text-xl font-black tracking-tight group-hover:text-red-500 transition-colors duration-300">

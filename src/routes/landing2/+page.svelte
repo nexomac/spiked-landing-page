@@ -1,15 +1,12 @@
 <script>
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 	import { ArrowRight, Zap, Globe, TrendingUp, Users, MessageSquare, BarChart3, Shield, Sparkles, Rocket, Target } from 'lucide-svelte';
-	import gsap from 'gsap';
-	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import Lenis from '@studio-freight/lenis';
-	import confetti from 'canvas-confetti';
-	
-	// Register GSAP plugins
-	if (typeof window !== 'undefined') {
-		gsap.registerPlugin(ScrollTrigger);
-	}
+
+	// Lazy-load browser-only deps to keep SSR safe on Vercel
+	let gsap;
+	let ScrollTrigger;
+	let Lenis;
+	let confetti;
 	
 	let scrollY = $state(0);
 	let mouseX = $state(0);
@@ -27,122 +24,149 @@
 	
 	let hoveredCard = $state(null);
 	
-	onMount(() => {
-		// Initialize Lenis smooth scroll
-		lenis = new Lenis({
-			duration: 1.2,
-			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-			orientation: 'vertical',
-			smoothWheel: true,
-			wheelMultiplier: 1,
-			smoothTouch: false,
-			touchMultiplier: 2
-		});
+	onMount(async () => {
+		try {
+			const [
+				{ default: LenisModule },
+				{ default: gsapModule },
+				{ ScrollTrigger: ScrollTriggerModule },
+				{ default: confettiModule }
+			] = await Promise.all([
+				import('@studio-freight/lenis'),
+				import('gsap'),
+				import('gsap/ScrollTrigger'),
+				import('canvas-confetti')
+			]);
 
-		function raf(time) {
-			lenis.raf(time);
-			requestAnimationFrame(raf);
-		}
+			Lenis = LenisModule;
+			gsap = gsapModule;
+			ScrollTrigger = ScrollTriggerModule;
+			confetti = confettiModule;
+			gsap.registerPlugin(ScrollTrigger);
 
-		requestAnimationFrame(raf);
-		
-		const handleScroll = () => {
-			scrollY = window.scrollY;
-			smoothScroll = lenis.scroll || 0;
-		};
-		
-		const handleMouseMove = (e) => {
-			mouseX = e.clientX;
-			mouseY = e.clientY;
-		};
-		
-		// GSAP animations for sections
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						const section = entry.target.dataset.section;
-						if (section) {
-							isVisible[section] = true;
-							
-							// Trigger GSAP animations
-							gsap.from(entry.target.querySelectorAll('.animate-in'), {
-								y: 50,
-								opacity: 0,
-								duration: 1,
-								stagger: 0.1,
-								ease: 'power3.out'
-							});
-						}
-					}
-				});
-			},
-			{ threshold: 0.1 }
-		);
-		
-		document.querySelectorAll('[data-section]').forEach((el) => observer.observe(el));
-		window.addEventListener('scroll', handleScroll);
-		window.addEventListener('mousemove', handleMouseMove);
-		
-		// Trigger hero animation with GSAP
-		setTimeout(() => {
-			isVisible.hero = true;
-			
-			gsap.from('.hero-badge', {
-				scale: 0,
-				opacity: 0,
-				duration: 0.6,
-				ease: 'back.out(1.7)'
+			// Initialize Lenis smooth scroll
+			lenis = new Lenis({
+				duration: 1.2,
+				easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+				orientation: 'vertical',
+				smoothWheel: true,
+				wheelMultiplier: 1,
+				smoothTouch: false,
+				touchMultiplier: 2
 			});
-			
-			gsap.from('.hero-title', {
-				y: 100,
-				opacity: 0,
-				duration: 1,
-				delay: 0.3,
-				ease: 'power4.out'
-			});
-			
-			gsap.from('.hero-cta', {
-				y: 30,
-				opacity: 0,
-				duration: 0.8,
-				delay: 0.6,
-				stagger: 0.1
-			});
-		}, 100);
-		
 
-		
-		// Stats counter animation
-		ScrollTrigger.create({
-			trigger: '[data-section="stats"]',
-			start: 'top 80%',
-			onEnter: () => {
-				document.querySelectorAll('.stat-value').forEach((el) => {
-					const target = el.textContent;
-					gsap.from(el, {
-						textContent: 0,
-						duration: 2,
-						ease: 'power2.out',
-						snap: { textContent: 1 }
-					});
-				});
+			function raf(time) {
+				lenis.raf(time);
+				requestAnimationFrame(raf);
 			}
-		});
-		
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-			window.removeEventListener('mousemove', handleMouseMove);
-			observer.disconnect();
 
-			lenis?.destroy();
-			ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-		};
+			requestAnimationFrame(raf);
+			
+			const handleScroll = () => {
+				scrollY = window.scrollY;
+				smoothScroll = lenis.scroll || 0;
+			};
+			
+			const handleMouseMove = (e) => {
+				mouseX = e.clientX;
+				mouseY = e.clientY;
+			};
+			
+			// GSAP animations for sections
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							const section = entry.target.dataset.section;
+							if (section) {
+								isVisible[section] = true;
+								
+								// Trigger GSAP animations
+								gsap.from(entry.target.querySelectorAll('.animate-in'), {
+									y: 50,
+									opacity: 0,
+									duration: 1,
+									stagger: 0.1,
+									ease: 'power3.out'
+								});
+							}
+						}
+					});
+				},
+				{ threshold: 0.1 }
+			);
+			
+			document.querySelectorAll('[data-section]').forEach((el) => observer.observe(el));
+			window.addEventListener('scroll', handleScroll);
+			window.addEventListener('mousemove', handleMouseMove);
+			
+			// Trigger hero animation with GSAP
+			setTimeout(() => {
+				isVisible.hero = true;
+				
+				gsap.from('.hero-badge', {
+					scale: 0,
+					opacity: 0,
+					duration: 0.6,
+					ease: 'back.out(1.7)'
+				});
+				
+				gsap.from('.hero-title', {
+					y: 100,
+					opacity: 0,
+					duration: 1,
+					delay: 0.3,
+					ease: 'power4.out'
+				});
+				
+				gsap.from('.hero-cta', {
+					y: 30,
+					opacity: 0,
+					duration: 0.8,
+					delay: 0.6,
+					stagger: 0.1
+				});
+			}, 100);
+			
+
+			
+			// Stats counter animation
+			ScrollTrigger.create({
+				trigger: '[data-section="stats"]',
+				start: 'top 80%',
+				onEnter: () => {
+					document.querySelectorAll('.stat-value').forEach((el) => {
+						const target = el.textContent;
+						gsap.from(el, {
+							textContent: 0,
+							duration: 2,
+							ease: 'power2.out',
+							snap: { textContent: 1 }
+						});
+					});
+				}
+			});
+			
+			return () => {
+				window.removeEventListener('scroll', handleScroll);
+				window.removeEventListener('mousemove', handleMouseMove);
+				observer.disconnect();
+
+				lenis?.destroy();
+				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+			};
+		} catch (error) {
+			console.error('landing2 client init failed', error);
+		}
 	});
 	
 	// Handle CTA button click with confetti
-	function handleCTAClick() {
+	async function handleCTAClick() {
+		if (!confetti) {
+			const { default: confettiModule } = await import('canvas-confetti');
+			confetti = confettiModule;
+		}
+
 		confetti({
 			particleCount: 100,
 			spread: 70,
@@ -153,6 +177,8 @@
 	
 	// Magnetic cursor effect for buttons
 	function handleMouseEnterButton(e) {
+		if (!gsap) return;
+
 		gsap.to(e.currentTarget, {
 			scale: 1.05,
 			duration: 0.3,
@@ -161,6 +187,8 @@
 	}
 	
 	function handleMouseLeaveButton(e) {
+		if (!gsap) return;
+
 		gsap.to(e.currentTarget, {
 			scale: 1,
 			duration: 0.3,

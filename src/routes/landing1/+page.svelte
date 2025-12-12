@@ -152,23 +152,23 @@
 							<div class="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-pulse"></div>
 							<div class="absolute inset-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-ping"></div>
 						</div>
-						<span class="hero-eyebrow">Revenue AI agents for the Fortune 2000</span>
+						<span class="hero-eyebrow">Revenue AI Agents built for the Fortune 2000</span>
 					</div>
 				</div>
 				<div class="hero-subhead px-4 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
-					<span>Operate every seller like a founder with reasoning-grade intelligence in every workflow.</span>
+					<span>Redefining the sales workforce so every seller operates like a founder with reasoning-grade intelligence in every workflow.</span>
 				</div>
 			</div>
 
 			<div class="mb-8 sm:mb-10 md:mb-12">
 				<h1 class="hero-title animate-fade-in-up">
-					Sell like a CEO
-					<span class="hero-title-accent">One command center for conversations, decisions, and action.</span>
+					Sell Like a CEO
+					<span class="hero-title-accent">The rise of the singular rep starts here.</span>
 				</h1>
 			</div>
 			
 			<p class="hero-body animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.2s;">
-				SpikedAI pairs reasoning models with real-time call intelligence and automatic follow-through so every rep thinks ahead, responds instantly, and ships the next step without the busywork.
+				Revenue AI Agents built for the Fortune 2000 pair reasoning models with real-time call intelligence and automatic follow-through so every rep thinks ahead, responds instantly, and ships the next step without the busywork.
 			</p>
 			
 			<div class="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-16 sm:mb-20 animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.35s;">

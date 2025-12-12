@@ -138,7 +138,7 @@
 				<div class="flex items-center gap-2.5 px-5 py-2.5 bg-zinc-900/80 backdrop-blur-sm rounded-full border border-zinc-800/50">
 					<div class="relative flex items-center gap-2">
 						<div class="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
-						<span class="text-sm font-medium text-zinc-300 tracking-wide">Revenue Intelligence Platform</span>
+						<span class="text-sm font-medium text-zinc-300 tracking-wide">Revenue AI Agents built for the Fortune 2000</span>
 					</div>
 				</div>
 			</div>
@@ -146,13 +146,12 @@
 			<!-- Hero title -->
 			<div class="mb-12">
 				<h1 class="hero-title mb-8">
-					The Command Center<br />
-					<span class="hero-gradient">for Revenue Excellence</span>
+					Sell Like a CEO<br />
+					<span class="hero-gradient">The rise of the singular rep starts here.</span>
 				</h1>
 				<div class="max-w-3xl">
 					<p class="hero-subtitle">
-						AI-powered intelligence for every conversation. Real-time insights, automated execution, 
-						and seamless workflow integration that empowers your revenue team to operate at the highest level.
+						Redefining the sales workforce with AI-powered intelligence for every conversation. Revenue AI Agents built for the Fortune 2000 deliver real-time insights, automated execution, and seamless workflow integration that empowers your revenue team to operate at the highest level.
 					</p>
 				</div>
 			</div>

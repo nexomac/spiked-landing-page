@@ -1690,4 +1690,45 @@
 		}
 	}
 
+	/* Light mode styles for features */
+	:global([data-theme='light']) :global(.bg-black),
+	:global([data-theme='light']) :global(.bg-zinc-950) {
+		background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+	}
+
+	:global([data-theme='light']) :global(.text-white) {
+		color: #0f172a !important;
+	}
+
+	:global([data-theme='light']) :global(.text-zinc-400),
+	:global([data-theme='light']) :global(.text-zinc-500),
+	:global([data-theme='light']) :global(.text-zinc-600) {
+		color: #475569 !important;
+	}
+
+	:global([data-theme='light']) :global(.text-red-500),
+	:global([data-theme='light']) :global(.text-red-600) {
+		color: #dc2626 !important;
+	}
+
+	:global([data-theme='light']) :global(.bg-zinc-900),
+	:global([data-theme='light']) :global(.bg-zinc-900\/50),
+	:global([data-theme='light']) :global(.bg-zinc-950\/50) {
+		background: rgba(255, 255, 255, 0.95) !important;
+		border-color: #e2e8f0 !important;
+		box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06) !important;
+	}
+
+	:global([data-theme='light']) :global(.border-zinc-900),
+	:global([data-theme='light']) :global(.border-zinc-800),
+	:global([data-theme='light']) :global(.border-red-900\/20),
+	:global([data-theme='light']) :global(.border-red-900\/30) {
+		border-color: rgba(226, 232, 240, 0.6) !important;
+	}
+
+	:global([data-theme='light']) :global(.shadow-2xl),
+	:global([data-theme='light']) :global(.shadow-xl) {
+		box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08) !important;
+	}
+
 </style>

@@ -256,7 +256,7 @@
 	/>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-b from-zinc-950 via-black to-black text-white overflow-hidden">
+<div class="min-h-screen bg-gradient-to-b from-zinc-950 via-black to-black text-white overflow-x-hidden">
 	<!-- Hero Section -->
 	<section 
 		data-section="hero"

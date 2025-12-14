@@ -119,6 +119,8 @@
           style={`animation-delay: ${0.4 + i * 0.1}s; transform: translate3d(0,0,0);`}
           onmousemove={(event) => handleTilt(event, 8)}
           onmouseleave={resetTilt}
+          role="group"
+          aria-label={`${agent.title} integration card`}
         >
           <div class="absolute inset-0 bg-gradient-to-br from-red-900/0 to-red-900/8 opacity-0 hover:opacity-100 transition-opacity duration-700"></div>
           <div class="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-1000"></div>
@@ -151,6 +153,11 @@
     letter-spacing: -0.04em;
     line-height: 1.05;
     color: #fff;
+    font-family: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  :global([data-theme='light']) .products-title {
+    color: #0f172a;
   }
 
   .products-title-accent {
@@ -168,6 +175,11 @@
     font-size: clamp(1rem, 2vw, 1.2rem);
     line-height: 1.8;
     font-weight: 400;
+    font-family: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  :global([data-theme='light']) .products-subhead {
+    color: #475569;
   }
 
   .product-card {
@@ -179,10 +191,22 @@
     transition: border-color 300ms ease, transform 300ms ease, box-shadow 300ms ease, background 300ms ease;
   }
 
+  :global([data-theme='light']) .product-card {
+    border: 1.5px solid rgba(226, 232, 240, 0.8);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
+  }
+
   .product-card:hover {
     border-color: rgba(248, 113, 113, 0.5);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
     background: linear-gradient(145deg, rgba(28, 28, 32, 0.95), rgba(24, 24, 28, 0.9));
+  }
+
+  :global([data-theme='light']) .product-card:hover {
+    border-color: rgba(220, 38, 38, 0.3);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 1), rgba(254, 249, 249, 0.98));
   }
 
   .integration-card {
@@ -193,9 +217,21 @@
     transition: border-color 300ms ease, transform 300ms ease, box-shadow 300ms ease, background 300ms ease;
   }
 
+  :global([data-theme='light']) .integration-card {
+    border: 1.5px solid rgba(226, 232, 240, 0.8);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+  }
+
   .integration-card:hover {
     border-color: rgba(248, 113, 113, 0.45);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
     background: linear-gradient(140deg, rgba(26, 26, 30, 0.95), rgba(18, 18, 22, 0.9));
+  }
+
+  :global([data-theme='light']) .integration-card:hover {
+    border-color: rgba(220, 38, 38, 0.25);
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.1);
+    background: linear-gradient(140deg, rgba(255, 255, 255, 1), rgba(254, 249, 249, 0.98));
   }
 </style>

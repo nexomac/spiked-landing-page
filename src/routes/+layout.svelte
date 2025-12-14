@@ -1,11 +1,14 @@
 <script>
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import { themeStore } from '$lib/stores/theme.js';
 
 	let { children } = $props();
 	let enableScale = $state(false);
+
+	injectAnalytics();
 
 	onMount(() => {
 		// Initialize theme based on saved preference or system settings

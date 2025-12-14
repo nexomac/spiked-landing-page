@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import FeaturesShowcase from '$lib/components/FeaturesShowcase.svelte';
 	import OnboardingFlow from '$lib/components/OnboardingFlow.svelte';
+	import HeroSection from '$lib/components/HeroSection.svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { innerWidth } from 'svelte/reactivity/window';
 	
@@ -88,179 +89,64 @@
 	function scrollToSection(id) {
 		document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 	}
+
+	function handleTilt(event, intensity = 8) {
+		const card = event.currentTarget;
+		const rect = card.getBoundingClientRect();
+		const x = ((event.clientX - rect.left) / rect.width - 0.5) * intensity;
+		const y = ((event.clientY - rect.top) / rect.height - 0.5) * intensity;
+
+		card.style.setProperty('--tilt-x', `${-y}deg`);
+		card.style.setProperty('--tilt-y', `${x}deg`);
+		card.style.setProperty('--glow-x', `${((event.clientX - rect.left) / rect.width) * 100}%`);
+		card.style.setProperty('--glow-y', `${((event.clientY - rect.top) / rect.height) * 100}%`);
+	}
+
+	function resetTilt(event) {
+		const card = event.currentTarget;
+		card.style.setProperty('--tilt-x', '0deg');
+		card.style.setProperty('--tilt-y', '0deg');
+		card.style.setProperty('--glow-x', '50%');
+		card.style.setProperty('--glow-y', '50%');
+	}
 </script>
 
-<!-- Hero Section -->
-<section 
-	data-section="hero" 
-	class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black hero-shell"
->
-	<!-- Enhanced Animated Grid Background with Parallax -->
-	<div class="absolute inset-0 hero-overlay" style="transform: translateY({scrollY * 0.5}px);">
-		<div class="absolute inset-0 bg-gradient-to-b from-red-950/30 via-black via-50% to-black"></div>
-		<div class="absolute inset-0 animate-grid-pulse hero-grid" style="background-image: linear-gradient(rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px); background-size: 60px 60px;"></div>
-		
-		<!-- Enhanced Animated Red Orbs with Mouse Interaction -->
-		<div 
-			class="absolute w-[600px] h-[600px] bg-red-600/25 rounded-full blur-3xl animate-float transition-transform duration-1000 hero-orb"
-			style="top: 15%; left: 20%; transform: translate({mouseX * 0.03}px, {mouseY * 0.03}px);"
-		></div>
-		<div 
-			class="absolute w-[500px] h-[500px] bg-red-800/15 rounded-full blur-3xl animate-float-delayed transition-transform duration-1000 hero-orb"
-			style="bottom: 15%; right: 20%; transform: translate({-mouseX * 0.02}px, {-mouseY * 0.02}px);"
-		></div>
-		
-		<!-- Additional floating orbs with better positioning -->
-		<div class="absolute top-1/3 left-1/4 w-80 h-80 bg-red-500/15 rounded-full blur-3xl animate-float hero-orb" style="animation-delay: 2s;"></div>
-		<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-700/20 rounded-full blur-3xl animate-float-delayed hero-orb" style="animation-delay: 1s;"></div>
-		
-		<!-- Multiple Scanning Line Effects -->
-		<div class="absolute inset-0 overflow-hidden">
-			<div class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-500/40 to-transparent opacity-30 animate-scan"></div>
-			<div class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-400/20 to-transparent opacity-20 animate-scan" style="animation-delay: 3s; animation-duration: 10s;"></div>
-		</div>
-		
-		<!-- Enhanced Particle grid -->
-		<div class="absolute inset-0">
-			{#each Array(30) as _, i}
-				<div 
-					class="absolute w-1.5 h-1.5 bg-red-500/40 rounded-full animate-particle-float"
-					style="left: {Math.random() * 100}%; top: {Math.random() * 100}%; animation-delay: {Math.random() * 5}s; animation-duration: {8 + Math.random() * 4}s;"
-				></div>
-			{/each}
-		</div>
-		
-		<!-- Radial gradient spotlight -->
-		<div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/50 hero-spotlight"></div>
-	</div>
+<svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
 
-	<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 md:py-32">
-		<div class="transform transition-all duration-1000 {visibleSections.hero ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
-			<!-- Enhanced Status Badge with better visual hierarchy -->
-			<div class="inline-flex flex-col gap-2 sm:gap-3 mb-8 sm:mb-10 animate-slide-down">
-				<div class="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 bg-zinc-950/90 backdrop-blur-xl rounded-full border border-red-900/50 group hover:border-red-600/70 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-900/30">
-					<div class="relative flex items-center gap-1.5 sm:gap-2.5">
-						<div class="relative">
-							<div class="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-pulse"></div>
-							<div class="absolute inset-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-ping"></div>
-						</div>
-						<span class="text-sm sm:text-base md:text-lg font-extrabold text-zinc-300 tracking-wider sm:tracking-widest uppercase leading-tight">Revenue AI Agents built for the Fortune 2000</span>
-					</div>
-				</div>
-				<div class="px-4 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
-					<span class="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-red-400 tracking-wide leading-relaxed block">Redefining the sales workforce, enabling high performance through AI-orchestration and reasoning models</span>
-				</div>
-			</div>
-
-			<!-- Enhanced Headline with better spacing and effects -->
-			<div class="mb-6 sm:mb-8 md:mb-10">
-				<h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[10rem] font-black leading-[0.9] tracking-tighter animate-fade-in-up">
-					<span class="inline-block text-white mb-2 hover:scale-[1.02] transition-transform duration-300">Sell Like</span>
-					<span class="inline-block bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent hover:scale-[1.02] transition-transform duration-300 animate-gradient bg-[length:200%_auto]">
-						a CEO
-					</span>
-				</h1>
-			</div>
-			
-			<!-- Enhanced Description with better typography -->
-			<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-zinc-300 mb-10 sm:mb-12 md:mb-14 max-w-4xl leading-[1.6] font-normal animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.2s;">
-				The rise of the singular rep starts here. <span class="text-zinc-300 font-normal">With SpikedAI, every seller operates as a micro-business unit, thinking,
-deciding, and selling like a CEO.</span> <span class="text-zinc-300 font-normal">Real-time intelligence powers every
-conversation, accelerates every deal cycle, and turns individual performance
-into revenue acceleration.</span>
-			</p>
-			
-			<!-- Enhanced CTA Buttons -->
-			<div class="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-16 sm:mb-20 animate-fade-in-up px-2 sm:px-0" style="animation-delay: 0.4s;">
-				<button 
-					onclick={onboardingStore.start}
-					class="group relative px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-base sm:text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1 primary-cta"
-				>
-					<span class="relative z-10 flex items-center justify-center gap-2">
-						Start Now, Skip Demos
-						<svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-						</svg>
-					</span>
-					<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-					<div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
-					<div class="absolute inset-0 rounded-xl ring-2 ring-red-500/0 group-hover:ring-red-500/50 transition-all duration-300"></div>
-				</button>
-				<a href="/contact-sales" class="px-8 sm:px-10 py-4 sm:py-5 bg-zinc-950/50 backdrop-blur-sm text-white rounded-xl font-semibold text-base sm:text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/30 transition-all duration-300 text-center hover:scale-[1.05] hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/30 secondary-cta">
-					Contact Sales
-				</a>
-			</div>
-
-			<!-- Enhanced Feature Metrics Bar with better design -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl px-2 sm:px-0">
-				{#each [
-					{ 
-						metric: '100%', 
-						label: 'Every meeting is captured 100%',
-						icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
-					},
-					{ 
-						metric: 'Real-Time', 
-						label: 'AI Assistance in Real Time',
-						icon: 'M13 10V3L4 14h7v7l9-11h-7z'
-					},
-					{ 
-						metric: 'Auto', 
-						label: 'FOLLOW-UP & PLANNING',
-						icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'
-					}
-				] as feature, i}
-					<div 
-						class="group relative bg-gradient-to-br from-zinc-950/80 to-zinc-950/50 backdrop-blur-xl p-5 sm:p-6 md:p-7 rounded-xl sm:rounded-2xl border-2 border-zinc-900 hover:border-red-900/60 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-900/30 animate-fade-in-up cursor-pointer"
-						style="animation-delay: {0.6 + i * 0.1}s; transform: translate3d(0, 0, 0);"
-					>
-						<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 via-red-950/10 to-red-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
-						<div class="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/15 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 rounded-2xl"></div>
-						<div class="relative">
-							<div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-								<div class="p-2 sm:p-3 bg-gradient-to-br from-red-950/50 to-red-950/30 rounded-lg sm:rounded-xl border border-red-900/40 group-hover:border-red-600/60 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-red-900/20">
-									<svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-500 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d={feature.icon} />
-									</svg>
-								</div>
-								<span class="text-3xl sm:text-4xl font-black text-white group-hover:text-red-400 transition-colors duration-300">{feature.metric}</span>
-							</div>
-							<p class="text-xs sm:text-sm text-zinc-500 font-bold tracking-wider uppercase group-hover:text-zinc-300 transition-colors leading-relaxed">{feature.label}</p>
-						</div>
-						<!-- Corner accent -->
-						<div class="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-600/0 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full"></div>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</div>
-
-	<!-- Enhanced Scroll Indicator -->
-	<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
-		<div class="w-7 h-12 border-2 border-zinc-800 rounded-full flex items-start justify-center p-2 hover:border-red-500 transition-all duration-300 cursor-pointer group hover:shadow-lg hover:shadow-red-900/30">
-			<div class="w-1.5 h-3 bg-red-500 rounded-full animate-scroll-indicator group-hover:bg-red-400 shadow-lg shadow-red-500/50"></div>
-		</div>
-		<p class="text-xs text-zinc-600 text-center mt-2 font-medium">Scroll to explore</p>
-	</div>
-</section>
+<HeroSection
+	visibleHero={visibleSections.hero}
+	{scrollY}
+	{mouseX}
+	{mouseY}
+	{handleTilt}
+	{resetTilt}
+	startOnboarding={onboardingStore.start}
+/>
 
 <!-- Products Section -->
-<section id="products" data-section="products" class="py-32 bg-black relative overflow-hidden">
+<section id="products" data-section="products" class="py-24 sm:py-32 bg-black relative overflow-hidden">
 	<!-- Background Grid -->
 	<div class="absolute inset-0" style="background-image: linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px); background-size: 40px 40px;"></div>
 	
-	<div class="max-w-7xl mx-auto px-6 relative z-10">
-		<div class="text-center mb-20 transform transition-all duration-1000 {visibleSections.products ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
-			<div class="inline-block mb-6">
-				<span class="text-sm font-bold text-red-500 tracking-widest uppercase">Core Platform Features</span>
+	<div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-6 relative z-10">
+		<div class="text-center mb-16 sm:mb-20 transform transition-all duration-1000 {visibleSections.products ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
+			<div class="inline-block mb-5">
+				<span class="text-xs sm:text-sm font-bold text-red-500 tracking-widest uppercase">Core Platform Features</span>
 			</div>
-			<h2 class="text-6xl md:text-7xl font-black mb-6 text-white leading-none tracking-tighter">
+			<h2 class="text-4xl sm:text-5xl md:text-7xl font-black mb-6 text-white leading-tight sm:leading-none tracking-tighter px-4">
 				AI-Powered<br />
 				<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">
 					Revenue Generation Platform
 				</span>
 			</h2>
-			<p class="text-xl text-zinc-400 max-w-3xl mx-auto font-light">
+			<p class="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto font-light px-4">
 				Built to support revenue teams from the first conversation to the final follow-up. It combines real-time intelligence, automated meeting assistance, and CRM-ready insights into one platform so sellers don’t just talk,  they convert.
 			</p>
 		</div>
@@ -296,15 +182,17 @@ into revenue acceleration.</span>
 					description: 'Real time follow-up, and task assignments so nothing gets missed.',
 					icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'
 				}
-			] as workflow, i}
-				<button
-					type="button"
-					onclick={() => activeTab = workflow.id}
-					class="group relative bg-zinc-950 border border-zinc-900 hover:border-red-900/50 rounded-lg p-6 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:shadow-lg {activeTab === workflow.id ? 'border-red-600 bg-gradient-to-br from-red-950/20 to-zinc-950 shadow-xl shadow-red-900/20' : ''} text-left w-full animate-fade-in-up hover:shadow-2xl hover:shadow-red-900/30"
-					style="animation-delay: {i * 0.1}s; transform: translate3d(0, 0, 0);"
-					aria-pressed={activeTab === workflow.id}
-					aria-label={workflow.title}
-				>
+				] as workflow, i}
+					<button
+						type="button"
+						onclick={() => activeTab = workflow.id}
+						onmousemove={(event) => handleTilt(event, 10)}
+						onmouseleave={resetTilt}
+						class="tilt-card group relative bg-zinc-950 border border-zinc-900 hover:border-red-900/50 rounded-lg p-6 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:shadow-lg {activeTab === workflow.id ? 'border-red-600 bg-gradient-to-br from-red-950/20 to-zinc-950 shadow-xl shadow-red-900/20' : ''} text-left w-full animate-fade-in-up hover:shadow-2xl hover:shadow-red-900/30"
+						style="animation-delay: {i * 0.1}s; transform: translate3d(0, 0, 0);"
+						aria-pressed={activeTab === workflow.id}
+						aria-label={workflow.title}
+					>
 					<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 to-red-950/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
 					<div class="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/5 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 rounded-lg"></div>
 					
@@ -356,7 +244,9 @@ into revenue acceleration.</span>
 				}
 			] as agent, i}
 				<div 
-					class="group relative bg-zinc-950/50 border border-zinc-900 hover:border-red-900/30 rounded-lg p-6 transition-all duration-500 overflow-hidden hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20 animate-fade-in-up cursor-pointer"
+					onmousemove={(event) => handleTilt(event, 8)}
+					onmouseleave={resetTilt}
+					class="tilt-card group relative bg-zinc-950/50 border border-zinc-900 hover:border-red-900/30 rounded-lg p-6 transition-all duration-500 overflow-hidden hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20 animate-fade-in-up cursor-pointer"
 					style="animation-delay: {0.5 + i * 0.1}s; transform: translate3d(0, 0, 0);"
 				>
 					<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 to-red-950/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -386,7 +276,7 @@ into revenue acceleration.</span>
 <FeaturesShowcase />
 
 <!-- Testimonials Section with Marquee -->
-<section id="testimonials" data-section="testimonials" class="py-32 bg-zinc-950 relative overflow-hidden border-y border-red-900/20">
+<section id="testimonials" data-section="testimonials" class="py-24 sm:py-32 bg-zinc-950 relative overflow-hidden border-y border-red-900/20">
 	<div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black z-10 pointer-events-none"></div>
 	
 	<!-- Animated background particles -->
@@ -399,9 +289,9 @@ into revenue acceleration.</span>
 		{/each}
 	</div>
 	
-	<div class="text-center mb-16 transform transition-all duration-1000 {visibleSections.testimonials ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} relative z-20">
-		<span class="text-sm font-bold text-red-500 tracking-widest uppercase animate-fade-in-up">Trusted by Sales Leaders</span>
-		<h2 class="text-5xl md:text-6xl font-black mt-4 mb-6 text-white tracking-tight animate-fade-in-up" style="animation-delay: 0.1s;">
+	<div class="text-center mb-12 sm:mb-16 px-4 transform transition-all duration-1000 {visibleSections.testimonials ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} relative z-20">
+		<span class="text-xs sm:text-sm font-bold text-red-500 tracking-widest uppercase animate-fade-in-up">Trusted by Sales Leaders</span>
+		<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-4 mb-6 text-white tracking-tight animate-fade-in-up leading-tight" style="animation-delay: 0.1s;">
 			AI That Empowers<br />
 			<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Sales & Dev Teams</span>
 		</h2>
@@ -447,7 +337,12 @@ into revenue acceleration.</span>
 					metricLabel: "More Deals Closed"
 				}
 			] as testimonial, i}
-				<div class="flex-shrink-0 w-96 bg-zinc-900 border border-zinc-800 rounded-lg p-6 hover:border-red-900/50 transition-all duration-500 group hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20 cursor-pointer" style="transform: translate3d(0, 0, 0);">
+				<div 
+					onmousemove={(event) => handleTilt(event, 6)}
+					onmouseleave={resetTilt}
+					class="tilt-card relative flex-shrink-0 w-96 bg-zinc-900 border border-zinc-800 rounded-lg p-6 hover:border-red-900/50 transition-all duration-500 group hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20 cursor-pointer overflow-hidden" 
+					style="transform: translate3d(0, 0, 0);"
+				>
 					<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 to-red-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
 					<div class="flex items-start gap-4 mb-4 relative">
 						<div class="flex-shrink-0">
@@ -513,7 +408,7 @@ into revenue acceleration.</span>
 </section>
 
 <!-- CTA Section -->
-<section data-section="cta" class="py-32 bg-gradient-to-br from-red-950 via-black to-black relative overflow-hidden border-t border-red-900/20">
+<section data-section="cta" class="py-24 sm:py-32 bg-gradient-to-br from-red-950 via-black to-black relative overflow-hidden border-t border-red-900/20">
 	<!-- Animated Background -->
 	<div class="absolute inset-0">
 		<div class="absolute inset-0 animate-grid-pulse" style="background-image: linear-gradient(rgba(220, 38, 38, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.05) 1px, transparent 1px); background-size: 50px 50px;"></div>
@@ -531,20 +426,21 @@ into revenue acceleration.</span>
 	</div>
 	
 	<div class="relative z-10 max-w-4xl mx-auto px-6 text-center transform transition-all duration-1000 {visibleSections.cta ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
-		<h2 class="text-6xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-fade-in-up">
+		<h2 class="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-tight sm:leading-none animate-fade-in-up">
 			Empower Your Sales Team<br />
 			<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent animate-gradient">
 				With AI Intelligence
 			</span>
 		</h2>
-		<p class="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto font-light animate-fade-in-up" style="animation-delay: 0.2s;">
+		<p class="text-lg sm:text-xl text-zinc-400 mb-10 sm:mb-12 max-w-2xl mx-auto font-light animate-fade-in-up" style="animation-delay: 0.2s;">
 			Join sales teams accelerating revenue with conversational AI. Real-time insights, automated follow-ups, and seamless integrations.
 		</p>
-		<div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.4s;">
+		<div class="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up" style="animation-delay: 0.4s;">
 			<button 
 				onclick={onboardingStore.start}
-				class="group relative px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded font-bold text-lg hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 overflow-hidden hover:scale-105 hover:-translate-y-1"
-			>
+				onmousemove={(event) => handleTilt(event, 12)}
+				onmouseleave={resetTilt}
+				class="tilt-card group relative px-8 py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 overflow-hidden hover:scale-105 hover:-translate-y-1">
 				<span class="relative z-10 flex items-center justify-center gap-2">
 					Start Free Trial
 					<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -554,7 +450,11 @@ into revenue acceleration.</span>
 				<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 				<div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
 			</button>
-			<a href="/contact-sales" class="px-8 py-4 bg-transparent text-white rounded font-semibold text-lg border border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/20">
+			<a 
+				href="/contact-sales" 
+				onmousemove={(event) => handleTilt(event, 10)}
+				onmouseleave={resetTilt}
+				class="tilt-card relative px-8 py-5 bg-transparent text-white rounded-xl font-semibold text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/20 overflow-hidden">
 				Contact Sales
 			</a>
 		</div>
@@ -653,6 +553,34 @@ into revenue acceleration.</span>
 </footer>
 
 <style>
+	.tilt-card {
+		--tilt-x: 0deg;
+		--tilt-y: 0deg;
+		--glow-x: 50%;
+		--glow-y: 50%;
+		transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), 0) scale3d(var(--tw-scale-x, 1), var(--tw-scale-y, 1), 1);
+		transition: transform 300ms ease, box-shadow 300ms ease;
+		will-change: transform;
+	}
+
+	.tilt-card::after {
+		content: '';
+		position: absolute;
+		inset: -1px;
+		background: radial-gradient(320px circle at var(--glow-x) var(--glow-y), rgba(248, 113, 113, 0.16), transparent 60%);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 300ms ease;
+	}
+
+	.tilt-card:hover::after {
+		opacity: 1;
+	}
+
+	.tilt-card:hover {
+		transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), 10px) scale3d(var(--tw-scale-x, 1.02), var(--tw-scale-y, 1.02), 1);
+	}
+
 	@keyframes float {
 		0%, 100% {
 			transform: translate(0px, 0px) scale(1);

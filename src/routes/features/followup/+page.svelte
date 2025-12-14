@@ -1,6 +1,7 @@
 <script>
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
+	import FollowupShowcase from '$lib/components/FollowupShowcase.svelte';
 	import { Calendar, CheckCircle2, Clock, TrendingUp, FileText, Users, Star, ArrowRight, Video, Mic, Brain, Sparkles, MessageSquare, Target, Zap, Activity, Radio, Waves, Cpu, Network, Database, Shield, Lock, Eye, Scan, Play, ChevronRight, BarChart3, Globe, Layers, RefreshCw } from 'lucide-svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { fly, fade, scale, slide, blur } from 'svelte/transition';
@@ -38,40 +39,6 @@
 		}
 	];
 
-	// Mock UI data for the showcase panels
-	const upcomingMeetings = [
-		{ company: 'Enterprise Corp', contact: 'Sarah Chen', time: 'Today, 2:00 PM', type: 'Follow-up', priority: 'high', avatar: 'EC' },
-		{ company: 'TechStart Inc', contact: 'Mike Johnson', time: 'Tomorrow, 10:00 AM', type: 'Discovery', priority: 'medium', avatar: 'TS' },
-		{ company: 'GlobalFin', contact: 'Lisa Park', time: 'Tomorrow, 3:30 PM', type: 'Demo', priority: 'high', avatar: 'GF' }
-	];
-
-	const briefingItems = [
-		{ icon: FileText, label: 'Last meeting summary', status: 'Ready', color: 'green' },
-		{ icon: Target, label: 'Key objectives identified', status: '3 items', color: 'blue' },
-		{ icon: MessageSquare, label: 'Open questions', status: '2 pending', color: 'amber' },
-		{ icon: CheckCircle2, label: 'Action items due', status: '1 overdue', color: 'red' }
-	];
-
-	const contextHistory = [
-		{ date: 'Nov 15', event: 'Discovery Call', duration: '45 min', sentiment: 'positive' },
-		{ date: 'Nov 8', event: 'Email Exchange', duration: '—', sentiment: 'neutral' },
-		{ date: 'Oct 28', event: 'Initial Outreach', duration: '—', sentiment: 'positive' }
-	];
-
-	const actionItems = [
-		{ text: 'Send security compliance docs', due: 'Today', priority: 'critical', completed: false },
-		{ text: 'Prepare ROI projections', due: 'Nov 28', priority: 'high', completed: false },
-		{ text: 'Schedule technical deep-dive', due: 'Dec 2', priority: 'medium', completed: true },
-		{ text: 'Share case study', due: 'Completed', priority: 'low', completed: true }
-	];
-
-	const sessions = [
-		{ name: 'Enterprise Corp Q1 Planning', type: 'report', active: true },
-		{ name: 'TechStart Discovery Prep', type: 'strategy', active: false },
-		{ name: 'GlobalFin Demo Checklist', type: 'checklist', active: false },
-		{ name: 'Weekly Pipeline Review', type: 'review', active: false }
-	];
-
 	// Email and PDF briefing data
 	const emailSections = [
 		{ icon: Target, title: 'Key Objectives', content: 'Budget approved at $250K. Need to address data migration concerns and provide ROI projections.' },
@@ -87,14 +54,7 @@
 		{ title: 'PLAYBOOK Command Center', items: ['Discovery Phase: 75% complete', 'Technical Validation: Pending', 'Business Case: In Progress'] }
 	];
 
-	// Auto-rotate features
 	onMount(() => {
-		const interval = setInterval(() => {
-			if (isAutoPlaying) {
-				activeFeature = (activeFeature + 1) % features.length;
-			}
-		}, 5000);
-		
 		// Handle mouse movement for parallax
 		const handleMouseMove = (e) => {
 			mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -110,7 +70,6 @@
 		window.addEventListener('scroll', handleScroll);
 		
 		return () => {
-			clearInterval(interval);
 			window.removeEventListener('mousemove', handleMouseMove);
 			window.removeEventListener('scroll', handleScroll);
 		};
@@ -470,316 +429,14 @@
 				</div>
 
 				<!-- Right Column - Product Showcase -->
-				<div 
-					class="relative tilt-hover"
-					in:fly={{ x: 30, duration: 800, delay: 400 }}
-					style="transform: perspective(1000px) rotateY({mouseX * -2}deg) rotateX({mouseY * 2}deg)"
-				>
-					<!-- Floating decorative elements -->
-					<div class="absolute -top-8 -right-8 w-32 h-32 bg-red-500/20 rounded-full blur-3xl float"></div>
-					<div class="absolute -bottom-8 -left-8 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl float-slow"></div>
-					
-					<!-- Main Product Interface with enhanced depth -->
-					<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
-						<!-- App Chrome -->
-						<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
-							<div class="flex items-center gap-3">
-								<div class="flex gap-1.5">
-									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-red-500 transition-colors cursor-pointer"></div>
-									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-yellow-500 transition-colors cursor-pointer"></div>
-									<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-green-500 transition-colors cursor-pointer"></div>
-								</div>
-								<div class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors">
-									<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
-									<span class="text-sm font-black tracking-tight text-white">
-										SPIKED<span class="text-red-500">AI</span>
-									</span>
-								</div>
-							</div>
-							<div class="flex items-center gap-2">
-								<span class="relative flex h-2 w-2 text-green-500 pulse-ring">
-									<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-								</span>
-								<span class="text-xs text-zinc-500">Synced</span>
-							</div>
-						</div>
-
-						<!-- Main Content Area -->
-						<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-1 relative overflow-hidden">
-							<!-- Animated gradient overlay -->
-							<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
-							
-							<div class="grid grid-cols-[280px_1fr] min-h-[500px] relative z-10">
-								
-								<!-- Left Sidebar -->
-								<div class="border-r border-zinc-800/50 p-4 space-y-6 backdrop-blur-sm">
-									<!-- Logo & New Session -->
-									<div class="flex items-center justify-between">
-										<div class="flex items-center gap-2 group cursor-pointer">
-											<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center glow-red group-hover:scale-110 transition-transform">
-												<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
-											</div>
-											<span class="text-sm font-black tracking-tight text-white group-hover:text-red-400 transition-colors">
-												SPIKED<span class="text-red-500 group-hover:text-red-400">AI</span>
-											</span>
-										</div>
-									</div>
-
-									<button class="w-full flex items-center gap-2 px-3 py-2 glass rounded-lg text-red-400 text-sm font-medium hover:bg-red-500/20 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/20">
-										<Sparkles class="w-4 h-4" />
-										<span>New session</span>
-									</button>
-
-									<!-- Nav Items -->
-									<div class="space-y-1">
-										<button class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all duration-300 text-sm group">
-											<Layers class="w-4 h-4 group-hover:scale-110 transition-transform" />
-											<span>Playbooks</span>
-										</button>
-										<button class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all duration-300 text-sm group">
-											<FileText class="w-4 h-4 group-hover:scale-110 transition-transform" />
-											<span>My work</span>
-										</button>
-										<button class="w-full flex items-center gap-3 px-3 py-2 rounded-lg glass text-white transition-all duration-300 text-sm shadow-lg">
-											<Calendar class="w-4 h-4 text-red-500 animate-pulse" />
-											<span>Meeting Prep</span>
-										</button>
-									</div>
-
-									<!-- Sessions -->
-									<div>
-										<p class="text-[10px] font-semibold text-zinc-600 uppercase tracking-wider mb-2 px-1">Sessions</p>
-										<div class="space-y-1">
-											{#each sessions as session, i}
-												<button 
-													class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group {session.active ? 'glass text-red-400 shadow-md' : 'text-zinc-500 hover:text-zinc-400 hover:bg-zinc-800/30'}"
-													in:fly={{ x: -10, delay: i * 50, duration: 300 }}
-												>
-													{#if session.type === 'report'}
-														<BarChart3 class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-													{:else if session.type === 'strategy'}
-														<Target class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-													{:else if session.type === 'checklist'}
-														<CheckCircle2 class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-													{:else}
-														<RefreshCw class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-													{/if}
-													<span class="truncate">{session.name}</span>
-												</button>
-											{/each}
-										</div>
-									</div>
-								</div>
-
-								<!-- Main Panel - Dynamic Content Based on Active Feature -->
-								<div class="p-5 overflow-hidden relative">
-									<!-- Background ambient glow -->
-									<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-transparent opacity-30"></div>
-									
-									{#if activeFeature === 0}
-										<!-- Smart Preparation View -->
-										<div in:fade={{ duration: 400 }} class="relative z-10">
-											<div class="flex items-center justify-between mb-5">
-												<div>
-													<h3 class="text-lg font-bold text-white">Meeting Prep Hub</h3>
-													<p class="text-xs text-zinc-500">Auto-generated briefings for your meetings</p>
-												</div>
-												<div class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red animate-pulse">
-													<div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-													<span class="text-xs font-medium text-green-400">3 Ready</span>
-												</div>
-											</div>
-
-											<!-- Upcoming Meetings -->
-											<div class="space-y-3">
-												{#each upcomingMeetings as meeting, i}
-													<div 
-														class="glass rounded-xl p-4 hover-lift cursor-pointer group relative overflow-hidden"
-														in:fly={{ y: 20, delay: i * 100, duration: 400 }}
-													>
-														<!-- Hover glow effect -->
-														<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/10 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-														
-														<div class="flex items-start gap-3 relative z-10">
-															<div class="w-10 h-10 rounded-xl bg-gradient-to-br {meeting.priority === 'high' ? 'from-red-500/20 to-orange-500/20' : 'from-blue-500/20 to-cyan-500/20'} flex items-center justify-center text-sm font-bold {meeting.priority === 'high' ? 'text-red-400' : 'text-blue-400'} group-hover:scale-110 transition-transform">
-																{meeting.avatar}
-															</div>
-															<div class="flex-1 min-w-0">
-																<div class="flex items-center gap-2 mb-1">
-																	<h4 class="font-semibold text-white text-sm truncate group-hover:text-red-400 transition-colors">{meeting.company}</h4>
-																	<span class="px-2 py-0.5 rounded text-[10px] font-medium {meeting.type === 'Follow-up' ? 'bg-amber-500/20 text-amber-400' : meeting.type === 'Discovery' ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'}">
-																		{meeting.type}
-																	</span>
-																</div>
-																<p class="text-xs text-zinc-500">{meeting.contact}</p>
-																<div class="flex items-center gap-1.5 mt-2 text-xs text-zinc-600">
-																	<Clock class="w-3 h-3" />
-																	<span>{meeting.time}</span>
-																</div>
-															</div>
-															<ChevronRight class="w-4 h-4 text-zinc-600 group-hover:text-zinc-400 group-hover:translate-x-2 transition-all" />
-														</div>
-
-														<!-- Briefing Status -->
-														<div class="mt-4 pt-3 border-t border-zinc-800/50 grid grid-cols-4 gap-2 relative z-10">
-															{#each briefingItems as item}
-																{@const Icon = item.icon}
-																<div class="text-center group/item hover:scale-110 transition-transform cursor-pointer">
-																	<Icon class="w-4 h-4 mx-auto mb-1 {item.color === 'green' ? 'text-green-500' : item.color === 'blue' ? 'text-blue-500' : item.color === 'amber' ? 'text-amber-500' : 'text-red-500'} group-hover/item:animate-pulse" />
-																	<p class="text-[10px] text-zinc-500 truncate">{item.status}</p>
-																</div>
-															{/each}
-														</div>
-													</div>
-												{/each}
-											</div>
-										</div>
-
-									{:else if activeFeature === 1}
-										<!-- Context Recall View -->
-										<div in:fade={{ duration: 400 }} class="relative z-10">
-											<div class="flex items-center justify-between mb-5">
-												<div>
-													<h3 class="text-lg font-bold text-white">Relationship Timeline</h3>
-													<p class="text-xs text-zinc-500">Enterprise Corp • Sarah Chen</p>
-												</div>
-												<div class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red">
-													<Brain class="w-3.5 h-3.5 text-blue-400 animate-pulse" />
-													<span class="text-xs font-medium text-blue-400">Full Context</span>
-												</div>
-											</div>
-
-											<!-- Timeline with enhanced animations -->
-											<div class="relative pl-6 space-y-4 mb-6">
-												<div class="absolute left-2 top-2 bottom-2 w-px bg-gradient-to-b from-red-500 via-zinc-700 to-zinc-800"></div>
-												
-												{#each contextHistory as event, i}
-													<div 
-														class="relative group"
-														in:fly={{ x: -20, delay: i * 150, duration: 400 }}
-													>
-														<div class="absolute -left-4 w-3 h-3 rounded-full transition-all duration-300 {i === 0 ? 'bg-red-500 ring-4 ring-red-500/20 group-hover:scale-125' : 'bg-zinc-700 group-hover:bg-zinc-600 group-hover:scale-125'}"></div>
-														<div class="glass rounded-lg p-3 hover:bg-zinc-800/50 transition-all duration-300 cursor-pointer group-hover:scale-[1.02]">
-															<div class="flex items-center justify-between mb-2">
-																<span class="text-xs font-semibold text-white group-hover:text-red-400 transition-colors">{event.event}</span>
-																<span class="text-[10px] text-zinc-500">{event.date}</span>
-															</div>
-															<div class="flex items-center gap-3 text-xs">
-																{#if event.duration !== '—'}
-																	<span class="text-zinc-500">{event.duration}</span>
-																{/if}
-																<span class="flex items-center gap-1 {event.sentiment === 'positive' ? 'text-green-400' : 'text-zinc-500'}">
-																	{#if event.sentiment === 'positive'}
-																		<TrendingUp class="w-3 h-3 group-hover:animate-bounce" />
-																		Positive
-																	{:else}
-																		<Activity class="w-3 h-3" />
-																		Neutral
-																	{/if}
-																</span>
-															</div>
-														</div>
-													</div>
-												{/each}
-											</div>
-
-											<!-- Key Insights Card with glow -->
-											<div class="glass rounded-xl p-4 hover-lift relative overflow-hidden" in:fly={{ y: 20, delay: 400, duration: 400 }}>
-												<div class="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-blue-500/10 opacity-50"></div>
-												<h4 class="text-sm font-semibold text-white mb-3 flex items-center gap-2 relative z-10">
-													<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
-													AI-Generated Insights
-												</h4>
-												<div class="space-y-2 text-xs relative z-10">
-													<div class="flex items-start gap-2 group cursor-pointer">
-														<div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
-														<span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">Budget approved at <span class="text-white font-medium">$250K</span> during last call</span>
-													</div>
-													<div class="flex items-start gap-2 group cursor-pointer">
-														<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
-														<span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">CTO has concerns about <span class="text-white font-medium">data migration timeline</span></span>
-													</div>
-													<div class="flex items-start gap-2 group cursor-pointer">
-														<div class="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
-														<span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">Strong champion: <span class="text-white font-medium">Sarah Chen (VP Sales)</span></span>
-													</div>
-												</div>
-											</div>
-										</div>
-
-									{:else}
-										<!-- Action Tracking View -->
-										<div in:fade={{ duration: 400 }} class="relative z-10">
-											<div class="flex items-center justify-between mb-5">
-												<div>
-													<h3 class="text-lg font-bold text-white">Action Items</h3>
-													<p class="text-xs text-zinc-500">Commitments you've made across all meetings</p>
-												</div>
-												<div class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red animate-pulse">
-													<Clock class="w-3.5 h-3.5 text-amber-400" />
-													<span class="text-xs font-medium text-amber-400">2 Due Soon</span>
-												</div>
-											</div>
-
-											<!-- Action Items List -->
-											<div class="space-y-2">
-												{#each actionItems as item, i}
-													<div 
-														class="glass rounded-lg p-3 flex items-start gap-3 hover-lift group {item.completed ? 'opacity-60' : ''} relative overflow-hidden"
-														in:fly={{ y: 15, delay: i * 80, duration: 300 }}
-													>
-														<!-- Hover gradient effect -->
-														<div class="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-														
-														<button class="mt-0.5 flex-shrink-0 relative z-10 group-hover:scale-110 transition-transform">
-															{#if item.completed}
-																<CheckCircle2 class="w-5 h-5 text-green-500 group-hover:animate-spin" />
-															{:else}
-																<div class="w-5 h-5 rounded-full border-2 {item.priority === 'critical' ? 'border-red-500' : item.priority === 'high' ? 'border-amber-500' : 'border-zinc-600'} group-hover:bg-zinc-800/50 transition-colors"></div>
-															{/if}
-														</button>
-														<div class="flex-1 min-w-0 relative z-10">
-															<p class="text-sm {item.completed ? 'text-zinc-500 line-through' : 'text-white group-hover:text-red-400'} transition-colors">{item.text}</p>
-															<div class="flex items-center gap-2 mt-1.5">
-																<span class="px-1.5 py-0.5 rounded text-[10px] font-medium {item.priority === 'critical' ? 'bg-red-500/20 text-red-400' : item.priority === 'high' ? 'bg-amber-500/20 text-amber-400' : item.priority === 'medium' ? 'bg-blue-500/20 text-blue-400' : 'bg-zinc-700 text-zinc-400'}">
-																	{item.priority}
-																</span>
-																<span class="text-[10px] text-zinc-500 flex items-center gap-1">
-																	<Clock class="w-3 h-3" />
-																	{item.due}
-																</span>
-															</div>
-														</div>
-													</div>
-												{/each}
-											</div>
-
-											<!-- Summary Stats with hover effects -->
-											<div class="grid grid-cols-3 gap-3 mt-5" in:fly={{ y: 20, delay: 350, duration: 300 }}>
-												<div class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group">
-													<p class="text-2xl font-bold text-white group-hover:text-red-400 transition-colors">12</p>
-													<p class="text-[10px] text-zinc-500">Total Items</p>
-												</div>
-												<div class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group">
-													<p class="text-2xl font-bold text-green-400 group-hover:scale-125 transition-transform">8</p>
-													<p class="text-[10px] text-zinc-500">Completed</p>
-												</div>
-												<div class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group">
-													<p class="text-2xl font-bold text-amber-400 animate-pulse">2</p>
-													<p class="text-[10px] text-zinc-500">Due Today</p>
-												</div>
-											</div>
-										</div>
-									{/if}
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Floating Elements for Visual Interest -->
-					<div class="absolute -top-6 -right-6 w-24 h-24 bg-red-500/10 rounded-full blur-2xl"></div>
-					<div class="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl"></div>
-				</div>
+				<FollowupShowcase
+					bind:activeFeature
+					bind:isAutoPlaying
+					{mouseX}
+					{mouseY}
+					height="500px"
+					showAppChrome={true}
+				/>
 			</div>
 		</div>
 	</section>

@@ -4,19 +4,21 @@
 	import { dialogues, aiResponses } from '$lib/data/ai-assistance.js';
 
 	// Props
-	export let selectedQuestion = $state('roi');
-	export let isAutoPlaying = $state(true);
-	export let mouseX = $state(0);
-	export let mouseY = $state(0);
-	export let height = '600px'; // Configurable height
-	export let showAppChrome = true; // Option to show/hide app chrome
-	export let customDialogues = null; // Allow custom dialogues
-	export let customAiResponses = null; // Allow custom AI responses
-	export let visibleCount = 8; // Number of dialogues to show
+	let {
+		selectedQuestion = $bindable('roi'),
+		isAutoPlaying = $bindable(true),
+		mouseX = 0,
+		mouseY = 0,
+		height = '600px',
+		showAppChrome = true,
+		customDialogues = null,
+		customAiResponses = null,
+		visibleCount = 8
+	} = $props();
 
 	// Use custom data if provided, otherwise use default
-	$: displayDialogues = customDialogues || dialogues;
-	$: displayAiResponses = customAiResponses || aiResponses;
+	let displayDialogues = $derived(customDialogues || dialogues);
+	let displayAiResponses = $derived(customAiResponses || aiResponses);
 
 	// Question types for tabs
 	const questionTypes = ['roi', 'pricing', 'security', 'customization', 'integrations'];

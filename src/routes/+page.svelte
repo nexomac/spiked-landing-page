@@ -1,11 +1,23 @@
 <script>
 	import { onMount } from 'svelte';
-	import FeaturesShowcase from '$lib/components/FeaturesShowcase.svelte';
+	import { fly, fade, crossfade } from 'svelte/transition';
 	import OnboardingFlow from '$lib/components/OnboardingFlow.svelte';
 	import HeroSection from '$lib/components/HeroSection.svelte';
 	import ProductsSection from '$lib/components/ProductsSection.svelte';
+	import AIAssistanceShowcase from '$lib/components/AIAssistanceShowcase.svelte';
+	import NotetakerShowcase from '$lib/components/NotetakerShowcase.svelte';
+	import FollowupShowcase from '$lib/components/FollowupShowcase.svelte';
+	import SimulatorShowcase from '$lib/components/SimulatorShowcase.svelte';
+	import DevToolsShowcase from '$lib/components/DevToolsShowcase.svelte';
+	import CRMShowcase from '$lib/components/CRMShowcase.svelte';
+	import SentimentShowcase from '$lib/components/SentimentShowcase.svelte';
+	import CustomGoalsShowcase from '$lib/components/CustomGoalsShowcase.svelte';
+	import { Sparkles, MessageSquare, Brain, FileText, Users, Calendar, ArrowRight, Target, CheckCircle2, TrendingUp, GitBranch, BarChart3, Heart, Settings, Zap, Activity } from 'lucide-svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
+	import { themeStore } from '$lib/stores/theme.js';
 	import { innerWidth } from 'svelte/reactivity/window';
+	
+	let theme = $state('dark');
 	
 	let activeTab = $state('simulator');
 	let activeFeatureTab = $state('transcription');
@@ -16,6 +28,137 @@
 	let mouseX = $state(0);
 	let mouseY = $state(0);
 	let scrollY = $state(0);
+	
+	// Showcase rotation state
+	let currentShowcaseIndex = $state(0);
+	let isTransitioning = $state(false);
+	let isPaused = $state(false);
+	let showcaseContainerRef = null;
+	
+	// State for showcase components that need bindings
+	let aiSelectedQuestion = $state('roi');
+	let aiIsAutoPlaying = $state(true);
+	let notetakerActiveTab = $state('templates');
+	let notetakerSelectedTemplate = $state(null);
+	let notetakerIsAutoPlaying = $state(true);
+	let followupActiveFeature = $state(0);
+	let followupIsAutoPlaying = $state(true);
+	let simulatorActive = $state(false);
+	let simulatorPaused = $state(false);
+	let simulatorScenario = $state('discovery');
+	let simulatorDialogueIndex = $state(0);
+	let simulatorShowCoaching = $state(true);
+	let simulatorHoveredDialogue = $state(null);
+	let sentimentCurrent = $state('positive');
+	let sentimentShowcaseScore = $state(78);
+	
+	// Showcase components configuration with full info
+	const showcases = [
+		{
+			id: 'ai-assistance',
+			name: 'AI Assistance',
+			label: 'AI Assistance',
+			title: 'Real-time AI answers',
+			subtitle: 'from your sales docs',
+			icon: Sparkles,
+			features: [
+				{ icon: Brain, title: 'Instant answers during calls', description: 'Get contextual responses from your sales docs in real-time' },
+				{ icon: MessageSquare, title: 'Powered by your knowledge base', description: 'AI trained on your specific sales and solutions documentation', highlight: true },
+				{ icon: FileText, title: 'Never miss a detail', description: 'Handle objections and technical questions with confidence' }
+			]
+		},
+		{
+			id: 'notetaker',
+			name: 'Smart Notetaker',
+			label: 'Smart Notetaker',
+			title: 'Automatically capture',
+			subtitle: 'transcribe, and analyze every conversation',
+			icon: MessageSquare,
+			features: [
+				{ icon: FileText, title: 'Smart transcription', description: 'AI-powered transcription with speaker identification' },
+				{ icon: Brain, title: 'Intelligent summaries', description: 'Auto-generate meeting summaries and action items', highlight: true },
+				{ icon: Zap, title: 'Take automatic actions', description: 'Send follow-ups, sync to CRM, track stakeholders' }
+			]
+		},
+		{
+			id: 'followup',
+			name: 'Follow-Up Planner',
+			label: 'Follow-Up Preparation',
+			title: 'Never walk in unprepared',
+			subtitle: 'Automatically compile everything you need',
+			icon: Calendar,
+			features: [
+				{ icon: FileText, title: 'Smart Preparation', description: 'Automatically compile everything you need before every meeting' },
+				{ icon: Brain, title: 'Context Recall', description: 'Instantly recall every past conversation, commitment, and detail', highlight: true },
+				{ icon: CheckCircle2, title: 'Action Tracking', description: 'Track commitments automatically and get reminded before follow-ups' }
+			]
+		},
+		{
+			id: 'simulator',
+			name: 'Call Simulator',
+			label: 'Meeting Simulator',
+			title: 'Practice makes perfect',
+			subtitle: 'Run realistic sales simulations',
+			icon: Users,
+			features: [
+				{ icon: Users, title: 'Realistic scenarios', description: 'Practice with AI-powered prospects in various situations' },
+				{ icon: Target, title: 'Practice Every Scenario', description: 'Master discovery, demos, objections, and closing', highlight: true },
+				{ icon: TrendingUp, title: 'Live coaching feedback', description: 'Get real-time insights and improvement suggestions' }
+			]
+		},
+		{
+			id: 'dev-tools',
+			name: 'Dev Tools',
+			label: 'Developer Tools',
+			title: 'Seamlessly connect sales',
+			subtitle: 'with development workflow',
+			icon: GitBranch,
+			features: [
+				{ icon: GitBranch, title: 'Jira & Asana Integration', description: 'Sync sales conversations with development tickets' },
+				{ icon: Activity, title: 'Automated workflows', description: 'Create tickets and track progress automatically', highlight: true },
+				{ icon: Settings, title: 'Custom integrations', description: 'Connect with your existing dev tools and workflows' }
+			]
+		},
+		{
+			id: 'crm',
+			name: 'CRM Integration',
+			label: 'CRM Integration',
+			title: 'Keep your CRM updated',
+			subtitle: 'automatically in real-time',
+			icon: BarChart3,
+			features: [
+				{ icon: BarChart3, title: 'Salesforce & HubSpot', description: 'Seamless integration with major CRM platforms' },
+				{ icon: Zap, title: 'Auto-sync everything', description: 'Contacts, deals, and activities updated automatically', highlight: true },
+				{ icon: TrendingUp, title: 'Real-time updates', description: 'Never miss a beat with instant CRM synchronization' }
+			]
+		},
+		{
+			id: 'sentiment',
+			name: 'Sentiment Analysis',
+			label: 'Sentiment Analysis',
+			title: 'Understand customer emotions',
+			subtitle: 'in real-time during calls',
+			icon: Heart,
+			features: [
+				{ icon: Heart, title: 'Real-time sentiment', description: 'Track emotional tone and engagement throughout calls' },
+				{ icon: TrendingUp, title: 'Buying signals', description: 'Identify positive signals and buying intent automatically', highlight: true },
+				{ icon: Activity, title: 'Sentiment timeline', description: 'Visualize sentiment changes over the conversation' }
+			]
+		},
+		{
+			id: 'custom-goals',
+			name: 'Custom Goals',
+			label: 'Custom Goals',
+			title: 'Track what matters',
+			subtitle: 'to your business',
+			icon: Target,
+			features: [
+				{ icon: Target, title: 'Custom metrics', description: 'Define and track goals specific to your sales process' },
+				{ icon: Settings, title: 'Flexible configuration', description: 'Set up goals that align with your business objectives', highlight: true },
+				{ icon: TrendingUp, title: 'Progress tracking', description: 'Monitor progress toward your custom goals in real-time' }
+			]
+		}
+	];
 	
 	// Reactive breakpoints using Svelte 5 $derived
 	let isMobile = $derived(innerWidth.current ? innerWidth.current < 768 : false);
@@ -40,6 +183,12 @@
 	];
 
 	onMount(() => {
+		// Initialize theme
+		themeStore.init();
+		const unsubscribeTheme = themeStore.subscribe((value) => {
+			theme = value;
+		});
+
 		const handleScroll = () => {
 			scrollY = window.scrollY;
 		};
@@ -78,12 +227,32 @@
 			transcriptIndex = (transcriptIndex + 1) % transcriptMessages.length;
 		}, 3000);
 
+		// Showcase rotation every 5 seconds (only when not paused)
+		let showcaseInterval = null;
+		const startShowcaseRotation = () => {
+			if (showcaseInterval) clearInterval(showcaseInterval);
+			showcaseInterval = setInterval(() => {
+				if (!isPaused && !isTransitioning) {
+					isTransitioning = true;
+					setTimeout(() => {
+						currentShowcaseIndex = (currentShowcaseIndex + 1) % showcases.length;
+						setTimeout(() => {
+							isTransitioning = false;
+						}, 300);
+					}, 600);
+				}
+			}, 5000);
+		};
+		startShowcaseRotation();
+
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 			window.removeEventListener('mousemove', handleMouseMove);
 			observer.disconnect();
 			clearInterval(sentimentInterval);
 			clearInterval(transcriptInterval);
+			if (showcaseInterval) clearInterval(showcaseInterval);
+			unsubscribeTheme();
 		};
 	});
 
@@ -158,7 +327,413 @@
 			{resetTilt}
 		/>
 
-		<FeaturesShowcase />
+		<!-- Interactive Showcase Section -->
+		<section id="showcase" data-section="showcase" class="py-24 sm:py-32 bg-gradient-to-b from-black via-zinc-950 to-black dark:from-black dark:via-zinc-950 dark:to-black from-gray-50 via-white to-gray-50 relative overflow-hidden border-y border-red-900/20 dark:border-red-900/20 border-gray-200 showcase-section">
+			<!-- Enhanced Background effects -->
+			<div class="absolute inset-0 overflow-hidden">
+				<!-- Animated gradient overlay -->
+				<div class="absolute inset-0 bg-gradient-to-r from-red-950/15 via-transparent to-blue-950/15 animate-gradient-shift"></div>
+				
+				<!-- Floating orbs with enhanced animation -->
+				<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/8 rounded-full blur-3xl animate-float-orb"></div>
+				<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl animate-float-orb-delayed"></div>
+				<div class="absolute top-1/2 right-1/3 w-64 h-64 bg-purple-600/6 rounded-full blur-2xl animate-float-orb-slow"></div>
+				
+				<!-- Grid pattern overlay -->
+				<div class="absolute inset-0 showcase-grid-pattern opacity-20"></div>
+				
+				<!-- Animated particles -->
+				{#each Array(25) as _, i}
+					<div 
+						class="absolute w-1.5 h-1.5 bg-red-500/30 rounded-full animate-particle-float showcase-particle"
+						style="left: {Math.random() * 100}%; top: {Math.random() * 100}%; animation-delay: {Math.random() * 5}s; animation-duration: {12 + Math.random() * 8}s;"
+					></div>
+				{/each}
+				
+				<!-- Shimmer effect -->
+				<div class="absolute inset-0 showcase-shimmer"></div>
+			</div>
+
+			<div class="relative z-10 max-w-7xl mx-auto px-6">
+				<!-- Header -->
+				<div class="text-center mb-8 transform transition-all duration-1000 {visibleSections.showcase ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
+					<span class="text-xs sm:text-sm font-bold text-red-500 dark:text-red-500 text-red-600 tracking-widest uppercase">All Features</span>
+					<h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-4 mb-4 text-white dark:text-white text-slate-900 tracking-tight leading-tight">
+						Experience Every Feature
+					</h2>
+					<p class="text-base text-zinc-400 dark:text-zinc-400 text-slate-600 max-w-2xl mx-auto">
+						Explore our complete suite of AI-powered features with interactive demos.
+					</p>
+				</div>
+
+				<!-- Split Layout Showcase Container -->
+				<div 
+					class="relative min-h-[650px] lg:min-h-[650px] min-h-[600px]"
+					role="region"
+					aria-label="Interactive feature showcase"
+					onmouseenter={() => isPaused = true}
+					onmouseleave={() => isPaused = false}
+					bind:this={showcaseContainerRef}
+				>
+					{#each showcases as showcase, i}
+						{#if currentShowcaseIndex === i}
+							<div
+								class="showcase-split-container"
+								in:fly={{ y: 20, duration: 700, easing: (t) => 1 - Math.pow(1 - t, 2.5) }}
+								out:fly={{ y: -15, duration: 400, easing: (t) => Math.pow(t, 1.5) }}
+							>
+								<!-- Desktop Layout: Split -->
+								<div class="hidden lg:grid lg:grid-cols-2 gap-10 items-center h-full">
+									<!-- Left Column - Feature Info -->
+									<div class="space-y-6 showcase-left-content">
+										<!-- Label Badge -->
+										<div 
+											class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500/10 via-red-500/5 to-transparent dark:from-red-500/10 dark:via-red-500/5 dark:to-transparent from-red-100/80 via-red-50/60 to-transparent backdrop-blur-md rounded-full border border-red-500/20 dark:border-red-500/20 border-red-300/40 shadow-lg shadow-red-500/10 dark:shadow-red-500/10 shadow-red-200/20 showcase-badge"
+											in:fly={{ x: -20, duration: 600, delay: 100 }}
+										>
+											<div class="relative">
+												<svelte:component this={showcase.icon} class="w-4 h-4 text-red-400 dark:text-red-400 text-red-600 relative z-10" />
+												<div class="absolute inset-0 bg-red-500/20 dark:bg-red-500/20 bg-red-400/30 rounded-full blur-md animate-pulse"></div>
+											</div>
+											<span class="text-xs font-bold text-red-300 dark:text-red-300 text-red-700 uppercase tracking-wider">{showcase.label}</span>
+										</div>
+
+										<!-- Title -->
+										<h3 
+											class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight showcase-title"
+											in:fly={{ x: -20, duration: 700, delay: 200 }}
+										>
+											<span class="bg-gradient-to-r from-white via-zinc-100 to-zinc-300 dark:from-white dark:via-zinc-100 dark:to-zinc-300 from-slate-900 via-slate-800 to-slate-700 bg-clip-text text-transparent block mb-2 animate-gradient-text">{showcase.title}</span>
+											<span class="text-white dark:text-white text-slate-900 block font-bold">{showcase.subtitle}</span>
+										</h3>
+
+										<!-- Feature Cards -->
+										<div class="space-y-3 showcase-features">
+											{#each showcase.features as feature, idx}
+												<div
+													class="feature-card group relative bg-gradient-to-br from-zinc-900/60 via-zinc-900/40 to-zinc-950/60 dark:from-zinc-900/60 dark:via-zinc-900/40 dark:to-zinc-950/60 from-white/80 via-gray-50/70 to-white/80 backdrop-blur-md rounded-xl p-4 border transition-all duration-500 {feature.highlight ? 'border-red-500/40 dark:border-red-500/40 border-red-400/50 border-l-4 border-l-red-500 dark:border-l-red-500 border-l-red-600 shadow-lg shadow-red-500/10 dark:shadow-red-500/10 shadow-red-200/20' : 'border-zinc-800/50 dark:border-zinc-800/50 border-gray-200/60'} hover:border-zinc-700/70 dark:hover:border-zinc-700/70 hover:border-gray-300/80 hover:shadow-xl hover:shadow-red-500/5 dark:hover:shadow-red-500/5 hover:shadow-red-200/10 hover:-translate-y-1"
+													in:fly={{ x: -30, duration: 600, delay: 300 + idx * 100 }}
+												>
+													<!-- Animated background gradient -->
+													<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-transparent dark:via-red-500/5 dark:via-red-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
+													
+													<div class="flex items-start gap-3 relative z-10">
+														<div class="relative">
+															<div class="w-10 h-10 rounded-lg {feature.highlight ? 'bg-gradient-to-br from-red-500/20 to-red-600/10 dark:from-red-500/20 dark:to-red-600/10 from-red-100 to-red-50' : 'bg-zinc-800/60 dark:bg-zinc-800/60 bg-gray-100/80'} flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+																<svelte:component this={feature.icon} class="w-5 h-5 {feature.highlight ? 'text-red-400 dark:text-red-400 text-red-600' : 'text-zinc-400 dark:text-zinc-400 text-gray-600 group-hover:text-zinc-300 dark:group-hover:text-zinc-300 group-hover:text-gray-700'} transition-colors duration-300" />
+															</div>
+															{#if feature.highlight}
+																<div class="absolute -inset-1 bg-red-500/20 dark:bg-red-500/20 bg-red-400/30 rounded-lg blur-sm animate-pulse"></div>
+															{/if}
+														</div>
+														<div class="flex-1 min-w-0">
+															<h4 class="font-bold text-white dark:text-white text-slate-900 mb-1.5 text-sm group-hover:text-red-100 dark:group-hover:text-red-100 group-hover:text-red-700 transition-colors duration-300">{feature.title}</h4>
+															<p class="text-xs text-zinc-400 dark:text-zinc-400 text-slate-600 leading-relaxed group-hover:text-zinc-300 dark:group-hover:text-zinc-300 group-hover:text-slate-700 transition-colors duration-300">{feature.description}</p>
+														</div>
+													</div>
+												</div>
+											{/each}
+										</div>
+
+										<!-- CTA -->
+										<a 
+											href="/features/{showcase.id}"
+											class="inline-flex items-center gap-2 text-red-400 hover:text-red-300 font-semibold group text-sm showcase-cta relative overflow-hidden"
+											in:fly={{ x: -20, duration: 600, delay: 600 }}
+										>
+											<span class="relative z-10">Learn more about {showcase.name.toLowerCase()}</span>
+											<ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
+											<div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500"></div>
+										</a>
+									</div>
+
+									<!-- Right Column - Showcase Widget -->
+									<div class="relative showcase-widget">
+										<div 
+											class="relative bg-gradient-to-br from-zinc-900/90 via-zinc-900/80 to-zinc-950/90 dark:from-zinc-900/90 dark:via-zinc-900/80 dark:to-zinc-950/90 from-white/95 via-gray-50/90 to-white/95 backdrop-blur-2xl rounded-3xl border border-zinc-800/60 dark:border-zinc-800/60 border-gray-200/80 p-5 shadow-2xl dark:shadow-2xl shadow-gray-200/50 showcase-widget-container"
+											in:fly={{ x: 30, duration: 800, delay: 200 }}
+										>
+											<!-- Multi-layer glow effects -->
+											<div class="absolute -inset-1 bg-gradient-to-r from-red-600/20 via-red-500/10 to-blue-600/20 dark:from-red-600/20 dark:via-red-500/10 dark:to-blue-600/20 from-red-200/30 via-red-100/20 to-blue-200/30 rounded-3xl blur-2xl opacity-60 dark:opacity-60 opacity-40 animate-pulse"></div>
+											<div class="absolute -inset-0.5 bg-gradient-to-r from-red-500/10 via-transparent to-blue-500/10 dark:from-red-500/10 dark:via-transparent dark:to-blue-500/10 from-red-100/20 via-transparent to-blue-100/20 rounded-3xl blur-xl"></div>
+											
+											<!-- Animated border -->
+											<div class="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-red-500/20 via-transparent to-blue-500/20 opacity-0 hover:opacity-100 transition-opacity duration-500" style="mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 2px;"></div>
+											
+											<div class="relative z-10">
+												{#if showcase.id === 'ai-assistance'}
+													<AIAssistanceShowcase
+														bind:selectedQuestion={aiSelectedQuestion}
+														bind:isAutoPlaying={aiIsAutoPlaying}
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'notetaker'}
+													<NotetakerShowcase
+														bind:activeTab={notetakerActiveTab}
+														bind:selectedTemplate={notetakerSelectedTemplate}
+														bind:isAutoPlaying={notetakerIsAutoPlaying}
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'followup'}
+													<FollowupShowcase
+														bind:activeFeature={followupActiveFeature}
+														bind:isAutoPlaying={followupIsAutoPlaying}
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'simulator'}
+													<SimulatorShowcase
+														bind:simulationActive={simulatorActive}
+														bind:isPaused={simulatorPaused}
+														bind:selectedScenario={simulatorScenario}
+														bind:currentDialogueIndex={simulatorDialogueIndex}
+														bind:showCoaching={simulatorShowCoaching}
+														bind:hoveredDialogue={simulatorHoveredDialogue}
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'dev-tools'}
+													<DevToolsShowcase
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'crm'}
+													<CRMShowcase
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'sentiment'}
+													<SentimentShowcase
+														bind:currentSentiment={sentimentCurrent}
+														bind:sentimentScore={sentimentShowcaseScore}
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'custom-goals'}
+													<CustomGoalsShowcase
+														mouseX={0}
+														mouseY={0}
+														height="500px"
+														showAppChrome={true}
+													/>
+												{/if}
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Mobile Layout: Stacked -->
+								<div class="lg:hidden space-y-6 showcase-mobile-content">
+									<!-- Mobile: Widget First -->
+									<div class="relative showcase-widget-mobile">
+										<div class="relative bg-gradient-to-br from-zinc-900/90 via-zinc-900/80 to-zinc-950/90 backdrop-blur-2xl rounded-2xl border border-zinc-800/60 p-4 shadow-2xl">
+											<div class="absolute -inset-1 bg-gradient-to-r from-red-600/20 via-red-500/10 to-blue-600/20 rounded-2xl blur-xl opacity-50"></div>
+											<div class="relative z-10">
+												{#if showcase.id === 'ai-assistance'}
+													<AIAssistanceShowcase
+														bind:selectedQuestion={aiSelectedQuestion}
+														bind:isAutoPlaying={aiIsAutoPlaying}
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'notetaker'}
+													<NotetakerShowcase
+														bind:activeTab={notetakerActiveTab}
+														bind:selectedTemplate={notetakerSelectedTemplate}
+														bind:isAutoPlaying={notetakerIsAutoPlaying}
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'followup'}
+													<FollowupShowcase
+														bind:activeFeature={followupActiveFeature}
+														bind:isAutoPlaying={followupIsAutoPlaying}
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'simulator'}
+													<SimulatorShowcase
+														bind:simulationActive={simulatorActive}
+														bind:isPaused={simulatorPaused}
+														bind:selectedScenario={simulatorScenario}
+														bind:currentDialogueIndex={simulatorDialogueIndex}
+														bind:showCoaching={simulatorShowCoaching}
+														bind:hoveredDialogue={simulatorHoveredDialogue}
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'dev-tools'}
+													<DevToolsShowcase
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'crm'}
+													<CRMShowcase
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'sentiment'}
+													<SentimentShowcase
+														bind:currentSentiment={sentimentCurrent}
+														bind:sentimentScore={sentimentShowcaseScore}
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{:else if showcase.id === 'custom-goals'}
+													<CustomGoalsShowcase
+														mouseX={0}
+														mouseY={0}
+														height="400px"
+														showAppChrome={true}
+													/>
+												{/if}
+											</div>
+										</div>
+									</div>
+
+									<!-- Mobile: Info Below -->
+									<div class="space-y-4">
+										<!-- Label Badge -->
+										<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-red-500/10 via-red-500/5 to-transparent backdrop-blur-md rounded-full border border-red-500/20">
+											<svelte:component this={showcase.icon} class="w-3.5 h-3.5 text-red-400" />
+											<span class="text-[10px] font-bold text-red-300 uppercase tracking-wider">{showcase.label}</span>
+										</div>
+
+										<!-- Title -->
+										<h3 class="text-2xl font-black leading-tight">
+											<span class="bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-transparent block mb-1">{showcase.title}</span>
+											<span class="text-white block text-lg">{showcase.subtitle}</span>
+										</h3>
+
+										<!-- Feature Cards (Compact) -->
+										<div class="space-y-2">
+											{#each showcase.features as feature, idx}
+												<div class="bg-zinc-900/60 backdrop-blur-sm rounded-lg p-3 border {feature.highlight ? 'border-red-500/30 border-l-2 border-l-red-500' : 'border-zinc-800/50'}">
+													<div class="flex items-start gap-2.5">
+														<div class="w-8 h-8 rounded-lg {feature.highlight ? 'bg-red-500/10' : 'bg-zinc-800/50'} flex items-center justify-center flex-shrink-0">
+															<svelte:component this={feature.icon} class="w-4 h-4 {feature.highlight ? 'text-red-400' : 'text-zinc-400'}" />
+														</div>
+														<div class="flex-1 min-w-0">
+															<h4 class="font-bold text-white mb-0.5 text-xs">{feature.title}</h4>
+															<p class="text-[10px] text-zinc-400 leading-relaxed">{feature.description}</p>
+														</div>
+													</div>
+												</div>
+											{/each}
+										</div>
+
+										<!-- CTA -->
+										<a 
+											href="/features/{showcase.id}"
+											class="inline-flex items-center gap-2 text-red-400 hover:text-red-300 font-semibold text-xs"
+										>
+											<span>Learn more</span>
+											<ArrowRight class="w-3.5 h-3.5" />
+										</a>
+									</div>
+								</div>
+							</div>
+						{/if}
+					{/each}
+				</div>
+
+					<!-- Navigation Icons - Desktop -->
+					<div class="hidden md:flex justify-center gap-2 mt-10 showcase-navigation">
+						{#each showcases as showcase, i}
+							<button
+								onclick={() => {
+									if (currentShowcaseIndex !== i && !isTransitioning) {
+										isTransitioning = true;
+										setTimeout(() => {
+											currentShowcaseIndex = i;
+											setTimeout(() => {
+												isTransitioning = false;
+											}, 300);
+										}, 400);
+									}
+								}}
+								class="group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-500 ease-out {currentShowcaseIndex === i ? 'bg-gradient-to-br from-red-500/30 to-red-600/20 dark:from-red-500/30 dark:to-red-600/20 from-red-100 to-red-50 text-red-300 dark:text-red-300 text-red-700 border-2 border-red-500/50 dark:border-red-500/50 border-red-400/60 shadow-lg shadow-red-500/30 dark:shadow-red-500/30 shadow-red-200/40 scale-110' : 'text-zinc-500 dark:text-zinc-500 text-gray-600 hover:text-zinc-300 dark:hover:text-zinc-300 hover:text-gray-800 hover:bg-zinc-800/60 dark:hover:bg-zinc-800/60 hover:bg-gray-100/80 border-2 border-zinc-800/50 dark:border-zinc-800/50 border-gray-200/60 hover:border-zinc-700/70 dark:hover:border-zinc-700/70 hover:border-gray-300/80 hover:scale-105'} backdrop-blur-md"
+								aria-label={`Show ${showcase.name}`}
+								title={showcase.name}
+							>
+							<div class="relative z-10">
+								<svelte:component this={showcase.icon} class="w-5 h-5 transition-all duration-300 {currentShowcaseIndex === i ? 'text-red-400 scale-110' : 'group-hover:rotate-12 group-hover:scale-110'}" />
+								{#if currentShowcaseIndex === i}
+									<div class="absolute inset-0 bg-red-500/40 rounded-full blur-lg animate-ping"></div>
+									<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent rounded-full"></div>
+								{/if}
+							</div>
+							<!-- Hover glow effect -->
+							<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/15 to-red-500/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+						</button>
+					{/each}
+				</div>
+
+					<!-- Navigation Icons - Mobile (Scrollable) -->
+					<div class="md:hidden mt-8 showcase-navigation-mobile">
+						<div class="flex gap-2 overflow-x-auto pb-2 px-2 -mx-2 scrollbar-hide">
+							{#each showcases as showcase, i}
+								<button
+									onclick={() => {
+										if (currentShowcaseIndex !== i && !isTransitioning) {
+											isTransitioning = true;
+											setTimeout(() => {
+												currentShowcaseIndex = i;
+												setTimeout(() => {
+													isTransitioning = false;
+												}, 300);
+											}, 400);
+										}
+									}}
+									class="group relative flex-shrink-0 w-14 h-14 flex flex-col items-center justify-center rounded-xl transition-all duration-500 ease-out {currentShowcaseIndex === i ? 'bg-gradient-to-br from-red-500/30 to-red-600/20 dark:from-red-500/30 dark:to-red-600/20 from-red-100 to-red-50 text-red-300 dark:text-red-300 text-red-700 border-2 border-red-500/50 dark:border-red-500/50 border-red-400/60 shadow-lg shadow-red-500/30 dark:shadow-red-500/30 shadow-red-200/40 scale-105' : 'text-zinc-500 dark:text-zinc-500 text-gray-600 hover:text-zinc-300 dark:hover:text-zinc-300 hover:text-gray-800 bg-zinc-800/40 dark:bg-zinc-800/40 bg-gray-100/80 border-2 border-zinc-800/50 dark:border-zinc-800/50 border-gray-200/60'} backdrop-blur-md"
+									aria-label={`Show ${showcase.name}`}
+								>
+									<div class="relative">
+										<svelte:component this={showcase.icon} class="w-5 h-5 transition-all duration-300 {currentShowcaseIndex === i ? 'text-red-400 dark:text-red-400 text-red-600 scale-110' : 'group-hover:scale-110'}" />
+										{#if currentShowcaseIndex === i}
+											<div class="absolute inset-0 bg-red-500/40 dark:bg-red-500/40 bg-red-400/50 rounded-full blur-lg animate-pulse"></div>
+										{/if}
+									</div>
+									<span class="text-[9px] font-semibold mt-1 text-center leading-tight {currentShowcaseIndex === i ? 'text-red-300 dark:text-red-300 text-red-700' : 'text-zinc-500 dark:text-zinc-500 text-gray-600'}">
+										{showcase.name.split(' ')[0]}
+									</span>
+								</button>
+							{/each}
+						</div>
+					</div>
+
+			</div>
+		</section>
 
 		<section id="testimonials" data-section="testimonials" class="py-24 sm:py-32 bg-zinc-950 dark:bg-zinc-950 bg-white relative overflow-hidden border-y border-red-900/20 dark:border-red-900/20 border-gray-200">
 			<div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black dark:from-black dark:via-transparent dark:to-black from-transparent via-transparent to-transparent z-10 pointer-events-none"></div>
@@ -652,6 +1227,384 @@
 		animation-play-state: paused;
 	}
 
+	/* Showcase section stability */
+	section#showcase {
+		will-change: contents;
+	}
+
+	/* Split showcase container animations */
+	.showcase-split-container {
+		min-height: 650px;
+		display: flex;
+		align-items: center;
+		will-change: transform, opacity;
+	}
+
+	/* Smooth transitions for showcase content */
+	.showcase-left-content > * {
+		animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+		opacity: 0;
+	}
+
+	.showcase-left-content > *:nth-child(1) { animation-delay: 0.1s; }
+	.showcase-left-content > *:nth-child(2) { animation-delay: 0.2s; }
+	.showcase-left-content > *:nth-child(3) { animation-delay: 0.3s; }
+	.showcase-left-content > *:nth-child(4) { animation-delay: 0.4s; }
+
+	.showcase-widget-container {
+		animation: slideInRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+		animation-delay: 0.2s;
+		opacity: 0;
+	}
+
+	@keyframes slideInLeft {
+		0% {
+			opacity: 0;
+			transform: translateX(-40px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slideInRight {
+		0% {
+			opacity: 0;
+			transform: translateX(40px) scale(0.95);
+		}
+		100% {
+			opacity: 1;
+			transform: translateX(0) scale(1);
+		}
+	}
+
+	@keyframes animate-gradient-text {
+		0%, 100% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+	}
+
+	.animate-gradient-text {
+		background-size: 200% auto;
+		animation: animate-gradient-text 3s ease infinite;
+	}
+
+	/* Feature card hover effects */
+	.feature-card {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.feature-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+		transition: left 0.5s;
+	}
+
+	.feature-card:hover::before {
+		left: 100%;
+	}
+
+	/* Showcase badge animation */
+	.showcase-badge {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.showcase-badge::after {
+		content: '';
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 200%;
+		height: 200%;
+		background: radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%);
+		animation: rotate 4s linear infinite;
+		pointer-events: none;
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	/* Widget container 3D effect */
+	.showcase-widget-container {
+		transform-style: preserve-3d;
+		perspective: 1000px;
+	}
+
+	.showcase-widget-container:hover {
+		transform: translateY(-5px) scale(1.01);
+		box-shadow: 
+			0 25px 50px -12px rgba(0, 0, 0, 0.5),
+			0 0 30px rgba(239, 68, 68, 0.2);
+	}
+
+	/* Navigation button enhancements */
+	.showcase-navigation button {
+		position: relative;
+		overflow: visible;
+		transform-style: preserve-3d;
+	}
+
+	.showcase-navigation button::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0;
+		height: 0;
+		border-radius: 50%;
+		background: radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%);
+		transform: translate(-50%, -50%);
+		transition: width 0.6s ease-out, height 0.6s ease-out;
+	}
+
+	.showcase-navigation button:hover::before {
+		width: 150px;
+		height: 150px;
+	}
+
+	/* Mobile navigation */
+	.showcase-navigation-mobile {
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.scrollbar-hide {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Mobile content animations */
+	.showcase-mobile-content > * {
+		animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+		opacity: 0;
+	}
+
+	.showcase-mobile-content > *:nth-child(1) { animation-delay: 0.1s; }
+	.showcase-mobile-content > *:nth-child(2) { animation-delay: 0.2s; }
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* Stagger animation for feature cards */
+	.showcase-features > * {
+		animation: staggerFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+		opacity: 0;
+	}
+
+	.showcase-features > *:nth-child(1) { animation-delay: 0.3s; }
+	.showcase-features > *:nth-child(2) { animation-delay: 0.4s; }
+	.showcase-features > *:nth-child(3) { animation-delay: 0.5s; }
+
+	@keyframes staggerFadeIn {
+		0% {
+			opacity: 0;
+			transform: translateX(-20px) scale(0.95);
+		}
+		100% {
+			opacity: 1;
+			transform: translateX(0) scale(1);
+		}
+	}
+
+	/* Enhanced background animations */
+	@keyframes gradient-shift {
+		0%, 100% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+	}
+
+	.animate-gradient-shift {
+		background-size: 200% 200%;
+		animation: gradient-shift 8s ease infinite;
+	}
+
+	@keyframes float-orb {
+		0%, 100% {
+			transform: translate(0, 0) scale(1);
+			opacity: 0.6;
+		}
+		33% {
+			transform: translate(30px, -30px) scale(1.1);
+			opacity: 0.8;
+		}
+		66% {
+			transform: translate(-20px, 20px) scale(0.9);
+			opacity: 0.7;
+		}
+	}
+
+	.animate-float-orb {
+		animation: float-orb 15s ease-in-out infinite;
+		opacity: 0.28;
+		filter: blur(28px);
+	}
+
+	.animate-float-orb-delayed {
+		animation: float-orb 18s ease-in-out infinite;
+		animation-delay: 2s;
+		opacity: 0.24;
+		filter: blur(26px);
+	}
+
+	.animate-float-orb-slow {
+		animation: float-orb 20s ease-in-out infinite;
+		animation-delay: 4s;
+		opacity: 0.22;
+		filter: blur(24px);
+	}
+
+	/* Grid pattern */
+	.showcase-grid-pattern {
+		background-image: 
+			linear-gradient(rgba(239, 68, 68, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(239, 68, 68, 0.018) 1px, transparent 1px);
+		background-size: 50px 50px;
+		mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+		-webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+		animation: grid-pulse 4s ease-in-out infinite;
+	}
+
+	/* Shimmer effect */
+	.showcase-shimmer {
+		background: linear-gradient(
+			90deg,
+			transparent,
+			rgba(255, 255, 255, 0.02) 50%,
+			transparent
+		);
+		animation: shimmer 8s ease-in-out infinite;
+		pointer-events: none;
+		opacity: 0.7;
+	}
+
+	@keyframes shimmer {
+		0% {
+			transform: translateX(-100%);
+		}
+		100% {
+			transform: translateX(100%);
+		}
+	}
+
+	/* Particle enhancements */
+	.showcase-particle {
+		box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+	}
+
+	/* Section entrance animation */
+	.showcase-section {
+		animation: sectionFadeIn 1s ease-out;
+		position: relative;
+		isolation: isolate;
+	}
+
+	/* Sharper surfaces for better clarity */
+	section#showcase .showcase-widget-container {
+		backdrop-filter: blur(10px);
+		background: linear-gradient(135deg, rgba(16, 16, 18, 0.94), rgba(8, 8, 10, 0.98));
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		box-shadow: 
+			0 18px 40px -18px rgba(0, 0, 0, 0.85),
+			0 0 64px rgba(255, 71, 71, 0.08);
+	}
+
+	section#showcase .showcase-widget-container > .absolute {
+		opacity: 0.4;
+	}
+
+	section#showcase .feature-card {
+		background: rgba(15, 15, 18, 0.92);
+		border-color: rgba(255, 255, 255, 0.06);
+		backdrop-filter: blur(6px);
+		box-shadow: 0 14px 36px -18px rgba(0, 0, 0, 0.8);
+	}
+
+	section#showcase .showcase-badge {
+		box-shadow: 0 10px 28px -18px rgba(0, 0, 0, 0.6);
+		border-color: rgba(255, 255, 255, 0.12);
+		background: linear-gradient(90deg, rgba(248, 113, 113, 0.08), rgba(248, 113, 113, 0.02));
+	}
+
+	@keyframes sectionFadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	/* Light mode showcase section - ensure proper theme switching */
+	:global([data-theme='light']) section#showcase {
+		background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%) !important;
+	}
+
+	:global([data-theme='light']) section#showcase h2,
+	:global([data-theme='light']) section#showcase h3,
+	:global([data-theme='light']) section#showcase h4 {
+		color: #0f172a !important;
+	}
+
+	:global([data-theme='light']) section#showcase .text-white {
+		color: #0f172a !important;
+	}
+
+	:global([data-theme='light']) section#showcase .text-zinc-400 {
+		color: #475569 !important;
+	}
+
+	:global([data-theme='light']) section#showcase .text-zinc-500 {
+		color: #64748b !important;
+	}
+
+	:global([data-theme='light']) section#showcase .showcase-widget-container {
+		background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9)) !important;
+		border-color: rgba(226, 232, 240, 0.6) !important;
+		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+	}
+
+	/* Force dark mode for showcase section - ensure it respects theme */
+	:global([data-theme='dark']) section#showcase {
+		background: linear-gradient(to bottom, #000000 0%, #09090b 50%, #000000 100%) !important;
+	}
+
+	:global([data-theme='dark']) section#showcase .showcase-widget-container {
+		background: linear-gradient(to bottom right, rgba(24, 24, 27, 0.9), rgba(9, 9, 11, 0.9)) !important;
+		border-color: rgba(39, 39, 42, 0.6) !important;
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+	}
+
 	/* Page-wide background */
 	.page-shell {
 		position: relative;
@@ -1035,23 +1988,17 @@
 		transform: translateY(-2px) scale(1.02);
 	}
 	
-	/* Ensure hero section is visible in light mode */
-	:global([data-theme='light']) .hero-shell {
-		position: relative;
-		z-index: 1;
-	}
-	
-	:global([data-theme='light']) .hero-shell .hero-overlay {
-		pointer-events: none;
-	}
-	
-	:global([data-theme='light']) .page-content {
-		position: relative;
-		z-index: 10;
-	}
-	
 	/* Light mode page background */
 	:global([data-theme='light']) .page-shell {
 		background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #ffffff 100%) !important;
+	}
+
+	/* Force dark mode for showcase section on Windows/light mode issues */
+	:global([data-theme='light']) section#showcase * {
+		color-scheme: light;
+	}
+
+	:global([data-theme='dark']) section#showcase * {
+		color-scheme: dark;
 	}
 </style>

@@ -12,12 +12,12 @@
 	data-section="hero"
 	class="relative min-h-screen flex items-center justify-center overflow-hidden hero-shell hero-type"
 >
-	<div class="absolute inset-0 hero-overlay" style={`transform: translateY(${scrollY * 0.5}px);`}>
-		<div class="absolute inset-0 bg-gradient-to-b from-red-950/30 via-black via-50% to-black dark:from-red-950/30 dark:via-black dark:via-50% dark:to-black from-transparent via-transparent to-transparent"></div>
-		<div
-			class="absolute inset-0 animate-grid-pulse hero-grid"
-			style="background-image: linear-gradient(rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px); background-size: 60px 60px;"
-		></div>
+		<div class="absolute inset-0 hero-overlay" style={`transform: translateY(${scrollY * 0.5}px);`}>
+			<div class="absolute inset-0 bg-gradient-to-b from-red-950/30 via-black via-50% to-black dark:from-red-950/30 dark:via-black dark:via-50% dark:to-black from-transparent via-transparent to-transparent"></div>
+			<div
+				class="absolute inset-0 animate-grid-pulse hero-grid"
+				style="background-image: linear-gradient(rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1.5px, transparent 1.5px); background-size: 60px 60px;"
+			></div>
 
 		<div
 			class="absolute w-[600px] h-[600px] bg-red-600/25 dark:bg-red-600/25 bg-red-500/12 rounded-full blur-3xl animate-float transition-transform duration-1000 hero-orb"
@@ -38,9 +38,9 @@
 		></div>
 
 		<div class="absolute inset-0 overflow-hidden">
-			<div class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-500/40 dark:via-red-500/40 via-red-500/15 to-transparent opacity-30 dark:opacity-30 opacity-20 animate-scan"></div>
+			<div class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-500/40 dark:via-red-500/40 via-red-500/15 to-transparent opacity-30 dark:opacity-30 opacity-20 animate-scan hero-scan-line"></div>
 			<div
-				class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-400/20 dark:via-red-400/20 via-red-400/10 to-transparent opacity-20 dark:opacity-20 opacity-10 animate-scan"
+				class="absolute h-px w-full bg-gradient-to-r from-transparent via-red-400/20 dark:via-red-400/20 via-red-400/10 to-transparent opacity-20 dark:opacity-20 opacity-10 animate-scan hero-scan-line"
 				style="animation-delay: 3s; animation-duration: 10s;"
 			></div>
 		</div>
@@ -71,8 +71,8 @@
 						<span class="hero-eyebrow dark:text-gray-200 text-gray-950">Revenue AI Agents built for the Fortune 2000</span>
 					</div>
 				</div>
-				<div class="hero-subhead px-5 sm:px-6 py-4 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 dark:from-red-950/30 dark:via-red-950/20 dark:to-red-950/30 from-red-50/80 via-red-50/60 to-red-50/80 backdrop-blur-xl rounded-2xl border border-red-900/30 dark:border-red-900/30 border-red-200 hover:border-red-800/50 dark:hover:border-red-800/50 hover:border-red-400 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20 dark:hover:shadow-red-900/20 hover:shadow-red-500/20 text-center">
-					<span class="leading-relaxed dark:text-gray-300 text-gray-900">Redefining the sales workforce so every seller operates like a founder with reasoning-grade intelligence in every workflow</span>
+				<div class="hero-subhead px-5 sm:px-6 py-4 sm:py-3 bg-gradient-to-r from-red-50/80 via-red-50/60 to-red-50/80 dark:from-red-950/30 dark:via-red-950/20 dark:to-red-950/30 backdrop-blur-xl rounded-2xl border border-rose-200 dark:border-red-900/30 hover:border-red-400 dark:hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20 dark:hover:shadow-red-900/20 hover:shadow-red-500/20 text-center">
+					<span class="leading-relaxed text-rose-800 dark:text-gray-300 font-semibold">Redefining the sales workforce so every seller operates like a founder with reasoning-grade intelligence in every workflow</span>
 				</div>
 			</div>
 
@@ -92,7 +92,7 @@
 					onclick={startOnboarding}
 					onmousemove={(event) => handleTilt(event, 12)}
 					onmouseleave={resetTilt}
-					class="tilt-card group relative px-8 py-5 sm:px-10 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-semibold text-lg tracking-tight overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1 primary-cta"
+					class="tilt-card group relative px-8 py-5 sm:px-10 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white dark:text-white text-rose-800 rounded-xl font-semibold text-lg tracking-tight overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-600/60 hover:scale-[1.05] hover:-translate-y-1 primary-cta"
 				>
 					<span class="relative z-10 flex items-center justify-center gap-2">
 						Start Now, Skip Demos
@@ -170,6 +170,10 @@
 <style>
 	.hero-type {
 		font-family: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+		color: inherit;
+	}
+
+	:global(.dark) .hero-type {
 		color: #f4f4f5;
 	}
 
@@ -195,6 +199,10 @@
 		font-weight: 600;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;
+		color: inherit;
+	}
+
+	:global(.dark) .hero-eyebrow {
 		color: #e5e7eb;
 	}
 
@@ -262,6 +270,11 @@
 		background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.82));
 		border-color: #e2e8f0;
 		box-shadow: 0 18px 60px rgba(15, 23, 42, 0.08);
+	}
+
+	:global([data-theme='light'] .hero-subhead span) {
+		color: #0f172a;
+		font-weight: 700;
 	}
 
 	:root[data-theme='light'] .hero-pill {
@@ -490,46 +503,10 @@
 		opacity: 1 !important;
 	}
 
-	:global([data-theme='light'] .hero-shell .primary-cta) {
-		background: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #f43f5e 100%) !important;
-		box-shadow: 
-			0 12px 48px rgba(239, 68, 68, 0.35),
-			0 6px 24px rgba(239, 68, 68, 0.25),
-			0 2px 8px rgba(239, 68, 68, 0.15),
-			inset 0 2px 4px rgba(255, 255, 255, 0.25),
-			inset 0 -1px 2px rgba(185, 28, 28, 0.2) !important;
-		border: none !important;
-		text-shadow: 
-			0 1px 2px rgba(0, 0, 0, 0.15),
-			0 0 8px rgba(255, 255, 255, 0.2) !important;
-		position: relative;
-		overflow: hidden;
-	}
-	
-	:global([data-theme='light'] .hero-shell .primary-cta::before) {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-		transition: left 0.5s ease;
-	}
-
-	:global([data-theme='light'] .hero-shell .primary-cta:hover) {
-		background: linear-gradient(135deg, #dc2626 0%, #ea580c 50%, #e11d48 100%) !important;
-		box-shadow: 
-			0 20px 60px rgba(239, 68, 68, 0.45),
-			0 10px 32px rgba(239, 68, 68, 0.35),
-			0 4px 12px rgba(239, 68, 68, 0.25),
-			inset 0 2px 4px rgba(255, 255, 255, 0.3),
-			inset 0 -1px 2px rgba(185, 28, 28, 0.25) !important;
-		transform: translateY(-3px) scale(1.02) !important;
-	}
-	
-	:global([data-theme='light'] .hero-shell .primary-cta:hover::before) {
-		left: 100%;
+	:global([data-theme='light'] .hero-shell .hero-scan-line) {
+		background: linear-gradient(90deg, transparent, rgba(226, 232, 240, 0.45), transparent) !important;
+		opacity: 0.12 !important;
+		filter: blur(0px);
 	}
 
 	:global([data-theme='light'] .hero-shell .secondary-cta) {

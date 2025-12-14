@@ -138,17 +138,17 @@
 		<div class="transform transition-all duration-1000 {visibleSections.hero ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
 			<!-- Enhanced Status Badge with better visual hierarchy -->
 			<div class="inline-flex flex-col gap-2 sm:gap-3 mb-8 sm:mb-10 animate-slide-down">
-				<div class="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 bg-zinc-950/90 backdrop-blur-xl rounded-full border border-red-900/50 group hover:border-red-600/70 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-900/30">
+				<div class="status-pill inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-xl rounded-full border border-rose-200 dark:border-red-900/50 group hover:border-red-600/70 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-900/30 text-rose-700 dark:text-zinc-300">
 					<div class="relative flex items-center gap-1.5 sm:gap-2.5">
 						<div class="relative">
 							<div class="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-pulse"></div>
 							<div class="absolute inset-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-ping"></div>
 						</div>
-						<span class="text-sm sm:text-base md:text-lg font-extrabold text-zinc-300 tracking-wider sm:tracking-widest uppercase leading-tight">Revenue AI Agents built for the Fortune 2000</span>
+						<span class="text-sm sm:text-base md:text-lg font-extrabold text-rose-700 dark:text-zinc-300 tracking-wider sm:tracking-widest uppercase leading-tight">Revenue AI Agents built for the Fortune 2000</span>
 					</div>
 				</div>
-				<div class="px-4 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
-					<span class="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-red-400 tracking-wide leading-relaxed block">Redefining the sales workforce, enabling high performance through AI-orchestration and reasoning models</span>
+				<div class="status-subline px-4 sm:px-5 py-2 sm:py-3 bg-white/95 dark:bg-gradient-to-r dark:from-red-950/30 dark:via-red-950/20 dark:to-red-950/30 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-rose-200 dark:border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20 text-rose-700 dark:text-red-400 shadow-sm">
+					<span class="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-rose-700 dark:text-red-400 tracking-wide leading-relaxed block">Redefining the sales workforce, enabling high performance through AI-orchestration and reasoning models</span>
 				</div>
 			</div>
 

@@ -422,8 +422,8 @@
 
 									<!-- Right Column - Showcase Widget -->
 									<div class="relative showcase-widget">
-										<div 
-											class="relative bg-gradient-to-br from-zinc-900/90 via-zinc-900/80 to-zinc-950/90 dark:from-zinc-900/90 dark:via-zinc-900/80 dark:to-zinc-950/90 from-white/95 via-gray-50/90 to-white/95 backdrop-blur-2xl rounded-3xl border border-zinc-800/60 dark:border-zinc-800/60 border-gray-200/80 p-5 shadow-2xl dark:shadow-2xl shadow-gray-200/50 showcase-widget-container"
+											<div
+											class="relative bg-gradient-to-br from-zinc-900/90 via-zinc-900/80 to-zinc-950/90 backdrop-blur-2xl rounded-3xl border border-zinc-800/60 p-5 shadow-2xl showcase-widget-container"
 											in:fly={{ x: 30, duration: 800, delay: 200 }}
 										>
 											<!-- Multi-layer glow effects -->
@@ -708,7 +708,7 @@
 			</div>
 		</section>
 
-		<section id="testimonials" data-section="testimonials" class="py-24 sm:py-32 bg-zinc-950 dark:bg-zinc-950 bg-white relative overflow-hidden border-y border-red-900/20 dark:border-red-900/20 border-gray-200">
+		<section id="testimonials" data-section="testimonials" class="py-24 sm:py-32 bg-zinc-950 relative overflow-hidden border-y border-red-900/20">
 			<div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black dark:from-black dark:via-transparent dark:to-black from-transparent via-transparent to-transparent z-10 pointer-events-none"></div>
 			<div class="absolute inset-0 overflow-hidden">
 				{#each Array(15) as _, i}
@@ -834,7 +834,7 @@
 			</div>
 		</section>
 
-		<section data-section="cta" class="py-24 sm:py-32 bg-gradient-to-br from-red-950 via-black to-black dark:from-red-950 dark:via-black dark:to-black from-red-50 via-white to-blue-50 relative overflow-hidden border-t border-red-900/20 dark:border-red-900/20 border-gray-200">
+		<section data-section="cta" class="py-24 sm:py-32 bg-gradient-to-br from-red-950 via-black to-black relative overflow-hidden border-t border-red-900/20">
 			<div class="absolute inset-0">
 				<div class="absolute inset-0 animate-grid-pulse" style="background-image: linear-gradient(rgba(220, 38, 38, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.05) 1px, transparent 1px); background-size: 50px 50px;"></div>
 				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-600/10 dark:bg-red-600/10 bg-red-500/5 rounded-full blur-3xl animate-pulse"></div>
@@ -873,11 +873,11 @@
 						<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 						<div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
 					</button>
-					<a 
-						href="/contact-sales" 
+					<a
+						href="/contact-sales"
 						onmousemove={(event) => handleTilt(event, 10)}
 						onmouseleave={resetTilt}
-						class="tilt-card relative px-8 py-5 bg-transparent dark:bg-transparent bg-white/80 text-white dark:text-white text-gray-900 rounded-xl font-semibold text-lg border-2 border-zinc-800 dark:border-zinc-800 border-gray-300 hover:border-red-600 dark:hover:border-red-600 hover:bg-red-950/20 dark:hover:bg-red-950/20 hover:bg-red-50 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/20 dark:hover:shadow-red-900/20 hover:shadow-red-500/20 overflow-hidden">
+						class="tilt-card relative px-8 py-5 bg-transparent text-white rounded-xl font-semibold text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/20 overflow-hidden">
 						Contact Sales
 					</a>
 				</div>
@@ -885,7 +885,7 @@
 			</div>
 		</section>
 
-		<footer class="bg-black dark:bg-black bg-white text-white dark:text-white text-gray-900 py-16 border-t border-zinc-900 dark:border-zinc-900 border-gray-200 relative overflow-hidden">
+		<footer class="bg-black text-white py-16 border-t border-zinc-900 relative overflow-hidden">
 			<div class="absolute inset-0 opacity-30 dark:opacity-30 opacity-10">
 				<div class="absolute inset-0" style="background-image: linear-gradient(rgba(220, 38, 38, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.02) 1px, transparent 1px); background-size: 30px 30px;"></div>
 			</div>
@@ -912,7 +912,7 @@
 								href="https://www.linkedin.com/company/spiked-ai"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="p-2 bg-zinc-900 dark:bg-zinc-900 bg-gray-100 hover:bg-red-950 dark:hover:bg-red-950 hover:bg-red-50 border border-zinc-800 dark:border-zinc-800 border-gray-300 hover:border-red-900/50 dark:hover:border-red-900/50 hover:border-red-500 rounded transition-all duration-300 group hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/30 dark:hover:shadow-red-900/30 hover:shadow-red-500/20"
+								class="p-2 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-900/50 rounded transition-all duration-300 group hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/30"
 								aria-label="Follow us on LinkedIn"
 							>
 								<svg class="w-4 h-4 fill-zinc-600 dark:fill-zinc-600 fill-gray-600 group-hover:fill-red-500 dark:group-hover:fill-red-500 group-hover:fill-red-600 transition-colors" viewBox="0 0 24 24">

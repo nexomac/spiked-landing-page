@@ -298,14 +298,6 @@
 		<div class="bg-layer orb orb-1"></div>
 		<div class="bg-layer orb orb-2"></div>
 		<div class="bg-layer orb orb-3"></div>
-		<div class="bg-layer particles">
-			{#each Array(36) as _, i}
-				<div
-					class="particle"
-					style={`left:${Math.random() * 100}%; top:${Math.random() * 100}%; animation-delay:${Math.random() * 6}s; animation-duration:${10 + Math.random() * 8}s;`}
-				></div>
-			{/each}
-		</div>
 	</div>
 
 	<div class="page-content relative z-10">
@@ -331,27 +323,8 @@
 		<section id="showcase" data-section="showcase" class="py-24 sm:py-32 bg-gradient-to-b from-black via-zinc-950 to-black dark:from-black dark:via-zinc-950 dark:to-black from-gray-50 via-white to-gray-50 relative overflow-hidden border-y border-red-900/20 dark:border-red-900/20 border-gray-200 showcase-section">
 			<!-- Enhanced Background effects -->
 			<div class="absolute inset-0 overflow-hidden">
-				<!-- Animated gradient overlay -->
-				<div class="absolute inset-0 bg-gradient-to-r from-red-950/15 via-transparent to-blue-950/15 animate-gradient-shift"></div>
-				
-				<!-- Floating orbs with enhanced animation -->
-				<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/8 rounded-full blur-3xl animate-float-orb"></div>
-				<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl animate-float-orb-delayed"></div>
-				<div class="absolute top-1/2 right-1/3 w-64 h-64 bg-purple-600/6 rounded-full blur-2xl animate-float-orb-slow"></div>
-				
 				<!-- Grid pattern overlay -->
 				<div class="absolute inset-0 showcase-grid-pattern opacity-20"></div>
-				
-				<!-- Animated particles -->
-				{#each Array(25) as _, i}
-					<div 
-						class="absolute w-1.5 h-1.5 bg-red-500/30 rounded-full animate-particle-float showcase-particle"
-						style="left: {Math.random() * 100}%; top: {Math.random() * 100}%; animation-delay: {Math.random() * 5}s; animation-duration: {12 + Math.random() * 8}s;"
-					></div>
-				{/each}
-				
-				<!-- Shimmer effect -->
-				<div class="absolute inset-0 showcase-shimmer"></div>
 			</div>
 
 			<div class="relative z-10 max-w-7xl mx-auto px-6">
@@ -1435,54 +1408,6 @@
 	}
 
 	/* Enhanced background animations */
-	@keyframes gradient-shift {
-		0%, 100% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-	}
-
-	.animate-gradient-shift {
-		background-size: 200% 200%;
-		animation: gradient-shift 8s ease infinite;
-	}
-
-	@keyframes float-orb {
-		0%, 100% {
-			transform: translate(0, 0) scale(1);
-			opacity: 0.6;
-		}
-		33% {
-			transform: translate(30px, -30px) scale(1.1);
-			opacity: 0.8;
-		}
-		66% {
-			transform: translate(-20px, 20px) scale(0.9);
-			opacity: 0.7;
-		}
-	}
-
-	.animate-float-orb {
-		animation: float-orb 15s ease-in-out infinite;
-		opacity: 0.28;
-		filter: blur(28px);
-	}
-
-	.animate-float-orb-delayed {
-		animation: float-orb 18s ease-in-out infinite;
-		animation-delay: 2s;
-		opacity: 0.24;
-		filter: blur(26px);
-	}
-
-	.animate-float-orb-slow {
-		animation: float-orb 20s ease-in-out infinite;
-		animation-delay: 4s;
-		opacity: 0.22;
-		filter: blur(24px);
-	}
 
 	/* Grid pattern */
 	.showcase-grid-pattern {
@@ -1495,32 +1420,6 @@
 		animation: grid-pulse 4s ease-in-out infinite;
 	}
 
-	/* Shimmer effect */
-	.showcase-shimmer {
-		background: linear-gradient(
-			90deg,
-			transparent,
-			rgba(255, 255, 255, 0.02) 50%,
-			transparent
-		);
-		animation: shimmer 8s ease-in-out infinite;
-		pointer-events: none;
-		opacity: 0.7;
-	}
-
-	@keyframes shimmer {
-		0% {
-			transform: translateX(-100%);
-		}
-		100% {
-			transform: translateX(100%);
-		}
-	}
-
-	/* Particle enhancements */
-	.showcase-particle {
-		box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
-	}
 
 	/* Section entrance animation */
 	.showcase-section {
@@ -1700,18 +1599,6 @@
 		right: -5%;
 	}
 
-	.particles .particle {
-		position: absolute;
-		width: 6px;
-		height: 6px;
-		border-radius: 999px;
-		background: rgba(248, 113, 113, 0.25);
-		animation: particle-float 12s infinite ease-out;
-	}
-
-	:global([data-theme='light']) .particles .particle {
-		background: rgba(239, 68, 68, 0.15);
-	}
 
 	/* Light mode testimonials section */
 	:global([data-theme='light']) section#testimonials {

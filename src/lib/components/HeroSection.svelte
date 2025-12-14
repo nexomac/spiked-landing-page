@@ -72,19 +72,19 @@
 					</div>
 				</div>
 				<div class="hero-subhead px-5 sm:px-6 py-4 sm:py-3 bg-gradient-to-r from-red-950/30 via-red-950/20 to-red-950/30 backdrop-blur-xl rounded-2xl border border-red-900/30 hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20">
-					<span class="leading-relaxed">Redefining the sales workforce so every seller operates like a founder with reasoning-grade intelligence in every workflow.</span>
+					<span class="leading-relaxed">Redefining the sales workforce so every seller operates like a founder with reasoning-grade intelligence in every workflow</span>
 				</div>
 			</div>
 
 			<div class="mb-10 sm:mb-12 md:mb-14">
 				<h1 class="hero-title animate-fade-in-up">
 					Sell Like a CEO
-					<span class="hero-title-accent">The rise of the singular rep starts here.</span>
+					<span class="hero-title-accent">The rise of the singular rep starts here</span>
 				</h1>
 			</div>
 
 			<p class="hero-body animate-fade-in-up mb-10 sm:mb-12" style="animation-delay: 0.2s;">
-				Revenue AI Agents built for the Fortune 2000 pair reasoning models with real-time call intelligence and automatic follow-through so every rep thinks ahead, responds instantly, and ships the next step without the busywork.
+				Revenue AI Agents built for the Fortune 2000 pair reasoning models with real-time call intelligence and automatic follow-through so every rep thinks ahead, responds instantly, and ships the next step without the busywork
 			</p>
 
 			<div class="flex flex-col sm:flex-row gap-5 mb-20 sm:mb-24 animate-fade-in-up" style="animation-delay: 0.35s;">
@@ -135,6 +135,7 @@
 					<div
 						onmousemove={(event) => handleTilt(event, 10)}
 						onmouseleave={resetTilt}
+						role="presentation"
 						class="tilt-card group relative bg-gradient-to-br from-zinc-950/80 to-zinc-950/50 backdrop-blur-xl p-5 sm:p-6 md:p-7 rounded-xl sm:rounded-2xl border-2 border-zinc-900 hover:border-red-900/60 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-900/30 animate-fade-in-up cursor-pointer"
 						style={`animation-delay: ${0.6 + i * 0.1}s; transform: translate3d(0, 0, 0);`}
 					>

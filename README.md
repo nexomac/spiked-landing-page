@@ -57,3 +57,13 @@ To publish your library to [npm](https://www.npmjs.com):
 npm publish
 ```
 # spiked-landing-page
+-- cursor --
+Technologies Used
+Svelte: Component framework used for building the UI; reusable components live in lib.
+SvelteKit: App framework powering the routes and server-side rendering; pages and routes are in routes.
+Vite: Dev server and bundler configured via vite.config.js for fast HMR and builds.
+sv: Scaffolding/packaging helper used to create and package this Svelte library.
+Node.js & npm: Runtime and package manager; scripts and dependencies are defined in package.json.
+JavaScript & CSS: App logic and styles live under src (e.g., app.css, app.html).
+Static assets & integrations: Static files and third-party form assets are in the static and zoho form/ folders.
+This repository is structured as a library (lib) plus a showcase app (routes) so you can develop and preview components together.

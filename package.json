@@ -46,13 +46,23 @@
 		"svelte"
 	],
 	"dependencies": {
+		"@google/generative-ai": "^0.24.1",
 		"@studio-freight/lenis": "^1.0.42",
+		"@tiptap/core": "^3.13.0",
+		"@tiptap/extension-image": "^3.13.0",
+		"@tiptap/extension-link": "^3.13.0",
+		"@tiptap/html": "^3.13.0",
+		"@tiptap/starter-kit": "^3.13.0",
 		"bits-ui": "^2.11.4",
 		"canvas-confetti": "^1.9.4",
 		"clsx": "^2.1.1",
 		"gsap": "^3.14.1",
 		"lucide-svelte": "^0.544.0",
+		"mongodb": "^7.0.0",
 		"splitting": "^1.1.0",
 		"tailwind-merge": "^3.4.0"
+	},
+	"volta": {
+		"node": "22.21.1"
 	}
 }

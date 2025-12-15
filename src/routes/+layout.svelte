@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+    import GlobalLoader from '$lib/components/GlobalLoader.svelte';
 	import { themeStore } from '$lib/stores/theme.js';
 
 	let { children } = $props();
@@ -29,6 +30,7 @@
 </script>
 
 <div id="site-root" class:scaled={enableScale}>
+    <GlobalLoader />
 	<Navigation />
 	{@render children()}
 </div>

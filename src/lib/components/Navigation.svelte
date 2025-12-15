@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+  import { page } from '$app/stores';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { themeStore } from '$lib/stores/theme.js';
 	import { Moon, Sun } from 'lucide-svelte';
@@ -10,14 +11,25 @@
 	const isLight = $derived(theme === 'light');
 	const themeLabel = $derived(isLight ? 'Switch to dark mode' : 'Switch to light mode');
 
+	/* Dynamic background based on scroll or route */
+    let navBackground = $derived(
+        ($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/admin')) && !isScrolled
+            ? 'bg-black' 
+            : isScrolled
+                ? 'bg-black/80 backdrop-blur-md border-b border-white/10'
+                : 'bg-transparent'
+    );
+
 	const navShellClass = $derived(
-		isScrolled
-			? isLight
-				? 'bg-white/90 backdrop-blur-xl border-b border-red-100/60 shadow-lg shadow-red-100/40'
-				: 'bg-black/90 backdrop-blur-xl border-b border-red-900/30 shadow-lg shadow-red-900/10'
-			: isLight
-				? 'bg-white/70 backdrop-blur-xl border-b border-red-100/40'
-				: 'bg-transparent'
+		($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/admin'))
+			? navBackground
+			: isScrolled
+				? isLight
+					? 'bg-white/90 backdrop-blur-xl border-b border-red-100/60 shadow-lg shadow-red-100/40'
+					: 'bg-black/90 backdrop-blur-xl border-b border-red-900/30 shadow-lg shadow-red-900/10'
+				: isLight
+					? 'bg-white/70 backdrop-blur-xl border-b border-red-100/40'
+					: 'bg-transparent'
 	);
 	
 	onMount(() => {

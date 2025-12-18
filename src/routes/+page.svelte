@@ -227,7 +227,7 @@
 			transcriptIndex = (transcriptIndex + 1) % transcriptMessages.length;
 		}, 3000);
 
-		// Showcase rotation every 5 seconds (only when not paused)
+		// Showcase rotation every 4 seconds (only when not paused)
 		let showcaseInterval = null;
 		const startShowcaseRotation = () => {
 			if (showcaseInterval) clearInterval(showcaseInterval);
@@ -238,10 +238,10 @@
 						currentShowcaseIndex = (currentShowcaseIndex + 1) % showcases.length;
 						setTimeout(() => {
 							isTransitioning = false;
-						}, 300);
-					}, 600);
+						}, 500);
+					}, 800);
 				}
-			}, 5000);
+			}, 4000);
 		};
 		startShowcaseRotation();
 

@@ -51,14 +51,14 @@ body {
 
 /* Global project tokens for easier theming */
 :root {
-	--accent-red: #ff5858; /* used for CTA and highlights */
+	--accent-red: #ef1820; /* primary brand red for CTAs and highlights */
 	--muted: #94a3b8;
 	--glass: rgba(255,255,255,0.03);
 }
 
 :root[data-theme="light"] {
 	color-scheme: light;
-	--accent-red: #e11d48;
+	--accent-red: #f0222a;
 	--muted: #334155;
 	--glass: rgba(255, 255, 255, 0.65);
 }
@@ -378,9 +378,9 @@ h1, h2, h3 {
 /* Buttons: subtle elevation and consistent radiuses */
 .btn-primary {
 	@apply inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold;
-	background: linear-gradient(90deg, var(--accent-red) 0%, #e74b4b 100%);
+	background: linear-gradient(110deg, var(--accent-red) 0%, #b01018 100%);
 	color: white;
-	box-shadow: 0 6px 18px rgba(231, 75, 75, 0.12);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(239, 24, 32, 0.18);
 }
 
 /* Subtle card accent for demo panel */

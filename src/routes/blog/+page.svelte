@@ -9,7 +9,7 @@
             <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-2">The Spiked Times</h1>
             <div class="flex justify-between border-t border-b border-black py-2 mt-4 text-sm font-bold uppercase tracking-widest">
                 <span>Vol. {new Date().getFullYear()}</span>
-                <span>Voice Technology & AI</span>
+                <span>Technology & AI</span>
                 <span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
             </div>
         </header>

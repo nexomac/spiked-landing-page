@@ -1,7 +1,10 @@
 import { getContentModel, getEntries, createEntry } from '$lib/cms';
 import { error, redirect } from '@sveltejs/kit';
+import { requireAuth } from '$lib/server/auth';
 
 export async function load({ params }) {
+    // ... load is protected by layout, but explicit check doesn't hurt. 
+    // Actually layout handles load.
     const model = await getContentModel(params.modelSlug); // e.g. 'blog-post'
     if (!model) throw error(404, 'Model not found');
     
@@ -14,7 +17,8 @@ export async function load({ params }) {
 }
 
 export const actions = {
-    createDraft: async ({ params }) => {
+    createDraft: async ({ params, cookies }) => {
+        requireAuth(cookies);
         // Create an empty draft
         const result = await createEntry(params.modelSlug, {});
         throw redirect(303, `/admin/editor/${params.modelSlug}/${result.insertedId.toString()}`);

@@ -68,7 +68,7 @@ async function generateContent() {
                     <button onclick={() => showAiModal = false} class="absolute top-4 right-4 text-gray-500 hover:text-white">✕</button>
                     
                     <h2 class="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">AI Content Generator</h2>
-                    <p class="text-gray-400 text-sm mb-6">Using Gemini 2.0 Flash Lite</p>
+                    <p class="text-gray-400 text-sm mb-6">Using Gemini 2.5 Flash</p>
 
                     <div class="space-y-4">
                         <div>

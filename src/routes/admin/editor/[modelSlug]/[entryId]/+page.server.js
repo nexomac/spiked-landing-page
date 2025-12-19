@@ -1,5 +1,6 @@
 import { getEntry, getContentModel, updateEntry, deleteEntry } from '$lib/cms';
 import { error, redirect } from '@sveltejs/kit';
+import { requireAuth } from '$lib/server/auth';
 
 export async function load({ params }) {
     const entry = await getEntry(params.entryId);
@@ -14,7 +15,8 @@ export async function load({ params }) {
 }
 
 export const actions = {
-    save: async ({ request, params }) => {
+    save: async ({ request, params, cookies }) => {
+        requireAuth(cookies);
         const formData = await request.formData();
         const status = formData.get('status'); // 'draft' or 'live'
         
@@ -49,7 +51,8 @@ export const actions = {
         return { success: true };
     },
 
-    delete: async ({ params }) => {
+    delete: async ({ params, cookies }) => {
+        requireAuth(cookies);
         await deleteEntry(params.entryId);
         throw redirect(303, `/admin/entries/${params.modelSlug}`);
     }

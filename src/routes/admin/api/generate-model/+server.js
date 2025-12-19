@@ -5,12 +5,17 @@ import { createContentModel } from '$lib/cms';
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
-export async function POST({ request }) {
+export async function POST({ request, cookies }) {
     if (!GEMINI_API_KEY) {
         return json({ error: 'GEMINI_API_KEY is not configured' }, { status: 500 });
     }
 
     const { prompt } = await request.json();
+
+    const authCookie = cookies.get('admin_session');
+    if (authCookie !== 'true') {
+        return json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     if (!prompt) {
         return json({ error: 'Missing prompt' }, { status: 400 });

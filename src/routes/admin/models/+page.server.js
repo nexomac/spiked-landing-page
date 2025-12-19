@@ -1,5 +1,6 @@
 import { getContentModels, createContentModel } from '$lib/cms';
 import { fail } from '@sveltejs/kit';
+import { requireAuth } from '$lib/server/auth';
 
 export async function load() {
     const models = await getContentModels();
@@ -9,7 +10,8 @@ export async function load() {
 }
 
 export const actions = {
-    create: async ({ request }) => {
+    create: async ({ request, cookies }) => {
+        requireAuth(cookies);
         const data = await request.formData();
         const name = data.get('name');
         const slug = data.get('slug');

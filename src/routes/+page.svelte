@@ -611,14 +611,14 @@
 										<!-- Feature Cards (Compact) -->
 										<div class="space-y-2">
 											{#each showcase.features as feature, idx}
-												<div class="bg-zinc-900/60 backdrop-blur-sm rounded-lg p-3 border {feature.highlight ? 'border-red-500/30 border-l-2 border-l-red-500' : 'border-zinc-800/50'}">
+												<div class="bg-white/95 dark:bg-zinc-900/60 backdrop-blur-sm rounded-lg p-3 border shadow-[0_10px_28px_rgba(15,23,42,0.08)] dark:shadow-none {feature.highlight ? 'border-red-500/30 dark:border-red-500/30 border-red-200/70 border-l-2 border-l-red-500/80' : 'border-slate-200 dark:border-zinc-800/50'}">
 													<div class="flex items-start gap-2.5">
-														<div class="w-8 h-8 rounded-lg {feature.highlight ? 'bg-red-500/10' : 'bg-zinc-800/50'} flex items-center justify-center flex-shrink-0">
-															<svelte:component this={feature.icon} class="w-4 h-4 {feature.highlight ? 'text-red-400' : 'text-zinc-400'}" />
+														<div class="w-8 h-8 rounded-lg {feature.highlight ? 'bg-red-50 dark:bg-red-500/10' : 'bg-slate-100 dark:bg-zinc-800/50'} flex items-center justify-center flex-shrink-0 border {feature.highlight ? 'border-red-100 dark:border-transparent' : 'border-slate-200 dark:border-transparent'}">
+															<svelte:component this={feature.icon} class="w-4 h-4 {feature.highlight ? 'text-red-500 dark:text-red-400' : 'text-slate-600 dark:text-zinc-400'}" />
 														</div>
 														<div class="flex-1 min-w-0">
-															<h4 class="font-bold text-white mb-0.5 text-xs">{feature.title}</h4>
-															<p class="text-[10px] text-zinc-400 leading-relaxed">{feature.description}</p>
+															<h4 class="font-bold text-slate-900 dark:text-white mb-0.5 text-xs">{feature.title}</h4>
+															<p class="text-[10px] text-slate-600 dark:text-zinc-400 leading-relaxed">{feature.description}</p>
 														</div>
 													</div>
 												</div>
@@ -1453,6 +1453,14 @@
 		box-shadow: 0 10px 28px -18px rgba(0, 0, 0, 0.6);
 		border-color: rgba(255, 255, 255, 0.12);
 		background: linear-gradient(90deg, rgba(248, 113, 113, 0.08), rgba(248, 113, 113, 0.02));
+	}
+
+	:global([data-theme='light']) section#showcase .feature-card {
+		background: linear-gradient(140deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+		border-color: rgba(226, 232, 240, 0.9);
+		box-shadow: 
+			0 18px 40px -16px rgba(15, 23, 42, 0.12),
+			0 6px 16px -8px rgba(15, 23, 42, 0.08);
 	}
 
 	@keyframes sectionFadeIn {

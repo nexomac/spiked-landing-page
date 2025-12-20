@@ -231,7 +231,7 @@
 			transcriptIndex = (transcriptIndex + 1) % transcriptMessages.length;
 		}, 3000);
 
-		// Showcase rotation every 4 seconds (only when not paused)
+		// Showcase rotation every 5 seconds (only when not paused)
 		let showcaseInterval = null;
 		const startShowcaseRotation = () => {
 			if (showcaseInterval) clearInterval(showcaseInterval);
@@ -242,10 +242,10 @@
 						currentShowcaseIndex = (currentShowcaseIndex + 1) % showcases.length;
 						setTimeout(() => {
 							isTransitioning = false;
-						}, 500);
-					}, 800);
+						}, 300);
+					}, 200);
 				}
-			}, 4000);
+			}, 5000);
 		};
 		startShowcaseRotation();
 
@@ -386,7 +386,7 @@
 
 				<!-- Split Layout Showcase Container -->
 				<div 
-					class="relative min-h-[650px] lg:min-h-[650px] min-h-[600px]"
+					class="relative h-[1100px] lg:h-[650px] showcase-overlap-grid"
 					role="region"
 					aria-label="Interactive feature showcase"
 					onmouseenter={() => isPaused = true}
@@ -397,8 +397,8 @@
 						{#if currentShowcaseIndex === i}
 							<div
 								class="showcase-split-container"
-								in:fly={{ y: 20, duration: 700, easing: (t) => 1 - Math.pow(1 - t, 2.5) }}
-								out:fly={{ y: -15, duration: 400, easing: (t) => Math.pow(t, 1.5) }}
+								in:fade={{ duration: 400 }}
+								out:fade={{ duration: 300 }}
 							>
 								<!-- Desktop Layout: Split -->
 								<div class="hidden lg:grid lg:grid-cols-2 gap-10 items-center h-full">
@@ -770,8 +770,12 @@
 					<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Sales & Dev Teams</span>
 				</h2>
 			</div>
-			<div class="relative">
-				<div class="flex gap-6 animate-marquee hover:pause">
+			<div class="relative overflow-hidden group/marquee">
+				<!-- Fade gradients for seamless edges -->
+				<div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+				<div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
+				
+				<div class="flex gap-6 py-4 animate-marquee hover:pause whitespace-nowrap">
 					{#each [
 						{
 							quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.",
@@ -795,6 +799,13 @@
 							metricLabel: "Saved Weekly"
 						},
 						{
+							quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.",
+							author: "Jessica Lee",
+							role: "VP of Sales",
+							metric: "25%",
+							metricLabel: "Efficiency Gain"
+						},
+						{
 							quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.",
 							author: "Alex Rivera",
 							role: "Senior Sales Engineer",
@@ -807,6 +818,20 @@
 							role: "Sales Director",
 							metric: "40%",
 							metricLabel: "More Deals Closed"
+						},
+						{
+							quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual data entry.",
+							author: "Michael Chen",
+							role: "Account Executive",
+							metric: "15hrs",
+							metricLabel: "Saved Weekly"
+						},
+						{
+							quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.",
+							author: "Jessica Lee",
+							role: "VP of Sales",
+							metric: "25%",
+							metricLabel: "Efficiency Gain"
 						}
 					] as testimonial, i}
 						<div 

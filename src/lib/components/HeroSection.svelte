@@ -112,6 +112,14 @@
 				>
 					Contact Sales
 				</a>
+				<a
+					href="/blog"
+					onmousemove={(event) => handleTilt(event, 10)}
+					onmouseleave={resetTilt}
+					class="tilt-card relative px-8 py-5 sm:px-10 sm:py-5 bg-zinc-950/50 dark:bg-zinc-950/50 bg-white/80 backdrop-blur-sm text-white dark:text-white text-gray-900 rounded-xl font-semibold text-lg tracking-tight border-2 border-zinc-800 dark:border-zinc-800 border-gray-300 hover:border-red-600 dark:hover:border-red-600 hover:border-red-500 hover:bg-red-950/30 dark:hover:bg-red-950/30 hover:bg-red-50 transition-all duration-300 text-center hover:scale-[1.05] hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/30 dark:hover:shadow-red-900/30 hover:shadow-red-500/20 secondary-cta overflow-hidden"
+				>
+					Resources
+				</a>
 			</div>
 
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-5xl mx-auto">
@@ -159,7 +167,7 @@
 		</div>
 	</div>
 
-	<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+	<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce-slow">
 		<div class="w-7 h-12 border-2 border-zinc-800 dark:border-zinc-800 border-gray-300 rounded-full flex items-start justify-center p-2 hover:border-red-500 dark:hover:border-red-500 transition-all duration-300 cursor-pointer group hover:shadow-lg hover:shadow-red-900/30 dark:hover:shadow-red-900/30 hover:shadow-red-500/20">
 			<div class="w-1.5 h-3 bg-red-500 rounded-full animate-scroll-indicator group-hover:bg-red-400 shadow-lg shadow-red-500/50"></div>
 		</div>

@@ -1,25 +1,70 @@
 import { getEntries } from '$lib/cms';
+import { getDb } from '$lib/db';
+
+function extractTextFromTiptap(node) {
+    if (!node) return '';
+    if (node.type === 'text') return node.text;
+    if (node.content && Array.isArray(node.content)) {
+        return node.content.map(child => extractTextFromTiptap(child)).join(' ');
+    }
+    return '';
+}
+
+function getBestExcerpt(data) {
+    const fields = ['excerpt', 'Excerpt', 'summary', 'Summary', 'content', 'Content', 'trend-category'];
+    for (const field of fields) {
+        const val = data[field];
+        if (!val) continue;
+
+        if (typeof val === 'object' && val.type === 'doc') {
+            const text = extractTextFromTiptap(val).trim();
+            if (text) return text.slice(0, 180) + '...';
+        }
+
+        if (typeof val === 'string' && val.length > 10) {
+            return val.slice(0, 180) + '...';
+        }
+    }
+    return 'Click to read the full story...';
+}
+
+function getBestImage(data) {
+    const fields = [
+        'coverImage', 'Cover Image', 'featured-image', 'FeaturedImage', 'Featured Image',
+        'image', 'Image', 'thumbnail', 'Thumbnail', 'hero-image', 'Hero Image', 'image-url', 'Image URL'
+    ];
+    for (const field of fields) {
+        if (data[field] && typeof data[field] === 'string' && (data[field].startsWith('http') || data[field].startsWith('data:image') || data[field].startsWith('/'))) {
+            return data[field];
+        }
+    }
+    return null;
+}
 
 export async function load() {
-    // Assuming 'blog-post' is the slug users will use. 
-    // If they create a different one, this needs to be dynamic or configured.
-    // For now, hardcode 'blog-post' as the primary blog model.
     console.log('Fetching live blog posts...');
-    // Fetch ALL live entries for the blog listing, regardless of model.
-    // This allows mixed content types (Blog Post, Article, Update) to appear.
+    const db = await getDb();
+    
+    // Fetch ALL live entries for the blog listing
     const posts = await getEntries(null, 'live');
-    console.log(`Found ${posts.length} posts`);
+    
+    // Fetch available newsletters for the subscription section
+    const newsletters = await db.collection('newsletters').find({}).toArray();
+
     return {
         posts: posts.map(p => ({
             ...p,
             _id: p._id.toString(),
-            // Flatten data for easier access in template
             title: p.data?.title || p.data?.Title || 'Untitled',
             slug: p.data?.slug || p.data?.Slug,
-            coverImage: p.data?.coverImage || p.data?.['Cover Image'],
-            excerpt: p.data?.excerpt || p.data?.Excerpt,
-            author: p.data?.author || p.data?.Author,
-            publishedDate: p.data?.publishedDate || p.data?.['Published Date'] || p.createdAt
+            coverImage: getBestImage(p.data || {}),
+            excerpt: getBestExcerpt(p.data || {}),
+            author: p.data?.author || p.data?.Author || 'Editorial Staff',
+            publishedDate: p.data?.publishedDate || p.data?.['Published Date'] || p.data?.['date-of-analysis'] || p.createdAt
+        })),
+        newsletters: newsletters.map(n => ({
+            ...n,
+            _id: n._id.toString()
         }))
     };
 }

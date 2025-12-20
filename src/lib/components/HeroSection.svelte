@@ -167,7 +167,7 @@
 		</div>
 	</div>
 
-	<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+	<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce-slow">
 		<div class="w-7 h-12 border-2 border-zinc-800 dark:border-zinc-800 border-gray-300 rounded-full flex items-start justify-center p-2 hover:border-red-500 dark:hover:border-red-500 transition-all duration-300 cursor-pointer group hover:shadow-lg hover:shadow-red-900/30 dark:hover:shadow-red-900/30 hover:shadow-red-500/20">
 			<div class="w-1.5 h-3 bg-red-500 rounded-full animate-scroll-indicator group-hover:bg-red-400 shadow-lg shadow-red-500/50"></div>
 		</div>

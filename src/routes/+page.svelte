@@ -227,7 +227,7 @@
 			transcriptIndex = (transcriptIndex + 1) % transcriptMessages.length;
 		}, 3000);
 
-		// Showcase rotation every 4 seconds (only when not paused)
+		// Showcase rotation every 5 seconds (only when not paused)
 		let showcaseInterval = null;
 		const startShowcaseRotation = () => {
 			if (showcaseInterval) clearInterval(showcaseInterval);
@@ -238,10 +238,10 @@
 						currentShowcaseIndex = (currentShowcaseIndex + 1) % showcases.length;
 						setTimeout(() => {
 							isTransitioning = false;
-						}, 500);
-					}, 800);
+						}, 300);
+					}, 200);
 				}
-			}, 4000);
+			}, 5000);
 		};
 		startShowcaseRotation();
 
@@ -341,7 +341,7 @@
 
 				<!-- Split Layout Showcase Container -->
 				<div 
-					class="relative min-h-[650px] lg:min-h-[650px] min-h-[600px]"
+					class="relative h-[1100px] lg:h-[650px] showcase-overlap-grid"
 					role="region"
 					aria-label="Interactive feature showcase"
 					onmouseenter={() => isPaused = true}
@@ -352,8 +352,8 @@
 						{#if currentShowcaseIndex === i}
 							<div
 								class="showcase-split-container"
-								in:fly={{ y: 20, duration: 700, easing: (t) => 1 - Math.pow(1 - t, 2.5) }}
-								out:fly={{ y: -15, duration: 400, easing: (t) => Math.pow(t, 1.5) }}
+								in:fade={{ duration: 400 }}
+								out:fade={{ duration: 300 }}
 							>
 								<!-- Desktop Layout: Split -->
 								<div class="hidden lg:grid lg:grid-cols-2 gap-10 items-center h-full">
@@ -725,8 +725,12 @@
 					<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Sales & Dev Teams</span>
 				</h2>
 			</div>
-			<div class="relative">
-				<div class="flex gap-6 animate-marquee hover:pause">
+			<div class="relative overflow-hidden group/marquee">
+				<!-- Fade gradients for seamless edges -->
+				<div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+				<div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
+				
+				<div class="flex gap-6 py-4 animate-marquee hover:pause whitespace-nowrap">
 					{#each [
 						{
 							quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.",
@@ -750,6 +754,13 @@
 							metricLabel: "Saved Weekly"
 						},
 						{
+							quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.",
+							author: "Jessica Lee",
+							role: "VP of Sales",
+							metric: "25%",
+							metricLabel: "Efficiency Gain"
+						},
+						{
 							quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.",
 							author: "Alex Rivera",
 							role: "Senior Sales Engineer",
@@ -762,6 +773,20 @@
 							role: "Sales Director",
 							metric: "40%",
 							metricLabel: "More Deals Closed"
+						},
+						{
+							quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual data entry.",
+							author: "Michael Chen",
+							role: "Account Executive",
+							metric: "15hrs",
+							metricLabel: "Saved Weekly"
+						},
+						{
+							quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.",
+							author: "Jessica Lee",
+							role: "VP of Sales",
+							metric: "25%",
+							metricLabel: "Efficiency Gain"
 						}
 					] as testimonial, i}
 						<div 
@@ -769,27 +794,34 @@
 							onmouseleave={resetTilt}
 							role="group"
 							aria-label={`Testimonial from ${testimonial.author}`}
-							class="tilt-card relative flex-shrink-0 w-96 bg-zinc-900 dark:bg-zinc-900 bg-white border border-zinc-800 dark:border-zinc-800 border-gray-200 rounded-lg p-6 hover:border-red-900/50 dark:hover:border-red-900/50 hover:border-red-500 transition-all duration-500 group hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20 dark:hover:shadow-red-900/20 hover:shadow-red-500/20 cursor-pointer overflow-hidden" 
-							style="transform: translate3d(0, 0, 0);"
+							class="tilt-card relative flex-shrink-0 w-[450px] bg-zinc-950/40 backdrop-blur-sm border border-zinc-800/50 rounded-2xl p-8 hover:border-red-600/50 transition-all duration-700 group/card hover:shadow-[0_0_40px_rgba(220,38,38,0.1)] cursor-pointer overflow-hidden inline-block align-top mr-8 whitespace-normal shadow-2xl" 
+							style="transform: translate3d(0, 0, 0); font-family: 'Space Grotesk', sans-serif;"
 						>
-							<div class="absolute inset-0 bg-gradient-to-br from-red-950/0 to-red-950/10 dark:from-red-950/0 dark:to-red-950/10 from-red-50/0 to-red-50/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
-							<div class="flex items-start gap-4 mb-4 relative">
-								<div class="flex-shrink-0">
-									<div class="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300 relative">
-										{testimonial.author[0]}
-										<div class="absolute inset-0 bg-red-500 rounded-full opacity-0 group-hover:opacity-20 animate-ping"></div>
+							<div class="absolute inset-0 bg-gradient-to-br from-red-600/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
+							
+							<div class="flex items-start justify-between gap-6 mb-6 relative">
+								<div class="flex items-center gap-4">
+									<div class="w-14 h-14 bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/5 rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover/card:scale-110 group-hover/card:border-red-500/50 transition-all duration-500 relative overflow-hidden flex-shrink-0">
+										<span>{testimonial.author[0]}</span>
+										<div class="absolute inset-0 bg-red-600/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+									</div>
+									<div class="min-w-0">
+										<p class="font-bold text-white text-base group-hover/card:text-red-500 transition-colors truncate">{testimonial.author}</p>
+										<p class="text-xs text-zinc-500 font-medium uppercase tracking-wider truncate">{testimonial.role}</p>
 									</div>
 								</div>
-								<div class="flex-1">
-						<p class="font-bold text-white dark:text-white text-gray-950 text-sm group-hover:text-red-400 dark:group-hover:text-red-400 group-hover:text-red-600 transition-colors">{testimonial.author}</p>
-						<p class="text-xs text-zinc-500 dark:text-zinc-500 text-gray-700 font-semibold">{testimonial.role}</p>
-								</div>
-								<div class="text-right">
-									<div class="text-2xl font-black text-red-500 group-hover:scale-110 transition-transform duration-300">{testimonial.metric}</div>
-									<div class="text-[10px] text-zinc-600 dark:text-zinc-600 text-gray-500 uppercase tracking-wider">{testimonial.metricLabel}</div>
+								<div class="text-right flex-shrink-0">
+									<div class="text-2xl font-black text-red-600 group-hover/card:scale-110 transition-transform duration-500 leading-none mb-1">{testimonial.metric}</div>
+									<div class="text-[9px] text-zinc-600 uppercase font-black tracking-widest">{testimonial.metricLabel}</div>
 								</div>
 							</div>
-							<p class="text-zinc-400 dark:text-zinc-400 text-gray-800 text-sm leading-relaxed group-hover:text-zinc-300 dark:group-hover:text-zinc-300 group-hover:text-gray-950 transition-colors relative font-medium">{testimonial.quote}</p>
+							
+							<div class="relative">
+								<span class="text-red-600 text-5xl font-serif absolute -left-4 -top-6 opacity-20 pointer-events-none">"</span>
+								<p class="text-zinc-400 text-base leading-relaxed group-hover/card:text-zinc-200 transition-colors relative z-10 font-medium">
+									{testimonial.quote}
+								</p>
+							</div>
 						</div>
 					{/each}
 				</div>
@@ -1149,7 +1181,17 @@
 	}
 
 	.animate-marquee {
-		animation: marquee 30s linear infinite;
+		animation: marquee 40s linear infinite;
+		width: max-content;
+	}
+
+	@keyframes marquee {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
 	}
 
 	.animate-fade-in-up {
@@ -1205,9 +1247,19 @@
 		will-change: contents;
 	}
 
+	.showcase-overlap-grid {
+		display: grid;
+		grid-template-areas: 'showcase';
+		align-items: center;
+	}
+
+	.showcase-overlap-grid > * {
+		grid-area: showcase;
+	}
+
 	/* Split showcase container animations */
 	.showcase-split-container {
-		min-height: 650px;
+		height: 100%;
 		display: flex;
 		align-items: center;
 		will-change: transform, opacity;

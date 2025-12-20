@@ -25,10 +25,10 @@
 
              if (value && typeof value === 'object' && value.type === 'doc') {
                 // Extract text from Tiptap JSON
-                fullText += extractFromTiptap(value) + ' ';
+                fullText += extractFromTiptap(value) + '. ';
              } else if (typeof value === 'string' && !value.startsWith('data:image')) {
                 // Standard text fields
-                fullText += value + ' ';
+                fullText += value + '. ';
              }
         }
         return fullText;

@@ -88,17 +88,17 @@
                     }} class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs uppercase text-gray-400 mb-1">Title</label>
-                                <input type="text" name="title" required placeholder="e.g. AI Weekly" class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white focus:border-red-500 outline-none" />
+                                <label for="title-input" class="block text-xs uppercase text-gray-400 mb-1">Title</label>
+                                <input id="title-input" type="text" name="title" required placeholder="e.g. AI Weekly" class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white focus:border-red-500 outline-none" />
                             </div>
                             <div>
-                                <label class="block text-xs uppercase text-gray-400 mb-1">Slug</label>
-                                <input type="text" name="slug" required placeholder="e.g. ai-weekly" class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white focus:border-red-500 outline-none" />
+                                <label for="slug-input" class="block text-xs uppercase text-gray-400 mb-1">Slug</label>
+                                <input id="slug-input" type="text" name="slug" required placeholder="e.g. ai-weekly" class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white focus:border-red-500 outline-none" />
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs uppercase text-gray-400 mb-1">Description</label>
-                            <textarea name="description" rows="2" placeholder="Brief tagline..." class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white focus:border-red-500 outline-none"></textarea>
+                            <label for="desc-input" class="block text-xs uppercase text-gray-400 mb-1">Description</label>
+                            <textarea id="desc-input" name="description" rows="2" placeholder="Brief tagline..." class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white focus:border-red-500 outline-none"></textarea>
                         </div>
                         <button class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded-lg">Create</button>
                     </form>
@@ -115,7 +115,7 @@
                                 <h3 class="font-bold text-xl group-hover:text-red-400 transition">{n.title}</h3>
                                 <p class="text-gray-500 text-sm">{n.description}</p>
                                 <div class="mt-2 flex gap-4 text-xs font-mono text-gray-600">
-                                    <span>Slug: <span class="text-gray-400">/newsletters/{n.slug}</span></span>
+                                    <span>Slug: <span class="text-gray-400">/newsletter/{n.slug}</span></span>
                                     <span>ID: <span class="text-gray-400">{n._id}</span></span>
                                 </div>
                             </div>

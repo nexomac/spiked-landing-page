@@ -13,7 +13,7 @@
 
 	/* Dynamic background based on scroll or route */
     let navBackground = $derived(
-        ($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/admin')) && !isScrolled
+        ($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter') || $page.url.pathname.startsWith('/admin')) && !isScrolled
             ? 'bg-black' 
             : isScrolled
                 ? 'bg-black/80 backdrop-blur-md border-b border-white/10'
@@ -21,7 +21,7 @@
     );
 
 	const navShellClass = $derived(
-		($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/admin'))
+		($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter') || $page.url.pathname.startsWith('/admin'))
 			? navBackground
 			: isScrolled
 				? isLight
@@ -90,31 +90,27 @@
 			</a>
 			
 			<div class="hidden md:flex items-center gap-1">
-				<a href="/" class={`px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 relative group ${isLight ? 'text-slate-600 hover:text-red-600' : 'text-zinc-400 hover:text-red-500'}`}>
+				<a href="/" class={`px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 relative group ${($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter')) ? 'text-white' : (isLight ? 'text-slate-600 hover:text-red-600' : 'text-zinc-400 hover:text-red-500')}`}>
 					Home
 					<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
 				</a>
-				<a href="/features" class={`px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 relative group ${isLight ? 'text-slate-600 hover:text-red-600' : 'text-zinc-400 hover:text-red-500'}`}>
-					Features
+				<a href="/blog" class={`px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 relative group ${($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter')) ? 'text-white underline decoration-red-500 underline-offset-8' : (isLight ? 'text-slate-600 hover:text-red-600' : 'text-zinc-400 hover:text-red-500')}`}>
+					The Bulletin
 					<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
 				</a>
-				<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class={`px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 relative group ${isLight ? 'text-slate-600 hover:text-red-600' : 'text-zinc-400 hover:text-red-500'}`}>
-					Platform
-					<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
-				</a>
-				<a href="/contact-sales" class={`px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 relative group ${isLight ? 'text-slate-600 hover:text-red-600' : 'text-zinc-400 hover:text-red-500'}`}>
+				<a href="/contact-sales" class={`px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 relative group ${($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter')) ? 'text-white' : (isLight ? 'text-slate-600 hover:text-red-600' : 'text-zinc-400 hover:text-red-500')}`}>
 					Contact Sales
 					<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
 				</a>
-				
-				<div class="ml-2 lg:ml-4 flex items-center gap-2 lg:gap-3">
+                
+                <div class="ml-2 lg:ml-4 flex items-center gap-2 lg:gap-3">
 					<button
 						onclick={toggleTheme}
-						class={`flex items-center gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-lg border transition-all duration-300 hover:scale-105 ${isLight ? 'border-slate-200 text-slate-700 hover:text-red-600 hover:border-red-200 bg-white/70' : 'border-zinc-800 text-white hover:text-red-500 bg-black/30'}`}
+						class={`flex items-center gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-lg border transition-all duration-300 hover:scale-105 ${($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter')) ? 'border-zinc-800 text-white bg-black/30' : (isLight ? 'border-slate-200 text-slate-700 hover:text-red-600 hover:border-red-200 bg-white/70' : 'border-zinc-800 text-white hover:text-red-500 bg-black/30')}`}
 						aria-label={themeLabel}
 						title={themeLabel}
 					>
-						{#if isLight}
+						{#if isLight && !($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter'))}
 							<Moon class="w-4 h-4" />
 							<span>Dark</span>
 						{:else}
@@ -151,9 +147,7 @@
 		<!-- Mobile Menu -->
 		{#if mobileMenuOpen}
 			<div class={`md:hidden mt-4 pb-4 space-y-2 pt-4 animate-slide-down rounded-xl border ${isLight ? 'border-red-100 bg-white/95 shadow-lg shadow-red-100/40' : 'border-red-900/30 bg-black/80 backdrop-blur-xl'}`}>
-				<a href="/" class={`block w-full text-left px-4 py-2.5 text-sm rounded transition-all duration-300 hover:translate-x-1 ${isLight ? 'text-slate-700 hover:text-red-600 hover:bg-red-50' : 'text-zinc-400 hover:text-red-500 hover:bg-red-950/30'}`}>Home</a>
-				<a href="/features" class={`block w-full text-left px-4 py-2.5 text-sm rounded transition-all duration-300 hover:translate-x-1 ${isLight ? 'text-slate-700 hover:text-red-600 hover:bg-red-50' : 'text-zinc-400 hover:text-red-500 hover:bg-red-950/30'}`}>Features</a>
-				<a href="https://spikedai.vercel.app/" target="_blank" rel="noopener noreferrer" class={`block w-full text-left px-4 py-2.5 text-sm rounded transition-all duration-300 hover:translate-x-1 ${isLight ? 'text-slate-700 hover:text-red-600 hover:bg-red-50' : 'text-zinc-400 hover:text-red-500 hover:bg-red-950/30'}`}>Platform</a>
+				<a href="/blog" class={`block w-full text-left px-4 py-2.5 text-sm rounded transition-all duration-300 hover:translate-x-1 ${isLight ? 'text-slate-700 hover:text-red-600 hover:bg-red-50' : 'text-zinc-400 hover:text-red-500 hover:bg-red-950/30'}`}>The Bulletin</a>
 				<a href="/contact-sales" class={`block w-full text-left px-4 py-2.5 text-sm rounded transition-all duration-300 hover:translate-x-1 ${isLight ? 'text-slate-700 hover:text-red-600 hover:bg-red-50' : 'text-zinc-400 hover:text-red-500 hover:bg-red-950/30'}`}>Contact Sales</a>
 				<div class="pt-2 space-y-2">
 					<button

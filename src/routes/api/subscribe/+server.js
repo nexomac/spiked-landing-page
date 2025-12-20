@@ -5,10 +5,10 @@ export async function POST({ request }) {
     try {
         const data = await request.formData();
         const email = data.get('email');
-        const newsletterId = data.get('newsletterId');
+        const newsletterIds = data.getAll('newsletterId');
 
-        if (!email || !newsletterId) {
-            return json({ success: false, message: 'Email and newsletter ID required' }, { status: 400 });
+        if (!email || !newsletterIds || newsletterIds.length === 0) {
+            return json({ success: false, message: 'Email and at least one newsletter selection required' }, { status: 400 });
         }
 
         const db = await getDb();
@@ -21,25 +21,20 @@ export async function POST({ request }) {
             // Update existing subscription
             await subscribers.updateOne(
                 { email },
-                { $addToSet: { subscribedTo: newsletterId } } // No duplicates
+                { $addToSet: { subscribedTo: { $each: newsletterIds } } }
             );
         } else {
             // Create new
             await subscribers.insertOne({
                 email,
-                subscribedTo: [newsletterId],
+                subscribedTo: newsletterIds,
                 createdAt: new Date()
             });
         }
 
-        // Return generic success page or redirect
-        // For strictly API usage, JSON is good. Since we used form action, redirect might be better, 
-        // but let's return JSON and assume we'd enhance the UI to handle it or use progressive enhancement.
-        // For this simple implementation, let's redirect back to referer or a success page.
-        
         return new Response(null, {
             status: 303,
-            headers: { Location: '/newsletters?success=true' }
+            headers: { Location: '/blog?success=true' }
         });
 
     } catch (e) {

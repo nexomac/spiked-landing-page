@@ -14,6 +14,30 @@
     function updateRichText(fieldSlug, json) {
         entryData[fieldSlug] = json;
     }
+
+    // Helper to check if Tiptap JSON is "empty"
+    function isTiptapEmpty(v) {
+        if (!v) return true;
+        if (typeof v === 'string') return v.trim() === '';
+        if (v.type === 'doc' && (!v.content || v.content.length === 0 || (v.content.length === 1 && v.content[0].type === 'paragraph' && (!v.content[0].content || v.content[0].content.length === 0)))) {
+            return true;
+        }
+        return false;
+    }
+
+    // Get the best initial value for a field (checks slug, then name)
+    function getFieldValue(field) {
+        const valBySlug = entryData[field.slug];
+        const valByName = entryData[field.name];
+
+        if (field.type === 'richtext') {
+            if (!isTiptapEmpty(valBySlug)) return valBySlug;
+            if (!isTiptapEmpty(valByName)) return valByName;
+            return { type: 'doc', content: [{ type: 'paragraph' }] };
+        }
+
+        return valBySlug || valByName || '';
+    }
 </script>
 
 <div class="min-h-screen bg-black text-white pt-24 px-4 pb-40">
@@ -43,12 +67,14 @@
 
                     {#if field.type === 'richtext'}
                         <TiptapEditor 
-                            value={entryData[field.slug]} 
+                            value={getFieldValue(field)} 
                             onChange={(json) => updateRichText(field.slug, json)} 
                         />
                         <!-- Hidden input to transport JSON data -->
                         {#if entryData[field.slug]}
                              <input type="hidden" name="richtext_{field.slug}" value={JSON.stringify(entryData[field.slug])} />
+                        {:else if getFieldValue(field)}
+                             <input type="hidden" name="richtext_{field.slug}" value={JSON.stringify(getFieldValue(field))} />
                         {:else}
                              <input type="hidden" name="richtext_{field.slug}" value="{JSON.stringify({type: 'doc', content: []})}" />
                         {/if}
@@ -57,19 +83,19 @@
                             <input 
                                 type="text" 
                                 name={field.slug} 
-                                value={entryData[field.slug] || ''}
+                                value={getFieldValue(field)}
                                 placeholder="Image URL (http://...)" 
                                 class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none"
                             />
-                            {#if entryData[field.slug]}
-                                <img src={entryData[field.slug]} alt="Preview" class="h-12 w-12 rounded object-cover border border-gray-700"/>
+                            {#if getFieldValue(field)}
+                                <img src={getFieldValue(field)} alt="Preview" class="h-12 w-12 rounded object-cover border border-gray-700"/>
                             {/if}
                         </div>
                     {:else if field.type === 'date'}
                         <input 
                             type="datetime-local" 
                             name={field.slug} 
-                            value={entryData[field.slug] || ''}
+                            value={getFieldValue(field)}
                             class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none"
                         />
                     {:else}
@@ -77,7 +103,7 @@
                         <input 
                             type="text" 
                             name={field.slug} 
-                            value={entryData[field.slug] || entryData[field.name] || ''} 
+                            value={getFieldValue(field)} 
                             class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none text-lg"
                         />
                     {/if}

@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.spiked.ai/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_app/
+
+# Allow important pages
+Allow: /
+Allow: /features/
+Allow: /contact-sales/
+

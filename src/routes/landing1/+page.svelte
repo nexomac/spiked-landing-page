@@ -231,7 +231,7 @@
 			transcriptIndex = (transcriptIndex + 1) % transcriptMessages.length;
 		}, 3000);
 
-		// Showcase rotation every 5 seconds (only when not paused)
+		// Showcase rotation every 4 seconds (only when not paused)
 		let showcaseInterval = null;
 		const startShowcaseRotation = () => {
 			if (showcaseInterval) clearInterval(showcaseInterval);
@@ -242,10 +242,10 @@
 						currentShowcaseIndex = (currentShowcaseIndex + 1) % showcases.length;
 						setTimeout(() => {
 							isTransitioning = false;
-						}, 300);
-					}, 200);
+						}, 500);
+					}, 800);
 				}
-			}, 5000);
+			}, 4000);
 		};
 		startShowcaseRotation();
 
@@ -286,12 +286,97 @@
 </script>
 
 <svelte:head>
+	<!-- Primary Meta Tags -->
+	<title>Spiked AI - AI-Powered Sales Intelligence Platform for Enterprise Teams</title>
+	<meta name="title" content="Spiked AI - AI-Powered Sales Intelligence Platform for Enterprise Teams" />
+	<meta name="description" content="Spiked AI empowers sales teams with real-time AI assistance, automated follow-ups, and seamless CRM integrations. Increase sales productivity and close more deals with conversational AI." />
+	<meta name="keywords" content="sales AI, conversational AI, sales intelligence, CRM integration, sales automation, AI assistant, sales productivity, enterprise AI, real-time sales, automated follow-ups" />
+	<link rel="canonical" href="https://www.spiked.ai/" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://www.spiked.ai/" />
+	<meta property="og:title" content="Spiked AI - AI-Powered Sales Intelligence Platform" />
+	<meta property="og:description" content="Empower your sales team with real-time AI assistance, automated follow-ups, and seamless CRM integrations. Close more deals with conversational AI." />
+	<meta property="og:image" content="https://www.spiked.ai/og-image.jpg" />
+	<meta property="og:site_name" content="Spiked AI" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:url" content="https://www.spiked.ai/" />
+	<meta name="twitter:title" content="Spiked AI - AI-Powered Sales Intelligence Platform" />
+	<meta name="twitter:description" content="Empower your sales team with real-time AI assistance, automated follow-ups, and seamless CRM integrations." />
+	<meta name="twitter:image" content="https://www.spiked.ai/og-image.jpg" />
+
+	<!-- Additional Meta Tags -->
+	<meta name="robots" content="index, follow" />
+	<meta name="author" content="Spiked AI" />
+	<meta name="language" content="English" />
+	<meta name="revisit-after" content="7 days" />
+
+	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link
 		href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
 		rel="stylesheet"
 	/>
+
+	<!-- Structured Data (JSON-LD) -->
+	{@html `
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "Spiked AI",
+			"url": "https://www.spiked.ai",
+			"logo": "https://www.spiked.ai/Spiked.ai-white-logo-icon-only.png",
+			"description": "AI-powered sales intelligence platform for enterprise teams",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "251 Rhode Island St, Suite 205",
+				"addressLocality": "San Francisco",
+				"addressRegion": "CA",
+				"postalCode": "94103",
+				"addressCountry": "US"
+			},
+			"sameAs": [
+				"https://www.linkedin.com/company/spiked-ai"
+			]
+		}
+		</script>
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Spiked AI",
+			"url": "https://www.spiked.ai",
+			"potentialAction": {
+				"@type": "SearchAction",
+				"target": "https://www.spiked.ai/search?q={search_term_string}",
+				"query-input": "required name=search_term_string"
+			}
+		}
+		</script>
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "SoftwareApplication",
+			"name": "Spiked AI",
+			"applicationCategory": "BusinessApplication",
+			"offers": {
+				"@type": "Offer",
+				"price": "0",
+				"priceCurrency": "USD"
+			},
+			"aggregateRating": {
+				"@type": "AggregateRating",
+				"ratingValue": "4.8",
+				"ratingCount": "150"
+			}
+		}
+		</script>
+	`}
 </svelte:head>
 
 <div class="page-shell">
@@ -334,12 +419,12 @@
 						<!-- Main Headline -->
 						<h1 class="contextual-headline mb-8 lg:mb-10">
 							<span class="block">Sell Like a CEO</span>
-
+							<span class="block text-red-500">AI-Powered Sales Intelligence</span>
 						</h1>
 
 						<!-- Sub-headline -->
 						<p class="contextual-subheadline mb-10 lg:mb-12 text-gray-400 leading-relaxed max-w-[540px]">
-							The rise of the singular rep starts here
+							Real-time AI assistance for sales teams. Automate follow-ups, integrate with CRM, and close more deals with conversational AI.
 						</p>
 
 						<!-- CTA Button -->
@@ -377,7 +462,7 @@
 				<div class="text-center mb-8 transform transition-all duration-1000 {visibleSections.showcase ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
 					<span class="text-xs sm:text-sm font-bold text-red-500 tracking-widest uppercase">All Features</span>
 					<h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-4 mb-4 text-white tracking-tight leading-tight">
-						Experience Every Feature
+						AI Sales Features for Real-Time Intelligence
 					</h2>
 					<p class="text-base text-zinc-400 max-w-2xl mx-auto">
 						Explore our complete suite of AI-powered features with interactive demos.
@@ -386,7 +471,7 @@
 
 				<!-- Split Layout Showcase Container -->
 				<div 
-					class="relative h-[1100px] lg:h-[650px] showcase-overlap-grid"
+					class="relative min-h-[650px] lg:min-h-[650px] min-h-[600px]"
 					role="region"
 					aria-label="Interactive feature showcase"
 					onmouseenter={() => isPaused = true}
@@ -397,8 +482,8 @@
 						{#if currentShowcaseIndex === i}
 							<div
 								class="showcase-split-container"
-								in:fade={{ duration: 400 }}
-								out:fade={{ duration: 300 }}
+								in:fly={{ y: 20, duration: 700, easing: (t) => 1 - Math.pow(1 - t, 2.5) }}
+								out:fly={{ y: -15, duration: 400, easing: (t) => Math.pow(t, 1.5) }}
 							>
 								<!-- Desktop Layout: Split -->
 								<div class="hidden lg:grid lg:grid-cols-2 gap-10 items-center h-full">
@@ -765,17 +850,13 @@
 			</div>
 			<div class="text-center mb-12 sm:mb-16 px-4 transform transition-all duration-1000 {visibleSections.testimonials ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} relative z-20">
 				<span class="text-xs sm:text-sm font-bold text-red-500 dark:text-red-500 tracking-widest uppercase animate-fade-in-up">Trusted by Sales Leaders</span>
-				<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-4 mb-6 text-white dark:text-white text-gray-900 tracking-tight animate-fade-in-up leading-tight" style="animation-delay: 0.1s;">
-					AI That Empowers<br />
+				<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-4 mb-6 text-white tracking-tight animate-fade-in-up leading-tight" style="animation-delay: 0.1s;">
+					AI Sales Intelligence That Empowers<br />
 					<span class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Sales & Dev Teams</span>
 				</h2>
 			</div>
-			<div class="relative overflow-hidden group/marquee">
-				<!-- Fade gradients for seamless edges -->
-				<div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
-				<div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
-				
-				<div class="flex gap-6 py-4 animate-marquee hover:pause whitespace-nowrap">
+			<div class="relative">
+				<div class="flex gap-6 animate-marquee hover:pause">
 					{#each [
 						{
 							quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.",
@@ -799,13 +880,6 @@
 							metricLabel: "Saved Weekly"
 						},
 						{
-							quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.",
-							author: "Jessica Lee",
-							role: "VP of Sales",
-							metric: "25%",
-							metricLabel: "Efficiency Gain"
-						},
-						{
 							quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.",
 							author: "Alex Rivera",
 							role: "Senior Sales Engineer",
@@ -818,20 +892,6 @@
 							role: "Sales Director",
 							metric: "40%",
 							metricLabel: "More Deals Closed"
-						},
-						{
-							quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual data entry.",
-							author: "Michael Chen",
-							role: "Account Executive",
-							metric: "15hrs",
-							metricLabel: "Saved Weekly"
-						},
-						{
-							quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.",
-							author: "Jessica Lee",
-							role: "VP of Sales",
-							metric: "25%",
-							metricLabel: "Efficiency Gain"
 						}
 					] as testimonial, i}
 						<div 
@@ -922,7 +982,7 @@
 				<h2 class="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-tight sm:leading-none animate-fade-in-up">
 					Empower Your Sales Team<br />
 					<span class="text-red-500">
-						With AI Intelligence
+						With Real-Time AI Intelligence
 					</span>
 				</h2>
 				<p class="text-lg sm:text-xl text-zinc-400 mb-10 sm:mb-12 max-w-2xl mx-auto font-semibold animate-fade-in-up" style="animation-delay: 0.2s;">

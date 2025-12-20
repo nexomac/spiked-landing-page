@@ -99,7 +99,7 @@
 
 	/* Gradient text */
 	.gradient-text {
-		background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+		background: linear-gradient(135deg, #e11d48 0%, #fb7185 45%, #fb923c 100%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
@@ -273,7 +273,7 @@
 	<meta name="description" content="Never miss important follow-up details. Automated preparation for your next meetings with context-aware briefings." />
 </svelte:head>
 
-<div class="min-h-screen bg-black text-white overflow-hidden">
+<div class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-rose-50 text-slate-900 overflow-hidden">
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="followup" />
 	
@@ -303,7 +303,7 @@
 	<!-- Hero Section - Writer.com Style Split Layout -->
 	<section class="relative min-h-screen pt-32 pb-24">
 		<!-- Background gradient -->
-		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
+		<div class="absolute inset-0 bg-gradient-to-b from-white via-rose-50 to-slate-100"></div>
 		
 		<div class="relative max-w-7xl mx-auto px-6">
 			<!-- Split Layout Container -->
@@ -313,11 +313,11 @@
 				<div class="lg:sticky lg:top-32 z-10">
 					<!-- Label with subtle animation -->
 					<div 
-						class="inline-flex items-center gap-2 px-3 py-1.5 glass rounded-full mb-8 hover:scale-105 transition-transform"
+						class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8 hover:scale-105 transition-transform bg-white/90 border border-rose-100 shadow-lg shadow-rose-100/70 backdrop-blur"
 						in:fly={{ y: -20, duration: 600, delay: 100 }}
 					>
 						<Calendar class="w-4 h-4 text-red-500 animate-pulse" />
-						<span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Follow-Up Prep</span>
+						<span class="text-xs font-semibold text-rose-700 uppercase tracking-wider">Follow-Up Prep</span>
 					</div>
 
 					<!-- Main Headline with shimmer effect -->
@@ -326,58 +326,58 @@
 						in:fly={{ y: 20, duration: 700, delay: 200 }}
 					>
 						<span class="gradient-text block mb-2">AI that prepares you</span>
-						<span class="text-white block">for every meeting</span>
+						<span class="text-slate-900 block">for every meeting</span>
 					</h1>
 
 					<!-- Three Feature Cards from Screenshot -->
 					<div class="space-y-4 mb-10">
 						<!-- Never walk in unprepared -->
 						<div 
-							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							class="rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden bg-white/90 border border-slate-200 shadow-[0_20px_50px_rgba(15,23,42,0.12)] backdrop-blur"
 							in:fly={{ y: 20, duration: 600, delay: 300 }}
 						>
-							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-rose-100/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 							<div class="flex items-start gap-4 relative z-10">
-								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
-									<FileText class="w-5 h-5 text-zinc-400" />
+								<div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:bg-rose-50 group-hover:border-rose-200 transition-colors">
+									<FileText class="w-5 h-5 text-slate-600 group-hover:text-rose-600" />
 								</div>
 								<div>
-									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Never walk in unprepared</h3>
-									<p class="text-sm text-zinc-400">Automatically compile everything you need before every meeting</p>
+									<h3 class="font-semibold text-slate-900 mb-1 group-hover:text-rose-600 transition-colors">Never walk in unprepared</h3>
+									<p class="text-sm text-slate-600">Automatically compile everything you need before every meeting</p>
 								</div>
 							</div>
 						</div>
 
 						<!-- Full relationship history (highlighted) -->
 						<div 
-							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden border-l-2 border-red-500"
+							class="rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden bg-white/95 border border-rose-200 border-l-2 border-l-rose-500 shadow-[0_24px_60px_rgba(244,63,94,0.18)] backdrop-blur"
 							in:fly={{ y: 20, duration: 600, delay: 400 }}
 						>
-							<div class="absolute inset-0 bg-gradient-to-r from-red-500/5 via-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="absolute inset-0 bg-gradient-to-r from-rose-100 via-rose-200/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 							<div class="flex items-start gap-4 relative z-10">
 								<div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
 									<Brain class="w-5 h-5 text-red-500" />
 								</div>
 								<div>
-									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Full relationship history</h3>
-									<p class="text-sm text-zinc-400">Instantly recall every past conversation, commitment, and detail</p>
+									<h3 class="font-semibold text-slate-900 mb-1 group-hover:text-rose-600 transition-colors">Full relationship history</h3>
+									<p class="text-sm text-slate-600">Instantly recall every past conversation, commitment, and detail</p>
 								</div>
 							</div>
 						</div>
 
 						<!-- Never drop the ball -->
 						<div 
-							class="glass rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden"
+							class="rounded-xl p-4 hover-lift group cursor-pointer relative overflow-hidden bg-white/90 border border-slate-200 shadow-[0_20px_50px_rgba(15,23,42,0.12)] backdrop-blur"
 							in:fly={{ y: 20, duration: 600, delay: 500 }}
 						>
-							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-rose-100/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 							<div class="flex items-start gap-4 relative z-10">
-								<div class="w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center flex-shrink-0 group-hover:bg-zinc-700/50 transition-colors">
-									<CheckCircle2 class="w-5 h-5 text-zinc-400" />
+								<div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:bg-rose-50 group-hover:border-rose-200 transition-colors">
+									<CheckCircle2 class="w-5 h-5 text-slate-600 group-hover:text-rose-600" />
 								</div>
 								<div>
-									<h3 class="font-semibold text-white mb-1 group-hover:text-red-400 transition-colors">Never drop the ball</h3>
-									<p class="text-sm text-zinc-400">Track commitments automatically and get reminded before follow-ups</p>
+									<h3 class="font-semibold text-slate-900 mb-1 group-hover:text-rose-600 transition-colors">Never drop the ball</h3>
+									<p class="text-sm text-slate-600">Track commitments automatically and get reminded before follow-ups</p>
 								</div>
 							</div>
 						</div>
@@ -420,7 +420,7 @@
 					<!-- CTA Link with hover effect -->
 					<a 
 						href="#learn-more" 
-						class="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-medium group"
+						class="inline-flex items-center gap-2 text-rose-600 hover:text-rose-500 font-medium group"
 						in:fly={{ y: 20, duration: 600, delay: 700 }}
 					>
 						<span>Learn more about follow-up preparation</span>

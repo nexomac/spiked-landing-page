@@ -6,7 +6,7 @@
     <div class="max-w-6xl mx-auto">
         <!-- Newspaper Header -->
         <header class="border-b-4 border-black mb-12 pb-4 text-center">
-            <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-2">The Spiked Times</h1>
+            <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-2">The SpikedAI Times</h1>
             <div class="flex justify-between border-t border-b border-black py-2 mt-4 text-sm font-bold uppercase tracking-widest">
                 <span>Vol. {new Date().getFullYear()}</span>
                 <span>Technology & AI</span>

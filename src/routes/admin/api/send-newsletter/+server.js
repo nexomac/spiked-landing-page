@@ -88,7 +88,7 @@ function generateEmailHtml(posts, newsletterMap) {
 
     return `
         <div style="font-family: serif; color: #000; max-width: 600px; margin: 0 auto;">
-            <h1 style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px;">The Spiked Times</h1>
+            <h1 style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px;">The SpikedAI Times</h1>
             <p style="text-align: center; font-style: italic;">Your weekly curated selections.</p>
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
             ${items}

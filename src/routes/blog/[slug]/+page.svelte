@@ -69,7 +69,7 @@
         <!-- Strip Header / Metaline -->
         <header class="w-full border-b border-black mb-8 px-8 pt-8 pb-4 text-center">
             <div class="flex justify-between items-center text-xs font-sans font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-black/5 pb-2">
-                <span>The Spiked Times</span>
+                <span>The SpikedAI Times</span>
                 <span class="flex items-center gap-2">
                     {formattedDate} 
                     <span class="text-black/30">•</span> 

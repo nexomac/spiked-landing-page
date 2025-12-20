@@ -211,4 +211,35 @@
 	.animate-shimmer {
 		animation: shimmer 2s infinite;
 	}
+
+	/* Light mode navigation */
+	:global([data-theme='light']) :global(nav) {
+		background: rgba(255, 255, 255, 0.92) !important;
+		backdrop-filter: blur(12px);
+		border-color: rgba(226, 232, 240, 0.8) !important;
+		box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+	}
+
+	:global([data-theme='light']) :global(nav) :global(.text-white),
+	:global([data-theme='light']) :global(nav) :global(a) {
+		color: #0f172a !important;
+	}
+
+	:global([data-theme='light']) :global(nav) :global(a:hover) {
+		color: #dc2626 !important;
+	}
+
+	:global([data-theme='light']) :global(nav) :global(.bg-gradient-to-r) {
+		background: linear-gradient(90deg, #ef4444, #f97316) !important;
+	}
+
+	:global([data-theme='light']) :global(nav) :global(.border-zinc-800) {
+		border-color: #e2e8f0 !important;
+		background: #ffffff !important;
+		color: #0f172a !important;
+	}
+
+	:global([data-theme='light']) :global(nav) :global(.border-zinc-800:hover) {
+		border-color: #dc2626 !important;
+	}
 </style>

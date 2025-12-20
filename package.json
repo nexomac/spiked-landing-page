@@ -51,6 +51,7 @@
 		"@tiptap/extension-link": "^3.13.0",
 		"@tiptap/html": "^3.13.0",
 		"@tiptap/starter-kit": "^3.13.0",
+		"@vercel/analytics": "^1.6.1",
 		"bits-ui": "^2.11.4",
 		"canvas-confetti": "^1.9.4",
 		"clsx": "^2.1.1",

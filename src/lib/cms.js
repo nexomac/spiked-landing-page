@@ -78,7 +78,10 @@ export async function getEntry(id) {
 export async function getEntryBySlug(modelSlug, entrySlug) {
      const db = await getDb();
      const query = { 
-         'data.slug': entrySlug,
+         $or: [
+             { 'data.slug': entrySlug },
+             { 'data.Slug': entrySlug }
+         ],
          status: 'live' 
      };
      // If modelSlug is provided, strict filter. Otherwise, search all.

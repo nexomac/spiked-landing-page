@@ -1,6 +1,8 @@
 import { getEntry, getContentModel, updateEntry, deleteEntry } from '$lib/cms';
+import { getDb } from '$lib/db';
 import { error, redirect } from '@sveltejs/kit';
 import { requireAuth } from '$lib/server/auth';
+import { ObjectId } from 'mongodb'; // Import directly to use in manual update
 
 export async function load({ params }) {
     const entry = await getEntry(params.entryId);
@@ -8,9 +10,13 @@ export async function load({ params }) {
 
     if (!entry || !model) throw error(404, 'Not found');
 
+    const db = await getDb();
+    const newsletters = await db.collection('newsletters').find({}).toArray();
+
     return {
         entry: { ...entry, _id: entry._id.toString() },
-        model: { ...model, _id: model._id.toString() }
+        model: { ...model, _id: model._id.toString() },
+        newsletters: newsletters.map(n => ({ ...n, _id: n._id.toString() }))
     };
 }
 
@@ -20,17 +26,18 @@ export const actions = {
         const formData = await request.formData();
         const status = formData.get('status'); // 'draft' or 'live'
         
-        // Fetch existing entry to merge data (preserves fields not in the form)
+        // Fetch existing entry to merge data
         const existingEntry = await getEntry(params.entryId);
         const existingData = existingEntry ? existingEntry.data : {};
+
+        // Extract Newsletter IDs
+        const newsletterIds = formData.getAll('newsletters');
 
         // Convert FormData to Object
         const incomingData = {};
         for (const [key, value] of formData.entries()) {
-            if (key !== 'status') {
-                // Remove any 'richtext_' prefix if present (handled in UI)
+            if (key !== 'status' && key !== 'newsletters') {
                 const cleanKey = key.replace('richtext_', '');
-                
                 if (key.startsWith('richtext_')) {
                     try {
                         incomingData[cleanKey] = JSON.parse(value);
@@ -43,10 +50,18 @@ export const actions = {
             }
         }
         
-        // Merge: Existing fields + New fields (New overwrites Old)
+        // Merge data
         const mergedData = { ...existingData, ...incomingData };
 
+        // Save entry via CMS lib (updates data and status)
         await updateEntry(params.entryId, mergedData, status);
+        
+        // Manual update for newsletters field (which is top-level, not in data)
+        const db = await getDb();
+        await db.collection('content_entries').updateOne(
+            { _id: new ObjectId(params.entryId) },
+            { $set: { newsletters: newsletterIds } }
+        );
 
         return { success: true };
     },

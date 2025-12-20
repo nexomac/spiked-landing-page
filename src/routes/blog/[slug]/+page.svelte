@@ -3,6 +3,8 @@
     import StarterKit from '@tiptap/starter-kit';
     import Image from '@tiptap/extension-image';
     import Link from '@tiptap/extension-link';
+    import ShareButton from '$lib/components/ShareButton.svelte';
+    import VoicePlayer from '$lib/components/VoicePlayer.svelte';
 
     let { data } = $props();
 
@@ -22,6 +24,14 @@
             return '';
         }
     }
+
+    function extractTextFromTiptap(node) {
+        if (node.type === 'text') return node.text;
+        if (node.content) {
+            return node.content.map(child => extractTextFromTiptap(child)).join(' ');
+        }
+        return '';
+    }
     
     // Format date format: "December 12, 2025"
     let formattedDate = $derived(new Date(data.post.publishedDate || data.post.createdAt).toLocaleDateString('en-US', {
@@ -29,6 +39,25 @@
         day: 'numeric',
         year: 'numeric'
     }));
+
+    // Calculate reading time
+    let readingTime = $derived.by(() => {
+        let textContent = '';
+        if (data.post.data) {
+            for (const [key, value] of Object.entries(data.post.data)) {
+                 if (['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate'].includes(key)) continue;
+
+                 if (value && typeof value === 'object' && value.type === 'doc') {
+                    textContent += extractTextFromTiptap(value) + ' ';
+                 } else if (typeof value === 'string' && !value.startsWith('data:image')) {
+                    textContent += value + ' ';
+                 }
+            }
+        }
+        const words = textContent.trim().split(/\s+/).length;
+        const minutes = Math.ceil(words / 200); // 200 wpm average
+        return `${minutes} min read`;
+    });
 </script>
 
 <!-- Outer background: Distinct from content to create "strip" effect -->
@@ -39,9 +68,13 @@
         
         <!-- Strip Header / Metaline -->
         <header class="w-full border-b border-black mb-8 px-8 pt-8 pb-4 text-center">
-            <div class="flex justify-between items-center text-xs font-sans font-bold uppercase tracking-widest text-gray-500 mb-6">
+            <div class="flex justify-between items-center text-xs font-sans font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-black/5 pb-2">
                 <span>The Spiked Times</span>
-                <span>{formattedDate}</span>
+                <span class="flex items-center gap-2">
+                    {formattedDate} 
+                    <span class="text-black/30">•</span> 
+                    {readingTime}
+                </span>
                 <span>Vol. {new Date().getFullYear()}</span>
             </div>
             
@@ -49,8 +82,16 @@
                 {data.post.title}
             </h1>
 
-            <div class="flex items-center justify-center space-x-2 font-sans text-sm font-bold border-t border-black/10 pt-4 w-fit mx-auto px-4">
+            <div class="flex flex-col items-center justify-center gap-4 font-sans text-sm font-bold border-t border-black/10 pt-4 w-full px-4">
                 <span>By {data.post.author || 'Editorial Staff'}</span>
+                
+                <div class="flex items-center gap-4">
+                    <VoicePlayer content={data.post.data || {}} />
+                    <ShareButton 
+                        title={data.post.title} 
+                        text={`Read "${data.post.title}" on Spiked.`}
+                    />
+                </div>
             </div>
         </header>
 

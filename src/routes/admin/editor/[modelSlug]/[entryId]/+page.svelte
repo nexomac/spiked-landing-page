@@ -109,19 +109,44 @@
                         Publish
                     </button>
                 </div>
+            </div>
 
-                <div class="mt-4 pt-4 border-t border-gray-800">
-                     <button formaction="?/delete" onclick={() => confirm('Are you sure you want to delete this entry? This cannot be undone.')} class="w-full text-red-500 hover:text-red-400 text-sm py-2 hover:bg-red-900/20 rounded-lg transition">
-                        Delete Entry
-                     </button>
-                </div>
+            <!-- Newsletters Section -->
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 mt-6">
+                <h3 class="font-bold text-lg mb-4">Newsletters</h3>
+                <p class="text-xs text-gray-500 mb-4">Select which newsletters this post belongs to.</p>
                 
-                {#if isSaving}
-                    <p class="text-center text-sm text-gray-400 mt-4 animate-pulse">Saving changes...</p>
-                {:else if form?.success}
-                    <p class="text-center text-sm text-green-400 mt-4">Saved successfully!</p>
+                {#if data.newsletters.length === 0}
+                    <p class="text-xs text-gray-500 italic">No newsletters defined.</p>
+                {:else}
+                    <div class="space-y-2">
+                        {#each data.newsletters as newsletter}
+                            <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-800 p-2 rounded transition">
+                                <input 
+                                    type="checkbox" 
+                                    name="newsletters" 
+                                    value={newsletter._id} 
+                                    checked={data.entry.newsletters && data.entry.newsletters.includes(newsletter._id)}
+                                    class="rounded border-gray-700 bg-gray-950 text-red-600 focus:ring-red-500"
+                                />
+                                <span class="text-sm">{newsletter.title}</span>
+                            </label>
+                        {/each}
+                    </div>
                 {/if}
             </div>
+
+            <div class="mt-4 pt-4 border-t border-gray-800">
+                 <button formaction="?/delete" onclick={() => confirm('Are you sure you want to delete this entry? This cannot be undone.')} class="w-full text-red-500 hover:text-red-400 text-sm py-2 hover:bg-red-900/20 rounded-lg transition">
+                    Delete Entry
+                 </button>
+            </div>
+            
+            {#if isSaving}
+                <p class="text-center text-sm text-gray-400 mt-4 animate-pulse">Saving changes...</p>
+            {:else if form?.success}
+                <p class="text-center text-sm text-green-400 mt-4">Saved successfully!</p>
+            {/if}
             
             <div class="mt-8">
                 <h3 class="font-bold text-sm text-gray-500 mb-2 font-mono">DEBUG DATA</h3>

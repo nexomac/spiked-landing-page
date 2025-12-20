@@ -56,7 +56,9 @@
 		"clsx": "^2.1.1",
 		"gsap": "^3.14.1",
 		"lucide-svelte": "^0.544.0",
+		"mongo-sanitize": "^1.1.0",
 		"mongodb": "^7.0.0",
+		"nodemailer": "^7.0.11",
 		"tailwind-merge": "^3.4.0"
 	},
 	"volta": {

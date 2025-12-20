@@ -9,6 +9,17 @@
     let element;
     let editor = $state(null);
 
+    $effect(() => {
+        if (editor && value) {
+            const currentJSON = editor.getJSON();
+            // Simple check: if empty or substantially different
+            // JSON stringify comparison is heavy but effective for this scale
+            if (JSON.stringify(currentJSON) !== JSON.stringify(value)) {
+                 editor.commands.setContent(value);
+            }
+        }
+    });
+
     onMount(() => {
         editor = new Editor({
             element: element,
@@ -24,7 +35,7 @@
                 }
             },
             onUpdate: ({ editor }) => {
-                const json = editor.getJSON(); // Save as JSON for "Block" structure
+                const json = editor.getJSON(); 
                 onChange(json);
             }
         });

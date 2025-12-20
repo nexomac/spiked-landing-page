@@ -68,7 +68,7 @@
 							<div class="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-pulse"></div>
 							<div class="absolute inset-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500 rounded-full animate-ping"></div>
 						</div>
-						<span class="hero-eyebrow dark:text-gray-200 text-gray-950">Revenue AI Agents built for the Fortune 2000</span>
+						<span class="hero-eyebrow dark:text-gray-200 text-gray-950">Reimagining revenue acceleration through an AI-driven sales workforce</span>
 					</div>
 				</div>
 				<div class="hero-subhead px-5 sm:px-6 py-4 sm:py-3 bg-gradient-to-r from-red-50/80 via-red-50/60 to-red-50/80 dark:from-red-950/30 dark:via-red-950/20 dark:to-red-950/30 backdrop-blur-xl rounded-2xl border border-rose-200 dark:border-red-900/30 hover:border-red-400 dark:hover:border-red-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-red-900/20 dark:hover:shadow-red-900/20 hover:shadow-red-500/20 text-center">

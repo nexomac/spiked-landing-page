@@ -129,7 +129,7 @@
 					<span class={`text-base sm:text-xl font-black tracking-tight transition-colors duration-300 ${isLight ? 'text-slate-900' : 'text-white'} group-hover:text-red-500`}>
 						SPIKED<span class="text-red-600 group-hover:text-red-400 transition-colors">AI</span>
 					</span>
-					<span class={`text-[8px] sm:text-[10px] font-medium tracking-wider uppercase -mt-0.5 transition-colors ${isLight ? 'text-slate-500 group-hover:text-slate-600' : 'text-zinc-500 group-hover:text-zinc-400'}`}>Revenue Growth OS</span>
+					<span class={`text-[8px] sm:text-[10px] font-medium tracking-wider uppercase -mt-0.5 transition-colors ${isLight ? 'text-slate-500 group-hover:text-slate-600' : 'text-zinc-500 group-hover:text-zinc-400'}`}>Conversational A.I Agents</span>
 				</div>
 			</a>
 			

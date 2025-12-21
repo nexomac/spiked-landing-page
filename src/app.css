@@ -24,15 +24,28 @@ body * {
 }
 
 ::-webkit-scrollbar-track {
-	@apply bg-gray-100 dark:bg-gray-900;
+	background-color: rgb(243 244 246);
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-track {
+	background-color: rgb(17 24 39);
 }
 
 ::-webkit-scrollbar-thumb {
-	@apply bg-gray-300 dark:bg-gray-700 rounded-full;
+	background-color: rgb(209 213 219);
+	border-radius: 9999px;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+	background-color: rgb(55 65 81);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	@apply bg-gray-400 dark:bg-gray-600;
+	background-color: rgb(156 163 175);
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+	background-color: rgb(75 85 99);
 }
 
 /* Smooth scroll behavior */
@@ -42,12 +55,18 @@ html {
 }
 
 body {
-	@apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100;
+	background-color: rgb(255 255 255);
+	color: rgb(17 24 39);
 	/* Use Space Grotesk font for modern, consistent typography */
 	font-family: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	overflow-x: hidden;
+}
+
+:root[data-theme="dark"] body {
+	background-color: rgb(3 7 18);
+	color: rgb(243 244 246);
 }
 
 /* Global project tokens for easier theming */
@@ -407,7 +426,14 @@ h3 {
 
 /* Buttons: subtle elevation and consistent radiuses */
 .btn-primary {
-	@apply inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1.5rem;
+	border-radius: 0.5rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 600;
 	background: linear-gradient(110deg, var(--accent-red) 0%, #b01018 100%);
 	color: white;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(239, 24, 32, 0.18);

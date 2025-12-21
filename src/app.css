@@ -449,30 +449,32 @@ h3 {
 /* When hosting on Vercel we want the whole site to render at 80% scale.
    We apply the scale to the root wrapper added in +layout.svelte and
    add a class on <html> so fixed elements can be adjusted if needed. */
+/* Global site scaling - default to 75% for "browser zoom" look */
 #site-root {
 	min-height: 100vh;
 	display: flow-root;
 }
 
 #site-root.scaled,
-:root.site-scale-80 #site-root {
-	transform-origin: top center;
-	transform: scale(0.8);
-	/* Compensate width/height reduction so layout stays centered and filled */
-	width: 125%;
-	min-height: 125vh;
-	margin-left: calc((100% - 125%) / 2);
+:root.site-scaled #site-root {
+	/* Use CSS zoom for authentic browser-zoom behavior (reflows content, no empty space) */
+	zoom: 0.75;
+	/* Ensure full viewport coverage even with zoom (100vh / 0.75 = 133.33vh) */
+	min-height: 133.333333vh;
 }
 
-/* Make sure fixed-position elements (like nav) stay visually aligned.
-   This reduces pointer-event issues and keeps the scaled UI usable. */
+/* Make sure fixed-position elements (like nav) stay visually aligned. */
 @media (min-width: 640px) {
 
-	:root.site-scale-80 nav,
+	/* With zoom, we typically don't need complex offsets if the fixed element is inside the zoomed container.
+	   If nav is outside, or if zoom affects fixed positioning (it does in Chrome), we might need adjustments.
+	   Assuming Nav is inside #site-root. If not, we might need to apply zoom to body. 
+	   Based on previous css, let's reset nav compensations. */
+	:root.site-scaled nav,
 	.site-root.scaled nav {
-		left: calc(50% - 50vw);
-		right: calc(50% - 50vw);
-		width: 100vw;
+		width: 100%;
+		left: 0;
+		right: 0;
 	}
 }
 

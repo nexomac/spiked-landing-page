@@ -60,7 +60,7 @@
 	<div class="relative w-full px-4 sm:px-6 lg:px-8">
 		<!-- Section Header -->
 		<div class="text-center mb-12 md:mb-16">
-			<div class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-zinc-950 backdrop-blur-sm rounded-full border border-red-900/50 shadow-lg mb-4 sm:mb-6">
+			<div class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-card backdrop-blur-sm rounded-full border border-red-900/50 shadow-lg mb-4 sm:mb-6">
 				<Sparkles class="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
 				<span class="text-xs sm:text-sm font-semibold text-red-500">
 					Enterprise-Grade Features
@@ -68,7 +68,7 @@
 			</div>
 			
 			<h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight px-4">
-				<span class="text-white">What would you like</span>
+				<span class="text-foreground">What would you like</span>
 				<br />
 				<span class="bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent">
 					to explore?
@@ -89,7 +89,7 @@
 				<div class={isDesktop ? 'sticky top-24' : ''}>
 					<!-- Feature Title & Description -->
 					<div class="transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'}">
-						<h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-white">
+						<h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-foreground">
 							{currentFeature.fullTitle}
 						</h3>
 						<p class="text-sm sm:text-base text-red-500 font-semibold mb-3 md:mb-4">
@@ -133,7 +133,7 @@
 					<!-- Feature Preview/Demo UI - Hide on mobile for better performance -->
 					{#if !isMobile}
 					<div class="transition-all duration-700 ease-out {showContent ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'}">
-						<div class="bg-zinc-950 backdrop-blur-sm rounded-2xl border border-zinc-900 shadow-xl overflow-hidden p-4 md:p-6 max-h-[75vh] flex flex-col">
+						<div class="bg-card backdrop-blur-sm rounded-2xl border border-zinc-900 shadow-xl overflow-hidden p-4 md:p-6 max-h-[75vh] flex flex-col">
 							{#if selectedFeature === 'ai-assistance'}
 								<!-- Halo Effect Wrapper -->
 								<div class="relative">
@@ -141,7 +141,7 @@
 									<div class="relative">
 								<div class="space-y-3">
 									<!-- App Header Bar -->
-									<div class="bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 backdrop-blur-xl rounded-t-xl border-b border-zinc-700/50 px-4 py-2.5 shadow-2xl">
+									<div class="bg-gradient-to-b from-zinc-800/90 to-card/90 backdrop-blur-xl rounded-t-xl border-b border-zinc-700/50 px-4 py-2.5 shadow-2xl">
 										<div class="flex items-center justify-between">
 											<div class="flex items-center gap-3">
 												<!-- macOS Traffic Lights -->
@@ -155,10 +155,10 @@
 												<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
 											</div>
 											<div>
-												<h4 class="text-sm font-black tracking-tight text-white">
+												<h4 class="text-sm font-black tracking-tight text-foreground">
 													SPIKED<span class="text-red-500">AI</span>
 												</h4>
-												<p class="text-xs text-zinc-500">Conversational AI Platform</p>
+												<p class="text-xs text-muted-foreground">Conversational AI Platform</p>
 											</div>
 										</div>
 											</div>
@@ -175,16 +175,16 @@
 									</div>
 
 									<!-- Main Content Area with Two Panels -->
-									<div class="bg-zinc-950 rounded-b-xl border border-t-0 border-zinc-800 overflow-hidden">
+									<div class="bg-card rounded-b-xl border border-t-0 border-border overflow-hidden">
 										<div class="grid grid-cols-[1fr_1.2fr] h-[420px]">
 											<!-- Left Panel: Live Transcription -->
-											<div class="border-r border-zinc-800 flex flex-col bg-zinc-950/50">
-												<div class="px-3 py-2 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
+											<div class="border-r border-border flex flex-col bg-secondary/50">
+												<div class="px-3 py-2 border-b border-border flex items-center justify-between bg-secondary/50">
 													<div class="flex items-center gap-2">
 														<MessageSquare class="w-4 h-4 text-zinc-400" />
-														<h5 class="text-xs font-bold text-white">Live Transcription</h5>
+														<h5 class="text-xs font-bold text-foreground">Live Transcription</h5>
 													</div>
-													<span class="text-xs text-zinc-500">Real-time meeting insights</span>
+													<span class="text-xs text-muted-foreground">Real-time meeting insights</span>
 												</div>
 												
 												<div class="flex-1 overflow-y-auto p-3 space-y-2">
@@ -195,8 +195,8 @@
 														</div>
 														<div class="flex-1 min-w-0">
 															<div class="flex items-center gap-2 mb-0.5">
-																<span class="text-xs font-semibold text-white">Sarah Chen</span>
-																<span class="text-[10px] text-zinc-600">10:23 AM</span>
+																<span class="text-xs font-semibold text-foreground">Sarah Chen</span>
+																<span class="text-[10px] text-muted-foreground">10:23 AM</span>
 															</div>
 															<p class="text-xs text-zinc-400 leading-relaxed">
 																Thanks for walking me through the demo. I'm curious about your enterprise security features - we have strict compliance requirements for SOC 2 and GDPR.
@@ -211,8 +211,8 @@
 														</div>
 														<div class="flex-1 min-w-0">
 															<div class="flex items-center gap-2 mb-0.5">
-																<span class="text-xs font-semibold text-white">CHIRAG CHINTAAL</span>
-																<span class="text-[10px] text-zinc-600">10:23 AM</span>
+																<span class="text-xs font-semibold text-foreground">CHIRAG CHINTAAL</span>
+																<span class="text-[10px] text-muted-foreground">10:23 AM</span>
 															</div>
 															<p class="text-xs text-zinc-400 leading-relaxed">
 																Great question! We're fully SOC 2 Type II certified and GDPR compliant. All data is encrypted at rest and in transit, and we offer SSO integration with Azure AD and Okta...
@@ -227,8 +227,8 @@
 														</div>
 														<div class="flex-1 min-w-0">
 															<div class="flex items-center gap-2 mb-0.5">
-																<span class="text-xs font-semibold text-white">Sarah Chen</span>
-																<span class="text-[10px] text-zinc-600">10:24 AM</span>
+																<span class="text-xs font-semibold text-foreground">Sarah Chen</span>
+																<span class="text-[10px] text-muted-foreground">10:24 AM</span>
 															</div>
 															<p class="text-xs text-zinc-400 leading-relaxed">
 																Perfect. What about data residency? Our legal team requires all data to be stored in the EU.
@@ -243,8 +243,8 @@
 														</div>
 														<div class="flex-1 min-w-0">
 															<div class="flex items-center gap-2 mb-0.5">
-																<span class="text-xs font-semibold text-white">CHIRAG CHINTAAL</span>
-																<span class="text-[10px] text-zinc-600">10:24 AM</span>
+																<span class="text-xs font-semibold text-foreground">CHIRAG CHINTAAL</span>
+																<span class="text-[10px] text-muted-foreground">10:24 AM</span>
 															</div>
 															<p class="text-xs text-zinc-300 leading-relaxed font-medium">
 																Absolutely, we have data centers in Frankfurt and Dublin. You can choose your preferred region during setup...
@@ -255,11 +255,11 @@
 											</div>
 
 											<!-- Right Panel: AI Copilot -->
-											<div class="flex flex-col bg-gradient-to-br from-zinc-950 to-zinc-900">
-												<div class="px-3 py-2 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
+											<div class="flex flex-col bg-gradient-to-br from-card to-card">
+												<div class="px-3 py-2 border-b border-border flex items-center justify-between bg-secondary/80">
 													<div class="flex items-center gap-2">
 														<Brain class="w-4 h-4 text-red-500" />
-														<h5 class="text-xs font-bold text-white">AI Copilot</h5>
+														<h5 class="text-xs font-bold text-foreground">AI Copilot</h5>
 													</div>
 													<div class="flex items-center gap-2">
 														<button class="px-2 py-1 text-[10px] font-medium text-zinc-400 hover:text-white border border-zinc-700 rounded hover:border-zinc-600 transition-colors">
@@ -278,7 +278,7 @@
 															<div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center">
 																<span class="text-[10px] font-bold text-zinc-400">?</span>
 															</div>
-															<span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wide">Click mic to speak</span>
+															<span class="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Click mic to speak</span>
 														</div>
 													</div>
 
@@ -286,11 +286,11 @@
 													<div class="bg-gradient-to-br from-red-950/40 to-red-900/20 border border-red-900/60 rounded-xl p-3 shadow-xl">
 														<div class="flex items-start gap-2 mb-2">
 															<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-																<Sparkles class="w-4 h-4 text-white" />
+																<Sparkles class="w-4 h-4 text-foreground" />
 															</div>
 															<div class="flex-1">
 																<div class="flex items-center gap-2 mb-1">
-																	<span class="text-xs font-bold text-white">Copilot</span>
+																	<span class="text-xs font-bold text-foreground">Copilot</span>
 																	<span class="px-1.5 py-0.5 bg-red-600/40 border border-red-500/50 text-[9px] font-bold text-red-300 rounded">JUST NOW</span>
 																</div>
 																<p class="text-xs font-semibold text-red-300 mb-2">
@@ -300,7 +300,7 @@
 														</div>
 
 														<!-- AI Generated Answer -->
-														<div class="bg-zinc-900/80 rounded-lg p-3 border border-zinc-800 space-y-2">
+														<div class="bg-secondary/80 rounded-lg p-3 border border-border space-y-2">
 															<h6 class="text-xs font-bold text-white mb-1.5">EU Data Residency Options</h6>
 															<p class="text-xs text-zinc-300 leading-relaxed mb-2">
 																For enterprise customers with EU data residency requirements:
@@ -330,7 +330,7 @@
 															</ul>
 
 															<!-- Source Reference -->
-															<div class="mt-3 pt-2 border-t border-zinc-800 flex items-center justify-between">
+															<div class="mt-3 pt-2 border-t border-border flex items-center justify-between">
 																<div class="flex items-center gap-1.5 text-[10px] text-red-400">
 																	<FileText class="w-3 h-3" />
 																	<span class="font-medium">Enterprise_Security_Guide.pdf</span>
@@ -349,12 +349,12 @@
 										</div>
 
 										<!-- Bottom Stats Bar -->
-										<div class="border-t border-zinc-800 bg-zinc-900/50 px-4 py-2">
+										<div class="border-t border-border bg-secondary/50 px-4 py-2">
 											<div class="flex items-center justify-between">
-												<div class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wide">Knowledge Base Active</div>
+												<div class="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Knowledge Base Active</div>
 												<div class="flex gap-2">
 													<!-- Compact knowledge-base summary to avoid visual overlap on small screens -->
-													<span class="px-3 py-1 bg-zinc-900/30 text-zinc-300 text-[11px] font-medium rounded-full border border-zinc-800">
+													<span class="px-3 py-1 bg-zinc-900/30 text-zinc-300 text-[11px] font-medium rounded-full border border-border">
 														Knowledge Base
 														<span class="ml-2 text-white font-bold">55 assets</span>
 													</span>
@@ -363,18 +363,18 @@
 										</div>
 
 										<!-- Performance Metrics Footer -->
-										<div class="border-t border-zinc-800 bg-zinc-950 grid grid-cols-3 divide-x divide-zinc-800">
+										<div class="border-t border-border bg-card grid grid-cols-3 divide-x divide-zinc-800">
 											<div class="px-3 py-2 text-center">
 												<div class="text-lg font-bold text-green-500">98%</div>
-												<div class="text-[10px] text-zinc-500 font-medium">Accuracy</div>
+												<div class="text-[10px] text-muted-foreground font-medium">Accuracy</div>
 											</div>
 											<div class="px-3 py-2 text-center">
 												<div class="text-lg font-bold text-blue-500">&lt;2s</div>
-												<div class="text-[10px] text-zinc-500 font-medium">Response Time</div>
+												<div class="text-[10px] text-muted-foreground font-medium">Response Time</div>
 											</div>
 											<div class="px-3 py-2 text-center">
 												<div class="text-lg font-bold text-red-500">142</div>
-												<div class="text-[10px] text-zinc-500 font-medium">Questions Answered</div>
+												<div class="text-[10px] text-muted-foreground font-medium">Questions Answered</div>
 											</div>
 										</div>
 									</div>
@@ -388,7 +388,7 @@
 									<div class="relative">
 								<div class="flex flex-col h-full space-y-2.5 overflow-hidden">
 									<!-- Compact Recording Header -->
-									<div class="bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 backdrop-blur-xl rounded-t-xl border-b border-zinc-700/50 px-4 py-2.5 shadow-2xl flex-shrink-0">
+									<div class="bg-gradient-to-b from-zinc-800/90 to-card/90 backdrop-blur-xl rounded-t-xl border-b border-zinc-700/50 px-4 py-2.5 shadow-2xl flex-shrink-0">
 										<div class="flex items-center justify-between mb-2">
 											<div class="flex items-center gap-3">
 												<!-- macOS Traffic Lights -->
@@ -403,23 +403,23 @@
 														<div class="w-2.5 h-2.5 bg-white rounded-full animate-pulse"></div>
 													</div>
 													<div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full flex items-center justify-center border-2 border-zinc-900">
-														<span class="text-[7px] font-bold text-white">REC</span>
+														<span class="text-[7px] font-bold text-foreground">REC</span>
 													</div>
 												</div>
 												<div>
 													<div class="flex items-center gap-2 mb-0.5">
-														<span class="text-xs font-bold text-white">Smart Notetaker Active</span>
+														<span class="text-xs font-bold text-foreground">Smart Notetaker Active</span>
 														<div class="px-1.5 py-0.5 bg-red-950/50 text-red-400 text-[9px] font-bold rounded-full border border-red-900/50 animate-pulse">
 															● LIVE
 														</div>
 													</div>
-													<p class="text-[10px] text-zinc-500">AI agents analyzing conversation in real-time</p>
+													<p class="text-[10px] text-muted-foreground">AI agents analyzing conversation in real-time</p>
 												</div>
 											</div>
 											</div>
 											<div class="text-right">
 												<div class="text-xl font-bold font-mono text-white mb-0.5">42:15</div>
-												<div class="text-[9px] text-zinc-500 font-medium">Recording Time</div>
+												<div class="text-[9px] text-muted-foreground font-medium">Recording Time</div>
 											</div>
 										</div>
 										
@@ -437,15 +437,15 @@
 
 										<!-- Live AI Agents Status -->
 										<div class="grid grid-cols-3 gap-1.5 mt-2">
-											<div class="flex items-center gap-1 px-2 py-1 bg-zinc-950 rounded-lg border border-zinc-800">
+											<div class="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border">
 												<div class="w-1 h-1 bg-green-500 rounded-full animate-pulse"></div>
 												<span class="text-[9px] font-semibold text-zinc-400">Transcribing</span>
 											</div>
-											<div class="flex items-center gap-1 px-2 py-1 bg-zinc-950 rounded-lg border border-zinc-800">
+											<div class="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border">
 												<div class="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></div>
 												<span class="text-[9px] font-semibold text-zinc-400">Extracting Actions</span>
 											</div>
-											<div class="flex items-center gap-1 px-2 py-1 bg-zinc-950 rounded-lg border border-zinc-800">
+											<div class="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border">
 												<div class="w-1 h-1 bg-purple-500 rounded-full animate-pulse"></div>
 												<span class="text-[9px] font-semibold text-zinc-400">Analyzing Sentiment</span>
 											</div>
@@ -453,19 +453,19 @@
 									</div>
 
 									<!-- Live Transcript with Smart Detection -->
-									<div class="bg-zinc-950 rounded-xl border border-zinc-800 overflow-hidden flex-1 flex flex-col min-h-0">
-										<div class="px-3 py-2 bg-zinc-900/50 border-b border-zinc-800 flex items-center justify-between flex-shrink-0">
+									<div class="bg-card rounded-xl border border-border overflow-hidden flex-1 flex flex-col min-h-0">
+										<div class="px-3 py-2 bg-secondary/50 border-b border-border flex items-center justify-between flex-shrink-0">
 											<div class="flex items-center gap-2">
 												<MessageSquare class="w-4 h-4 text-red-500" />
-												<h5 class="text-xs font-bold text-white">Live Conversation Intelligence</h5>
+												<h5 class="text-xs font-bold text-foreground">Live Conversation Intelligence</h5>
 											</div>
 											<div class="flex items-center gap-2">
-												<span class="text-[9px] text-zinc-500 font-medium">4 Speakers</span>
+												<span class="text-[9px] text-muted-foreground font-medium">4 Speakers</span>
 												<div class="flex -space-x-1">
-													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-red-600 to-red-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-white">JD</div>
-													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-white">SA</div>
-													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-green-600 to-green-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-white">Y</div>
-													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-white">AM</div>
+													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-red-600 to-red-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-foreground">JD</div>
+													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-foreground">SA</div>
+													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-green-600 to-green-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-foreground">Y</div>
+													<div class="w-4 h-4 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 border-2 border-zinc-900 flex items-center justify-center text-[7px] font-bold text-foreground">AM</div>
 												</div>
 											</div>
 										</div>
@@ -479,9 +479,9 @@
 													</div>
 													<div class="flex-1 min-w-0">
 														<div class="flex items-center gap-1.5 mb-0.5">
-															<span class="text-xs font-bold text-white">John Doe</span>
+															<span class="text-xs font-bold text-foreground">John Doe</span>
 															<span class="px-1.5 py-0.5 bg-blue-950/40 text-blue-400 text-[9px] font-bold rounded border border-blue-900/50">CLIENT</span>
-															<span class="text-[9px] text-zinc-600 font-mono">2:34 PM</span>
+															<span class="text-[9px] text-muted-foreground font-mono">2:34 PM</span>
 														</div>
 														<p class="text-xs text-zinc-300 leading-snug">
 															What's your implementation timeline? We need this up and running by Q2.
@@ -504,7 +504,7 @@
 												<div class="relative p-2.5">
 													<div class="flex items-start gap-2">
 														<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-															<Activity class="w-3.5 h-3.5 text-white" />
+															<Activity class="w-3.5 h-3.5 text-foreground" />
 														</div>
 														<div class="flex-1">
 															<div class="flex items-center gap-1.5 mb-1">
@@ -517,7 +517,7 @@
 															<div class="flex items-center gap-1.5 text-[9px] text-zinc-400 mb-2">
 																<Calendar class="w-2.5 h-2.5" />
 																<span>Due: Before next meeting</span>
-																<span class="text-zinc-600">•</span>
+																<span class="text-muted-foreground">•</span>
 																<Users class="w-2.5 h-2.5" />
 																<span>Assign to: You</span>
 															</div>
@@ -542,9 +542,9 @@
 													</div>
 													<div class="flex-1 min-w-0">
 														<div class="flex items-center gap-1.5 mb-0.5">
-															<span class="text-xs font-bold text-white">You</span>
+															<span class="text-xs font-bold text-foreground">You</span>
 															<span class="px-1.5 py-0.5 bg-green-950/40 text-green-400 text-[9px] font-bold rounded border border-green-900/50">SALES REP</span>
-															<span class="text-[9px] text-zinc-600 font-mono">2:35 PM</span>
+															<span class="text-[9px] text-muted-foreground font-mono">2:35 PM</span>
 														</div>
 														<p class="text-xs text-zinc-300 leading-snug">
 															Absolutely! We can have you up and running in 4-6 weeks. I'll send over our implementation roadmap right after this call.
@@ -569,9 +569,9 @@
 													</div>
 													<div class="flex-1 min-w-0">
 														<div class="flex items-center gap-1.5 mb-0.5">
-															<span class="text-xs font-bold text-white">Sarah Anderson</span>
+															<span class="text-xs font-bold text-foreground">Sarah Anderson</span>
 															<span class="px-1.5 py-0.5 bg-purple-950/40 text-purple-400 text-[9px] font-bold rounded border border-purple-900/50">DECISION MAKER</span>
-															<span class="text-[9px] text-zinc-600 font-mono">2:36 PM</span>
+															<span class="text-[9px] text-muted-foreground font-mono">2:36 PM</span>
 														</div>
 														<p class="text-xs text-zinc-300 leading-snug">
 															That sounds great. Can you also include case studies from similar implementations in the financial sector?
@@ -581,7 +581,7 @@
 											</div>
 
 											<!-- Gradient Fade Overlay -->
-											<div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent pointer-events-none"></div>
+											<div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card via-zinc-950/80 to-transparent pointer-events-none"></div>
 										</div>
 									</div>
 
@@ -591,7 +591,7 @@
 											<div class="absolute top-0 right-0 w-12 h-12 bg-red-500/10 rounded-full blur-xl"></div>
 											<div class="relative">
 												<div class="text-xl font-bold text-red-500 mb-0.5">4</div>
-												<div class="text-[9px] text-zinc-500 font-semibold uppercase tracking-wide">Speakers</div>
+												<div class="text-[9px] text-muted-foreground font-semibold uppercase tracking-wide">Speakers</div>
 												<div class="text-[8px] text-red-400/70">Identified</div>
 											</div>
 										</div>
@@ -599,7 +599,7 @@
 											<div class="absolute top-0 right-0 w-12 h-12 bg-green-500/10 rounded-full blur-xl"></div>
 											<div class="relative">
 												<div class="text-xl font-bold text-green-500 mb-0.5">7</div>
-												<div class="text-[9px] text-zinc-500 font-semibold uppercase tracking-wide">Action Items</div>
+												<div class="text-[9px] text-muted-foreground font-semibold uppercase tracking-wide">Action Items</div>
 												<div class="text-[8px] text-green-400/70">Auto-detected</div>
 											</div>
 										</div>
@@ -607,7 +607,7 @@
 											<div class="absolute top-0 right-0 w-12 h-12 bg-blue-500/10 rounded-full blur-xl"></div>
 											<div class="relative">
 												<div class="text-xl font-bold text-blue-500 mb-0.5">12</div>
-												<div class="text-[9px] text-zinc-500 font-semibold uppercase tracking-wide">Key Moments</div>
+												<div class="text-[9px] text-muted-foreground font-semibold uppercase tracking-wide">Key Moments</div>
 												<div class="text-[8px] text-blue-400/70">Tagged</div>
 											</div>
 										</div>
@@ -633,14 +633,14 @@
 													<div class="w-3 h-3 rounded-full bg-green-500 shadow-lg shadow-green-500/50"></div>
 												</div>
 												<Calendar class="w-5 h-5 text-red-500" />
-												<span class="text-sm font-bold text-white">Next Meeting Brief</span>
+												<span class="text-sm font-bold text-foreground">Next Meeting Brief</span>
 											</div>
 											<span class="px-2 py-1 bg-red-950/50 text-red-400 text-xs rounded-full font-semibold border border-red-900/50">Tomorrow 2PM</span>
 										</div>
 										
 										<!-- Previous Meeting Context -->
 										<div class="space-y-2 text-sm mb-4">
-											<div class="flex items-start gap-2 p-2 bg-zinc-900 rounded-lg border border-zinc-800">
+											<div class="flex items-start gap-2 p-2 bg-zinc-900 rounded-lg border border-border">
 												<div class="w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center flex-shrink-0 mt-0.5">
 													<span class="text-white text-xs">1</span>
 												</div>
@@ -649,7 +649,7 @@
 													<p class="text-xs text-gray-500">Last meeting • Oct 18, 2025</p>
 												</div>
 											</div>
-											<div class="flex items-start gap-2 p-2 bg-zinc-900 rounded-lg border border-zinc-800">
+											<div class="flex items-start gap-2 p-2 bg-zinc-900 rounded-lg border border-border">
 												<div class="w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center flex-shrink-0 mt-0.5">
 													<span class="text-white text-xs">2</span>
 												</div>
@@ -658,7 +658,7 @@
 													<p class="text-xs text-gray-500">Committed for this meeting</p>
 												</div>
 											</div>
-											<div class="flex items-start gap-2 p-2 bg-zinc-900 rounded-lg border border-zinc-800">
+											<div class="flex items-start gap-2 p-2 bg-zinc-900 rounded-lg border border-border">
 												<div class="w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center flex-shrink-0 mt-0.5">
 													<span class="text-white text-xs">3</span>
 												</div>
@@ -694,17 +694,17 @@
 
 									<!-- Quick Stats -->
 									<div class="grid grid-cols-3 gap-2">
-										<div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800 text-center">
+										<div class="p-3 bg-zinc-900 rounded-xl border border-border text-center">
 											<div class="text-lg font-bold text-red-500">3</div>
-											<div class="text-xs text-zinc-500">Past Meetings</div>
+											<div class="text-xs text-muted-foreground">Past Meetings</div>
 										</div>
-										<div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800 text-center">
+										<div class="p-3 bg-zinc-900 rounded-xl border border-border text-center">
 											<div class="text-lg font-bold text-green-500">5</div>
-											<div class="text-xs text-zinc-500">Open Actions</div>
+											<div class="text-xs text-muted-foreground">Open Actions</div>
 										</div>
-										<div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800 text-center">
+										<div class="p-3 bg-zinc-900 rounded-xl border border-border text-center">
 											<div class="text-lg font-bold text-orange-500">2</div>
-											<div class="text-xs text-zinc-500">Commitments</div>
+											<div class="text-xs text-muted-foreground">Commitments</div>
 										</div>
 									</div>
 								</div>
@@ -726,7 +726,7 @@
 													<div class="w-3 h-3 rounded-full bg-yellow-500 shadow-lg shadow-yellow-500/50"></div>
 													<div class="w-3 h-3 rounded-full bg-green-500 shadow-lg shadow-green-500/50"></div>
 												</div>
-												<span class="text-sm font-bold text-white">Simulation: Enterprise Objection Handling</span>
+												<span class="text-sm font-bold text-foreground">Simulation: Enterprise Objection Handling</span>
 											</div>
 											<span class="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full shadow-lg flex items-center gap-1">
 												<div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
@@ -784,15 +784,15 @@
 												<TrendingUp class="w-4 h-4 text-green-500" />
 												<div class="text-lg font-bold text-green-500">85%</div>
 											</div>
-											<div class="text-xs text-zinc-500">Score</div>
+											<div class="text-xs text-muted-foreground">Score</div>
 										</div>
 										<div class="p-3 bg-gradient-to-br from-blue-950/20 to-cyan-950/20 rounded-lg text-center border border-blue-900/50">
 											<div class="text-lg font-bold text-blue-500 mb-1">12</div>
-											<div class="text-xs text-zinc-500">Simulations</div>
+											<div class="text-xs text-muted-foreground">Simulations</div>
 										</div>
 										<div class="p-3 bg-gradient-to-br from-red-950/20 to-red-950/20 rounded-lg text-center border border-red-900/50">
 											<div class="text-lg font-bold text-red-500 mb-1">+23%</div>
-											<div class="text-xs text-zinc-500">Improvement</div>
+											<div class="text-xs text-muted-foreground">Improvement</div>
 										</div>
 									</div>
 								</div>
@@ -805,7 +805,7 @@
 									<div class="relative">
 								<div class="flex flex-col h-full space-y-2.5 overflow-hidden">
 									<!-- Header Section -->
-									<div class="bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 backdrop-blur-xl rounded-t-xl border-b border-zinc-700/50 px-4 py-2.5 shadow-2xl flex-shrink-0">
+									<div class="bg-gradient-to-b from-zinc-800/90 to-card/90 backdrop-blur-xl rounded-t-xl border-b border-zinc-700/50 px-4 py-2.5 shadow-2xl flex-shrink-0">
 										<div class="flex items-center justify-between mb-2">
 											<div class="flex items-center gap-3">
 												<!-- macOS Traffic Lights -->
@@ -837,7 +837,7 @@
 											<div class="relative p-3 bg-zinc-900 rounded-lg border-2 border-blue-900/50 hover:border-blue-600 transition-all cursor-pointer shadow-lg hover:shadow-blue-600/20">
 												<div class="flex items-center gap-2 mb-2">
 													<div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-xl shadow-blue-600/30">
-														<svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+														<svg class="w-6 h-6 text-foreground" viewBox="0 0 24 24" fill="currentColor">
 															<path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.5 17.5h-9v-11h9v11z"/>
 														</svg>
 													</div>
@@ -898,7 +898,7 @@
 									<div class="p-3 bg-gradient-to-r from-green-950/30 to-emerald-950/30 rounded-lg border border-green-900/50 shadow-lg flex-shrink-0">
 										<div class="flex items-start gap-2.5">
 											<div class="w-9 h-9 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center flex-shrink-0 shadow-md">
-												<TrendingUp class="w-4 h-4 text-white" />
+												<TrendingUp class="w-4 h-4 text-foreground" />
 											</div>
 											<div class="flex-1">
 												<div class="flex items-center gap-1.5 mb-1.5">
@@ -928,7 +928,7 @@
 											<div class="absolute top-0 right-0 w-12 h-12 bg-blue-500/10 rounded-full blur-xl"></div>
 											<div class="relative">
 												<div class="text-xl font-bold text-blue-500 mb-0.5">47</div>
-												<div class="text-[9px] text-zinc-500 font-semibold uppercase tracking-wide">Tickets Created</div>
+												<div class="text-[9px] text-muted-foreground font-semibold uppercase tracking-wide">Tickets Created</div>
 												<div class="text-[8px] text-blue-400/70">This month</div>
 											</div>
 										</div>
@@ -936,7 +936,7 @@
 											<div class="absolute top-0 right-0 w-12 h-12 bg-green-500/10 rounded-full blur-xl"></div>
 											<div class="relative">
 												<div class="text-xl font-bold text-green-500 mb-0.5">3.2h</div>
-												<div class="text-[9px] text-zinc-500 font-semibold uppercase tracking-wide">Time Saved</div>
+												<div class="text-[9px] text-muted-foreground font-semibold uppercase tracking-wide">Time Saved</div>
 												<div class="text-[8px] text-green-400/70">Per week</div>
 											</div>
 										</div>
@@ -944,7 +944,7 @@
 											<div class="absolute top-0 right-0 w-12 h-12 bg-purple-500/10 rounded-full blur-xl"></div>
 											<div class="relative">
 												<div class="text-xl font-bold text-purple-500 mb-0.5">100%</div>
-												<div class="text-[9px] text-zinc-500 font-semibold uppercase tracking-wide">Captured</div>
+												<div class="text-[9px] text-muted-foreground font-semibold uppercase tracking-wide">Captured</div>
 												<div class="text-[8px] text-purple-400/70">No requests lost</div>
 											</div>
 										</div>
@@ -959,7 +959,7 @@
 									<div class="relative">
 								<div class="space-y-3">
 									<!-- Header Section -->
-									<div class="bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-950 rounded-xl border border-zinc-800 p-4 shadow-2xl">
+									<div class="bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-950 rounded-xl border border-border p-4 shadow-2xl">
 										<div class="flex items-center justify-between mb-3">
 											<div class="flex items-center gap-2">
 												<!-- macOS Traffic Lights -->
@@ -1104,7 +1104,7 @@
 
 									<!-- Value Proposition Section -->
 									<div class="bg-gradient-to-br from-red-950/20 via-zinc-950 to-zinc-950 rounded-xl border border-red-900/50 overflow-hidden shadow-xl">
-										<div class="px-4 py-3 bg-zinc-900/50 border-b border-zinc-800">
+										<div class="px-4 py-3 bg-secondary/50 border-b border-border">
 											<h5 class="text-xs font-bold text-white flex items-center gap-2">
 												<svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -1114,9 +1114,9 @@
 										</div>
 										<div class="p-4 space-y-3">
 											<!-- Benefit 1: Customer History -->
-											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-zinc-800 hover:border-red-900/50 transition-colors group">
+											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-border hover:border-red-900/50 transition-colors group">
 												<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-													<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													<svg class="w-4 h-4 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
 													</svg>
 												</div>
@@ -1129,9 +1129,9 @@
 											</div>
 
 											<!-- Benefit 2: Automated Data Entry -->
-											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-zinc-800 hover:border-red-900/50 transition-colors group">
+											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-border hover:border-red-900/50 transition-colors group">
 												<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-													<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													<svg class="w-4 h-4 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
 													</svg>
 												</div>
@@ -1144,9 +1144,9 @@
 											</div>
 
 											<!-- Benefit 3: Team Alignment -->
-											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-zinc-800 hover:border-red-900/50 transition-colors group">
+											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-border hover:border-red-900/50 transition-colors group">
 												<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-													<Users class="w-4 h-4 text-white" />
+													<Users class="w-4 h-4 text-foreground" />
 												</div>
 												<div class="flex-1">
 													<h6 class="text-xs font-bold text-white mb-1">Perfect Team Alignment</h6>
@@ -1157,9 +1157,9 @@
 											</div>
 
 											<!-- Benefit 4: Data Accuracy -->
-											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-zinc-800 hover:border-red-900/50 transition-colors group">
+											<div class="flex items-start gap-3 p-3 bg-zinc-900/60 rounded-lg border border-border hover:border-red-900/50 transition-colors group">
 												<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-													<Target class="w-4 h-4 text-white" />
+													<Target class="w-4 h-4 text-foreground" />
 												</div>
 												<div class="flex-1">
 													<h6 class="text-xs font-bold text-white mb-1">100% Data Accuracy</h6>
@@ -1172,72 +1172,72 @@
 									</div>
 
 									<!-- Live Sync Activity Feed -->
-									<div class="bg-zinc-950 rounded-xl border border-zinc-800 overflow-hidden">
-										<div class="px-4 py-2.5 bg-zinc-900/50 border-b border-zinc-800 flex items-center justify-between">
+									<div class="bg-card rounded-xl border border-border overflow-hidden">
+										<div class="px-4 py-2.5 bg-secondary/50 border-b border-border flex items-center justify-between">
 											<div class="flex items-center gap-2">
 												<BarChart3 class="w-4 h-4 text-blue-500" />
-												<h5 class="text-xs font-bold text-white">Recent Sync Activity</h5>
+												<h5 class="text-xs font-bold text-foreground">Recent Sync Activity</h5>
 											</div>
 											<span class="px-2 py-0.5 bg-blue-950/50 text-blue-400 text-[10px] font-bold rounded-full border border-blue-900/50">LIVE</span>
 										</div>
 
 										<div class="p-3 space-y-2">
 											<!-- Sync Activity 1 -->
-											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-zinc-800 hover:bg-zinc-900/60 transition-colors">
+											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-border hover:bg-zinc-900/60 transition-colors">
 												<div class="flex items-center gap-2.5">
 													<div class="w-7 h-7 rounded-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-lg">
-														<svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<svg class="w-3.5 h-3.5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 															<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
 														</svg>
 													</div>
 													<div>
 														<p class="text-xs text-white font-semibold">Updated deal stage to "Negotiation"</p>
-														<p class="text-[10px] text-zinc-500 mt-0.5">Salesforce • Acme Corp Deal</p>
+														<p class="text-[10px] text-muted-foreground mt-0.5">Salesforce • Acme Corp Deal</p>
 													</div>
 												</div>
-												<span class="text-[10px] text-zinc-600 font-mono">2m ago</span>
+												<span class="text-[10px] text-muted-foreground font-mono">2m ago</span>
 											</div>
 
 											<!-- Sync Activity 2 -->
-											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-zinc-800 hover:bg-zinc-900/60 transition-colors">
+											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-border hover:bg-zinc-900/60 transition-colors">
 												<div class="flex items-center gap-2.5">
 													<div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg">
-														<FileText class="w-3.5 h-3.5 text-white" />
+														<FileText class="w-3.5 h-3.5 text-foreground" />
 													</div>
 													<div>
 														<p class="text-xs text-white font-semibold">Added meeting notes & transcript</p>
-														<p class="text-[10px] text-zinc-500 mt-0.5">HubSpot • Q2 Planning Call</p>
+														<p class="text-[10px] text-muted-foreground mt-0.5">HubSpot • Q2 Planning Call</p>
 													</div>
 												</div>
-												<span class="text-[10px] text-zinc-600 font-mono">5m ago</span>
+												<span class="text-[10px] text-muted-foreground font-mono">5m ago</span>
 											</div>
 
 											<!-- Sync Activity 3 -->
-											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-zinc-800 hover:bg-zinc-900/60 transition-colors">
+											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-border hover:bg-zinc-900/60 transition-colors">
 												<div class="flex items-center gap-2.5">
 													<div class="w-7 h-7 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg">
-														<Target class="w-3.5 h-3.5 text-white" />
+														<Target class="w-3.5 h-3.5 text-foreground" />
 													</div>
 													<div>
 														<p class="text-xs text-white font-semibold">Created 3 follow-up tasks</p>
-														<p class="text-[10px] text-zinc-500 mt-0.5">monday.com • Demo Follow-up Board</p>
+														<p class="text-[10px] text-muted-foreground mt-0.5">monday.com • Demo Follow-up Board</p>
 													</div>
 												</div>
-												<span class="text-[10px] text-zinc-600 font-mono">8m ago</span>
+												<span class="text-[10px] text-muted-foreground font-mono">8m ago</span>
 											</div>
 
 											<!-- Sync Activity 4 -->
-											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-zinc-800 hover:bg-zinc-900/60 transition-colors">
+											<div class="flex items-center justify-between p-2.5 bg-zinc-900/40 rounded-lg border border-border hover:bg-zinc-900/60 transition-colors">
 												<div class="flex items-center gap-2.5">
 													<div class="w-7 h-7 rounded-full bg-gradient-to-br from-orange-600 to-orange-700 flex items-center justify-center shadow-lg">
-														<Activity class="w-3.5 h-3.5 text-white" />
+														<Activity class="w-3.5 h-3.5 text-foreground" />
 													</div>
 													<div>
 														<p class="text-xs text-white font-semibold">Updated contact sentiment score</p>
-														<p class="text-[10px] text-zinc-500 mt-0.5">Zoho CRM • John Doe Contact</p>
+														<p class="text-[10px] text-muted-foreground mt-0.5">Zoho CRM • John Doe Contact</p>
 													</div>
 												</div>
-												<span class="text-[10px] text-zinc-600 font-mono">12m ago</span>
+												<span class="text-[10px] text-muted-foreground font-mono">12m ago</span>
 											</div>
 										</div>
 									</div>
@@ -1248,7 +1248,7 @@
 											<div class="absolute top-0 right-0 w-16 h-16 bg-red-500/10 rounded-full blur-2xl"></div>
 											<div class="relative">
 												<div class="text-2xl font-bold text-red-500 mb-1">247</div>
-												<div class="text-[10px] text-zinc-500 font-semibold uppercase tracking-wide">Records Today</div>
+												<div class="text-[10px] text-muted-foreground font-semibold uppercase tracking-wide">Records Today</div>
 												<div class="text-[9px] text-red-400/70 mt-0.5">Auto-synced</div>
 											</div>
 										</div>
@@ -1256,7 +1256,7 @@
 											<div class="absolute top-0 right-0 w-16 h-16 bg-green-500/10 rounded-full blur-2xl"></div>
 											<div class="relative">
 												<div class="text-2xl font-bold text-green-500 mb-1">100%</div>
-												<div class="text-[10px] text-zinc-500 font-semibold uppercase tracking-wide">Success Rate</div>
+												<div class="text-[10px] text-muted-foreground font-semibold uppercase tracking-wide">Success Rate</div>
 												<div class="text-[9px] text-green-400/70 mt-0.5">Zero errors</div>
 											</div>
 										</div>
@@ -1264,7 +1264,7 @@
 											<div class="absolute top-0 right-0 w-16 h-16 bg-blue-500/10 rounded-full blur-2xl"></div>
 											<div class="relative">
 												<div class="text-2xl font-bold text-blue-500 mb-1">2.4s</div>
-												<div class="text-[10px] text-zinc-500 font-semibold uppercase tracking-wide">Avg Sync Time</div>
+												<div class="text-[10px] text-muted-foreground font-semibold uppercase tracking-wide">Avg Sync Time</div>
 												<div class="text-[9px] text-blue-400/70 mt-0.5">Real-time</div>
 											</div>
 										</div>
@@ -1288,7 +1288,7 @@
 													<div class="w-3 h-3 rounded-full bg-yellow-500 shadow-lg shadow-yellow-500/50"></div>
 													<div class="w-3 h-3 rounded-full bg-green-500 shadow-lg shadow-green-500/50"></div>
 												</div>
-												<span class="text-sm font-bold text-white">Overall Deal Health</span>
+												<span class="text-sm font-bold text-foreground">Overall Deal Health</span>
 											</div>
 											<div class="flex items-center gap-2">
 												<Heart class="w-5 h-5 text-green-500 fill-green-500 animate-pulse" />
@@ -1306,15 +1306,15 @@
 										<!-- Sentiment Indicators -->
 										<div class="grid grid-cols-3 gap-2">
 											<div class="text-center">
-												<div class="text-xs text-zinc-500">Positive</div>
+												<div class="text-xs text-muted-foreground">Positive</div>
 												<div class="text-lg font-bold text-green-500">73%</div>
 											</div>
 											<div class="text-center">
-												<div class="text-xs text-zinc-500">Neutral</div>
+												<div class="text-xs text-muted-foreground">Neutral</div>
 												<div class="text-lg font-bold text-zinc-400">22%</div>
 											</div>
 											<div class="text-center">
-												<div class="text-xs text-zinc-500">Negative</div>
+												<div class="text-xs text-muted-foreground">Negative</div>
 												<div class="text-lg font-bold text-red-500">5%</div>
 											</div>
 										</div>
@@ -1364,7 +1364,7 @@
 										<div class="p-3 bg-gradient-to-r from-green-950/30 to-emerald-950/30 rounded-lg border-l-4 border-green-500 shadow-md">
 											<div class="flex items-start gap-2">
 												<div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-													<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													<svg class="w-3 h-3 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
 													</svg>
 												</div>
@@ -1377,7 +1377,7 @@
 									</div>
 
 									<!-- Emotion Timeline -->
-									<div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
+									<div class="p-3 bg-zinc-900 rounded-xl border border-border">
 										<div class="text-xs font-semibold text-zinc-400 mb-2">SENTIMENT TIMELINE</div>
 										<div class="flex items-end gap-1 h-16">
 											{#each [65, 70, 85, 78, 90, 87, 82, 88, 92, 87] as height}
@@ -1399,7 +1399,7 @@
 										<div class="flex items-center justify-between mb-4">
 											<div class="flex items-center gap-2">
 												<Settings class="w-5 h-5 text-red-500" />
-												<span class="text-sm font-bold text-white">Discovery Call Goals</span>
+												<span class="text-sm font-bold text-foreground">Discovery Call Goals</span>
 											</div>
 											<span class="px-3 py-1 bg-red-950/50 text-red-400 text-xs rounded-full font-semibold border border-red-900/50">3/4 Complete</span>
 										</div>
@@ -1409,7 +1409,7 @@
 											<div class="flex items-center justify-between p-3 bg-gradient-to-r from-green-950/30 to-emerald-950/30 rounded-lg border border-green-900/50 shadow-sm">
 												<div class="flex items-center gap-3 flex-1">
 													<div class="w-6 h-6 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center shadow-md">
-														<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<svg class="w-4 h-4 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 															<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
 														</svg>
 													</div>
@@ -1425,7 +1425,7 @@
 											<div class="flex items-center justify-between p-3 bg-gradient-to-r from-green-950/30 to-emerald-950/30 rounded-lg border border-green-900/50 shadow-sm">
 												<div class="flex items-center gap-3 flex-1">
 													<div class="w-6 h-6 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center shadow-md">
-														<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<svg class="w-4 h-4 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 															<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
 														</svg>
 													</div>
@@ -1441,7 +1441,7 @@
 											<div class="flex items-center justify-between p-3 bg-gradient-to-r from-green-950/30 to-emerald-950/30 rounded-lg border border-green-900/50 shadow-sm">
 												<div class="flex items-center gap-3 flex-1">
 													<div class="w-6 h-6 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center shadow-md">
-														<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<svg class="w-4 h-4 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 															<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
 														</svg>
 													</div>
@@ -1478,7 +1478,7 @@
 									</div>
 
 									<!-- Performance Analytics -->
-									<div class="p-4 bg-zinc-900 rounded-xl border border-zinc-800 shadow-md">
+									<div class="p-4 bg-zinc-900 rounded-xl border border-border shadow-md">
 										<div class="flex items-center justify-between mb-3">
 											<div class="text-xs font-semibold text-gray-600 dark:text-gray-400">GOAL COMPLETION RATE</div>
 											<span class="text-sm font-bold text-purple-600">85%</span>
@@ -1502,15 +1502,15 @@
 									<div class="grid grid-cols-3 gap-2">
 										<div class="p-3 bg-gradient-to-br from-red-950/20 to-red-950/20 rounded-lg text-center border border-red-900/50">
 											<div class="text-lg font-bold text-red-500">24</div>
-											<div class="text-xs text-zinc-500">Active Goals</div>
+											<div class="text-xs text-muted-foreground">Active Goals</div>
 										</div>
 										<div class="p-3 bg-gradient-to-br from-green-950/20 to-emerald-950/20 rounded-lg text-center border border-green-900/50">
 											<div class="text-lg font-bold text-green-500">187</div>
-											<div class="text-xs text-zinc-500">Completed</div>
+											<div class="text-xs text-muted-foreground">Completed</div>
 										</div>
 										<div class="p-3 bg-gradient-to-br from-blue-950/20 to-cyan-950/20 rounded-lg text-center border border-blue-900/50">
 											<div class="text-lg font-bold text-blue-500">8</div>
-											<div class="text-xs text-zinc-500">Templates</div>
+											<div class="text-xs text-muted-foreground">Templates</div>
 										</div>
 									</div>
 								</div>
@@ -1534,8 +1534,8 @@
 								}}
 								onmouseleave={() => hoveredFeature = null}
 								onclick={() => selectedFeature = feature.id}
-								class="group relative bg-zinc-950 rounded-lg sm:rounded-xl p-3 sm:p-4 border-2 transition-all duration-500 ease-out active:scale-[0.97] w-full
-								{selectedFeature === feature.id ? 'border-red-500 bg-gradient-to-br from-red-950/30 to-zinc-950/50 shadow-lg shadow-red-500/20' : 'border-zinc-800 hover:border-red-600 hover:shadow-lg hover:shadow-red-600/10'}"
+								class="group relative bg-card rounded-lg sm:rounded-xl p-3 sm:p-4 border-2 transition-all duration-500 ease-out active:scale-[0.97] w-full
+								{selectedFeature === feature.id ? 'border-red-500 bg-gradient-to-br from-red-950/30 to-zinc-950/50 shadow-lg shadow-red-500/20' : 'border-border hover:border-red-600 hover:shadow-lg hover:shadow-red-600/10'}"
 								style="transition-delay: {idx * 30}ms; transform: translate3d(0, 0, 0);"
 							>
 								<!-- Checkbox -->
@@ -1550,7 +1550,7 @@
 								
 								<!-- Icon -->
 								<div class="flex flex-col items-center justify-center pt-2 sm:pt-3 pb-1">
-									<div class="w-10 h-10 sm:w-12 sm:h-12 mb-2 sm:mb-3 flex items-center justify-center text-zinc-500 group-hover:text-red-500 transition-all duration-500 ease-out group-hover:scale-110
+									<div class="w-10 h-10 sm:w-12 sm:h-12 mb-2 sm:mb-3 flex items-center justify-center text-muted-foreground group-hover:text-red-500 transition-all duration-500 ease-out group-hover:scale-110
 										{selectedFeature === feature.id ? 'text-red-500 scale-110' : ''}">
 										<Icon class="w-full h-full" strokeWidth={1.5} />
 									</div>
@@ -1692,7 +1692,7 @@
 
 	/* Light mode styles for features */
 	:global([data-theme='light']) :global(.bg-black),
-	:global([data-theme='light']) :global(.bg-zinc-950) {
+	:global([data-theme='light']) :global(.bg-card) {
 		background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
 	}
 
@@ -1701,8 +1701,8 @@
 	}
 
 	:global([data-theme='light']) :global(.text-zinc-400),
-	:global([data-theme='light']) :global(.text-zinc-500),
-	:global([data-theme='light']) :global(.text-zinc-600) {
+	:global([data-theme='light']) :global(.text-muted-foreground),
+	:global([data-theme='light']) :global(.text-muted-foreground) {
 		color: #475569 !important;
 	}
 
@@ -1713,14 +1713,14 @@
 
 	:global([data-theme='light']) :global(.bg-zinc-900),
 	:global([data-theme='light']) :global(.bg-zinc-900\/50),
-	:global([data-theme='light']) :global(.bg-zinc-950\/50) {
+	:global([data-theme='light']) :global(.bg-card\/50) {
 		background: rgba(255, 255, 255, 0.95) !important;
 		border-color: #e2e8f0 !important;
 		box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06) !important;
 	}
 
 	:global([data-theme='light']) :global(.border-zinc-900),
-	:global([data-theme='light']) :global(.border-zinc-800),
+	:global([data-theme='light']) :global(.border-border),
 	:global([data-theme='light']) :global(.border-red-900\/20),
 	:global([data-theme='light']) :global(.border-red-900\/30) {
 		border-color: rgba(226, 232, 240, 0.6) !important;

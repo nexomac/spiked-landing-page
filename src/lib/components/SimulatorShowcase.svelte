@@ -85,7 +85,7 @@
 	<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
 		{#if showAppChrome}
 			<!-- App Chrome -->
-			<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
+			<div class="bg-card/90 border-b border-border/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
 				<div class="flex items-center gap-3">
 					<div class="flex gap-1.5">
 						<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-red-500 transition-colors cursor-pointer"></div>
@@ -95,7 +95,7 @@
 					<div class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors">
 						<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
 						<div class="flex items-center gap-2">
-							<span class="text-sm font-black tracking-tight text-white">
+							<span class="text-sm font-black tracking-tight text-foreground">
 								SPIKED<span class="text-red-500">AI</span>
 							</span>
 							<span class="text-[11px] text-zinc-400 uppercase tracking-wide">Simulator</span>
@@ -134,7 +134,7 @@
 		{/if}
 
 		<!-- Main Content Area -->
-		<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-1 relative overflow-hidden">
+		<div class="bg-gradient-to-br from-card to-card p-1 relative overflow-hidden">
 			<!-- Animated gradient overlay -->
 			<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-purple-500/5 opacity-50 animate-pulse"></div>
 			
@@ -156,11 +156,11 @@
 									class="group flex flex-col items-start gap-3 p-4 rounded-xl border transition-all text-left {selectedScenario === scenario.id ? 'glass border-red-500/30 shadow-lg shadow-red-500/10' : 'glass-subtle hover:glass'}"
 								>
 									<div class="w-10 h-10 rounded-lg bg-gradient-to-br {gradientClass} flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
-										<svelte:component this={IconComponent} class="w-5 h-5 text-white" />
+										<svelte:component this={IconComponent} class="w-5 h-5 text-foreground" />
 									</div>
 									<div class="flex-1">
 										<div class="flex items-center gap-2 mb-1">
-											<h4 class="text-sm font-bold text-white">{scenario.name}</h4>
+											<h4 class="text-sm font-bold text-foreground">{scenario.name}</h4>
 											{#if selectedScenario === scenario.id}
 												<CheckCircle class="w-3.5 h-3.5 text-red-500 animate-pulse" />
 											{/if}
@@ -170,7 +170,7 @@
 											<span class="px-2 py-0.5 glass rounded text-[10px] font-semibold text-zinc-400">
 												{scenario.difficulty}
 											</span>
-											<span class="flex items-center gap-1 text-[10px] text-zinc-500">
+											<span class="flex items-center gap-1 text-[10px] text-muted-foreground">
 												<Clock class="w-3 h-3" />
 												{scenario.duration}
 											</span>
@@ -195,15 +195,15 @@
 					<div class="h-full p-1">
 						<div class="grid grid-cols-[1fr_1.3fr] h-full">
 							<!-- Left Panel: Live Conversation -->
-							<div class="border-r border-zinc-800/50 glass-subtle flex flex-col">
+							<div class="border-r border-border/50 glass-subtle flex flex-col">
 								<!-- Prospect Info Header -->
-								<div class="px-3 py-2.5 border-b border-zinc-800/50 glass">
+								<div class="px-3 py-2.5 border-b border-border/50 glass">
 									<div class="flex items-center gap-2.5">
 										<div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-[10px] font-bold shadow-lg">
 											JC
 										</div>
 										<div class="flex-1">
-											<h5 class="text-xs font-bold text-white">Jennifer Chen</h5>
+											<h5 class="text-xs font-bold text-foreground">Jennifer Chen</h5>
 											<p class="text-[10px] text-zinc-400">VP of Sales • TechCorp Inc.</p>
 										</div>
 										<div class="flex items-center gap-1 px-2 py-0.5 glass border border-green-500/30 rounded-full">
@@ -235,8 +235,8 @@
 
 												<div class="flex-1 max-w-[85%]">
 													<div class="flex items-center gap-1.5 mb-1 {dialogue.isAI ? '' : 'flex-row-reverse'}">
-														<span class="text-[10px] font-semibold text-white">{dialogue.speaker}</span>
-														<span class="text-[9px] text-zinc-600">{dialogue.time}</span>
+														<span class="text-[10px] font-semibold text-foreground">{dialogue.speaker}</span>
+														<span class="text-[9px] text-muted-foreground">{dialogue.time}</span>
 														{#if dialogue.sentiment}
 															<span class="px-1.5 py-0.5 glass rounded text-[8px] text-zinc-400">
 																{dialogue.sentiment}
@@ -244,16 +244,16 @@
 														{/if}
 													</div>
 													
-													<div class="p-2.5 rounded-lg {dialogue.isAI ? 'glass border border-zinc-800/50' : 'glass border border-green-500/30 shadow-sm shadow-green-500/10'}">
+													<div class="p-2.5 rounded-lg {dialogue.isAI ? 'glass border border-border/50' : 'glass border border-green-500/30 shadow-sm shadow-green-500/10'}">
 														<p class="text-[11px] text-zinc-300 leading-relaxed">{dialogue.text}</p>
 														
 														{#if !dialogue.isAI && dialogue.score}
-															<div class="mt-2 pt-2 border-t border-zinc-800/50">
+															<div class="mt-2 pt-2 border-t border-border/50">
 																<div class="flex items-center justify-between mb-1">
 																	<span class="text-[9px] font-semibold text-zinc-400">Your Score</span>
 																	<span class="text-xs font-bold text-green-500">{dialogue.score}/100</span>
 																</div>
-																<div class="flex items-start gap-1 text-[9px] text-zinc-500">
+																<div class="flex items-start gap-1 text-[9px] text-muted-foreground">
 																	<CheckCircle class="w-2.5 h-2.5 text-green-500 flex-shrink-0 mt-0.5" />
 																	<span>{dialogue.feedback}</span>
 																</div>
@@ -296,7 +296,7 @@
 											<div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-[9px] font-bold shadow-md">
 												JC
 											</div>
-											<div class="px-3 py-2 glass border border-zinc-800/50 rounded-lg flex gap-1">
+											<div class="px-3 py-2 glass border border-border/50 rounded-lg flex gap-1">
 												<div class="w-1.5 h-1.5 bg-zinc-600 rounded-full typing-dot"></div>
 												<div class="w-1.5 h-1.5 bg-zinc-600 rounded-full typing-dot"></div>
 												<div class="w-1.5 h-1.5 bg-zinc-600 rounded-full typing-dot"></div>
@@ -306,12 +306,12 @@
 								</div>
 
 								<!-- Response Input -->
-								<div class="p-2.5 border-t border-zinc-800/50 glass">
+								<div class="p-2.5 border-t border-border/50 glass">
 									<div class="flex gap-2">
 										<input 
 											type="text" 
 											placeholder="Type your response or use voice..."
-											class="flex-1 px-3 py-2 glass-subtle border border-zinc-800/50 rounded-lg text-xs text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
+											class="flex-1 px-3 py-2 glass-subtle border border-border/50 rounded-lg text-xs text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
 											disabled={isPaused}
 										/>
 										<button 
@@ -329,14 +329,14 @@
 							<!-- Right Panel: Live Coaching -->
 							<div class="flex flex-col glass-subtle">
 								<!-- Coaching Header -->
-								<div class="px-3 py-2.5 border-b border-zinc-800/50 flex items-center justify-between glass">
+								<div class="px-3 py-2.5 border-b border-border/50 flex items-center justify-between glass">
 									<div class="flex items-center gap-1.5">
 										<Brain class="w-3.5 h-3.5 text-red-500" />
-										<h5 class="text-xs font-bold text-white">Live AI Coaching</h5>
+										<h5 class="text-xs font-bold text-foreground">Live AI Coaching</h5>
 									</div>
 									<button 
 										onclick={() => showCoaching = !showCoaching}
-										class="text-[10px] text-zinc-400 hover:text-white transition-colors px-2 py-1 rounded hover:bg-zinc-800/50"
+										class="text-[10px] text-zinc-400 hover:text-white transition-colors px-2 py-1 rounded hover:bg-secondary/50"
 									>
 										{showCoaching ? 'Hide' : 'Show'}
 									</button>
@@ -349,20 +349,20 @@
 											<div class="flex items-center justify-between mb-2">
 												<div class="flex items-center gap-2">
 													<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg">
-														<Award class="w-3.5 h-3.5 text-white" />
+														<Award class="w-3.5 h-3.5 text-foreground" />
 													</div>
 													<div>
-														<h6 class="text-[10px] font-bold text-white">Overall Performance</h6>
+														<h6 class="text-[10px] font-bold text-foreground">Overall Performance</h6>
 														<p class="text-[8px] text-red-400">Real-time analysis</p>
 													</div>
 												</div>
 												<div class="text-right">
-													<div class="text-xl font-bold text-white">{currentCoaching.overallScore}</div>
+													<div class="text-xl font-bold text-foreground">{currentCoaching.overallScore}</div>
 													<div class="text-[8px] text-zinc-400">/ 100</div>
 												</div>
 											</div>
 											<div class="flex items-center gap-2">
-												<div class="flex-1 h-1.5 bg-zinc-900/50 rounded-full overflow-hidden">
+												<div class="flex-1 h-1.5 bg-secondary/50 rounded-full overflow-hidden">
 													<div class="h-full bg-gradient-to-r from-red-600 to-red-500 rounded-full transition-all" style="width: {currentCoaching.overallScore}%"></div>
 												</div>
 												<span class="text-[10px] font-semibold text-green-500">{currentCoaching.sentiment}</span>
@@ -370,24 +370,24 @@
 										</div>
 
 										<!-- Key Metrics -->
-										<div class="glass border border-zinc-800/50 rounded-xl p-3">
+										<div class="glass border border-border/50 rounded-xl p-3">
 											<h6 class="text-[10px] font-bold text-white mb-2 flex items-center gap-1.5">
 												<BarChart3 class="w-3.5 h-3.5 text-blue-500" />
 												Key Metrics
 											</h6>
 											<div class="space-y-1.5">
 												{#each currentCoaching.keyMetrics as metric}
-													<div class="flex items-center justify-between p-2 glass-subtle rounded-lg border border-zinc-800/30">
+													<div class="flex items-center justify-between p-2 glass-subtle rounded-lg border border-border/30">
 														<div class="flex-1">
 															<div class="flex items-center gap-1.5 mb-0.5">
-																<span class="text-[9px] font-semibold text-white">{metric.label}</span>
+																<span class="text-[9px] font-semibold text-foreground">{metric.label}</span>
 																{#if metric.status === 'good'}
 																	<CheckCircle class="w-2.5 h-2.5 text-green-500" />
 																{:else}
 																	<AlertCircle class="w-2.5 h-2.5 text-orange-500" />
 																{/if}
 															</div>
-															<div class="text-[8px] text-zinc-500">Target: {metric.target}</div>
+															<div class="text-[8px] text-muted-foreground">Target: {metric.target}</div>
 														</div>
 														<div class="text-xs font-bold {metric.status === 'good' ? 'text-green-500' : 'text-orange-500'}">
 															{metric.value}

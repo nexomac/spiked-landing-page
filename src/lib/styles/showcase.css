@@ -1,0 +1,208 @@
+/* Shared showcase component styles with light/dark mode support */
+
+/* Glass morphism effect - theme aware */
+.glass {
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="light"] .glass {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 4px 16px 0 rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+:root:not([data-theme="light"]) .glass,
+:root[data-theme="dark"] .glass {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Theme-aware showcase card backgrounds */
+.showcase-card {
+    background: var(--card);
+}
+
+.showcase-card-alt {
+    background: var(--secondary);
+}
+
+/* Theme-aware text colors */
+.showcase-text-primary {
+    color: var(--foreground);
+}
+
+.showcase-text-secondary {
+    color: var(--muted-foreground);
+}
+
+/* Progress bar backgrounds */
+.progress-track {
+    background: var(--muted);
+}
+
+/* Hover effects */
+.hover-lift {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(239, 68, 68, 0.1);
+}
+
+/* Scrollbars */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--muted-foreground);
+    opacity: 0.3;
+    border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    opacity: 0.5;
+}
+
+/* Animated borders */
+.animated-border {
+    position: relative;
+    background: var(--card);
+    animation: borderShimmer 3s ease-in-out infinite;
+}
+
+.animated-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.1), transparent, rgba(239, 68, 68, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotateBorder 4s linear infinite;
+}
+
+@keyframes borderShimmer {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes rotateBorder {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+/* 3D tilt hover */
+.tilt-hover {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+.tilt-hover:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* Floating animations */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    33% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+
+    66% {
+        transform: translateY(-10px) rotate(-5deg);
+    }
+}
+
+@keyframes float-slow {
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0px);
+    }
+
+    50% {
+        transform: translateY(-30px) translateX(10px);
+    }
+}
+
+.float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+}
+
+/* Depth shadow */
+.depth-shadow {
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.15),
+        0 8px 16px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.05);
+}
+
+/* Glow effects */
+.glow-red {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.glow-red:hover {
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+}
+
+/* Pulse ring */
+@keyframes pulse-ring {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.pulse-ring::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    animation: pulse-ring 1.5s ease-out infinite;
+}

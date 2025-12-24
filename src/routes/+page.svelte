@@ -489,7 +489,7 @@
 		<!-- Contextual AI Style Hero Section -->
 		<section
 			data-section="hero"
-			class="relative min-h-screen flex items-center overflow-hidden bg-black contextual-hero"
+			class="relative min-h-screen flex items-center overflow-hidden bg-background contextual-hero"
 		>
 			<!-- Abstract Iridescent Graphic (Right Side) -->
 			<div
@@ -529,7 +529,7 @@
 
 						<!-- Sub-headline -->
 						<p
-							class="contextual-subheadline mb-10 lg:mb-12 text-gray-400 leading-relaxed max-w-[540px]"
+							class="contextual-subheadline mb-10 lg:mb-12 text-muted-foreground leading-relaxed max-w-[540px]"
 						>
 							The rise of the singular rep starts here
 						</p>
@@ -561,7 +561,7 @@
 
 			<!-- Smooth transition to next section -->
 			<div
-				class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black pointer-events-none z-20"
+				class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
 			></div>
 		</section>
 
@@ -569,7 +569,7 @@
 		<section
 			id="showcase"
 			data-section="showcase"
-			class="py-24 sm:py-32 bg-black relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
+			class="py-24 sm:py-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -593,11 +593,13 @@
 						>All Features</span
 					>
 					<h2
-						class="text-3xl sm:text-4xl md:text-5xl font-black mt-4 mb-4 text-white tracking-tight leading-tight"
+						class="text-3xl sm:text-4xl md:text-5xl font-black mt-4 mb-4 text-foreground tracking-tight leading-tight"
 					>
 						Experience Every Feature
 					</h2>
-					<p class="text-base text-zinc-400 max-w-2xl mx-auto">
+					<p
+						class="text-base text-muted-foreground max-w-2xl mx-auto"
+					>
 						Explore our complete suite of AI-powered features with
 						interactive demos.
 					</p>
@@ -660,11 +662,12 @@
 												delay: 200,
 											}}
 										>
-											<span class="text-white block mb-2"
+											<span
+												class="text-foreground block mb-2"
 												>{showcase.title}</span
 											>
 											<span
-												class="text-white block font-bold"
+												class="text-foreground block font-bold"
 												>{showcase.subtitle}</span
 											>
 										</h3>
@@ -677,9 +680,9 @@
 												{@const FeatureIcon =
 													feature.icon}
 												<div
-													class="feature-card group relative bg-zinc-900/60 backdrop-blur-md rounded-xl p-4 border border-zinc-800/50 transition-all duration-500 {feature.highlight
+													class="feature-card group relative bg-card/60 backdrop-blur-md rounded-xl p-4 border border-border/50 transition-all duration-500 {feature.highlight
 														? 'border-red-500/40 border-l-4 border-l-red-500 shadow-lg shadow-red-500/10'
-														: ''} hover:border-zinc-700/70 hover:shadow-xl hover:shadow-red-500/5 hover:-translate-y-1"
+														: ''} hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1"
 													in:fly={{
 														x: -30,
 														duration: 600,
@@ -698,12 +701,12 @@
 															<div
 																class="w-10 h-10 rounded-lg {feature.highlight
 																	? 'bg-red-500/20'
-																	: 'bg-zinc-800/60'} flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+																	: 'bg-secondary/60'} flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
 															>
 																<FeatureIcon
 																	class="w-5 h-5 {feature.highlight
 																		? 'text-red-400'
-																		: 'text-zinc-400 group-hover:text-zinc-300'} transition-colors duration-300"
+																		: 'text-muted-foreground group-hover:text-foreground'} transition-colors duration-300"
 																/>
 															</div>
 															{#if feature.highlight}
@@ -716,12 +719,12 @@
 															class="flex-1 min-w-0"
 														>
 															<h4
-																class="font-bold text-white mb-1.5 text-sm group-hover:text-red-100 transition-colors duration-300"
+																class="font-bold text-foreground mb-1.5 text-sm group-hover:text-primary-foreground transition-colors duration-300"
 															>
 																{feature.title}
 															</h4>
 															<p
-																class="text-xs text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-300"
+																class="text-xs text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300"
 															>
 																{feature.description}
 															</p>
@@ -756,7 +759,7 @@
 									<!-- Right Column - Showcase Widget -->
 									<div class="relative showcase-widget">
 										<div
-											class="relative bg-zinc-900/90 backdrop-blur-2xl rounded-3xl border border-zinc-800/60 p-5 shadow-2xl showcase-widget-container"
+											class="relative bg-card/90 backdrop-blur-2xl rounded-3xl border border-border/60 p-5 shadow-2xl showcase-widget-container"
 											in:fly={{
 												x: 30,
 												duration: 800,
@@ -894,7 +897,7 @@
 										class="relative showcase-widget-mobile"
 									>
 										<div
-											class="relative bg-gradient-to-br from-zinc-900/90 via-zinc-900/80 to-zinc-950/90 backdrop-blur-2xl rounded-2xl border border-zinc-800/60 p-4 shadow-2xl"
+											class="relative bg-gradient-to-br from-card/90 via-card/80 to-card/90 backdrop-blur-2xl rounded-2xl border border-border/60 p-4 shadow-2xl"
 										>
 											<div
 												class="absolute -inset-1 bg-gradient-to-r from-red-600/20 via-red-500/10 to-blue-600/20 rounded-2xl blur-xl opacity-50"
@@ -1026,11 +1029,11 @@
 											class="text-2xl font-black leading-tight"
 										>
 											<span
-												class="bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-transparent block mb-1"
+												class="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent block mb-1"
 												>{showcase.title}</span
 											>
 											<span
-												class="text-white block text-lg"
+												class="text-foreground block text-lg"
 												>{showcase.subtitle}</span
 											>
 										</h3>
@@ -1041,34 +1044,34 @@
 												{@const FeatureIcon =
 													feature.icon}
 												<div
-													class="bg-zinc-900/60 backdrop-blur-sm rounded-lg p-3 border {feature.highlight
-														? 'border-red-500/30 border-l-2 border-l-red-500'
-														: 'border-zinc-800/50'}"
+													class="bg-card/60 backdrop-blur-sm rounded-lg p-3 border {feature.highlight
+														? 'border-primary/30 border-l-2 border-l-primary'
+														: 'border-border/50'}"
 												>
 													<div
 														class="flex items-start gap-2.5"
 													>
 														<div
 															class="w-8 h-8 rounded-lg {feature.highlight
-																? 'bg-red-500/10'
-																: 'bg-zinc-800/50'} flex items-center justify-center flex-shrink-0"
+																? 'bg-primary/10'
+																: 'bg-secondary/50'} flex items-center justify-center flex-shrink-0"
 														>
 															<FeatureIcon
 																class="w-4 h-4 {feature.highlight
-																	? 'text-red-400'
-																	: 'text-zinc-400'}"
+																	? 'text-primary'
+																	: 'text-muted-foreground'}"
 															/>
 														</div>
 														<div
 															class="flex-1 min-w-0"
 														>
 															<h4
-																class="font-bold text-white mb-0.5 text-xs"
+																class="font-bold text-foreground mb-0.5 text-xs"
 															>
 																{feature.title}
 															</h4>
 															<p
-																class="text-[10px] text-zinc-400 leading-relaxed"
+																class="text-[10px] text-muted-foreground leading-relaxed"
 															>
 																{feature.description}
 															</p>
@@ -1204,12 +1207,12 @@
 		<section
 			id="testimonials"
 			data-section="testimonials"
-			class="py-24 sm:py-32 bg-black relative overflow-hidden transform transition-all duration-1000 {visibleSections.testimonials
+			class="py-24 sm:py-32 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.testimonials
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
 			<div
-				class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black dark:from-black dark:via-transparent dark:to-black from-transparent via-transparent to-transparent z-10 pointer-events-none"
+				class="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background dark:from-background dark:via-transparent dark:to-background from-transparent via-transparent to-transparent z-10 pointer-events-none"
 			></div>
 			<div class="absolute inset-0 overflow-hidden">
 				{#each Array(15) as _, i}
@@ -1232,7 +1235,7 @@
 					>Trusted by Sales Leaders</span
 				>
 				<h2
-					class="text-3xl sm:text-4xl md:text-6xl font-black mt-4 mb-6 text-white dark:text-white text-gray-900 tracking-tight animate-fade-in-up leading-tight"
+					class="text-3xl sm:text-4xl md:text-6xl font-black mt-4 mb-6 text-foreground tracking-tight animate-fade-in-up leading-tight"
 					style="animation-delay: 0.1s;"
 				>
 					AI That Empowers<br />
@@ -1245,10 +1248,10 @@
 			<div class="relative overflow-hidden group/marquee">
 				<!-- Fade gradients for seamless edges -->
 				<div
-					class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"
+					class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"
 				></div>
 				<div
-					class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"
+					class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"
 				></div>
 
 				<div
@@ -1260,7 +1263,7 @@
 							onmouseleave={resetTilt}
 							role="group"
 							aria-label={`Testimonial from ${testimonial.author}`}
-							class="tilt-card relative flex-shrink-0 w-96 bg-zinc-900 border border-zinc-800 rounded-lg p-6 hover:border-red-900/50 hover:border-red-500 transition-all duration-500 group hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/20 cursor-pointer overflow-hidden"
+							class="tilt-card relative flex-shrink-0 w-96 bg-card border border-border rounded-lg p-6 hover:border-primary/50 hover:border-primary transition-all duration-500 group hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20 cursor-pointer overflow-hidden"
 							style="transform: translate3d(0, 0, 0);"
 						>
 							<div
@@ -1279,31 +1282,31 @@
 								</div>
 								<div class="flex-1">
 									<p
-										class="font-bold text-white text-sm group-hover:text-red-400 transition-colors"
+										class="font-bold text-foreground text-sm group-hover:text-primary-foreground transition-colors"
 									>
 										{testimonial.author}
 									</p>
 									<p
-										class="text-xs text-zinc-500 font-semibold"
+										class="text-xs text-muted-foreground font-semibold"
 									>
 										{testimonial.role}
 									</p>
 								</div>
 								<div class="text-right">
 									<div
-										class="text-2xl font-black text-red-500 group-hover:scale-110 transition-transform duration-300"
+										class="text-2xl font-black text-primary group-hover:scale-110 transition-transform duration-300"
 									>
 										{testimonial.metric}
 									</div>
 									<div
-										class="text-[10px] text-zinc-600 uppercase tracking-wider"
+										class="text-[10px] text-muted-foreground uppercase tracking-wider"
 									>
 										{testimonial.metricLabel}
 									</div>
 								</div>
 							</div>
 							<p
-								class="text-zinc-400 text-sm leading-relaxed group-hover:text-zinc-300 transition-colors relative font-medium"
+								class="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground/90 transition-colors relative font-medium"
 							>
 								{testimonial.quote}
 							</p>
@@ -1313,7 +1316,7 @@
 			</div>
 			<div class="mt-20 max-w-7xl mx-auto px-6 relative z-20">
 				<div
-					class="bg-zinc-950 border border-red-900/30 rounded-lg p-8 hover:border-red-900/50 hover:border-red-500/60 transition-all duration-500 hover:shadow-2xl hover:shadow-red-900/20 group"
+					class="bg-card border border-border/30 rounded-lg p-8 hover:border-border/50 hover:border-primary/60 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 group"
 					style="transform: translate3d(0, 0, 0); backdrop-filter: blur(24px) saturate(200%) brightness(1.05);"
 				>
 					<div
@@ -1321,12 +1324,12 @@
 					></div>
 					<div class="text-center mb-8 relative">
 						<h3
-							class="text-2xl font-black text-white mb-2 group-hover:text-red-500 transition-colors"
+							class="text-2xl font-black text-foreground mb-2 group-hover:text-primary transition-colors"
 						>
 							Built for Sales & Dev Teams
 						</h3>
 						<p
-							class="text-zinc-500 group-hover:text-zinc-400 transition-colors font-semibold"
+							class="text-muted-foreground group-hover:text-muted-foreground/80 transition-colors font-semibold"
 						>
 							Powerful conversational AI that integrates with your
 							entire workflow
@@ -1339,18 +1342,18 @@
 								style="animation-delay: {i * 0.1}s;"
 							>
 								<div
-									class="absolute -top-4 left-0 text-6xl font-black text-red-950 opacity-50 group-hover/item:opacity-100 group-hover/item:text-red-900 group-hover/item:text-red-500 transition-all duration-500 group-hover/item:scale-110"
+									class="absolute -top-4 left-0 text-6xl font-black text-primary/20 opacity-50 group-hover/item:opacity-100 group-hover/item:text-primary/40 group-hover/item:text-primary transition-all duration-500 group-hover/item:scale-110"
 								>
 									{feature.number}
 								</div>
 								<div class="relative pt-8">
 									<h4
-										class="text-lg font-bold text-white mb-2 group-hover/item:text-red-500 transition-colors"
+										class="text-lg font-bold text-foreground mb-2 group-hover/item:text-primary transition-colors"
 									>
 										{feature.title}
 									</h4>
 									<p
-										class="text-sm text-zinc-500 group-hover/item:text-zinc-400 transition-colors font-semibold"
+										class="text-sm text-muted-foreground group-hover/item:text-muted-foreground transition-colors font-semibold"
 									>
 										{feature.description}
 									</p>
@@ -1364,7 +1367,7 @@
 
 		<section
 			data-section="cta"
-			class="py-24 sm:py-32 bg-black relative overflow-hidden transform transition-all duration-1000 {visibleSections.cta
+			class="py-24 sm:py-32 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.cta
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -1399,13 +1402,13 @@
 					: 'translate-y-10 opacity-0'}"
 			>
 				<h2
-					class="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-tight sm:leading-none animate-fade-in-up"
+					class="text-4xl sm:text-5xl md:text-7xl font-black text-foreground mb-6 tracking-tight leading-tight sm:leading-none animate-fade-in-up"
 				>
 					Empower Your Sales Team<br />
 					<span class="text-red-500"> With AI Intelligence </span>
 				</h2>
 				<p
-					class="text-lg sm:text-xl text-zinc-400 mb-10 sm:mb-12 max-w-2xl mx-auto font-semibold animate-fade-in-up"
+					class="text-lg sm:text-xl text-muted-foreground mb-10 sm:mb-12 max-w-2xl mx-auto font-semibold animate-fade-in-up"
 					style="animation-delay: 0.2s;"
 				>
 					Join sales teams accelerating revenue with conversational
@@ -1420,7 +1423,7 @@
 						onclick={onboardingStore.start}
 						onmousemove={(event) => handleTilt(event, 12)}
 						onmouseleave={resetTilt}
-						class="tilt-card group relative px-8 py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 overflow-hidden hover:scale-105 hover:-translate-y-1"
+						class="tilt-card group relative px-8 py-5 bg-gradient-to-r from-primary to-red-700 text-primary-foreground rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300 overflow-hidden hover:scale-105 hover:-translate-y-1"
 					>
 						<span
 							class="relative z-10 flex items-center justify-center gap-2"
@@ -1451,13 +1454,13 @@
 						href="/contact-sales"
 						onmousemove={(event) => handleTilt(event, 10)}
 						onmouseleave={resetTilt}
-						class="tilt-card relative px-8 py-5 bg-transparent text-white rounded-xl font-semibold text-lg border-2 border-zinc-800 hover:border-red-600 hover:bg-red-950/20 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/20 overflow-hidden"
+						class="tilt-card relative px-8 py-5 bg-transparent text-foreground rounded-xl font-semibold text-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20 overflow-hidden"
 					>
 						Contact Sales
 					</a>
 				</div>
 				<p
-					class="mt-6 text-zinc-600 text-sm animate-fade-in-up font-semibold"
+					class="mt-6 text-muted-foreground text-sm animate-fade-in-up font-semibold"
 					style="animation-delay: 0.6s;"
 				>
 					Free forever plan • No credit card required • Quick setup
@@ -1466,7 +1469,7 @@
 		</section>
 
 		<footer
-			class="bg-black text-white py-16 border-t border-zinc-900 relative overflow-hidden"
+			class="bg-background text-foreground py-16 border-t border-border relative overflow-hidden"
 		>
 			<div class="absolute inset-0 opacity-30">
 				<div
@@ -1486,7 +1489,7 @@
 									class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-500"
 								></div>
 								<div
-									class="relative bg-zinc-900 p-1.5 rounded-lg border border-red-900/50 group-hover:border-red-600 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6"
+									class="relative bg-background p-1.5 rounded-lg border border-border group-hover:border-primary transition-all duration-500 group-hover:scale-110 group-hover:rotate-6"
 								>
 									<img
 										src="/Spiked.ai-white-logo-icon-only.png"
@@ -1505,7 +1508,7 @@
 							</span>
 						</div>
 						<p
-							class="text-zinc-500 text-sm mb-6 max-w-xs hover:text-zinc-400 transition-colors"
+							class="text-muted-foreground text-sm mb-6 max-w-xs hover:text-foreground transition-colors"
 						>
 							Conversational AI for Sales Teams. Empower your team
 							with real-time intelligence and automated workflows.
@@ -1515,11 +1518,11 @@
 								href="https://www.linkedin.com/company/spiked-ai"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="p-2 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-900/50 rounded transition-all duration-300 group hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/30"
+								class="p-2 bg-secondary hover:bg-primary/20 border border-border hover:border-primary/50 rounded transition-all duration-300 group hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/30"
 								aria-label="Follow us on LinkedIn"
 							>
 								<svg
-									class="w-4 h-4 fill-zinc-600 group-hover:fill-red-500 transition-colors"
+									class="w-4 h-4 fill-muted-foreground group-hover:fill-primary transition-colors"
 									viewBox="0 0 24 24"
 								>
 									<path
@@ -1532,14 +1535,14 @@
 
 					<div class="group">
 						<h4
-							class="font-bold text-white mb-4 text-sm tracking-wider uppercase group-hover:text-red-500 transition-colors"
+							class="font-bold text-foreground mb-4 text-sm tracking-wider uppercase group-hover:text-primary transition-colors"
 						>
 							Features
 						</h4>
-						<ul class="space-y-2 text-zinc-500 text-sm">
+						<ul class="space-y-2 text-muted-foreground text-sm">
 							<li>
 								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
+									class="hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block"
 									>Call Simulator</button
 								>
 							</li>
@@ -1578,14 +1581,14 @@
 
 					<div class="group">
 						<h4
-							class="font-bold text-white mb-4 text-sm tracking-wider uppercase group-hover:text-red-500 transition-colors"
+							class="font-bold text-foreground mb-4 text-sm tracking-wider uppercase group-hover:text-primary transition-colors"
 						>
 							Integrations
 						</h4>
-						<ul class="space-y-2 text-zinc-500 text-sm">
+						<ul class="space-y-2 text-muted-foreground text-sm">
 							<li>
 								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
+									class="hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block"
 									>Salesforce</button
 								>
 							</li>
@@ -1624,15 +1627,15 @@
 
 					<div class="group">
 						<h4
-							class="font-bold text-white mb-4 text-sm tracking-wider uppercase group-hover:text-red-500 transition-colors"
+							class="font-bold text-foreground mb-4 text-sm tracking-wider uppercase group-hover:text-primary transition-colors"
 						>
 							Company
 						</h4>
-						<ul class="space-y-2 text-zinc-500 text-sm">
+						<ul class="space-y-2 text-muted-foreground text-sm">
 							<li>
 								<button
 									onclick={() => scrollToSection("pricing")}
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
+									class="hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block"
 									>Pricing</button
 								>
 							</li>
@@ -1664,12 +1667,12 @@
 					</div>
 				</div>
 
-				<div class="border-t border-zinc-900 pt-8">
+				<div class="border-t border-border pt-8">
 					<div
 						class="flex flex-col md:flex-row justify-between items-center gap-4"
 					>
 						<div
-							class="text-center md:text-left text-zinc-600 text-sm hover:text-zinc-500 transition-colors"
+							class="text-center md:text-left text-muted-foreground text-sm hover:text-foreground transition-colors"
 						>
 							© 2025 SpikedAI. All rights reserved. <span
 								class="hidden md:inline"
@@ -1677,9 +1680,9 @@
 								Francisco, CA 94103</span
 							>
 						</div>
-						<div class="flex gap-6 text-xs text-zinc-600">
+						<div class="flex gap-6 text-xs text-muted-foreground">
 							<button
-								class="hover:text-red-500 transition-all duration-300 hover:scale-105"
+								class="hover:text-primary transition-all duration-300 hover:scale-105"
 								>Privacy Policy</button
 							>
 							<button
@@ -1705,7 +1708,7 @@
 	/* Hero Background */
 	.contextual-hero {
 		position: relative;
-		background: #000000;
+		background-color: var(--background);
 		isolation: isolate;
 	}
 
@@ -1949,7 +1952,7 @@
 		font-weight: 900;
 		line-height: 1.05;
 		letter-spacing: -0.03em;
-		color: #ffffff;
+		color: var(--foreground);
 		text-shadow: 0 20px 80px rgba(59, 130, 246, 0.3);
 	}
 
@@ -1962,7 +1965,7 @@
 	/* CTA Button */
 	.contextual-cta {
 		background: linear-gradient(145deg, #ef4444, #dc2626);
-		color: #ffffff;
+		color: var(--foreground);
 		border: 1.5px solid rgba(239, 68, 68, 0.5);
 		box-shadow:
 			0 20px 60px rgba(239, 68, 68, 0.4),
@@ -2095,52 +2098,6 @@
 
 	.animate-fade-in-up {
 		animation: fade-in-up 0.8s ease-out forwards;
-	}
-
-	/* ===== LIGHT MODE OVERRIDES ===== */
-
-	:global([data-theme="light"]) .contextual-hero {
-		background: radial-gradient(
-				ellipse 60% 50% at 20% 25%,
-				rgba(79, 70, 229, 0.12),
-				transparent 55%
-			),
-			radial-gradient(
-				ellipse 45% 40% at 80% 20%,
-				rgba(236, 72, 153, 0.14),
-				transparent 55%
-			),
-			radial-gradient(
-				ellipse 70% 60% at 50% 75%,
-				rgba(14, 165, 233, 0.1),
-				transparent 60%
-			),
-			linear-gradient(180deg, #f8fafc 0%, #f4f6fb 45%, #ffffff 100%) !important;
-	}
-
-	:global([data-theme="light"]) .contextual-headline {
-		color: #0f172a;
-		text-shadow: 0 12px 50px rgba(15, 23, 42, 0.12);
-	}
-
-	:global([data-theme="light"]) .contextual-subheadline {
-		color: #475569;
-	}
-
-	:global([data-theme="light"]) .contextual-cta {
-		background: linear-gradient(145deg, #111827, #111827);
-		color: #f8fafc;
-		border-color: #0f172a;
-		box-shadow:
-			0 18px 50px rgba(15, 23, 42, 0.18),
-			inset 0 1px 0 rgba(255, 255, 255, 0.18);
-	}
-
-	:global([data-theme="light"]) .cta-icon {
-		background: #f8fafc;
-		color: #0f172a;
-		border-color: rgba(15, 23, 42, 0.12);
-		box-shadow: 0 10px 18px rgba(15, 23, 42, 0.15);
 	}
 
 	/* ===== ACCESSIBILITY ===== */

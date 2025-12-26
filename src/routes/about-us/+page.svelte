@@ -212,8 +212,9 @@
 	.page {
 		min-height: 100vh;
 		background:
-			radial-gradient(circle at 20% 10%, rgba(239, 24, 32, 0.08), transparent 28%),
-			radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.04), transparent 22%),
+			radial-gradient(circle at 20% 10%, rgba(139, 92, 246, 0.04), transparent 35%),
+			radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.02), transparent 28%),
+			radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.03), transparent 40%),
 			var(--background);
 		color: var(--foreground);
 		padding: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 4vw, 3rem) 4rem;
@@ -235,7 +236,7 @@
 		inset: 0;
 		border-radius: 32px;
 		padding: 1px;
-		background: linear-gradient(135deg, rgba(239, 24, 32, 0.22), rgba(255, 255, 255, 0.05));
+		background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.08), rgba(255, 255, 255, 0.04));
 		mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
 		mask-composite: xor;
 		pointer-events: none;
@@ -262,7 +263,7 @@
 		position: absolute;
 		inset: -20% -10% auto;
 		height: 65%;
-		background: radial-gradient(circle at 20% 30%, rgba(239, 24, 32, 0.2), transparent 40%);
+		background: radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.12), rgba(59, 130, 246, 0.06), transparent 50%);
 		z-index: 0;
 	}
 
@@ -275,7 +276,7 @@
 	}
 
 	.eyebrow {
-		color: var(--primary);
+		color: #a78bfa;
 		font-size: 0.85rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
@@ -284,7 +285,7 @@
 	}
 
 	.eyebrow.soft {
-		color: rgba(239, 24, 32, 0.8);
+		color: rgba(139, 92, 246, 0.75);
 		margin-bottom: 0;
 	}
 
@@ -339,10 +340,10 @@
 	}
 
 	.pill-primary {
-		background: linear-gradient(120deg, var(--primary), #ef443b);
-		color: var(--primary-foreground);
-		border-color: rgba(239, 24, 32, 0.6);
-		box-shadow: 0 10px 35px rgba(239, 24, 32, 0.25);
+		background: linear-gradient(120deg, #8b5cf6, #6366f1);
+		color: #fff;
+		border-color: rgba(139, 92, 246, 0.5);
+		box-shadow: 0 10px 35px rgba(139, 92, 246, 0.2);
 	}
 
 	.highlight-grid {
@@ -393,10 +394,10 @@
 		border-radius: 12px;
 		display: grid;
 		place-items: center;
-		background: rgba(239, 24, 32, 0.12);
-		color: #fff;
+		background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
+		color: #e9d5ff;
 		font-weight: 700;
-		border: 1px solid rgba(239, 24, 32, 0.35);
+		border: 1px solid rgba(139, 92, 246, 0.3);
 	}
 
 	.commitment-title {
@@ -453,8 +454,8 @@
 		width: 12px;
 		height: 100%;
 		border-radius: 10px;
-		background: linear-gradient(180deg, rgba(239, 24, 32, 0.9), rgba(239, 24, 32, 0.4));
-		box-shadow: 0 8px 20px rgba(239, 24, 32, 0.25);
+		background: linear-gradient(180deg, rgba(139, 92, 246, 0.7), rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.3));
+		box-shadow: 0 8px 20px rgba(139, 92, 246, 0.15);
 	}
 
 	.pillar-card p {
@@ -492,8 +493,8 @@
 
 	.team-card:hover {
 		transform: translateY(-6px);
-		border-color: rgba(239, 24, 32, 0.6);
-		box-shadow: 0 25px 60px rgba(239, 24, 32, 0.15);
+		border-color: rgba(139, 92, 246, 0.5);
+		box-shadow: 0 25px 60px rgba(139, 92, 246, 0.12), 0 0 0 1px rgba(139, 92, 246, 0.2) inset;
 	}
 
 	.portrait {
@@ -521,7 +522,7 @@
 		inset: auto 10% -20% 10%;
 		height: 30%;
 		filter: blur(35px);
-		background: rgba(239, 24, 32, 0.35);
+		background: linear-gradient(to top, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.15));
 		z-index: 1;
 	}
 
@@ -548,9 +549,9 @@
 	.focus-tag {
 		padding: 0.35rem 0.7rem;
 		border-radius: 10px;
-		background: rgba(239, 24, 32, 0.15);
-		color: #ffecec;
-		border: 1px solid rgba(239, 24, 32, 0.4);
+		background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(59, 130, 246, 0.12));
+		color: #e9d5ff;
+		border: 1px solid rgba(139, 92, 246, 0.35);
 		font-weight: 700;
 		font-size: 0.85rem;
 	}

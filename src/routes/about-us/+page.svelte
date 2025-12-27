@@ -62,11 +62,11 @@
 		{
 			name: 'Ginnee Sahi',
 			background: 'AWS, Microsoft',
-			focus: 'GTM',
+			focus: 'Go To Market',
 			image: photo('Ginnee Sahi.jpeg'),
 			role: 'Advisor, Co-Founder',
 			description: 'Drives GTM execution and operator enablement.',
-			tags: ['GTM', 'Enablement']
+			tags: ['Go To Market', 'Customers', 'Partnerships']
 		},
 		{
 			name: 'Tom Davenport',
@@ -89,11 +89,11 @@
 		{
 			name: 'Kaveesh Manchanda',
 			background: 'Google, Microsoft',
-			focus: 'Engineering',
+			focus: 'Partnerships',
 			image: photo('Kaveesh Manchanda.jpeg'),
 			role: 'VP Engineering, Platform Reliability',
 			description: 'Heads engineering reliability and secure platform delivery.',
-			tags: ['Engineering', 'Quality']
+			tags: ['Partnerships', 'Go To Market Systems', 'Customer Voice']
 		}
 	];
 </script>

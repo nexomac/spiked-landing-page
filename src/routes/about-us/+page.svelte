@@ -216,26 +216,28 @@
 	}
 
 	:global(:root) {
-		--about-backdrop: linear-gradient(180deg, #0b0f19 0%, #060913 100%);
-		--about-surface: #0f1420;
-		--about-surface-soft: #0c111c;
-		--about-panel: #0e1320;
-		--about-border: rgba(255, 255, 255, 0.08);
-		--about-border-strong: rgba(255, 255, 255, 0.14);
-		--about-muted: #cbd5e1;
-		--about-subtle: #94a3b8;
-		--about-chip: rgba(255, 255, 255, 0.08);
-		--about-chip-border: rgba(255, 255, 255, 0.12);
-		--about-line: linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+		--about-backdrop: radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.03), transparent 38%),
+			radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.02), transparent 30%),
+			linear-gradient(180deg, #060910 0%, #0a0f17 100%);
+		--about-surface: rgba(14, 18, 26, 0.9);
+		--about-surface-soft: rgba(12, 16, 24, 0.9);
+		--about-panel: rgba(13, 17, 26, 0.92);
+		--about-border: rgba(255, 255, 255, 0.06);
+		--about-border-strong: rgba(255, 255, 255, 0.1);
+		--about-muted: #d1d5db;
+		--about-subtle: #aeb6c5;
+		--about-chip: rgba(255, 255, 255, 0.06);
+		--about-chip-border: rgba(255, 255, 255, 0.1);
+		--about-line: linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
 		--about-portrait-fade: linear-gradient(
 			180deg,
-			transparent 44%,
-			rgba(3, 5, 10, 0.55) 78%,
-			rgba(3, 5, 10, 0.72) 100%
+			transparent 52%,
+			rgba(3, 5, 10, 0.32) 78%,
+			rgba(3, 5, 10, 0.52) 100%
 		);
-		--about-portrait-glow: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04), transparent);
-		--about-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
-		--about-soft-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+		--about-portrait-glow: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02), transparent);
+		--about-shadow: 0 10px 32px rgba(0, 0, 0, 0.28);
+		--about-soft-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
 	}
 
 	:global(:root[data-theme="light"]) {
@@ -265,38 +267,33 @@
 		min-height: 100vh;
 		background: var(--about-backdrop);
 		color: var(--foreground);
-		padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 5vw, 4rem) 5rem;
+		padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 5vw, 3.75rem) 4.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: clamp(2.5rem, 4vw, 3.5rem);
+	}
+
+	.page section {
+		width: min(1180px, 100%);
+		margin: 0 auto;
 	}
 
 	.hero {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
 		gap: clamp(2rem, 5vw, 4rem);
 		align-items: start;
-		max-width: 1280px;
-		margin: 0 auto clamp(3rem, 6vw, 5rem);
+		margin: 0 auto;
 		position: relative;
-	}
-
-	.hero::after {
-		content: '';
-		position: absolute;
-		inset: -0.5rem;
-		border-radius: 32px;
-		padding: 1.5px;
-		background: linear-gradient(135deg, var(--about-border-strong), transparent 65%, var(--about-border));
-		mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-		mask-composite: xor;
-		pointer-events: none;
-		opacity: 0.5;
 	}
 
 	.hero-copy,
 	.hero-panel {
 		position: relative;
-		background: linear-gradient(145deg, var(--about-surface-soft), var(--about-surface));
+		background: linear-gradient(160deg, var(--about-surface), var(--about-surface-soft));
 		border: 1px solid var(--about-border);
-		border-radius: 32px;
+		border-radius: 28px;
 		padding: clamp(2rem, 4vw, 3.5rem);
 		box-shadow:
 			var(--about-shadow),
@@ -353,7 +350,7 @@
 	}
 
 	h1 {
-		font-size: clamp(2.75rem, 6vw, 4.25rem);
+		font-size: clamp(2.6rem, 5vw, 3.6rem);
 		line-height: 1.15;
 		margin: 0 0 1.5rem;
 		letter-spacing: -0.025em;
@@ -362,7 +359,7 @@
 	}
 
 	h2 {
-		font-size: clamp(2.25rem, 5vw, 3.25rem);
+		font-size: clamp(2.2rem, 4.5vw, 3.2rem);
 		line-height: 1.25;
 		margin: 0.5rem 0 1rem;
 		letter-spacing: -0.02em;
@@ -397,8 +394,8 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 0.75rem 1.25rem;
-		border-radius: 999px;
+		padding: 0.65rem 1.15rem;
+		border-radius: 18px;
 		border: 1px solid var(--about-chip-border);
 		background: var(--about-chip);
 		color: var(--foreground);
@@ -541,8 +538,7 @@
 	}
 
 	.principles {
-		max-width: 1280px;
-		margin: clamp(3.5rem, 6vw, 5rem) auto;
+		margin: 0 auto;
 		padding: clamp(2.5rem, 4vw, 3.5rem);
 		border-radius: 32px;
 		border: 1px solid var(--about-border);
@@ -624,8 +620,7 @@
 	}
 
 	.team {
-		max-width: 1280px;
-		margin: clamp(3.5rem, 6vw, 5rem) auto;
+		margin: 0 auto;
 	}
 
 	.page > .team:first-of-type {
@@ -635,49 +630,33 @@
 	.team-grid {
 		margin-top: 2.5rem;
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 		gap: 1.75rem;
 	}
 
 	.team-card {
 		position: relative;
-		background: linear-gradient(145deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(180deg, var(--about-surface), var(--about-surface-soft));
 		border: 1px solid var(--about-border);
-		border-radius: 24px;
+		border-radius: 28px;
 		overflow: hidden;
-		box-shadow: var(--about-shadow), 0 0 0 1px var(--about-border) inset;
+		box-shadow: var(--about-shadow);
 		display: flex;
 		flex-direction: column;
-		transition: all 0.3s ease;
-	}
-
-	.team-card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 3px;
-		background: var(--about-line);
-		opacity: 0.35;
-		transition: opacity 0.3s ease;
-		z-index: 10;
+		transition: all 0.25s ease;
 	}
 
 	.team-card:hover {
-		transform: translateY(-8px);
+		transform: translateY(-6px);
 		border-color: var(--about-border-strong);
-		box-shadow: var(--about-shadow), 0 0 0 1px var(--about-border-strong) inset;
-	}
-
-	.team-card:hover::before {
-		opacity: 0.85;
+		box-shadow: var(--about-shadow), 0 0 0 1px var(--about-border-strong);
 	}
 
 	.portrait {
 		position: relative;
-		aspect-ratio: 4 / 3;
+		aspect-ratio: 5 / 4;
 		overflow: hidden;
+		min-height: 320px;
 	}
 
 	.portrait img {
@@ -685,6 +664,7 @@
 		height: 100%;
 		object-fit: cover;
 		display: block;
+		filter: contrast(1.08) saturate(1.08);
 		transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
@@ -696,31 +676,21 @@
 		content: '';
 		position: absolute;
 		inset: 0;
-		background: var(--about-portrait-fade);
+		background: linear-gradient(180deg, transparent 68%, rgba(0, 0, 0, 0.35));
+		opacity: 0.6;
 	}
 
 	.portrait-glow {
-		position: absolute;
-		inset: auto 15% -25% 15%;
-		height: 35%;
-		filter: blur(45px);
-		background: var(--about-portrait-glow);
-		z-index: 1;
-		transition: opacity 0.3s ease;
-		opacity: 0.7;
-	}
-
-	.team-card:hover .portrait-glow {
-		opacity: 1;
+		display: none;
 	}
 
 	.team-content {
 		position: relative;
 		z-index: 2;
-		padding: 1.5rem 1.5rem 1.75rem;
+		padding: 1.75rem 1.75rem 2rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.65rem;
 	}
 
 	.name-row {
@@ -732,7 +702,7 @@
 
 	.name-row h3 {
 		margin: 0;
-		font-size: 1.55rem;
+		font-size: 1.7rem;
 	}
 
 	.focus-tag {
@@ -751,7 +721,7 @@
 		color: var(--about-subtle);
 		margin: 0;
 		font-weight: 600;
-		font-size: 0.9375rem;
+		font-size: 1rem;
 	}
 
 	.role-title {

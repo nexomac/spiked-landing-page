@@ -37,13 +37,15 @@ export async function POST({ request, cookies }) {
                 ]
             }
 
-            Supported field types: 'text', 'richtext', 'date', 'image'.
+            Supported field types: 'text', 'richtext', 'date', 'image', 'quote', 'highlight'.
             
             Rules:
             1. Always include 'Title' and 'Slug' fields as the first two items.
-            2. Infer appropriate fields for the requested topic (e.g. if 'Event', add Date, Location).
-            3. Use lowercase slugs for fields.
-            4. No markdown formatting.
+            2. Infer appropriate fields for the requested topic.
+            3. Use 'quote' for short, impactful text or testimonials.
+            4. Use 'highlight' for summary boxes or key takeaways.
+            5. Use lowercase slugs for fields.
+            6. No markdown formatting.
         `;
 
         const userPrompt = `Create a content model for: ${prompt}`;

@@ -4,11 +4,17 @@
 
     let { data, form } = $props();
 
-    let entryData = $state(data.entry.data || {});
+    // Use a derived fallback for initial state setup
+    let entryData = $state({});
     let isSaving = $state(false);
 
+    // Synchronize state when page data loads
     $effect(() => {
-        entryData = data.entry.data || {};
+        if (data.entry.data) {
+            // We merge carefully to retain any local unsaved changes IF desired, 
+            // but usually we want to follow the server's lead after a save.
+            entryData = JSON.parse(JSON.stringify(data.entry.data));
+        }
     });
 
     function updateRichText(fieldSlug, json) {
@@ -25,18 +31,24 @@
         return false;
     }
 
-    // Get the best initial value for a field (checks slug, then name)
+    // Get the best initial value for a field (checks slug, then name, then case-insensitive)
     function getFieldValue(field) {
-        const valBySlug = entryData[field.slug];
-        const valByName = entryData[field.name];
+        // 1. Direct slug match
+        if (entryData[field.slug] !== undefined) return entryData[field.slug];
+        
+        // 2. Direct name match
+        if (entryData[field.name] !== undefined) return entryData[field.name];
 
+        // 3. Case-insensitive search through all entryData keys
+        const ciKey = Object.keys(entryData).find(k => k.toLowerCase() === field.slug.toLowerCase());
+        if (ciKey) return entryData[ciKey];
+
+        // 4. Fallbacks for specific types
         if (field.type === 'richtext') {
-            if (!isTiptapEmpty(valBySlug)) return valBySlug;
-            if (!isTiptapEmpty(valByName)) return valByName;
             return { type: 'doc', content: [{ type: 'paragraph' }] };
         }
 
-        return valBySlug || valByName || '';
+        return '';
     }
 </script>
 
@@ -44,8 +56,8 @@
     <form method="POST" action="?/save" use:enhance={() => {
         isSaving = true;
         return async ({ update }) => {
+            await update();
             isSaving = false;
-            update();
         };
     }} class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         
@@ -71,39 +83,47 @@
                             onChange={(json) => updateRichText(field.slug, json)} 
                         />
                         <!-- Hidden input to transport JSON data -->
-                        {#if entryData[field.slug]}
-                             <input type="hidden" name="richtext_{field.slug}" value={JSON.stringify(entryData[field.slug])} />
-                        {:else if getFieldValue(field)}
-                             <input type="hidden" name="richtext_{field.slug}" value={JSON.stringify(getFieldValue(field))} />
-                        {:else}
-                             <input type="hidden" name="richtext_{field.slug}" value="{JSON.stringify({type: 'doc', content: []})}" />
-                        {/if}
+                        <input type="hidden" name="richtext_{field.slug}" value={JSON.stringify(entryData[field.slug] || getFieldValue(field))} />
                     {:else if field.type === 'image'}
                         <div class="flex gap-4">
                             <input 
                                 type="text" 
                                 name={field.slug} 
-                                value={getFieldValue(field)}
+                                bind:value={entryData[field.slug]}
                                 placeholder="Image URL (http://...)" 
                                 class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none"
                             />
-                            {#if getFieldValue(field)}
-                                <img src={getFieldValue(field)} alt="Preview" class="h-12 w-12 rounded object-cover border border-gray-700"/>
+                            {#if entryData[field.slug]}
+                                <img src={entryData[field.slug]} alt="Preview" class="h-12 w-12 rounded object-cover border border-gray-700"/>
                             {/if}
                         </div>
                     {:else if field.type === 'date'}
                         <input 
                             type="datetime-local" 
                             name={field.slug} 
-                            value={getFieldValue(field)}
+                            bind:value={entryData[field.slug]}
                             class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none"
                         />
+                    {:else if field.type === 'quote'}
+                        <textarea 
+                            name={field.slug} 
+                            bind:value={entryData[field.slug]}
+                            placeholder="Enter an impactful quote..."
+                            class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none text-2xl font-serif italic text-center min-h-[120px]"
+                        ></textarea>
+                    {:else if field.type === 'highlight'}
+                        <textarea 
+                            name={field.slug} 
+                            bind:value={entryData[field.slug]}
+                            placeholder="Enter key takeaway or callout text..."
+                            class="w-full bg-red-950/20 border border-red-500/30 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none font-sans"
+                        ></textarea>
                     {:else}
                         <!-- Default Text -->
                         <input 
                             type="text" 
                             name={field.slug} 
-                            value={getFieldValue(field)} 
+                            bind:value={entryData[field.slug]}
                             class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none text-lg"
                         />
                     {/if}

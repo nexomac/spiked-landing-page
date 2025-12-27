@@ -50,8 +50,22 @@ export const actions = {
             }
         }
         
-        // Merge data
-        const mergedData = { ...existingData, ...incomingData };
+        // Smart Merge: prevent casing duplicates (Title vs title)
+        const mergedData = { ...existingData };
+        for (const [newKey, newValue] of Object.entries(incomingData)) {
+            // Find if a case-insensitive match exists
+            const existingKeyMatch = Object.keys(mergedData).find(
+                k => k.toLowerCase() === newKey.toLowerCase()
+            );
+            
+            if (existingKeyMatch) {
+                // Update the existing key (preserving its casing)
+                mergedData[existingKeyMatch] = newValue;
+            } else {
+                // Add as new key
+                mergedData[newKey] = newValue;
+            }
+        }
 
         // Save entry via CMS lib (updates data and status)
         await updateEntry(params.entryId, mergedData, status);

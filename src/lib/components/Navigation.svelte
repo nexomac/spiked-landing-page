@@ -8,8 +8,7 @@
 	
 	let isScrolled = $state(false);
 	let mobileMenuOpen = $state(false);
-	let theme = $state('dark');
-	const isLight = $derived(theme === 'light');
+	const isLight = $derived($themeStore === 'light');
 	const themeLabel = $derived(isLight ? 'Switch to dark mode' : 'Switch to light mode');
 
     // Mega Menu State
@@ -82,13 +81,8 @@
 		
 		window.addEventListener('scroll', handleScroll);
 		
-		const unsubscribe = themeStore.subscribe((value) => {
-			theme = value;
-		});
-		
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
-			unsubscribe();
 		};
 	});
 	
@@ -221,12 +215,12 @@
 						aria-label={themeLabel}
 						title={themeLabel}
 					>
-						{#if isLight && !($page.url.pathname.startsWith('/blog') || $page.url.pathname.startsWith('/newsletter'))}
-							<Moon class="w-4 h-4" />
-							<span>Dark</span>
-						{:else}
-							<Sun class="w-4 h-4" />
+						{#if !isLight}
+							<Sun class="w-4 h-4 text-yellow-500" />
 							<span>Light</span>
+						{:else}
+							<Moon class="w-4 h-4 text-slate-700" />
+							<span>Dark</span>
 						{/if}
 					</button>
 					<button class={`px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold transition-all duration-300 hover:scale-105 ${isLight ? 'text-slate-700 hover:text-red-600' : 'text-white hover:text-red-500'}`}>

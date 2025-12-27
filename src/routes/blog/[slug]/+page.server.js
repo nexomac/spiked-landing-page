@@ -1,4 +1,4 @@
-import { getEntryBySlug } from '$lib/cms';
+import { getEntryBySlug, getContentModel } from '$lib/cms';
 import { error } from '@sveltejs/kit';
 
 function getBestImage(data) {
@@ -19,6 +19,8 @@ export async function load({ params }) {
     
     if (!post) throw error(404, 'Article not found');
 
+    const model = await getContentModel(post.modelSlug);
+
     return {
         post: {
             ...post,
@@ -29,6 +31,7 @@ export async function load({ params }) {
             sidebar: post.data?.sidebar || post.data?.Sidebar,
             author: post.data?.author || post.data?.Author,
             publishedDate: post.data?.publishedDate || post.data?.['Published Date'] || post.createdAt
-        }
+        },
+        modelFields: model?.fields || []
     };
 }

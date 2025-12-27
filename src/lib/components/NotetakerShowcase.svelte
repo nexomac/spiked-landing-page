@@ -78,7 +78,7 @@
 	<div class="animated-border rounded-2xl overflow-hidden depth-shadow">
 		{#if showAppChrome}
 			<!-- App Chrome -->
-			<div class="bg-zinc-900/90 border-b border-zinc-800/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
+			<div class="bg-card/90 border-b border-border/50 px-4 py-3 flex items-center justify-between backdrop-blur-xl">
 				<div class="flex items-center gap-3">
 					<div class="flex gap-1.5">
 						<div class="w-3 h-3 rounded-full bg-zinc-700 hover:bg-red-500 transition-colors cursor-pointer"></div>
@@ -87,7 +87,7 @@
 					</div>
 					<div class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors">
 						<img src="/Spiked.ai-white-logo-icon-only.png" alt="SpikedAI Logo" class="w-4 h-4 rounded-sm object-contain" />
-						<span class="text-sm font-black tracking-tight text-white">
+						<span class="text-sm font-black tracking-tight text-foreground">
 							SPIKED<span class="text-red-500">AI</span>
 						</span>
 					</div>
@@ -106,14 +106,14 @@
 		{/if}
 
 		<!-- Main Content Area -->
-		<div class="bg-gradient-to-br from-zinc-950 to-zinc-900 p-1 relative overflow-hidden">
+		<div class="bg-gradient-to-br from-card to-card p-1 relative overflow-hidden">
 			<!-- Animated gradient overlay -->
 			<div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
 			
 			<div class="grid grid-cols-[280px_1fr] relative z-10" style="height: {height};">
 				
 				<!-- Left Sidebar -->
-				<div class="border-r border-zinc-800/50 p-4 space-y-6 backdrop-blur-sm">
+				<div class="border-r border-border/50 p-4 space-y-6 backdrop-blur-sm">
 					<!-- Logo & New Session -->
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2 group cursor-pointer">
@@ -135,14 +135,14 @@
 					<div class="space-y-1">
 						<button 
 							onclick={() => activeTab = 'templates'}
-							class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 text-sm group {activeTab === 'templates' ? 'glass text-white shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'}"
+							class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 text-sm group {activeTab === 'templates' ? 'glass text-white shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-secondary/50'}"
 						>
 							<Layers class="w-4 h-4 {activeTab === 'templates' ? 'text-red-500 animate-pulse' : ''} group-hover:scale-110 transition-transform" />
 							<span>Templates</span>
 						</button>
 						<button 
 							onclick={() => activeTab = 'custom'}
-							class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 text-sm group {activeTab === 'custom' ? 'glass text-white shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'}"
+							class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 text-sm group {activeTab === 'custom' ? 'glass text-white shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-secondary/50'}"
 						>
 							<Target class="w-4 h-4 {activeTab === 'custom' ? 'text-red-500 animate-pulse' : ''} group-hover:scale-110 transition-transform" />
 							<span>Custom Goals ({displayCustomGoals.length})</span>
@@ -151,17 +151,17 @@
 
 					<!-- Sessions -->
 					<div>
-						<p class="text-[10px] font-semibold text-zinc-600 uppercase tracking-wider mb-2 px-1">Recent</p>
+						<p class="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-1">Recent</p>
 						<div class="space-y-1">
 							<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group glass text-red-400 shadow-md">
 								<BarChart3 class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
 								<span class="truncate">Q4 Analysis</span>
 							</button>
-							<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group text-zinc-500 hover:text-zinc-400 hover:bg-zinc-800/30">
+							<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group text-muted-foreground hover:text-zinc-400 hover:bg-secondary/30">
 								<FileText class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
 								<span class="truncate">Client Meeting</span>
 							</button>
-							<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group text-zinc-500 hover:text-zinc-400 hover:bg-zinc-800/30">
+							<button class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 group text-muted-foreground hover:text-zinc-400 hover:bg-secondary/30">
 								<RefreshCw class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
 								<span class="truncate">Weekly Sync</span>
 							</button>
@@ -179,7 +179,7 @@
 						<div class="relative h-full flex flex-col">
 							<div class="mb-4">
 								<h3 class="text-sm font-semibold text-white mb-1">Template Library</h3>
-								<p class="text-xs text-zinc-500">Choose a pre-built analysis template</p>
+								<p class="text-xs text-muted-foreground">Choose a pre-built analysis template</p>
 							</div>
 
 							<div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
@@ -191,7 +191,7 @@
 									>
 										<div class="flex items-start gap-3">
 											<div class="w-10 h-10 rounded-lg bg-gradient-to-br {template.color} flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-												<IconComponent class="w-5 h-5 text-white" />
+												<IconComponent class="w-5 h-5 text-foreground" />
 											</div>
 											<div class="flex-1 min-w-0">
 												<div class="flex items-center gap-2 mb-1">
@@ -212,15 +212,15 @@
 						<div class="relative h-full flex flex-col">
 							<div class="mb-4">
 								<h3 class="text-sm font-semibold text-white mb-1">Custom Analysis Goals</h3>
-								<p class="text-xs text-zinc-500">Personalized objectives for your team</p>
+								<p class="text-xs text-muted-foreground">Personalized objectives for your team</p>
 							</div>
 
 							<div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
 								{#each displayCustomGoals as goal}
-									<div class="p-4 glass-subtle rounded-xl border border-zinc-800/50 hover:border-red-500/20 transition-all duration-300 group hover:glass">
+									<div class="p-4 glass-subtle rounded-xl border border-border/50 hover:border-red-500/20 transition-all duration-300 group hover:glass">
 										<div class="flex items-start gap-3">
 											<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
-												<Target class="w-4 h-4 text-white" />
+												<Target class="w-4 h-4 text-foreground" />
 											</div>
 											<div class="flex-1 min-w-0">
 												<h4 class="font-semibold text-white text-sm mb-1 group-hover:text-red-400 transition-colors">{goal.title}</h4>
@@ -238,8 +238,8 @@
 								{/each}
 
 								<!-- Add New Goal Button -->
-								<button class="w-full p-4 rounded-xl border-2 border-dashed border-zinc-800 hover:border-red-500/50 transition-all duration-300 group hover:bg-zinc-900/50">
-									<div class="flex items-center justify-center gap-2 text-zinc-500 group-hover:text-red-400">
+								<button class="w-full p-4 rounded-xl border-2 border-dashed border-border hover:border-red-500/50 transition-all duration-300 group hover:bg-secondary/50">
+									<div class="flex items-center justify-center gap-2 text-muted-foreground group-hover:text-red-400">
 										<Plus class="w-5 h-5 group-hover:scale-110 transition-transform" />
 										<span class="text-sm font-medium">Add Custom Goal</span>
 									</div>
@@ -252,11 +252,11 @@
 				<!-- Right Panel - Output Display -->
 				<div class="flex flex-col h-full">
 					<!-- Header -->
-					<div class="p-4 border-b border-zinc-800/50 backdrop-blur-sm">
+					<div class="p-4 border-b border-border/50 backdrop-blur-sm">
 						<div class="flex items-center justify-between mb-2">
 							<div class="flex items-center gap-2">
 								<Brain class="w-4 h-4 text-red-500 animate-pulse" />
-								<h3 class="text-sm font-semibold text-white">AI Analysis Output</h3>
+								<h3 class="text-sm font-semibold text-foreground">AI Analysis Output</h3>
 							</div>
 							<div class="flex items-center gap-2">
 								<button class="px-3 py-1.5 glass rounded-lg text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5">
@@ -270,7 +270,7 @@
 							</div>
 						</div>
 						{#if selectedTemplate}
-							<p class="text-xs text-zinc-500">Template: <span class="text-red-400">{selectedTemplate.title}</span></p>
+							<p class="text-xs text-muted-foreground">Template: <span class="text-red-400">{selectedTemplate.title}</span></p>
 						{/if}
 					</div>
 
@@ -281,10 +281,10 @@
 							<!-- Template output content -->
 							<div class="space-y-4">
 								<!-- Summary Card -->
-								<div class="glass rounded-xl p-4 border border-zinc-800/50">
+								<div class="glass rounded-xl p-4 border border-border/50">
 									<div class="flex items-center gap-2 mb-3">
 										<div class="w-8 h-8 rounded-lg bg-gradient-to-br {selectedTemplate.color} flex items-center justify-center">
-											<IconComponent class="w-4 h-4 text-white" />
+											<IconComponent class="w-4 h-4 text-foreground" />
 										</div>
 										<h4 class="font-semibold text-white text-sm">{selectedTemplate.title}</h4>
 									</div>
@@ -315,15 +315,15 @@
 												<ul class="space-y-1.5">
 													<li class="text-xs text-zinc-400 flex items-start gap-2">
 														<span class="text-red-500">•</span>
-														<span><strong class="text-white">John:</strong> Finalize API documentation by Friday</span>
+														<span><strong class="text-foreground">John:</strong> Finalize API documentation by Friday</span>
 													</li>
 													<li class="text-xs text-zinc-400 flex items-start gap-2">
 														<span class="text-red-500">•</span>
-														<span><strong class="text-white">Sarah:</strong> Schedule follow-up with design team</span>
+														<span><strong class="text-foreground">Sarah:</strong> Schedule follow-up with design team</span>
 													</li>
 													<li class="text-xs text-zinc-400 flex items-start gap-2">
 														<span class="text-red-500">•</span>
-														<span><strong class="text-white">Team:</strong> Review pricing strategy proposal</span>
+														<span><strong class="text-foreground">Team:</strong> Review pricing strategy proposal</span>
 													</li>
 												</ul>
 											</div>
@@ -357,28 +357,28 @@
 
 								<!-- Stakeholder Analysis (if applicable) -->
 								{#if selectedTemplate.id === 'stakeholder'}
-									<div class="glass rounded-xl p-4 border border-zinc-800/50">
+									<div class="glass rounded-xl p-4 border border-border/50">
 										<div class="flex items-center gap-2 mb-3">
 											<Users class="w-4 h-4 text-green-500" />
 											<h4 class="font-semibold text-white text-sm">Stakeholder Map</h4>
 										</div>
 										<div class="space-y-2">
-											<div class="flex items-center gap-3 p-2 rounded-lg bg-zinc-900/50">
-												<div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-xs font-bold text-white">
+											<div class="flex items-center gap-3 p-2 rounded-lg bg-secondary/50">
+												<div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-xs font-bold text-foreground">
 													JD
 												</div>
 												<div class="flex-1">
-													<p class="text-xs font-semibold text-white">John Doe</p>
-													<p class="text-[10px] text-zinc-500">Decision Maker • High Influence</p>
+													<p class="text-xs font-semibold text-foreground">John Doe</p>
+													<p class="text-[10px] text-muted-foreground">Decision Maker • High Influence</p>
 												</div>
 											</div>
-											<div class="flex items-center gap-3 p-2 rounded-lg bg-zinc-900/50">
-												<div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-xs font-bold text-white">
+											<div class="flex items-center gap-3 p-2 rounded-lg bg-secondary/50">
+												<div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-xs font-bold text-foreground">
 													SM
 												</div>
 												<div class="flex-1">
-													<p class="text-xs font-semibold text-white">Sarah Miller</p>
-													<p class="text-[10px] text-zinc-500">Technical Champion • Medium Influence</p>
+													<p class="text-xs font-semibold text-foreground">Sarah Miller</p>
+													<p class="text-[10px] text-muted-foreground">Technical Champion • Medium Influence</p>
 												</div>
 											</div>
 										</div>
@@ -391,7 +391,7 @@
 										<Mail class="w-4 h-4" />
 										<span>Send Follow-Up</span>
 									</button>
-									<button class="flex-1 flex items-center justify-center gap-2 px-4 py-3 glass hover:bg-zinc-800/50 text-white text-xs font-semibold rounded-xl transition-all">
+									<button class="flex-1 flex items-center justify-center gap-2 px-4 py-3 glass hover:bg-secondary/50 text-white text-xs font-semibold rounded-xl transition-all">
 										<Activity class="w-4 h-4" />
 										<span>Sync to CRM</span>
 									</button>
@@ -402,10 +402,10 @@
 							<div class="h-full flex items-center justify-center">
 								<div class="text-center max-w-xs">
 									<div class="w-16 h-16 rounded-2xl glass mx-auto mb-4 flex items-center justify-center">
-										<FileText class="w-8 h-8 text-zinc-600" />
+										<FileText class="w-8 h-8 text-muted-foreground" />
 									</div>
 									<h4 class="font-semibold text-white text-sm mb-2">No Template Selected</h4>
-									<p class="text-xs text-zinc-500 leading-relaxed">
+									<p class="text-xs text-muted-foreground leading-relaxed">
 										Choose a template or custom goal from the sidebar to generate AI-powered insights.
 									</p>
 								</div>

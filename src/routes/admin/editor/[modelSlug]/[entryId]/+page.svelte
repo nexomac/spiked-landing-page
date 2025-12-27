@@ -21,6 +21,17 @@
         entryData[fieldSlug] = json;
     }
 
+    async function handleImageUpload(fieldSlug, event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            entryData[fieldSlug] = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
     // Helper to check if Tiptap JSON is "empty"
     function isTiptapEmpty(v) {
         if (!v) return true;
@@ -85,16 +96,51 @@
                         <!-- Hidden input to transport JSON data -->
                         <input type="hidden" name="richtext_{field.slug}" value={JSON.stringify(entryData[field.slug] || getFieldValue(field))} />
                     {:else if field.type === 'image'}
-                        <div class="flex gap-4">
-                            <input 
-                                type="text" 
-                                name={field.slug} 
-                                bind:value={entryData[field.slug]}
-                                placeholder="Image URL (http://...)" 
-                                class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none"
-                            />
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <div class="relative flex-1 group">
+                                    <input 
+                                        type="text" 
+                                        name={field.slug} 
+                                        bind:value={entryData[field.slug]}
+                                        placeholder="Paste image link (http://...) or upload below" 
+                                        class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-red-500 outline-none transition-all"
+                                    />
+                                    {#if entryData[field.slug]}
+                                        <button 
+                                            type="button"
+                                            onclick={() => entryData[field.slug] = ''}
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-500 text-xs font-bold uppercase"
+                                        >
+                                            Clear
+                                        </button>
+                                    {/if}
+                                </div>
+                                
+                                <label class="shrink-0 cursor-pointer group/upload">
+                                    <input 
+                                        type="file" 
+                                        accept="image/*" 
+                                        class="hidden" 
+                                        onchange={(e) => handleImageUpload(field.slug, e)}
+                                    />
+                                    <div class="h-full px-6 flex items-center justify-center bg-gray-800 border border-gray-700 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-gray-700 hover:border-red-500/50 transition-all text-gray-300 group-hover/upload:text-white">
+                                        Upload from PC
+                                    </div>
+                                </label>
+                            </div>
+
                             {#if entryData[field.slug]}
-                                <img src={entryData[field.slug]} alt="Preview" class="h-12 w-12 rounded object-cover border border-gray-700"/>
+                                <div class="relative w-full max-w-sm aspect-video rounded-xl overflow-hidden border-2 border-red-900/20 bg-gray-900 group">
+                                    <img 
+                                        src={entryData[field.slug]} 
+                                        alt="Preview" 
+                                        class="w-full h-full object-cover"
+                                    />
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <span class="text-[10px] font-black uppercase tracking-widest bg-red-600 px-2 py-1 rounded">Live Preview</span>
+                                    </div>
+                                </div>
                             {/if}
                         </div>
                     {:else if field.type === 'date'}

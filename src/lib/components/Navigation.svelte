@@ -97,6 +97,17 @@
 				},
 			],
 		},
+		about: {
+			label: "About",
+			links: [
+				{
+					title: "About Us",
+					desc: "Meet the team and how we work.",
+					icon: Users,
+					href: "/about-us",
+				},
+			],
+		},
 	};
 
 	function handleMouseEnter(menu) {

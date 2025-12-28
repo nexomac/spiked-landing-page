@@ -33,5 +33,26 @@ export const actions = {
         } catch (e) {
             return fail(500, { error: e.message });
         }
+    },
+    importJson: async ({ request, cookies }) => {
+        requireAuth(cookies);
+        const data = await request.formData();
+        const jsonContent = data.get('jsonContent');
+
+        if (!jsonContent) {
+            return fail(400, { missing: true });
+        }
+
+        try {
+            const modelDef = JSON.parse(jsonContent);
+            if (!modelDef.name || !modelDef.slug || !Array.isArray(modelDef.fields)) {
+                return fail(400, { invalidJson: true, error: 'Model must have name, slug, and fields array.' });
+            }
+
+            await createContentModel(modelDef);
+            return { success: true };
+        } catch (e) {
+            return fail(400, { invalidJson: true, error: e.message });
+        }
     }
 };

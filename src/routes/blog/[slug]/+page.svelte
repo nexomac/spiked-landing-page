@@ -15,7 +15,8 @@
             if (fieldData && typeof fieldData === 'object' && fieldData.type === 'doc') {
                 return generateHTML(fieldData, [
                     StarterKit,
-                    Image
+                    Image,
+                    Link
                 ]);
             }
             return '';
@@ -33,8 +34,9 @@
         return '';
     }
     
-    // Format date format: "December 12, 2025"
+    // Format date format: "Friday, December 12, 2025"
     let formattedDate = $derived(new Date(data.post.publishedDate || data.post.createdAt).toLocaleDateString('en-US', {
+        weekday: 'long',
         month: 'long',
         day: 'numeric',
         year: 'numeric'
@@ -67,8 +69,8 @@
 <div class="min-h-screen transition-colors duration-500 font-serif pt-24 pb-20 px-4 flex justify-center selection:bg-red-500/30 
     {$themeStore === 'dark' ? 'bg-[#0f0f0f] text-white/90' : 'bg-[#f8f8f0] text-black'}">
     
-    <!-- The "Vertical Newspaper Strip" Container -->
-    <article class="w-full max-w-2xl border-x shadow-2xl min-h-[80vh] flex flex-col items-center transition-colors duration-500
+    <!-- The "Vertical Newspaper Strip" Container - WIDENED to max-w-3xl -->
+    <article class="w-full max-w-5xl border-x shadow-2xl min-h-[80vh] flex flex-col items-center transition-colors duration-500
         {$themeStore === 'dark' ? 'bg-[#1a1a1a] border-red-900/20' : 'bg-white border-black/10'}">
         
         <!-- Strip Header / Metaline -->
@@ -84,13 +86,13 @@
                 <span class="hidden md:block transition-colors {$themeStore === 'dark' ? 'text-gray-500' : 'text-gray-400'}">The SpikedAI Times</span>
                 <span class="flex items-center gap-2">
                     {formattedDate} 
-                    <span class="opacity-30">•</span> 
+                    <span class="opacity-30">/</span> 
                     {readingTime}
                 </span>
                 <span class="hidden sm:block">Vol. {new Date().getFullYear()}</span>
             </nav>
             
-            <h1 class="text-4xl md:text-5xl font-black leading-tight mb-6 font-serif transition-colors
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 font-serif transition-colors
                 {$themeStore === 'dark' ? 'text-white' : 'text-black'}">
                 {data.post.title || data.post.data?.Title || data.post.data?.title}
             </h1>
@@ -99,7 +101,7 @@
                 {$themeStore === 'dark' ? 'border-red-900/10 text-gray-500' : 'border-black/10 text-gray-600'}">
                 <span class="flex items-center gap-2">
                     <span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
-                    By {data.post.author || data.post.data?.Author || 'Editorial Staff'}
+                    By {data.post.author || data.post.data?.Author || data.post.data?.author || 'Editorial Staff'}
                     <span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
                 </span>
                 
@@ -107,20 +109,20 @@
                     <VoicePlayer content={rest || {}} />
                     <ShareButton 
                         title={data.post.title}
-                        text={`Read "${data.post.title}" on Spiked.`}
+                        text={`Read "${data.post.title}" on SpikedAI.`}
                     />
                 </div>
             </div>
         </header>
 
         <!-- Main Content Column -->
-        <div class="w-full px-8 md:px-12 pb-12 transition-colors {$themeStore === 'dark' ? 'bg-[#1a1a1a]' : 'bg-white'}">
+        <div class="w-full px-8 md:px-16 pb-12 transition-colors {$themeStore === 'dark' ? 'bg-[#1a1a1a]' : 'bg-white'}">
             <!-- Optional Cover Image -->
-            {#if data.post.coverImage}
+            {#if data.post.coverImage || data.post.data?.coverImage || data.post.data?.['Cover Image']}
                 <div class="mb-8 border-2 p-1 transition-colors
                     {$themeStore === 'dark' ? 'bg-[#0f0f0f] border-red-900/30' : 'bg-gray-100 border-black'}">
                     <img 
-                        src={data.post.coverImage} 
+                        src={data.post.coverImage || data.post.data?.coverImage || data.post.data?.['Cover Image']} 
                         alt={data.post.title} 
                         class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all duration-700" 
                     />
@@ -131,46 +133,81 @@
             <!-- Text Content -->
             <div class="prose prose-lg prose-serif max-w-none leading-relaxed text-justify tiptap-content transition-colors
                 {$themeStore === 'dark' ? 'text-white/80' : 'text-black'}">
-                {#each data.modelFields as field}
+                {#each data.modelFields as field, i}
                     {@const value = data.post.data[field.slug] || data.post.data[field.name]}
-                    {#if value && !['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate'].some(k => field.slug.toLowerCase() === k.toLowerCase())}
+                    {#if value && !['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate', 'publishDate', 'publish_date', 'published_date', 'date'].some(k => field.slug.toLowerCase() === k.toLowerCase())}
                         
                         {#if field.type === 'richtext'}
-                            <div class="mb-6 theme-prose-colors">
+                            <div class="mb-10 theme-prose-colors">
                                 {@html getFieldHtml(value)}
                             </div>
                         {:else if field.type === 'image' || (typeof value === 'string' && (value.startsWith('data:image') || value.match(/\.(jpeg|jpg|gif|png|webp)$/i)))}
-                            <div class="mb-8 border-2 p-1 transition-colors
+                            <div class="mb-10 border-2 p-1 transition-colors
                                 {$themeStore === 'dark' ? 'bg-[#0f0f0f] border-red-900/30' : 'bg-gray-100 border-black'}">
                                 <img src={value} alt={field.name} class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all" />
                             </div>
                         {:else if field.type === 'quote'}
-                            <div class="my-10 px-8 py-6 border-y-2 text-center transition-colors
+                            <div class="my-12 px-8 py-8 border-y-2 text-center transition-colors
                                 {$themeStore === 'dark' ? 'border-red-900/30' : 'border-black'}">
-                                <p class="text-3xl font-black italic leading-tight transition-colors
+                                <p class="text-3xl md:text-4xl font-black italic leading-tight transition-colors
                                     {$themeStore === 'dark' ? 'text-red-500' : 'text-black'}">
                                     "{value}"
                                 </p>
                             </div>
                         {:else if field.type === 'highlight'}
-                            <div class="my-8 p-6 shadow-[8px_8px_0px_0px_rgba(220,38,38,1)] transition-colors
+                            <div class="my-10 p-8 shadow-[12px_12px_0px_0px_rgba(220,38,38,1)] transition-colors
                                 {$themeStore === 'dark' ? 'bg-red-950/20 border-l-4 border-red-600' : 'bg-black text-white'}">
-                                <p class="font-sans font-bold uppercase tracking-widest text-[10px] mb-2 text-red-600">Key Intelligence</p>
-                                <p class="text-xl font-bold leading-snug">
+                                <p class="font-sans font-bold uppercase tracking-widest text-xs mb-3 text-red-600">Intelligence Brief</p>
+                                <p class="text-2xl font-bold leading-snug">
                                     {value}
                                 </p>
                             </div>
+                        {:else if field.type === 'callout'}
+                            <div class="my-8 p-6 border-2 border-dashed transition-colors
+                                {$themeStore === 'dark' ? 'border-red-900/40 bg-red-900/5' : 'border-black bg-gray-50'}">
+                                <div class="flex items-start gap-4">
+                                    <span class="text-4xl">📢</span>
+                                    <p class="text-xl font-medium italic">{value}</p>
+                                </div>
+                            </div>
+                        {:else if field.type === 'link'}
+                            <div class="mb-8 font-sans">
+                                <a href={value} target="_blank" class="inline-flex items-center gap-2 text-xl font-bold border-b-4 border-red-600 hover:bg-red-600 hover:text-white transition-all px-2 py-1">
+                                    {value.replace(/^https?:\/\//, '')} ↗
+                                </a>
+                            </div>
+                        {:else if field.type === 'statistic'}
+                            {@const [statLabel, statVal] = (value || '').split('|')}
+                            <div class="my-10 flex flex-col md:flex-row items-center gap-12 p-8 border transition-colors
+                                {$themeStore === 'dark' ? 'border-red-900/30 bg-[#0a0a0a]' : 'border-black bg-gray-50'}">
+                                <div class="flex-1 text-center md:text-left">
+                                    <div class="text-6xl font-black text-red-600 mb-2 truncate">{statVal || statLabel || '0'}</div>
+                                    <div class="text-sm font-sans font-bold uppercase tracking-widest opacity-60">{statVal ? statLabel : 'Metric Value'}</div>
+                                </div>
+                                <div class="w-32 h-32 shrink-0 relative flex items-center justify-center">
+                                    <svg viewBox="0 0 32 32" class="w-full h-full rotate-[-90deg]">
+                                        <circle r="16" cx="16" cy="16" fill="transparent" stroke="currentColor" stroke-width="32" stroke-dasharray="100 100" class="opacity-10" />
+                                        <circle r="16" cx="16" cy="16" fill="transparent" stroke="#dc2626" stroke-width="32" stroke-dasharray="{parseFloat(statVal) || 75} 100" />
+                                    </svg>
+                                </div>
+                            </div>
+                        {:else if field.type === 'divider'}
+                            <div class="my-12 flex justify-center items-center gap-4">
+                                <div class="h-0.5 flex-1 bg-red-600/30"></div>
+                                <div class="text-red-600 rotate-45 text-xs">◆</div>
+                                <div class="h-0.5 flex-1 bg-red-600/30"></div>
+                            </div>
                         {:else if typeof value === 'string'}
-                            <p class="mb-4 font-serif text-lg">{value}</p>
+                            <p class="mb-6 font-serif text-xl leading-relaxed">{value}</p>
                         {/if}
                     {/if}
                 {/each}
 
                 <!-- Fallback for any fields not in modelFields but in data -->
                 {#each Object.entries(data.post.data || {}) as [key, value]}
-                    {#if !data.modelFields.some(f => f.slug === key || f.name === key) && !['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate', 'newsletters', 'Cover Image', 'Featured Image', 'FeaturedImage', 'featured-image', 'Image', 'image', 'Thumbnail', 'thumbnail'].some(k => key.toLowerCase() === k.toLowerCase())}
+                    {#if !data.modelFields.some(f => f.slug === key || f.name === key) && !['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate', 'publishDate', 'publish_date', 'published_date', 'date', 'newsletters', 'Cover Image', 'Featured Image', 'FeaturedImage', 'featured-image', 'Image', 'image', 'Thumbnail', 'thumbnail'].some(k => key.toLowerCase() === k.toLowerCase())}
                          {#if typeof value === 'string' && value.length > 0}
-                            <p class="mb-4 font-serif text-lg">{value}</p>
+                            <p class="mb-6 font-serif text-xl leading-relaxed">{value}</p>
                          {/if}
                     {/if}
                 {/each}
@@ -188,46 +225,65 @@
 <style>
     /* Custom Typography Tweaks for the 'Sherwood' feel */
     :global(.tiptap-content p) {
-        margin-bottom: 1.5em;
+        margin-bottom: 2em;
         text-indent: 0;
     }
-    :global(.tiptap-content p:first-of-type::first-letter) {
+    /* Specific selector to target ONLY top-level paragraphs, not lists or others */
+    :global(.tiptap-content > p:first-of-type::first-letter) {
         float: left;
-        font-size: 3.5em;
+        font-size: 4em;
         line-height: 0.8;
         font-weight: bold;
-        margin-right: 0.1em;
-        margin-top: -0.05em;
+        margin-right: 0.15em;
+        margin-top: 0.05em;
         color: #dc2626; /* Spiked Red Dropcap */
+        font-family: serif;
     }
     :global(.theme-dark .tiptap-content p) {
         color: rgba(255, 255, 255, 0.8);
     }
     
+    /* Headers: Smaller and more elegant as requested */
     :global(.tiptap-content h2) {
         font-family: sans-serif;
         text-transform: uppercase;
         font-size: 1.1em;
-        letter-spacing: 0.05em;
+        font-weight: 900;
+        letter-spacing: 0.15em;
         border-bottom: 2px solid #dc2626; /* Red border for headers */
-        padding-bottom: 0.2em;
-        margin-top: 2em;
+        padding-bottom: 0.3em;
+        margin-top: 3em;
+        margin-bottom: 1.5em;
         color: inherit;
+        display: inline-block;
+    }
+
+    :global(.tiptap-content h3) {
+        font-family: sans-serif;
+        text-transform: uppercase;
+        font-size: 0.9em;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        margin-top: 2.5em;
+        margin-bottom: 1em;
+        color: #dc2626;
     }
 
     :global(.tiptap-content blockquote) {
-        border-left: 4px solid #dc2626;
-        padding-left: 1em;
+        border-left: 6px solid #dc2626;
+        padding-left: 1.5em;
         font-style: italic;
-        font-weight: bold;
-        background: rgba(220, 38, 38, 0.05);
-        padding: 1em;
-        margin: 2em 0;
+        font-weight: 700;
+        background: rgba(220, 38, 38, 0.03);
+        padding: 2em;
+        margin: 3em 0;
+        font-size: 1.25em;
+        color: inherit; /* Respect parent color */
     }
 
     :global(.theme-dark .tiptap-content blockquote) {
-        background: rgba(220, 38, 38, 0.1);
-        color: #fff;
+        background: rgba(220, 38, 38, 0.07);
+        color: rgba(255, 255, 255, 0.9) !important;
     }
 
     :global(.tiptap-content a) {
@@ -235,6 +291,25 @@
         text-decoration: underline;
         text-underline-offset: 4px;
         font-weight: bold;
+    }
+
+    :global(.tiptap-content ul) {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 2em;
+    }
+    :global(.tiptap-content li) {
+        position: relative;
+        padding-left: 1.5em;
+        margin-bottom: 0.5em;
+    }
+    :global(.tiptap-content li::before) {
+        content: "◆";
+        position: absolute;
+        left: 0;
+        color: #dc2626;
+        font-size: 0.8em;
+        top: 0.2em;
     }
 
     /* Handle prose colors in dark mode better than default Tailwind prose */

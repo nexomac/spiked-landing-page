@@ -39,15 +39,21 @@
             <h3 class="font-semibold mb-4">Add Field</h3>
             <form action="?/addField" method="POST" class="flex gap-4 items-end">
                 <div class="flex-1">
-                    <label class="block text-xs text-gray-500 mb-1">Field Name</label>
-                    <input name="fieldName" type="text" required class="w-full bg-black border border-gray-700 rounded px-3 py-2" placeholder="e.g. Body Content" />
+                    <label for="fieldName" class="block text-xs text-gray-500 mb-1">Field Name</label>
+                    <input id="fieldName" name="fieldName" type="text" required class="w-full bg-black border border-gray-700 rounded px-3 py-2" placeholder="e.g. Body Content" />
                 </div>
                 <div class="w-40">
-                    <label class="block text-xs text-gray-500 mb-1">Type</label>
-                    <select name="fieldType" class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white">
+                    <label for="fieldType" class="block text-xs text-gray-500 mb-1">Type</label>
+                    <select id="fieldType" name="fieldType" class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white text-xs">
                         <option value="text">Short Text</option>
-                        <option value="richtext">Rich Text (Blocks)</option> <!-- Important for the Newspaper style -->
+                        <option value="richtext">Rich Text (Blocks)</option>
                         <option value="image">Image URL</option>
+                        <option value="quote">Impact Quote</option>
+                        <option value="highlight">Highlight Box</option>
+                        <option value="link">External Link</option>
+                        <option value="callout">Callout/Notice</option>
+                        <option value="statistic">Statistic (Label|Value)</option>
+                        <option value="divider">Section Divider</option>
                         <option value="date">Date</option>
                     </select>
                 </div>

@@ -1,6 +1,7 @@
 <script>
     import { Check, X, Zap, Shield, Rocket, Globe, Cpu } from 'lucide-svelte';
     import { themeStore } from '$lib/stores/theme.js';
+    import { fade } from "svelte/transition";
 
     let billingCycle = $state('monthly'); // 'monthly' or 'annual'
 
@@ -15,7 +16,7 @@
                 '500 Monthly Actions',
                 'Community Support',
                 'Basic Analytics',
-                'Spiked Cloud Hosting'
+                'SpikedAI Cloud Hosting'
             ],
             cta: 'Get Started for Free',
             highlight: false,

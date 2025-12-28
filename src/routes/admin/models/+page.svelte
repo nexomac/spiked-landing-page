@@ -114,23 +114,59 @@
             </div>
 
             <!-- Create -->
-            <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 h-fit">
-                <h2 class="text-xl font-semibold mb-4">Manually Create</h2>
-                <form method="POST" action="?/create" class="space-y-4">
-                    <div>
-                        <label for="modelName" class="block text-sm text-gray-400 mb-1">Model Name</label>
-                        <input id="modelName" name="name" type="text" placeholder="e.g. Blog Post" required 
-                            class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white" />
+            <div class="space-y-8">
+                <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 h-fit">
+                    <h2 class="text-xl font-semibold mb-4">Manually Create</h2>
+                    <form method="POST" action="?/create" class="space-y-4">
+                        <div>
+                            <label for="modelName" class="block text-sm text-gray-400 mb-1">Model Name</label>
+                            <input id="modelName" name="name" type="text" placeholder="e.g. Blog Post" required 
+                                class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white" />
+                        </div>
+                        <div>
+                            <label for="modelSlug" class="block text-sm text-gray-400 mb-1">API Slug</label>
+                            <input id="modelSlug" name="slug" type="text" placeholder="e.g. blog-post" required 
+                                class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white" />
+                        </div>
+                        <button class="w-full bg-white text-black font-bold py-2 rounded hover:bg-gray-200 transition">
+                            Create Model
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-gray-900/50 p-6 rounded-xl border border-red-900/30 h-fit">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-2 h-2 bg-red-600 animate-pulse"></div>
+                        <h2 class="text-xl font-semibold">JSON Blueprint</h2>
                     </div>
-                    <div>
-                        <label for="modelSlug" class="block text-sm text-gray-400 mb-1">API Slug</label>
-                        <input id="modelSlug" name="slug" type="text" placeholder="e.g. blog-post" required 
-                            class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-white" />
-                    </div>
-                    <button class="w-full bg-white text-black font-bold py-2 rounded hover:bg-gray-200 transition">
-                        Create Model
-                    </button>
-                </form>
+                    <p class="text-xs text-gray-500 mb-4 uppercase tracking-widest font-mono">Expert Mode / Schema Import</p>
+                    
+                    <form method="POST" action="?/importJson" class="space-y-4">
+                        <div>
+                            <textarea 
+                                name="jsonContent" 
+                                rows="10" 
+                                placeholder={JSON.stringify({
+                                    name: "Example Model",
+                                    slug: "example-model",
+                                    fields: [
+                                        { name: "Title", type: "text", required: true, slug: "title" },
+                                        { name: "Body", type: "richtext", required: true, slug: "body" }
+                                    ]
+                                }, null, 2)}
+                                class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white font-mono text-xs focus:border-red-500 outline-none min-h-[200px]"
+                            ></textarea>
+                        </div>
+                        
+                        {#if form?.invalidJson}
+                            <p class="text-red-500 text-xs font-bold uppercase tracking-tight">Error: {form.error}</p>
+                        {/if}
+
+                        <button class="w-full bg-red-600 text-white font-bold py-2 rounded hover:bg-red-500 transition uppercase tracking-widest text-sm">
+                            Import Schema →
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

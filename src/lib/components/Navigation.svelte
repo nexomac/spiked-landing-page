@@ -17,6 +17,7 @@
 		Newspaper,
 		LifeBuoy,
 		ChevronDown,
+		Video,
 	} from "lucide-svelte";
 
 	let isScrolled = $state(false);
@@ -95,16 +96,11 @@
 					icon: LifeBuoy,
 					href: "/features/custom-goals",
 				},
-			],
-		},
-		about: {
-			label: "About",
-			links: [
 				{
-					title: "About Us",
-					desc: "Meet the team and how we work.",
-					icon: Users,
-					href: "/about-us",
+					title: "Video Resources",
+					desc: "Watch how Spiked AI can transform your business.",
+					icon: Video,
+					href: "/features/video-resources",
 				},
 			],
 		},
@@ -177,7 +173,7 @@
 						<img
 							src="/Spiked.ai-white-logo-icon-only.png"
 							alt="SpikedAI Logo"
-							class={`h-5 w-5 sm:h-7 sm:w-7 rounded transform group-hover:rotate-6 transition-all duration-500 ${isLight ? 'brightness-0' : ''}`}
+							class={`h-5 w-5 sm:h-7 sm:w-7 rounded transform group-hover:rotate-6 transition-all duration-500`}
 						/>
 					</div>
 				</div>
@@ -221,6 +217,15 @@
 					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${$page.url.pathname === "/pricing" ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
 				>
 					Pricing
+					<span
+						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
+					></span>
+				</a>
+				<a
+					href="/about-us"
+					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${$page.url.pathname === "/about-us" ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
+				>
+					About Us
 					<span
 						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
 					></span>

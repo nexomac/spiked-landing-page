@@ -85,7 +85,7 @@
                     <div class="space-y-2">
                         <div class="block text-sm font-medium text-gray-300 uppercase tracking-wide">
                             <span class="block mb-1">
-                                {field.name}
+                                {field.name} - {field.type}
                                 {#if field.required}<span class="text-red-500">*</span>{/if}
                             </span>
                         </div>

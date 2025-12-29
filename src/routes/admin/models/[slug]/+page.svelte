@@ -24,8 +24,26 @@
                         <div class="font-medium">{field.name}</div>
                         <div class="text-xs text-gray-500 font-mono">{field.slug}</div>
                     </div>
-                    <div class="text-sm px-2 py-1 bg-gray-800 rounded text-gray-300">
-                        {field.type}
+                    <div class="flex items-center">
+                        <form action="?/updateFieldType" method="POST" class="mr-4">
+                            <input type="hidden" name="fieldSlug" value={field.slug}>
+                            <select 
+                                name="newType" 
+                                class="text-sm bg-gray-800 rounded text-gray-300 border border-transparent hover:border-gray-700 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-red-500 cursor-pointer" 
+                                onchange={(e) => e.target.form.requestSubmit()}
+                            >
+                                <option value="text" selected={field.type === 'text'}>Short Text</option>
+                                <option value="richtext" selected={field.type === 'richtext'}>Rich Text</option>
+                                <option value="image" selected={field.type === 'image'}>Image URL</option>
+                                <option value="quote" selected={field.type === 'quote'}>Quote</option>
+                                <option value="highlight" selected={field.type === 'highlight'}>Highlight</option>
+                                <option value="link" selected={field.type === 'link'}>Link</option>
+                                <option value="callout" selected={field.type === 'callout'}>Callout</option>
+                                <option value="statistic" selected={field.type === 'statistic'}>Statistic</option>
+                                <option value="divider" selected={field.type === 'divider'}>Divider</option>
+                                <option value="date" selected={field.type === 'date'}>Date</option>
+                            </select>
+                        </form>
                     </div>
                     <form action="?/removeField" method="POST">
                         <input type="hidden" name="fieldSlug" value={field.slug}>

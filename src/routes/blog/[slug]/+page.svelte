@@ -172,8 +172,11 @@
                             </div>
                         {:else if field.type === 'link'}
                             <div class="mb-8 font-sans">
-                                <a href={value} target="_blank" class="inline-flex items-center gap-2 text-xl font-bold border-b-4 border-red-600 hover:bg-red-600 hover:text-white transition-all px-2 py-1">
-                                    {value.replace(/^https?:\/\//, '')} ↗
+                                <a href={value} target="_blank" class="group inline-flex items-center gap-2 text-xl font-bold border-b-4 border-red-600 hover:bg-red-600 hover:text-white transition-all px-2 py-1">
+                                    <span class="group-hover:text-white">
+                                        {value.replace(/^https?:\/\//, '')}
+                                    </span>
+                                    <span class="group-hover:text-white">↗</span>
                                 </a>
                             </div>
                         {:else if field.type === 'statistic'}

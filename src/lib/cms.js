@@ -25,14 +25,40 @@ export async function getContentModel(slug) {
 
 // --- Entries ---
 
-export async function createEntry(modelSlug, data) {
+export async function createEntry(modelSlug, rawData) {
     const db = await getDb();
     const model = await getContentModel(modelSlug);
     if (!model) throw new Error(`Model ${modelSlug} not found`);
 
+    // Strict Field Enforcement: Only keep keys that exist as slugs in the model
+    const data = {};
+    model.fields.forEach(field => {
+        // Try exact slug match
+        if (rawData[field.slug] !== undefined) {
+            data[field.slug] = rawData[field.slug];
+        } 
+        // Fallback: try case-insensitive match for resilience (but store as slug)
+        else {
+            const ciKey = Object.keys(rawData).find(k => k.toLowerCase() === field.slug.toLowerCase());
+            if (ciKey) {
+                data[field.slug] = rawData[ciKey];
+            }
+        }
+    });
+
+    // Extract core fields to top level for indexing/querying
+    const title = data.title || data.name || 'Untitled';
+    const slug = data.slug || '';
+    const author = data.author || 'Editorial Staff';
+    const publishedDate = data.publishedDate || new Date().toISOString();
+
     return await db.collection('content_entries').insertOne({
         modelSlug,
-        data, // The actual content fields
+        title,
+        slug,
+        author,
+        publishedDate,
+        data, // The strictly filtered content fields
         status: 'draft',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -78,7 +104,10 @@ export async function getEntry(id) {
 export async function getEntryBySlug(modelSlug, entrySlug) {
      const db = await getDb();
      const query = { 
-         'data.slug': entrySlug,
+         $or: [
+             { 'data.slug': entrySlug },
+             { 'data.Slug': entrySlug }
+         ],
          status: 'live' 
      };
      // If modelSlug is provided, strict filter. Otherwise, search all.

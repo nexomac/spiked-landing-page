@@ -52,7 +52,7 @@ export async function POST({ cookies }) {
             
             await sendEmail({
                 to: sub.email,
-                subject: 'Your Weekly Spiked Digest',
+                subject: 'Your Weekly SpikedAI Digest',
                 html,
                 text: 'Please enable HTML to view your newsletter.'
             });

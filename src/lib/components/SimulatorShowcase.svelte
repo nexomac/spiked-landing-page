@@ -156,7 +156,7 @@
 									class="group flex flex-col items-start gap-3 p-4 rounded-xl border transition-all text-left {selectedScenario === scenario.id ? 'glass border-red-500/30 shadow-lg shadow-red-500/10' : 'glass-subtle hover:glass'}"
 								>
 									<div class="w-10 h-10 rounded-lg bg-gradient-to-br {gradientClass} flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
-										<svelte:component this={IconComponent} class="w-5 h-5 text-foreground" />
+										<IconComponent class="w-5 h-5 text-foreground" />
 									</div>
 									<div class="flex-1">
 										<div class="flex items-center gap-2 mb-1">

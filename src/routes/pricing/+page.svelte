@@ -1,6 +1,7 @@
 <script>
-    import { fade, fly } from 'svelte/transition';
     import { Check, X, Zap, Shield, Rocket, Globe, Cpu } from 'lucide-svelte';
+    import { themeStore } from '$lib/stores/theme.js';
+    import { fade } from "svelte/transition";
 
     let billingCycle = $state('monthly'); // 'monthly' or 'annual'
 
@@ -15,7 +16,7 @@
                 '500 Monthly Actions',
                 'Community Support',
                 'Basic Analytics',
-                'Spiked Cloud Hosting'
+                'SpikedAI Cloud Hosting'
             ],
             cta: 'Get Started for Free',
             highlight: false,
@@ -55,9 +56,10 @@
     ];
 </script>
 
-<div class="min-h-screen bg-black text-white pt-32 pb-20 px-4 sm:px-6 overflow-hidden">
+<div class="min-h-screen transition-colors duration-500 pt-32 pb-20 px-4 sm:px-6 overflow-hidden
+    {$themeStore === 'dark' ? 'bg-[#0f0f0f] text-white' : 'bg-[#f8f8f0] text-black'}">
     <!-- Decorative Gradients -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-red-900/10 blur-[120px] pointer-events-none rounded-full"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] {$themeStore === 'dark' ? 'bg-red-900/10' : 'bg-red-500/5'} blur-[120px] pointer-events-none rounded-full"></div>
     
     <div class="max-w-7xl mx-auto relative z-10">
         <!-- Header -->
@@ -65,21 +67,22 @@
             <h1 class="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase">
                 Fuel Your <span class="text-red-600">Growth</span>
             </h1>
-            <p class="text-xl text-zinc-400 max-w-2xl mx-auto font-medium font-sans">
+            <p class="text-xl max-w-2xl mx-auto font-medium font-sans {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}">
                 Simple, transparent pricing for teams of all sizes. From solo builders to global enterprises.
             </p>
 
             <!-- Billing Toggle -->
-            <div class="mt-10 inline-flex items-center p-1 bg-zinc-900 border border-zinc-800 rounded-full">
+            <div class="mt-10 inline-flex items-center p-1 rounded-full border transition-colors
+                {$themeStore === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'}">
                 <button 
                     onclick={() => billingCycle = 'monthly'}
-                    class={`px-6 py-2 rounded-full text-sm font-bold transition-all ${billingCycle === 'monthly' ? 'bg-red-600 text-white shadow-lg' : 'text-zinc-500 hover:text-white'}`}
+                    class={`px-6 py-2 rounded-full text-sm font-bold transition-all ${billingCycle === 'monthly' ? 'bg-red-600 text-white shadow-lg' : ($themeStore === 'dark' ? 'text-zinc-500 hover:text-white' : 'text-zinc-400 hover:text-black')}`}
                 >
                     Monthly
                 </button>
                 <button 
                     onclick={() => billingCycle = 'annual'}
-                    class={`px-6 py-2 rounded-full text-sm font-bold transition-all ${billingCycle === 'annual' ? 'bg-red-600 text-white shadow-lg' : 'text-zinc-500 hover:text-white'}`}
+                    class={`px-6 py-2 rounded-full text-sm font-bold transition-all ${billingCycle === 'annual' ? 'bg-red-600 text-white shadow-lg' : ($themeStore === 'dark' ? 'text-zinc-500 hover:text-white' : 'text-zinc-400 hover:text-black')}`}
                 >
                     Annual (Save 20%)
                 </button>
@@ -91,7 +94,9 @@
             {#each plans as plan, i}
                 <div 
                     in:fly={{ y: 50, delay: 200 * i, duration: 800 }}
-                    class={`relative flex flex-col p-8 sm:p-12 rounded-3xl border transition-all duration-500 group ${plan.highlight ? 'bg-zinc-950 border-red-600 shadow-[0_0_50px_rgba(220,38,38,0.15)] scale-105 z-10' : 'bg-zinc-950/50 border-zinc-800 border-dashed hover:border-zinc-700'}`}
+                    class={`relative flex flex-col p-8 sm:p-12 rounded-3xl border transition-all duration-500 group ${plan.highlight 
+                        ? ($themeStore === 'dark' ? 'bg-zinc-950 border-red-600 shadow-[0_0_50px_rgba(220,38,38,0.15)]' : 'bg-white border-red-600 shadow-[0_20px_50px_rgba(220,38,38,0.1)]') 
+                        : ($themeStore === 'dark' ? 'bg-zinc-950/50 border-zinc-800 border-dashed hover:border-zinc-700' : 'bg-white border-zinc-200 border-dashed hover:border-zinc-300 shadow-sm')}`}
                 >
                     {#if plan.highlight}
                         <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full">
@@ -100,20 +105,22 @@
                     {/if}
 
                     <div class="flex items-center gap-4 mb-6">
-                        <div class={`w-12 h-12 rounded-xl flex items-center justify-center border transition-transform duration-500 group-hover:scale-110 ${plan.highlight ? 'bg-red-600 border-red-500 shadow-lg shadow-red-600/30' : 'bg-zinc-900 border-zinc-800 text-zinc-400'}`}>
+                        <div class={`w-12 h-12 rounded-xl flex items-center justify-center border transition-transform duration-500 group-hover:scale-110 ${plan.highlight ? 'bg-red-600 border-red-500 shadow-lg shadow-red-600/30' : ($themeStore === 'dark' ? 'bg-zinc-900 border-zinc-800 text-zinc-400' : 'bg-zinc-50 border-zinc-200 text-zinc-400')}`}>
                             <plan.icon class="w-6 h-6 text-white" />
                         </div>
                         <div>
-                            <h2 class="text-3xl font-black tracking-tight uppercase">{plan.name}</h2>
+                            <h2 class="text-3xl font-black tracking-tight uppercase transition-colors">
+                                {plan.name}
+                            </h2>
                         </div>
                     </div>
 
-                    <p class="text-zinc-500 text-sm mb-8 leading-relaxed font-medium">{plan.desc}</p>
+                    <p class="text-sm mb-8 leading-relaxed font-medium transition-colors {$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-500'}">{plan.desc}</p>
 
                     <div class="mb-8">
                         <div class="flex items-baseline gap-1">
                             <span class="text-5xl font-black tracking-tighter">${billingCycle === 'monthly' ? plan.price.monthly : plan.price.annual}</span>
-                            <span class="text-zinc-500 font-bold uppercase text-xs tracking-widest">/ month</span>
+                            <span class="font-bold uppercase text-xs tracking-widest transition-colors {$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-400'}">/ month</span>
                         </div>
                         {#if billingCycle === 'annual' && plan.price.annual > 0}
                             <p class="text-red-500 text-[10px] font-bold mt-1 uppercase tracking-widest">Billed annually</p>
@@ -124,12 +131,12 @@
                         {#each plan.features as feature}
                             <div class="flex items-center gap-3">
                                 <Check class="w-4 h-4 text-red-600" />
-                                <span class="text-sm font-medium text-zinc-300">{feature}</span>
+                                <span class="text-sm font-medium transition-colors {$themeStore === 'dark' ? 'text-zinc-300' : 'text-zinc-600'}">{feature}</span>
                             </div>
                         {/each}
                     </div>
 
-                    <button class={`w-full py-4 rounded-xl font-black uppercase tracking-widest transition-all duration-300 transform active:scale-95 ${plan.highlight ? 'bg-red-600 text-white hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/40' : 'bg-white text-black hover:bg-zinc-200'}`}>
+                    <button class={`w-full py-4 rounded-xl font-black uppercase tracking-widest transition-all duration-300 transform active:scale-95 ${plan.highlight ? 'bg-red-600 text-white hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/40' : ($themeStore === 'dark' ? 'bg-white text-black hover:bg-zinc-200' : 'bg-black text-white hover:bg-zinc-800')}`}>
                         {plan.cta}
                     </button>
                 </div>
@@ -140,10 +147,11 @@
         <div class="max-w-4xl mx-auto" in:fade={{ delay: 1000 }}>
             <h3 class="text-2xl font-black uppercase tracking-tighter mb-10 text-center">Detailed Comparison</h3>
             
-            <div class="border border-zinc-900 rounded-2xl overflow-hidden bg-zinc-950/20 backdrop-blur-sm">
+            <div class="border rounded-2xl overflow-hidden backdrop-blur-sm transition-colors
+                {$themeStore === 'dark' ? 'bg-zinc-950/20 border-zinc-900' : 'bg-white border-zinc-200 shadow-sm'}">
                 <table class="w-full border-collapse">
                     <thead>
-                        <tr class="bg-zinc-900/50">
+                        <tr class="transition-colors {$themeStore === 'dark' ? 'bg-zinc-900/50' : 'bg-zinc-50'}">
                             <th class="p-6 text-left text-xs font-black uppercase tracking-widest text-zinc-500">Capability</th>
                             <th class="p-6 text-center text-xs font-black uppercase tracking-widest text-zinc-500">Starter</th>
                             <th class="p-6 text-center text-xs font-black uppercase tracking-widest text-zinc-500">Pro</th>
@@ -152,18 +160,20 @@
                     <tbody>
                         {#each comparisonFeatures as section}
                             <tr>
-                                <td colspan="3" class="px-6 py-4 bg-zinc-900/20 text-[10px] font-black uppercase tracking-widest text-red-600 border-y border-zinc-900">
+                                <td colspan="3" class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-red-600 border-y transition-colors
+                                    {$themeStore === 'dark' ? 'bg-zinc-900/20 border-zinc-900' : 'bg-zinc-100 border-zinc-200'}">
                                     {section.category}
                                 </td>
                             </tr>
                             {#each section.features as feature}
-                                <tr class="border-b border-zinc-900 last:border-0 hover:bg-white/5 transition-colors">
-                                    <td class="p-6 text-sm font-bold text-zinc-400">{feature.name}</td>
+                                <tr class="border-b last:border-0 hover:bg-white/5 transition-colors
+                                    {$themeStore === 'dark' ? 'border-zinc-900' : 'border-zinc-200'}">
+                                    <td class="p-6 text-sm font-bold {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}">{feature.name}</td>
                                     <td class="p-6 text-center text-sm font-medium">
                                         {#if typeof feature.free === 'boolean'}
-                                            {#if feature.free} <Check class="w-4 h-4 text-zinc-400 mx-auto" /> {:else} <X class="w-4 h-4 text-zinc-800 mx-auto" /> {/if}
+                                            {#if feature.free} <Check class="w-4 h-4 text-zinc-400 mx-auto" /> {:else} <X class="w-4 h-4 mx-auto {$themeStore === 'dark' ? 'text-zinc-800' : 'text-zinc-300'}" /> {/if}
                                         {:else}
-                                            <span class="text-zinc-500">{feature.free}</span>
+                                            <span class="{$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-400'}">{feature.free}</span>
                                         {/if}
                                     </td>
                                     <td class="p-6 text-center text-sm font-black text-red-500">
@@ -182,12 +192,14 @@
         </div>
 
         <!-- FAQ CTA -->
-        <div class="mt-32 text-center border-t border-zinc-900 pt-20">
+        <div class="mt-32 text-center border-t pt-20 transition-colors {$themeStore === 'dark' ? 'border-zinc-900' : 'border-zinc-200'}">
             <h3 class="text-3xl font-black uppercase mb-4">Have Questions?</h3>
-            <p class="text-zinc-500 mb-8 max-w-md mx-auto">Our revenue experts are standing by to help you find the right setup for your team.</p>
+            <p class="mb-8 max-w-md mx-auto {$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-500'}">Our revenue experts are standing by to help you find the right setup for your team.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact-sales" class="px-8 py-3 bg-zinc-900 hover:bg-zinc-800 rounded-lg font-bold text-sm transition-colors">Talk to Sales</a>
-                <a href="/#faq" class="px-8 py-3 border border-zinc-800 hover:border-zinc-700 rounded-lg font-bold text-sm transition-colors">Read Implementation FAQ</a>
+                <a href="/contact-sales" class="px-8 py-3 rounded-lg font-bold text-sm transition-colors
+                    {$themeStore === 'dark' ? 'bg-zinc-900 hover:bg-zinc-800 text-white' : 'bg-black text-white hover:bg-zinc-900'}">Talk to Sales</a>
+                <a href="/#faq" class="px-8 py-3 border rounded-lg font-bold text-sm transition-colors
+                    {$themeStore === 'dark' ? 'border-zinc-800 hover:border-zinc-700 text-white' : 'border-zinc-200 hover:border-zinc-300 text-black'}">Read Implementation FAQ</a>
             </div>
         </div>
     </div>

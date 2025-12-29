@@ -10,7 +10,7 @@
     <div class="max-w-md w-full bg-gray-900/50 backdrop-blur-xl border border-gray-800 rounded-2xl p-8 relative z-10 shadow-2xl">
         <div class="text-center mb-8">
             <h1 class="text-3xl font-black tracking-tight mb-2">
-                SPIKED<span class="text-red-500">ADMIN</span>
+                SPIKEDAI<span class="text-red-500">ADMIN</span>
             </h1>
             <p class="text-gray-400 text-sm">Enter your credentials to continue</p>
         </div>

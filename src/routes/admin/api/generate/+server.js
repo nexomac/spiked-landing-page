@@ -29,22 +29,27 @@ export async function POST({ request, cookies }) {
         }
 
         // 2. Construct the prompt for Gemini
-        const fieldDescriptions = model.fields.map(f => `${f.name} (${f.type})`).join(', ');
+        const fieldList = model.fields.map(f => `- ${f.slug} (${f.type}): ${f.name}`).join('\n');
         
         const systemInstruction = `
             You are a CMS Content Generator agent. 
-            Your task is to generate valid JSON content for a headless CMS based on a user's prompt.
+            Your task is to generate valid JSON content for a headless CMS entry.
             
-            The Content Model has the following fields: ${fieldDescriptions}.
+            IMPORTANT: You MUST use the following slugs as the ONLY keys in your JSON object:
+            ${fieldList}
             
             Rules:
-            1. Return ONLY a valid JSON object. Do not include markdown formatting (like \`\`\`json).
-            2. For 'richtext' fields, generate a simple Tiptap JSON structure (type: 'doc', content: [...]).
-            3. For 'text' fields, generate plain strings.
-            4. For 'date' fields, MUST use ISO 8601 format (YYYY-MM-DD). this is critical.
-            5. For 'image' fields, provide a VALID, working public URL. Use 'https://placehold.co/800x400' or a specific unsplash source url like 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop'. Do NOT use fake paths.
-            6. Ensure the content matches the tone and intent of the user's prompt.
-            7. If the user asks for a specific title, use it.
+            1. Return ONLY a valid JSON object.
+            2. For every key in the JSON, it MUST exactly match one of the slugs provided above. Do NOT use the display names as keys.
+            3. For 'richtext' fields, generate a Tiptap JSON structure (typeof: 'doc', content: [...]). Use H2, H3, bold, bullet lists, and blockquotes.
+            4. For 'text' fields, generate plain strings.
+            5. For 'statistic' fields, use "Label|Value" format (e.g. "Growth|95%"). The Value part MUST be a percentage.
+            6. For 'date' fields, use ISO 8601 format (YYYY-MM-DD). Only mention the field name as 'publishedDate', use the current date ${new Date().toISOString().split('T')[0]}.
+            7. For 'link' fields, provide a valid URL.
+            8. For 'callout' fields, provide a short, punchy sentence.
+            9. For 'divider' fields, use "---".
+            10. For 'image' fields, provide an empty string "".
+            11. Ensure the content matches the tone of the request: ${prompt}.
         `;
 
         const userPrompt = `Generate a blog post entry for the '${model.name}' model. \nUser Request: ${prompt}`;

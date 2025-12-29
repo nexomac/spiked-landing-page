@@ -45,5 +45,20 @@ export const actions = {
             { $pull: { fields: { slug: fieldSlug } } }
         );
         return { success: true };
+    },
+    updateFieldType: async ({ request, params }) => {
+        const data = await request.formData();
+        const fieldSlug = data.get('fieldSlug');
+        const newType = data.get('newType');
+
+        if (!fieldSlug || !newType) return;
+
+        const db = await getDb();
+        // Use the positional operator $ to identify the element in the array to update
+        await db.collection('content_models').updateOne(
+            { slug: params.slug, 'fields.slug': fieldSlug },
+            { $set: { 'fields.$.type': newType } }
+        );
+        return { success: true };
     }
 };

@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-    <title>Resources - Spiked</title>
+    <title>Resources - SpikedAI</title>
     <meta name="description" content="Watch expert interviews and insights from industry leaders" />
 </svelte:head>
 

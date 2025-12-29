@@ -125,7 +125,7 @@
 							: 'bg-card text-muted-foreground hover:bg-muted hover:text-foreground'}"
 						title={feature.title}
 					>
-						<svelte:component this={feature.icon} class="w-4 h-4" />
+						<feature.icon class="w-4 h-4" />
 					</a>
 				{/each}
 			</div>

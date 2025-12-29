@@ -365,7 +365,7 @@
 											in:fly={{ x: -20, duration: 600, delay: 100 }}
 										>
 											<div class="relative">
-												<svelte:component this={showcase.icon} class="w-4 h-4 text-red-400 dark:text-red-400 text-red-600 relative z-10" />
+												<showcase.icon class="w-4 h-4 text-red-400 dark:text-red-400 text-red-600 relative z-10" />
 												<div class="absolute inset-0 bg-red-500/20 dark:bg-red-500/20 bg-red-400/30 rounded-full blur-md animate-pulse"></div>
 											</div>
 											<span class="text-xs font-bold text-red-300 dark:text-red-300 text-red-700 uppercase tracking-wider">{showcase.label}</span>
@@ -393,7 +393,7 @@
 													<div class="flex items-start gap-3 relative z-10">
 														<div class="relative">
 															<div class="w-10 h-10 rounded-lg {feature.highlight ? 'bg-gradient-to-br from-red-500/20 to-red-600/10 dark:from-red-500/20 dark:to-red-600/10 from-red-100 to-red-50' : 'bg-zinc-800/60 dark:bg-zinc-800/60 bg-gray-100/80'} flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
-																<svelte:component this={feature.icon} class="w-5 h-5 {feature.highlight ? 'text-red-400 dark:text-red-400 text-red-600' : 'text-zinc-400 dark:text-zinc-400 text-gray-600 group-hover:text-zinc-300 dark:group-hover:text-zinc-300 group-hover:text-gray-700'} transition-colors duration-300" />
+																<feature.icon class="w-5 h-5 {feature.highlight ? 'text-red-400 dark:text-red-400 text-red-600' : 'text-zinc-400 dark:text-zinc-400 text-gray-600 group-hover:text-zinc-300 dark:group-hover:text-zinc-300 group-hover:text-gray-700'} transition-colors duration-300" />
 															</div>
 															{#if feature.highlight}
 																<div class="absolute -inset-1 bg-red-500/20 dark:bg-red-500/20 bg-red-400/30 rounded-lg blur-sm animate-pulse"></div>
@@ -598,7 +598,7 @@
 									<div class="space-y-4">
 										<!-- Label Badge -->
 										<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-red-500/10 via-red-500/5 to-transparent backdrop-blur-md rounded-full border border-red-500/20">
-											<svelte:component this={showcase.icon} class="w-3.5 h-3.5 text-red-400" />
+											<showcase.icon class="w-3.5 h-3.5 text-red-400" />
 											<span class="text-[10px] font-bold text-red-300 uppercase tracking-wider">{showcase.label}</span>
 										</div>
 
@@ -614,7 +614,7 @@
 												<div class="bg-white/95 dark:bg-zinc-900/60 backdrop-blur-sm rounded-lg p-3 border shadow-[0_10px_28px_rgba(15,23,42,0.08)] dark:shadow-none {feature.highlight ? 'border-red-500/30 dark:border-red-500/30 border-red-200/70 border-l-2 border-l-red-500/80' : 'border-slate-200 dark:border-zinc-800/50'}">
 													<div class="flex items-start gap-2.5">
 														<div class="w-8 h-8 rounded-lg {feature.highlight ? 'bg-red-50 dark:bg-red-500/10' : 'bg-slate-100 dark:bg-zinc-800/50'} flex items-center justify-center flex-shrink-0 border {feature.highlight ? 'border-red-100 dark:border-transparent' : 'border-slate-200 dark:border-transparent'}">
-															<svelte:component this={feature.icon} class="w-4 h-4 {feature.highlight ? 'text-red-500 dark:text-red-400' : 'text-slate-600 dark:text-zinc-400'}" />
+															<feature.icon class="w-4 h-4 {feature.highlight ? 'text-red-500 dark:text-red-400' : 'text-slate-600 dark:text-zinc-400'}" />
 														</div>
 														<div class="flex-1 min-w-0">
 															<h4 class="font-bold text-slate-900 dark:text-white mb-0.5 text-xs">{feature.title}</h4>
@@ -660,7 +660,7 @@
 								title={showcase.name}
 							>
 							<div class="relative z-10">
-								<svelte:component this={showcase.icon} class="w-5 h-5 transition-all duration-300 {currentShowcaseIndex === i ? 'text-red-400 scale-110' : 'group-hover:rotate-12 group-hover:scale-110'}" />
+								<showcase.icon class="w-5 h-5 transition-all duration-300 {currentShowcaseIndex === i ? 'text-red-400 scale-110' : 'group-hover:rotate-12 group-hover:scale-110'}" />
 								{#if currentShowcaseIndex === i}
 									<div class="absolute inset-0 bg-red-500/40 rounded-full blur-lg animate-ping"></div>
 									<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent rounded-full"></div>
@@ -692,7 +692,7 @@
 									aria-label={`Show ${showcase.name}`}
 								>
 									<div class="relative">
-										<svelte:component this={showcase.icon} class="w-5 h-5 transition-all duration-300 {currentShowcaseIndex === i ? 'text-red-400 dark:text-red-400 text-red-600 scale-110' : 'group-hover:scale-110'}" />
+										<showcase.icon class="w-5 h-5 transition-all duration-300 {currentShowcaseIndex === i ? 'text-red-400 dark:text-red-400 text-red-600 scale-110' : 'group-hover:scale-110'}" />
 										{#if currentShowcaseIndex === i}
 											<div class="absolute inset-0 bg-red-500/40 dark:bg-red-500/40 bg-red-400/50 rounded-full blur-lg animate-pulse"></div>
 										{/if}

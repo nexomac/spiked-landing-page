@@ -37,13 +37,19 @@ export async function POST({ request, cookies }) {
                 ]
             }
 
-            Supported field types: 'text', 'richtext', 'date', 'image'.
+            Supported field types: 'text', 'richtext', 'date', 'image', 'quote', 'highlight', 'link', 'callout', 'statistic', 'divider'.
             
             Rules:
             1. Always include 'Title' and 'Slug' fields as the first two items.
-            2. Infer appropriate fields for the requested topic (e.g. if 'Event', add Date, Location).
-            3. Use lowercase slugs for fields.
-            4. No markdown formatting.
+            2. Infer appropriate fields for the requested topic.
+            3. Use 'quote' for short, impactful text or testimonials.
+            4. Use 'highlight' for summary boxes or key takeaways.
+            5. Use 'link' for external resources or related articles.
+            6. Use 'callout' for urgent warnings, announcements, or "did you know" facts.
+            7. Use 'statistic' for data points (uses format "Label|Value") and Value should always be a percentage like '10%'.
+            8. Use 'divider' to separate logical sections.
+            9. Use lowercase slugs for fields.
+            10. No markdown formatting.
         `;
 
         const userPrompt = `Create a content model for: ${prompt}`;
@@ -63,6 +69,21 @@ export async function POST({ request, cookies }) {
              const cleanText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
              modelDef = JSON.parse(cleanText);
         }
+
+        // Enforcement layer: Ensure core fields are always present and properly formatted
+        const essentialFields = [
+            { name: 'Title', type: 'text', required: true, slug: 'title' },
+            { name: 'Slug', type: 'text', required: true, slug: 'slug' },
+            { name: 'Author', type: 'text', required: true, slug: 'author' },
+            { name: 'Published Date', type: 'date', required: true, slug: 'publishedDate' }
+        ];
+
+        // Filter out any of these if the AI included them, so we can prepend our clean versions
+        const aiFields = (modelDef.fields || []).filter(f => 
+            !['title', 'slug', 'author', 'publisheddate', 'published-date'].includes(f.slug.toLowerCase())
+        );
+
+        modelDef.fields = [...essentialFields, ...aiFields];
 
         // Create the model in DB
         const resultDb = await createContentModel(modelDef);

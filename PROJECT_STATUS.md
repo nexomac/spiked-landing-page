@@ -9,7 +9,7 @@
 
 ```svelte
 <!-- OLD (deprecated) -->
-<svelte:component this={feature.icon} class="..." />
+<feature.icon class="..." />
 
 <!-- NEW (Svelte 5 compliant) -->
 {@const Icon = feature.icon}

@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import { fade } from "svelte/transition";
 	import { page } from "$app/stores";
 	import { onboardingStore } from "$lib/stores/onboarding.js";
@@ -23,6 +23,12 @@
 	let isScrolled = $state(false);
 	let mobileMenuOpen = $state(false);
     const isLight = $derived($themeStore === 'light');
+	const quickLinks = [
+		{ href: "/about-us", label: "About Us" },
+		{ href: "/pricing", label: "Pricing" },
+		{ href: "/resources", label: "Resources" },
+		{ href: "/contact-sales", label: "Contact" },
+	];
 
 	// Mega Menu State
 	let activeMenu = $state(null);
@@ -134,6 +140,18 @@
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
+	});
+
+	onDestroy(() => {
+		if (typeof document !== "undefined") {
+			document.documentElement.classList.remove("nav-locked");
+		}
+	});
+
+	$effect(() => {
+		if (typeof document !== "undefined") {
+			document.documentElement.classList.toggle("nav-locked", mobileMenuOpen);
+		}
 	});
 
 	function toggleTheme() {
@@ -380,50 +398,80 @@
 			</svg>
 		</button>
 
+		{#if mobileMenuOpen}
+			<div
+				class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
+				aria-hidden="true"
+				onclick={() => toggleMobileMenu(false)}
+			></div>
+		{/if}
+
 		<!-- Mobile Menu -->
 		{#if mobileMenuOpen}
 			<div
-				class={`md:hidden mt-4 pb-6 space-y-6 pt-6 animate-slide-down rounded-2xl border backdrop-blur-xl px-4 max-h-[80vh] overflow-y-auto shadow-2xl ${isLight ? 'bg-white/95 border-zinc-200' : 'bg-zinc-950/95 border-zinc-800'}`}
+				class={`md:hidden fixed left-3 right-3 top-[calc(var(--nav-height,80px)+12px)] z-50 pb-6 space-y-6 pt-6 animate-slide-down rounded-3xl border backdrop-blur-2xl px-4 max-h-[78vh] overflow-y-auto shadow-2xl ${isLight ? 'bg-white/95 border-zinc-200' : 'bg-zinc-950/95 border-zinc-800'}`}
 			>
-				{#each Object.entries(navData) as [id, menu]}
-					<div class="space-y-3">
-						<h3
-							class="text-[10px] font-black uppercase tracking-widest px-2 text-zinc-500"
-						>
-							{menu.label}
-						</h3>
-						<div class="grid grid-cols-1 gap-1">
-							{#each menu.links as link}
-								<a
-									href={link.href}
-									class={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all hover:bg-red-500/5 group ${isLight ? 'text-zinc-900 hover:text-red-600' : 'text-white hover:text-red-500'}`}
-									onclick={() => (mobileMenuOpen = false)}
-								>
-									<div
-										class={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isLight ? 'bg-zinc-50 text-zinc-400 group-hover:text-red-600' : 'bg-zinc-900 text-zinc-500 group-hover:text-red-500'}`}
-									>
-										<link.icon size={16} />
-									</div>
-									<span class="text-sm font-bold"
-										>{link.title}</span
-									>
-								</a>
-							{/each}
-						</div>
+				<div class="px-1">
+					<p
+						class={`text-[11px] font-black uppercase tracking-[0.25em] mb-3 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}
+					>
+						Navigation
+					</p>
+					<div class="grid grid-cols-2 gap-3 mb-4">
+						{#each quickLinks as quick}
+							<a
+								href={quick.href}
+								class={`rounded-2xl px-4 py-3 text-sm font-bold border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${isLight ? 'bg-red-50/60 text-zinc-900 border-red-100 hover:border-red-300 hover:text-red-700' : 'bg-red-950/30 text-white border-red-900/50 hover:border-red-500/60 hover:text-red-300'}`}
+								onclick={() => (mobileMenuOpen = false)}
+							>
+								{quick.label}
+							</a>
+						{/each}
 					</div>
-				{/each}
+				</div>
 
-				<div class="space-y-3 pt-2 border-t border-zinc-200 dark:border-zinc-800">
-					<a
-						href="/pricing"
-						class={`block px-3 py-2 text-sm font-bold rounded-lg transition-all hover:bg-red-500/5 ${isLight ? 'text-zinc-900 hover:text-red-600' : 'text-white hover:text-red-500'}`}
-						onclick={() => (mobileMenuOpen = false)}>Pricing</a
-					>
-					<a
-						href="/blog"
-						class={`block px-3 py-2 text-sm font-bold rounded-lg transition-all hover:bg-red-500/5 ${isLight ? 'text-zinc-900 hover:text-red-600' : 'text-white hover:text-red-500'}`}
-						onclick={() => (mobileMenuOpen = false)}>The Bulletin</a
-					>
+				<div class="space-y-4">
+					{#each Object.entries(navData) as [id, menu]}
+						<div
+							class={`rounded-2xl border overflow-hidden transition-all duration-300 ${isLight ? 'border-zinc-200 bg-white' : 'border-zinc-800 bg-black/50'}`}
+						>
+							<div
+								class={`flex items-center justify-between px-4 py-3 border-b ${isLight ? 'border-zinc-100' : 'border-zinc-800'}`}
+							>
+								<h3 class="text-xs font-black uppercase tracking-[0.2em] text-red-500">
+									{menu.label}
+								</h3>
+								<span
+									class={`text-[11px] font-semibold ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}
+								>
+									{menu.links.length} links
+								</span>
+							</div>
+							<div class="divide-y divide-zinc-100 dark:divide-zinc-800">
+								{#each menu.links as link}
+									<a
+										href={link.href}
+										class="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-red-500/5"
+										onclick={() => (mobileMenuOpen = false)}
+									>
+										<div
+											class={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all duration-300 ${isLight ? 'bg-zinc-50 border-zinc-100 text-zinc-500 group-hover:text-red-600 group-hover:border-red-200' : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 group-hover:text-red-400 group-hover:border-red-900/50'}`}
+										>
+											<link.icon size={18} />
+										</div>
+										<div class="flex-1 min-w-0">
+											<p class={`text-sm font-semibold leading-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
+												{link.title}
+											</p>
+											<p class={`text-xs leading-tight ${isLight ? 'text-zinc-500' : 'text-zinc-500'}`}>
+												{link.desc}
+											</p>
+										</div>
+									</a>
+								{/each}
+							</div>
+						</div>
+					{/each}
 				</div>
 
 				<div class="pt-4 space-y-3">
@@ -475,6 +523,10 @@
 		100% {
 			transform: translateX(100%);
 		}
+	}
+
+	:global(.nav-locked) {
+		overflow: hidden;
 	}
 
 	.animate-slide-down {

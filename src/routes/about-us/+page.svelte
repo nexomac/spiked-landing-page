@@ -60,7 +60,7 @@
 			tags: ['Product thinking', 'AI workflows']
 		},
 		{
-			name: 'Ginnee Sahi',
+			name: 'Ginnee Singh',
 			background: 'AWS, Microsoft',
 			focus: 'Go To Market',
 			image: photo('Ginnee Sahi.jpeg'),

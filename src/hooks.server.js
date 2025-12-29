@@ -8,10 +8,19 @@ export async function handle({ event, resolve }) {
     response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
     response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
     
-    // CSP: Allow scripts from self, unsplash (images), placehold.co (images), and inline styles/scripts needed for Svelte/Tiptap
-    // Note: Being permissive with 'unsafe-inline' for styles/scripts due to Svelte/Tailwind/Tiptap nature in dev mode.
-    // In strict prod, nonces would be better.
-    response.headers.set('Content-Security-Policy', "default-src 'self'; img-src 'self' data: https://images.unsplash.com https://placehold.co; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self';");
+    // CSP loosened to permit YouTube embeds, Google Fonts, and Vercel Analytics script.
+    response.headers.set(
+        'Content-Security-Policy',
+        [
+            "default-src 'self'",
+            "img-src 'self' data: https://images.unsplash.com https://placehold.co",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' data: https://fonts.gstatic.com",
+            "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+            "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
+            "connect-src 'self' https://va.vercel-scripts.com",
+        ].join('; ')
+    );
 
 	return response;
 }

@@ -16,103 +16,59 @@
         </header>
 
         <div class="videos-grid">
-            <div class="video-card">
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/d0PNJLstfYs" 
-                    title="Vishal Garg, Better.com | theCUBE + NYSE Wired: Mixture of Experts" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
-                <h3>Vishal Garg, Better.com</h3>
-            </div>
-
-            <div class="video-card">
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/BQcw_UIRSKU" 
-                    title="Anushka Salinas, Nanit | theCUBE + NYSE Wired: Mixture of Experts" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
-                <h3>Anushka Salinas, Nanit</h3>
-            </div>
-
-            <div class="video-card">
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/0PUsnvhTxi4" 
-                    title="Tim Piemonte, Tribeca Softech & Ankur Patel, Multimodal | theCUBE + NYSE Wired: Mixture of Experts" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
-                <h3>Tim Piemonte, Tribeca Softech & Ankur Patel, Multimodal</h3>
-            </div>
-
-            <div class="video-card">
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/waDHs6vVYvA" 
-                    title="Jethro Rothe-Kushel, Ritual Ads | theCUBE + NYSE Wired: Mixture of Experts" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
-                <h3>Jethro Rothe-Kushel, Ritual Ads</h3>
-            </div>
-
-            <div class="video-card">
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/AKj1Pp6xmrk" 
-                    title="John Garner, WeShop | theCUBE + NYSE Wired: Mixture of Experts" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
-                <h3>John Garner, WeShop</h3>
-            </div>
-
-            <div class="video-card">
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/0B5xub85ogs" 
-                    title="Garima Kapoor, MinIO | theCUBE + NYSE Wired: Mixture of Experts" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
-                <h3>Garima Kapoor, MinIO</h3>
-            </div>
-
-            <div class="video-card">
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/zSzTlNrNppI" 
-                    title="Raphaelle D'ornano, Decoding Discontinuity | theCUBE + NYSE Wired: Mixture of Experts" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
-                <h3>Raphaelle D'ornano, Decoding Discontinuity</h3>
-            </div>
+            {#each [
+                {
+                    id: "BQcw_UIRSKU",
+                    title: "Anushka Salinas, Nanit | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "6J9AgLJ8CiY",
+                    title: "Ginniee Singh, SpikedAI | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "0PUsnvhTxi4",
+                    title: "Tim Piemonte, Tribeca Softech & Ankur Patel, Multimodal | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "ZVidW_wUCwA",
+                    title: "Umesh Sachdev, Uniphore | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "2Q8XZfkYv9I",
+                    title: "Sid Sheth, d-Matrix | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "2pQhRDomSTw",
+                    title: "Aaron Katz, ClickHouse | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "DWVtGMYcXfg",
+                    title: "Muddu Sudhakar, Salesforce | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "3y_W7J214kQ",
+                    title: "Jim McNiel, TAE Technologies | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+                {
+                    id: "CmyrvW2m7Z8",
+                    title: "Alex Rinke, Celonis | theCUBE + NYSE Wired: Mixture of Experts",
+                },
+            ] as video}
+                <div class="video-card">
+                    <div class="video-frame">
+                        <iframe 
+                            src={`https://www.youtube.com/embed/${video.id}`} 
+                            title={video.title} 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
+                            allowfullscreen
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+                    <h3>{video.title}</h3>
+                </div>
+            {/each}
         </div>
     </div>
 </div>
@@ -155,7 +111,7 @@
 
     .videos-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 3rem;
         margin-top: 3rem;
     }
@@ -174,9 +130,21 @@
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
 
+    .video-frame {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        overflow: hidden;
+        border-radius: 10px;
+        background: #0f0f0f;
+    }
+
     .video-card iframe {
-        border-radius: 8px;
-        aspect-ratio: 16/9;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
     }
 
     .video-card h3 {

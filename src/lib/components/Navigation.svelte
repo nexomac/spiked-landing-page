@@ -100,7 +100,7 @@
 					title: "Video Resources",
 					desc: "Watch how Spiked AI can transform your business.",
 					icon: Video,
-					href: "/features/video-resources",
+					href: "/resources",
 				},
 			],
 		},
@@ -114,6 +114,13 @@
 	function handleMouseLeave() {
 		menuTimer = setTimeout(() => {
 			activeMenu = null;
+		}, 300);
+	}
+
+	function handleMenuClick(menu) {
+		activeMenu = "abcdef";
+		setTimeout(() => {
+			activeMenu = menu;
 		}, 300);
 	}
 
@@ -200,6 +207,7 @@
 					>
 						<button
 							class={`flex items-center gap-1.5 px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative hover:text-red-600 ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}
+							onclick={() => handleMenuClick(id)}
 						>
 							{menu.label}
 							<ChevronDown
@@ -215,6 +223,7 @@
 				<a
 					href="/pricing"
 					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${$page.url.pathname === "/pricing" ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
+					onmouseenter={() => handleMouseEnter('pricing')}
 				>
 					Pricing
 					<span
@@ -224,6 +233,7 @@
 				<a
 					href="/about-us"
 					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${$page.url.pathname === "/about-us" ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
+					onmouseenter={() => handleMouseEnter('about-us')}
 				>
 					About Us
 					<span

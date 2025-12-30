@@ -24,7 +24,19 @@
                         <div class="font-medium">{field.name}</div>
                         <div class="text-xs text-gray-500 font-mono">{field.slug}</div>
                     </div>
-                    <div class="flex items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="flex flex-col gap-0.5 mr-2">
+                            <form action="?/moveField" method="POST">
+                                <input type="hidden" name="fieldSlug" value={field.slug}>
+                                <input type="hidden" name="direction" value="up">
+                                <button class="text-gray-600 hover:text-white leading-none text-xs" title="Move Up">▲</button>
+                            </form>
+                            <form action="?/moveField" method="POST">
+                                <input type="hidden" name="fieldSlug" value={field.slug}>
+                                <input type="hidden" name="direction" value="down">
+                                <button class="text-gray-600 hover:text-white leading-none text-xs" title="Move Down">▼</button>
+                            </form>
+                        </div>
                         <form action="?/updateFieldType" method="POST" class="mr-4">
                             <input type="hidden" name="fieldSlug" value={field.slug}>
                             <select 

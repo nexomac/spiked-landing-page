@@ -22,13 +22,18 @@
 
 	let isScrolled = $state(false);
 	let mobileMenuOpen = $state(false);
-    const isLight = $derived($themeStore === 'light');
+	const isLight = $derived($themeStore === "light");
 	const quickLinks = [
 		{ href: "/about-us", label: "About Us" },
+		{ href: "/about-us#more", label: "+ More" },
 		{ href: "/pricing", label: "Pricing" },
 		{ href: "/resources", label: "Resources" },
 		{ href: "/contact-sales", label: "Contact" },
 	];
+
+	const isAboutPage = $derived($page.url.pathname === "/about-us");
+	const isMoreActive = $derived(isAboutPage && $page.url.hash === "#more");
+	const isCoreAboutActive = $derived(isAboutPage && $page.url.hash !== "#more");
 
 	// Mega Menu State
 	let activeMenu = $state(null);
@@ -241,9 +246,18 @@
 				</a>
 				<a
 					href="/about-us"
-					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${$page.url.pathname === "/about-us" ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
+					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${isCoreAboutActive ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
 				>
 					About Us
+					<span
+						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
+					></span>
+				</a>
+				<a
+					href="/about-us#more"
+					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${isMoreActive ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
+				>
+					+More
 					<span
 						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
 					></span>

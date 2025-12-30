@@ -489,7 +489,7 @@
 		<!-- Contextual AI Style Hero Section -->
 		<section
 			data-section="hero"
-			class="relative min-h-screen flex items-center overflow-hidden bg-background contextual-hero"
+			class="relative flex items-center overflow-hidden bg-background contextual-hero"
 		>
 			<!-- Abstract Iridescent Graphic (Right Side) -->
 			<div
@@ -511,10 +511,10 @@
 
 			<!-- Content Container -->
 			<div
-				class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full pt-28 pb-16 lg:pt-36 lg:pb-24"
+				class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner"
 			>
 				<div
-					class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[70vh]"
+					class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center hero-grid-shell"
 				>
 					<!-- Left Column: Text Content -->
 					<div
@@ -1705,11 +1705,38 @@
 <style>
 	/* ===== CONTEXTUAL AI HERO STYLES ===== */
 
+	:global(:root) {
+		--nav-height: 80px;
+		--hero-panel-height: clamp(600px, calc(100dvh - var(--nav-height)), 1040px);
+		--hero-panel-padding: clamp(2.5rem, 9vh, 6.5rem);
+	}
+
+	@supports not (height: 100dvh) {
+		:global(:root) {
+			--hero-panel-height: clamp(600px, calc(100vh - var(--nav-height)), 1040px);
+		}
+	}
+
+	@media (max-height: 860px) {
+		:global(:root) {
+			--hero-panel-padding: clamp(2.25rem, 8vh, 5.75rem);
+		}
+	}
+
 	/* Hero Background */
 	.contextual-hero {
 		position: relative;
 		background-color: var(--background);
 		isolation: isolate;
+		min-height: var(--hero-panel-height);
+	}
+
+	.hero-panel-inner {
+		padding-block: var(--hero-panel-padding);
+	}
+
+	.hero-grid-shell {
+		min-height: clamp(520px, 70vh, 860px);
 	}
 
 	/* Contextual Graphic Container */

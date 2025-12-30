@@ -25,7 +25,7 @@
         {
             name: 'Pro',
             desc: 'For teams ready to scale their revenue operations with advanced AI.',
-            price: { monthly: 199, annual: 159 },
+            price: { monthly: 75, annual: 60 },
             features: [
                 'Unlimited Agents',
                 'Ultra-fast Response Times',

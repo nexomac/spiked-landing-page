@@ -20,7 +20,7 @@
 		{
 			id: '01',
 			title: 'Embedded partnership',
-			description: 'We join your GTM, product, and engineering rhythms.'
+			description: 'We join your Go to Market, product, and engineering rhythms.'
 		},
 		{
 			id: '02',
@@ -49,6 +49,34 @@
 		}
 	];
 
+	const sections = [
+		{ id: 'team', label: 'Core team' },
+		{ id: 'more', label: '+More' },
+		{ id: 'how-we-work', label: 'How we work' },
+		{ id: 'principles', label: 'Principles' }
+	];
+
+	const extendedCollaborators = [
+		{
+			name: 'Amazon AI CTO',
+			background: 'Amazon AI, AWS',
+			focus: 'Platform scale',
+			role: 'Strategic Advisor',
+			initials: 'AA',
+			description: 'Advises on secure foundation models, trust layers, and enterprise-grade guardrails.',
+			tags: ['Platform Scale', 'Trust & Safety', 'Enterprise']
+		},
+		{
+			name: 'Storyteller, NVIDIA AI Architect',
+			background: 'NVIDIA, GPU-native systems',
+			focus: 'Narrative & architecture',
+			role: 'Storyteller & Systems Design',
+			initials: 'NV',
+			description: 'Shapes the narrative and GPU-native architecture behind production rollouts.',
+			tags: ['GPU Systems', 'Narrative', 'Applied AI']
+		}
+	];
+
 	const teamMembers = [
 		{
 			name: 'Avi Sahi',
@@ -60,13 +88,13 @@
 			tags: ['Product thinking', 'AI workflows']
 		},
 		{
-			name: 'Ginnee Sahi',
+			name: 'Ginnee Singh',
 			background: 'AWS, Microsoft',
-			focus: 'Go To Market',
+			focus: 'Go to Market',
 			image: photo('Ginnee Sahi.jpeg'),
 			role: 'Advisor, Co-Founder',
-			description: 'Drives GTM execution and operator enablement.',
-			tags: ['Go To Market', 'Customers', 'Partnerships']
+			description: 'Drives Go to Market execution and operator enablement.',
+			tags: ['Go to Market', 'Customers', 'Partnerships']
 		},
 		{
 			name: 'Tom Davenport',
@@ -83,8 +111,8 @@
 			focus: 'Go to Market',
 			image: photo('Praneet Gill.jpeg'),
 			role: 'Go to Market',
-			description: 'Runs go-to-market motions and customer voice programs.',
-			tags: ['GTM systems', 'Customer voice']
+			description: 'Runs Go to Market motions and customer programs.',
+			tags: ['Go to Market', 'Customers']
 		},
 		{
 			name: 'Kaveesh Manchanda',
@@ -93,7 +121,7 @@
 			image: photo('Kaveesh Manchanda.jpeg'),
 			role: 'VP Engineering, Platform Reliability',
 			description: 'Heads engineering reliability and secure platform delivery.',
-			tags: ['Partnerships', 'Go To Market Systems', 'Customer Voice']
+			tags: ['Partnerships', 'Go to Market', 'Customers']
 		}
 	];
 </script>
@@ -103,10 +131,10 @@
 </svelte:head>
 
 <div class="page">
-	<section class="team">
+	<section class="team" id="team">
 		<div class="section-header">
-			<p class="eyebrow">The team</p>
-			<h2>Builders, strategists, and GTM operators who live close to the customer.</h2>
+			<p class="eyebrow">Core team</p>
+			<h2>Builders, strategists, and Go to Market operators who live close to the customer.</h2>
 			<p class="muted">
 				We combine enterprise experience with a startup pace so you get AI that ships and sticks.
 			</p>
@@ -136,11 +164,54 @@
 						{/if}
 					</div>
 				</article>
-			{/each}
-		</div>
-	</section>
+				{/each}
+			</div>
+		</section>
 
-	<section class="hero">
+	<section class="more" id="more">
+		<div class="section-header">
+			<p class="eyebrow">+ More</p>
+			<h2>Advisory bench from the world’s AI leaders.</h2>
+			<p class="muted">
+				We tap trusted partners to pressure test architecture, security, and narrative so every rollout is durable.
+			</p>
+		</div>
+
+		<div class="more-grid">
+			{#each extendedCollaborators as person}
+				<article class="more-card">
+					<div class="more-card-header">
+						<div class="avatar" aria-hidden="true">
+							<span>{person.initials}</span>
+						</div>
+						<div class="more-card-titles">
+							<h3>{person.name}</h3>
+							<p class="role-title">{person.role}</p>
+						</div>
+						<span class="focus-tag subdued">{person.focus}</span>
+					</div>
+					<p class="background">{person.background}</p>
+					<p class="description">{person.description}</p>
+					<div class="tag-row">
+						{#each person.tags as tag}
+							<span class="chip">{tag}</span>
+						{/each}
+					</div>
+				</article>
+				{/each}
+			</div>
+		</section>
+
+	<nav class="section-nav" aria-label="About navigation">
+		{#each sections as section}
+			<a href={`#${section.id}`} class="section-link">
+				<span aria-hidden="true">+</span>
+				{section.label}
+			</a>
+		{/each}
+	</nav>
+
+	<section class="hero" id="how-we-work">
 		<div class="hero-copy">
 			<p class="eyebrow">About Spiked</p>
 			<h1>
@@ -187,7 +258,7 @@
 		</div>
 	</section>
 
-	<section class="principles">
+	<section class="principles" id="principles">
 		<div class="section-header">
 			<p class="eyebrow">Operating principles</p>
 			<h2>Everything we build is designed for measurable, durable revenue impact.</h2>
@@ -272,11 +343,56 @@
 		flex-direction: column;
 		align-items: center;
 		gap: clamp(2.5rem, 4vw, 3.5rem);
+		position: relative;
 	}
 
 	.page section {
 		width: min(1180px, 100%);
 		margin: 0 auto;
+		scroll-margin-top: 120px;
+	}
+
+	.section-nav {
+		width: min(1180px, 100%);
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: 0.75rem;
+		padding: 0.85rem;
+		border-radius: 20px;
+		border: 1px solid var(--about-border-strong);
+		background: linear-gradient(145deg, var(--about-surface), var(--about-surface-soft));
+		box-shadow: var(--about-soft-shadow);
+		backdrop-filter: blur(16px);
+	}
+
+	.section-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		font-weight: 800;
+		font-size: 0.95rem;
+		padding: 0.75rem 1rem;
+		border-radius: 12px;
+		color: var(--foreground);
+		text-decoration: none;
+		background: var(--about-chip);
+		border: 1px solid var(--about-chip-border);
+		transition: all 0.25s ease;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.section-link:hover {
+		border-color: var(--about-border-strong);
+		transform: translateY(-1px);
+		box-shadow: 0 10px 32px rgba(0, 0, 0, 0.2);
+	}
+
+	.section-link span[aria-hidden='true'] {
+		font-size: 1rem;
+		color: var(--about-subtle);
 	}
 
 	.hero {
@@ -537,6 +653,90 @@
 		font-size: 0.9375rem;
 	}
 
+	.more {
+		margin: 0 auto;
+		padding: clamp(2.25rem, 4vw, 3.25rem);
+		border-radius: 32px;
+		border: 1px solid var(--about-border);
+		background: linear-gradient(150deg, var(--about-surface), var(--about-surface-soft));
+		box-shadow: var(--about-shadow);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.more::before {
+		content: '';
+		position: absolute;
+		inset: -35% 0 auto;
+		height: 70%;
+		background: radial-gradient(ellipse at 75% 20%, var(--about-chip), transparent 60%);
+		opacity: 0.8;
+		pointer-events: none;
+	}
+
+	.more > * {
+		position: relative;
+		z-index: 1;
+	}
+
+	.more-grid {
+		margin-top: 2rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		gap: 1.25rem;
+	}
+
+	.more-card {
+		padding: 1.5rem;
+		border-radius: 20px;
+		background: linear-gradient(170deg, var(--about-surface), var(--about-panel));
+		border: 1px solid var(--about-border);
+		box-shadow: var(--about-soft-shadow);
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		transition: all 0.25s ease;
+	}
+
+	.more-card:hover {
+		border-color: var(--about-border-strong);
+		transform: translateY(-3px);
+		box-shadow: var(--about-shadow);
+	}
+
+	.more-card-header {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		gap: 0.9rem;
+		align-items: center;
+	}
+
+	.more-card-titles h3 {
+		margin: 0 0 0.25rem;
+	}
+
+	.avatar {
+		width: 3rem;
+		height: 3rem;
+		border-radius: 0.9rem;
+		background:
+			radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 60%),
+			var(--about-line);
+		display: grid;
+		place-items: center;
+		color: var(--foreground);
+		font-weight: 800;
+		letter-spacing: 0.05em;
+		border: 1px solid var(--about-border-strong);
+		box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+	}
+
+	.focus-tag.subdued {
+		border-color: var(--about-border);
+		background: var(--about-chip);
+		color: var(--about-subtle);
+	}
+
 	.principles {
 		margin: 0 auto;
 		padding: clamp(2.5rem, 4vw, 3.5rem);
@@ -548,6 +748,8 @@
 
 	.section-header {
 		max-width: 800px;
+		display: grid;
+		gap: 0.35rem;
 	}
 
 	.section-header .muted {
@@ -621,10 +823,32 @@
 
 	.team {
 		margin: 0 auto;
+		padding: clamp(2.5rem, 4vw, 3.5rem);
+		border-radius: 32px;
+		border: 1px solid var(--about-border);
+		background: linear-gradient(160deg, var(--about-surface), var(--about-surface-soft));
+		box-shadow: var(--about-shadow);
+		position: relative;
+		overflow: hidden;
 	}
 
 	.page > .team:first-of-type {
 		margin-top: clamp(1.5rem, 3vw, 2rem);
+	}
+
+	.team::before {
+		content: '';
+		position: absolute;
+		inset: -35% 0 auto;
+		height: 65%;
+		background: radial-gradient(ellipse at 20% 30%, var(--about-chip), transparent 60%);
+		opacity: 0.9;
+		pointer-events: none;
+	}
+
+	.team > * {
+		position: relative;
+		z-index: 1;
 	}
 
 	.team-grid {
@@ -783,6 +1007,16 @@
 			padding: 1.25rem 1rem 3rem;
 		}
 
+		.section-nav {
+			grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+			padding: 0.75rem;
+		}
+
+		.section-link {
+			font-size: 0.9rem;
+			justify-content: flex-start;
+		}
+
 		.hero {
 			margin-bottom: 2rem;
 		}
@@ -792,6 +1026,14 @@
 		}
 
 		.team-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.more-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.more-card-header {
 			grid-template-columns: 1fr;
 		}
 	}

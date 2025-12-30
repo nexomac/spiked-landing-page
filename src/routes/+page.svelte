@@ -569,7 +569,7 @@
 		<section
 			id="showcase"
 			data-section="showcase"
-			class="py-24 sm:py-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
+			class="mt-[20vh] pt-32 pb-24 sm:mt-[25vh] sm:pt-40 sm:pb-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>

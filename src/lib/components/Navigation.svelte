@@ -111,7 +111,7 @@
 					title: "Video Resources",
 					desc: "Watch how Spiked AI can transform your business.",
 					icon: Video,
-					href: "/features/video-resources",
+					href: "/resources",
 				},
 			],
 		},
@@ -253,15 +253,7 @@
 						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
 					></span>
 				</a>
-				<a
-					href="/about-us#more"
-					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${isMoreActive ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
-				>
-					+More
-					<span
-						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
-					></span>
-				</a>
+	
 			</div>
 
 			<!-- Mega Menu Panel -->

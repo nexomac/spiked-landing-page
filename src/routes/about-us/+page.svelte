@@ -63,6 +63,7 @@
 			focus: 'Platform scale',
 			role: 'Strategic Advisor',
 			initials: 'AA',
+			logo: '/logos/amazon-logo.svg',
 			description: 'Advises on secure foundation models, trust layers, and enterprise-grade guardrails.',
 			tags: ['Platform Scale', 'Trust & Safety', 'Enterprise']
 		},
@@ -72,6 +73,7 @@
 			focus: 'Narrative & architecture',
 			role: 'Storyteller & Systems Design',
 			initials: 'NV',
+			logo: '/logos/nvidia-logo.svg',
 			description: 'Shapes the narrative and GPU-native architecture behind production rollouts.',
 			tags: ['GPU Systems', 'Narrative', 'Applied AI']
 		}
@@ -164,9 +166,16 @@
 						{/if}
 					</div>
 				</article>
-				{/each}
+			{/each}
+			<div
+				class="team-more"
+				aria-label="Two more team members"
+				style="font-size:1.1rem; font-weight:800; padding:0.75rem 1.2rem; min-width:120px; border-radius:20px; letter-spacing:0.08em; text-align:center;"
+			>
+				+2 More
 			</div>
-		</section>
+		</div>
+	</section>
 
 	<section class="more" id="more">
 		<div class="section-header">
@@ -177,12 +186,25 @@
 			</p>
 		</div>
 
+		<div class="more-logos" aria-label="Advisory logos">
+			<div class="logo-chip">
+				<img src="/logos/amazon-logo.svg" alt="Amazon logo" loading="lazy" />
+			</div>
+			<div class="logo-chip">
+				<img src="/logos/nvidia-logo.svg" alt="NVIDIA logo" loading="lazy" />
+			</div>
+		</div>
+
 		<div class="more-grid">
 			{#each extendedCollaborators as person}
 				<article class="more-card">
 					<div class="more-card-header">
-						<div class="avatar" aria-hidden="true">
-							<span>{person.initials}</span>
+						<div class="avatar" class:logo={person.logo} aria-hidden="true">
+							{#if person.logo}
+								<img src={person.logo} alt={`${person.name} logo`} loading="lazy" />
+							{:else}
+								<span>{person.initials}</span>
+							{/if}
 						</div>
 						<div class="more-card-titles">
 							<h3>{person.name}</h3>
@@ -686,6 +708,36 @@
 		gap: 1.25rem;
 	}
 
+	.more-logos {
+		margin-top: 1.5rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.logo-chip {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.7rem 1.35rem;
+		border-radius: 999px;
+		background: linear-gradient(120deg, rgba(255, 255, 255, 0.98), rgba(236, 240, 246, 0.94));
+		border: 1px solid rgba(255, 255, 255, 0.7);
+		box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+	}
+
+	.logo-chip img {
+		height: 32px;
+		width: auto;
+		display: block;
+	}
+
+	:global(:root[data-theme='light']) .logo-chip {
+		border-color: rgba(15, 23, 42, 0.08);
+		box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1);
+	}
+
 	.more-card {
 		padding: 1.5rem;
 		border-radius: 20px;
@@ -729,6 +781,18 @@
 		letter-spacing: 0.05em;
 		border: 1px solid var(--about-border-strong);
 		box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+	}
+
+	.avatar.logo {
+		background: #ffffff;
+		border-color: rgba(255, 255, 255, 0.6);
+	}
+
+	.avatar img {
+		max-width: 82%;
+		max-height: 70%;
+		object-fit: contain;
+		display: block;
 	}
 
 	.focus-tag.subdued {
@@ -874,6 +938,25 @@
 		transform: translateY(-6px);
 		border-color: var(--about-border-strong);
 		box-shadow: var(--about-shadow), 0 0 0 1px var(--about-border-strong);
+	}
+
+	.team-more {
+		align-self: center;
+		justify-self: start;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: fit-content;
+		padding: 0.75rem 1.2rem;
+		border-radius: 999px;
+		border: 1px dashed var(--about-border-strong);
+		background: var(--about-chip);
+		color: var(--about-subtle);
+		font-weight: 800;
+		font-size: 0.85rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		box-shadow: var(--about-soft-shadow);
 	}
 
 	.portrait {
@@ -1029,12 +1112,21 @@
 			grid-template-columns: 1fr;
 		}
 
+		.team-more {
+			justify-self: center;
+		}
+
 		.more-grid {
 			grid-template-columns: 1fr;
 		}
 
 		.more-card-header {
 			grid-template-columns: 1fr;
+		}
+
+		.more-logos {
+			margin-inline: auto;
+			justify-content: center;
 		}
 	}
 </style>

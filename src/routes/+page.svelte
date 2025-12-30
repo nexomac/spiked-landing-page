@@ -489,7 +489,7 @@
 		<!-- Contextual AI Style Hero Section -->
 		<section
 			data-section="hero"
-			class="relative flex items-center overflow-hidden bg-background contextual-hero"
+			class="relative flex items-center overflow-hidden bg-background contextual-hero min-h-[85vh] py-20 sm:py-24"
 		>
 			<!-- Abstract Iridescent Graphic (Right Side) -->
 			<div
@@ -561,7 +561,7 @@
 
 			<!-- Smooth transition to next section -->
 			<div
-				class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
+				class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none z-20"
 			></div>
 		</section>
 
@@ -569,7 +569,7 @@
 		<section
 			id="showcase"
 			data-section="showcase"
-			class="mt-[20vh] pt-32 pb-24 sm:mt-[25vh] sm:pt-40 sm:pb-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
+			class="pt-24 pb-24 sm:pt-32 sm:pb-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -584,7 +584,7 @@
 			<div class="relative z-10 max-w-7xl mx-auto px-6">
 				<!-- Header -->
 				<div
-					class="text-center mb-8 transform transition-all duration-1000 {visibleSections.showcase
+					class="text-center mb-16 sm:mb-20 transform transition-all duration-1000 {visibleSections.showcase
 						? 'translate-y-0 opacity-100'
 						: 'translate-y-10 opacity-0'}"
 				>
@@ -593,7 +593,7 @@
 						>All Features</span
 					>
 					<h2
-						class="text-3xl sm:text-4xl md:text-5xl font-black mt-4 mb-4 text-foreground tracking-tight leading-tight"
+						class="text-3xl sm:text-4xl md:text-5xl font-black mt-4 mb-6 text-foreground tracking-tight leading-tight"
 					>
 						Experience Every Feature
 					</h2>
@@ -1981,12 +1981,20 @@
 		letter-spacing: -0.03em;
 		color: var(--foreground);
 		text-shadow: 0 20px 80px rgba(59, 130, 246, 0.3);
+		/* Better text rendering */
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	.contextual-subheadline {
 		font-size: clamp(1.125rem, 2vw, 1.375rem);
 		font-weight: 500;
 		line-height: 1.6;
+		/* Better text rendering */
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	/* CTA Button */

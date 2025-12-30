@@ -142,10 +142,58 @@
 		@apply border-border;
 	}
 
+	html {
+		/* High-quality font rendering */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+		
+		/* Better text sharpness */
+		font-feature-settings: "kern" 1;
+		font-kerning: normal;
+		
+		/* Smooth scrolling */
+		scroll-behavior: smooth;
+		
+		/* Hardware acceleration for smoother rendering */
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-perspective: 1000;
+		perspective: 1000;
+	}
+
 	body {
 		@apply bg-background text-foreground;
-		font-feature-settings: "rlig" 1, "calt" 1;
+		font-feature-settings: "rlig" 1, "calt" 1, "kern" 1;
 		transition: background-color 0.3s ease, color 0.3s ease;
+		
+		/* Better text rendering */
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	/* High-quality image rendering */
+	img {
+		image-rendering: -webkit-optimize-contrast;
+		image-rendering: crisp-edges;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+
+	/* SVG sharpness */
+	svg {
+		shape-rendering: geometricPrecision;
+	}
+
+	/* Smooth animations with hardware acceleration */
+	[class*="animate"],
+	[class*="transition"] {
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		will-change: transform;
 	}
 }
 

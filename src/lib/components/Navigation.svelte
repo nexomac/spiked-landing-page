@@ -356,7 +356,7 @@
 					aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
 				>
 					{#if !isLight}
-						<Sun class="w-4 h-4 text-yellow-500" />
+						<Sun class="w-4 h-4 text-white-500" />
 						<span>Light</span>
 					{:else}
 						<Moon class="w-4 h-4 text-zinc-600" />

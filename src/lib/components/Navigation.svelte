@@ -25,15 +25,12 @@
 	const isLight = $derived($themeStore === "light");
 	const quickLinks = [
 		{ href: "/about-us", label: "About Us" },
-		{ href: "/about-us#more", label: "+ More" },
 		{ href: "/pricing", label: "Pricing" },
 		{ href: "/resources", label: "Resources" },
 		{ href: "/contact-sales", label: "Contact" },
 	];
 
 	const isAboutPage = $derived($page.url.pathname === "/about-us");
-	const isMoreActive = $derived(isAboutPage && $page.url.hash === "#more");
-	const isCoreAboutActive = $derived(isAboutPage && $page.url.hash !== "#more");
 
 	// Mega Menu State
 	let activeMenu = $state(null);

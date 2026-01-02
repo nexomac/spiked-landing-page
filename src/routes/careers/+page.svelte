@@ -131,16 +131,17 @@
 
 <!-- Hero Section -->
 <section class="relative pt-32 pb-20 px-6 overflow-hidden">
-	<div class="absolute inset-0 bg-gradient-to-b from-purple-500/5 via-transparent to-transparent pointer-events-none"></div>
+	<div class="absolute inset-0 bg-gradient-to-b from-red-500/10 via-red-500/5 to-transparent pointer-events-none"></div>
+	<div class="absolute inset-0" style="background-image: linear-gradient(rgba(239, 68, 68, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(239, 68, 68, 0.03) 1px, transparent 1px); background-size: 50px 50px;"></div>
 	
 	<div class="max-w-7xl mx-auto relative z-10">
 		<div class="text-center max-w-3xl mx-auto">
-			<div class="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full mb-6">
-				<Briefcase class="w-4 h-4 text-purple-400" />
-				<span class="text-sm font-medium text-purple-300">We're Hiring</span>
+			<div class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded-full mb-6 shadow-lg shadow-red-500/10">
+				<Briefcase class="w-4 h-4 text-red-400" />
+				<span class="text-sm font-medium text-red-300">We're Hiring</span>
 			</div>
 			
-			<h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+			<h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-white via-red-100 to-gray-200 bg-clip-text text-transparent tracking-tight">
 				Build the Future of Sales Intelligence
 			</h1>
 			
@@ -180,9 +181,10 @@
 
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 			{#each benefits as benefit}
-				<div class="p-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-xl hover:border-purple-500/30 transition-all duration-300">
-					<div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
-						<svelte:component this={benefit.icon} class="w-6 h-6 text-purple-400" />
+				<div class="group p-6 bg-gradient-to-br from-card/90 to-card/60 backdrop-blur-sm border border-border rounded-xl hover:border-red-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1">
+					<div class="relative w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-500/20 transition-all duration-300 group-hover:scale-110">
+						<svelte:component this={benefit.icon} class="w-6 h-6 text-red-400" />
+						<div class="absolute inset-0 bg-red-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 					</div>
 					<h3 class="text-lg font-semibold mb-2">{benefit.title}</h3>
 					<p class="text-sm text-gray-400">{benefit.description}</p>
@@ -206,15 +208,15 @@
 			{#each openRoles as role}
 				<button
 					onclick={() => openRole(role)}
-					class="text-left p-8 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-xl hover:border-purple-500/30 transition-all duration-300 group"
+					class="text-left p-8 bg-gradient-to-br from-card/90 to-card/60 backdrop-blur-sm border border-border rounded-xl hover:border-red-500/50 transition-all duration-300 group hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
 				>
 					<div class="flex items-start justify-between gap-4">
 						<div class="flex-1">
 							<div class="flex items-center gap-3 mb-3">
-								<h3 class="text-2xl font-bold group-hover:text-purple-400 transition-colors">
+								<h3 class="text-2xl font-bold group-hover:text-red-400 transition-colors">
 									{role.title}
 								</h3>
-								<span class="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-sm text-purple-300">
+								<span class="px-3 py-1 bg-red-500/10 border border-red-500/30 rounded-full text-sm text-red-300 font-semibold">
 									{role.department}
 								</span>
 							</div>
@@ -236,8 +238,8 @@
 						</div>
 
 						<div class="flex-shrink-0">
-							<div class="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-								<ArrowRight class="w-5 h-5 text-purple-400 group-hover:translate-x-1 transition-transform" />
+							<div class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center group-hover:bg-red-500/20 transition-all duration-300 group-hover:scale-110">
+								<ArrowRight class="w-5 h-5 text-red-400 group-hover:translate-x-1 transition-transform" />
 							</div>
 						</div>
 					</div>
@@ -248,36 +250,37 @@
 </section>
 
 <!-- Culture Section -->
-<section class="py-20 px-6 bg-gradient-to-b from-purple-500/5 to-transparent">
-	<div class="max-w-7xl mx-auto">
+<section class="py-20 px-6 bg-gradient-to-b from-red-500/5 to-transparent relative overflow-hidden">
+	<div class="absolute inset-0" style="background-image: linear-gradient(rgba(239, 68, 68, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(239, 68, 68, 0.02) 1px, transparent 1px); background-size: 50px 50px;"></div>
+	<div class="max-w-7xl mx-auto relative z-10">
 		<div class="grid lg:grid-cols-2 gap-12 items-center">
 			<div>
-				<h2 class="text-4xl font-bold mb-6">Our Culture</h2>
-				<p class="text-gray-400 mb-6 leading-relaxed">
+				<h2 class="text-4xl font-black mb-6 tracking-tight">Our Culture</h2>
+				<p class="text-muted-foreground mb-6 leading-relaxed text-lg">
 					We're building a company where great people can do their best work. Our culture is built on transparency, ownership, and continuous learning.
 				</p>
 				<ul class="space-y-4">
-					<li class="flex items-start gap-3">
-						<div class="w-6 h-6 bg-purple-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-							<Code class="w-3 h-3 text-purple-400" />
+					<li class="flex items-start gap-3 group">
+						<div class="w-6 h-6 bg-red-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-red-500/20 transition-colors duration-300">
+							<Code class="w-3 h-3 text-red-400" />
 						</div>
 						<div>
 							<div class="font-semibold mb-1">Ship Fast, Learn Faster</div>
 							<div class="text-sm text-gray-400">We believe in rapid iteration and learning from real users.</div>
 						</div>
 					</li>
-					<li class="flex items-start gap-3">
-						<div class="w-6 h-6 bg-purple-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-							<Users class="w-3 h-3 text-purple-400" />
+					<li class="flex items-start gap-3 group">
+						<div class="w-6 h-6 bg-red-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-red-500/20 transition-colors duration-300">
+							<Users class="w-3 h-3 text-red-400" />
 						</div>
 						<div>
 							<div class="font-semibold mb-1">Collaborate Openly</div>
 							<div class="text-sm text-gray-400">Best ideas win, regardless of where they come from.</div>
 						</div>
 					</li>
-					<li class="flex items-start gap-3">
-						<div class="w-6 h-6 bg-purple-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-							<TrendingUp class="w-3 h-3 text-purple-400" />
+					<li class="flex items-start gap-3 group">
+						<div class="w-6 h-6 bg-red-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-red-500/20 transition-colors duration-300">
+							<TrendingUp class="w-3 h-3 text-red-400" />
 						</div>
 						<div>
 							<div class="font-semibold mb-1">Grow Together</div>
@@ -288,22 +291,22 @@
 			</div>
 			
 			<div class="relative">
-				<div class="aspect-square bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-2xl border border-white/10 p-8 backdrop-blur-sm">
+				<div class="aspect-square bg-gradient-to-br from-red-500/10 via-red-500/5 to-transparent rounded-2xl border border-border/60 p-8 backdrop-blur-sm shadow-xl">
 					<div class="grid grid-cols-2 gap-4 h-full">
-						<div class="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-6 border border-white/10 flex flex-col justify-center">
-							<div class="text-4xl font-bold text-purple-400 mb-2">50+</div>
-							<div class="text-sm text-gray-400">Team Members</div>
+						<div class="group bg-gradient-to-br from-card/90 to-card/60 rounded-xl p-6 border border-border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1">
+							<div class="text-4xl font-black text-red-400 mb-2 group-hover:scale-110 transition-transform duration-300">50+</div>
+							<div class="text-sm text-muted-foreground font-semibold">Team Members</div>
 						</div>
-						<div class="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-6 border border-white/10 flex flex-col justify-center">
-							<div class="text-4xl font-bold text-purple-400 mb-2">12</div>
-							<div class="text-sm text-gray-400">Countries</div>
+						<div class="group bg-gradient-to-br from-card/90 to-card/60 rounded-xl p-6 border border-border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1">
+							<div class="text-4xl font-black text-red-400 mb-2 group-hover:scale-110 transition-transform duration-300">12</div>
+							<div class="text-sm text-muted-foreground font-semibold">Countries</div>
 						</div>
-						<div class="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-6 border border-white/10 flex flex-col justify-center">
-							<div class="text-4xl font-bold text-purple-400 mb-2">4.9★</div>
-							<div class="text-sm text-gray-400">Glassdoor Rating</div>
+						<div class="group bg-gradient-to-br from-card/90 to-card/60 rounded-xl p-6 border border-border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1">
+							<div class="text-4xl font-black text-red-400 mb-2 group-hover:scale-110 transition-transform duration-300">4.9★</div>
+							<div class="text-sm text-muted-foreground font-semibold">Glassdoor Rating</div>
 						</div>
-						<div class="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-6 border border-white/10 flex flex-col justify-center">
-							<div class="text-4xl font-bold text-purple-400 mb-2">95%</div>
+						<div class="group bg-gradient-to-br from-card/90 to-card/60 rounded-xl p-6 border border-border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1">
+							<div class="text-4xl font-black text-red-400 mb-2 group-hover:scale-110 transition-transform duration-300">95%</div>
 							<div class="text-sm text-gray-400">Retention Rate</div>
 						</div>
 					</div>
@@ -314,18 +317,25 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 px-6">
-	<div class="max-w-4xl mx-auto text-center">
-		<h2 class="text-3xl font-bold mb-4">Don't See a Perfect Fit?</h2>
-		<p class="text-gray-400 mb-8">
+<section class="py-20 px-6 relative overflow-hidden">
+	<div class="absolute inset-0">
+		<div class="absolute inset-0" style="background-image: linear-gradient(rgba(239, 68, 68, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(239, 68, 68, 0.05) 1px, transparent 1px); background-size: 50px 50px;"></div>
+		<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-600/10 rounded-full blur-3xl"></div>
+	</div>
+	<div class="max-w-4xl mx-auto text-center relative z-10">
+		<h2 class="text-3xl md:text-4xl font-black mb-4 tracking-tight">Don't See a Perfect Fit?</h2>
+		<p class="text-muted-foreground mb-8 text-lg">
 			We're always looking for talented people. Send us your resume and tell us what you're passionate about.
 		</p>
 		<a
 			href="mailto:careers@spiked.com"
-			class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg font-semibold transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
+			class="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-red-700 hover:from-red-600 hover:to-red-800 rounded-xl font-bold transition-all duration-300 shadow-xl shadow-red-500/25 hover:shadow-red-500/50 hover:scale-105 hover:-translate-y-1 relative overflow-hidden"
 		>
-			Get in Touch
-			<ArrowRight class="w-5 h-5" />
+			<span class="relative z-10">
+				Get in Touch
+			</span>
+			<ArrowRight class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+			<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 		</a>
 	</div>
 </section>
@@ -333,19 +343,19 @@
 <!-- Role Details Modal -->
 {#if selectedRole}
 	<div
-		class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+		class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-6"
 		onclick={closeRole}
 	>
 		<div
-			class="bg-gray-900 border border-white/10 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+			class="bg-card border border-border rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
 			onclick={(e) => e.stopPropagation()}
 		>
 			<div class="p-8">
 				<div class="flex items-start justify-between mb-6">
 					<div>
-						<h2 class="text-3xl font-bold mb-2">{selectedRole.title}</h2>
-						<div class="flex items-center gap-4 text-sm text-gray-400">
-							<span class="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-300">
+						<h2 class="text-3xl font-black mb-2 tracking-tight">{selectedRole.title}</h2>
+						<div class="flex items-center gap-4 text-sm text-muted-foreground">
+							<span class="px-3 py-1 bg-red-500/10 border border-red-500/30 rounded-full text-red-300 font-semibold">
 								{selectedRole.department}
 							</span>
 							<div class="flex items-center gap-2">
@@ -375,24 +385,27 @@
 					</div>
 
 					<div>
-						<h3 class="text-lg font-semibold mb-3">What We're Looking For</h3>
+						<h3 class="text-lg font-bold mb-3">What We're Looking For</h3>
 						<ul class="space-y-2">
 							{#each selectedRole.requirements as requirement}
-								<li class="flex items-start gap-3 text-gray-400">
-									<div class="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+								<li class="flex items-start gap-3 text-muted-foreground">
+									<div class="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
 									<span>{requirement}</span>
 								</li>
 							{/each}
 						</ul>
 					</div>
 
-					<div class="pt-6 border-t border-white/10">
+					<div class="pt-6 border-t border-border">
 						<a
 							href="mailto:careers@spiked.com?subject=Application for {selectedRole.title}"
-							class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg font-semibold transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
+							class="group w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-red-700 hover:from-red-600 hover:to-red-800 rounded-xl font-bold transition-all duration-300 shadow-xl shadow-red-500/25 hover:shadow-red-500/50 hover:scale-[1.02] relative overflow-hidden"
 						>
-							Apply for This Position
-							<ArrowRight class="w-5 h-5" />
+							<span class="relative z-10">
+								Apply for This Position
+							</span>
+							<ArrowRight class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+							<div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 						</a>
 					</div>
 				</div>
@@ -402,7 +415,13 @@
 {/if}
 
 <style>
+	/* Ensure careers page uses consistent theme */
 	:global(body) {
-		background: linear-gradient(to bottom, #0f0f1e 0%, #1a0b2e 100%);
+		background: var(--background);
+	}
+	
+	/* Smooth scrolling */
+	section {
+		scroll-margin-top: 80px;
 	}
 </style>

@@ -10,7 +10,7 @@
 
 <section
 	data-section="hero"
-	class="relative min-h-screen flex items-center justify-center overflow-hidden hero-shell font-sans text-foreground"
+	class="relative h-[120vh] min-h-[100dvh] flex items-center justify-center overflow-hidden hero-shell font-sans text-foreground"
 >
 	<!-- Background Overlay -->
 	<div
@@ -176,56 +176,6 @@
 				>
 					Resources
 				</a>
-			</div>
-
-			<div
-				class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-5xl mx-auto"
-			>
-				{#each [{ metric: "100%", label: "Every meeting captured", icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" }, { metric: "Real-time", label: "Live AI assistance", icon: "M13 10V3L4 14h7v7l9-11h-7z" }, { metric: "Auto", label: "Follow-up and planning", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" }] as feature, i}
-					<div
-						onmousemove={(event) => handleTilt(event, 10)}
-						onmouseleave={resetTilt}
-						role="presentation"
-						class="tilt-card group relative bg-card/50 backdrop-blur-xl p-5 sm:p-6 md:p-7 rounded-xl sm:rounded-2xl border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 cursor-pointer"
-						style={`animation-delay: ${0.6 + i * 0.1}s; transform: translate3d(0, 0, 0);`}
-					>
-						<div
-							class="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-						></div>
-						<div class="relative">
-							<div
-								class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4"
-							>
-								<div
-									class="p-2 sm:p-3 bg-secondary rounded-lg sm:rounded-xl border border-border group-hover:border-primary/50 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-primary/10"
-								>
-									<svg
-										class="w-5 h-5 sm:w-6 sm:h-6 text-primary group-hover:text-primary transition-colors"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2.5"
-											d={feature.icon}
-										/>
-									</svg>
-								</div>
-								<span
-									class="text-3xl sm:text-4xl text-foreground font-black group-hover:text-primary transition-colors duration-300"
-									>{feature.metric}</span
-								>
-							</div>
-							<p
-								class="text-muted-foreground font-bold tracking-wide uppercase text-xs sm:text-sm group-hover:text-foreground transition-colors"
-							>
-								{feature.label}
-							</p>
-						</div>
-					</div>
-				{/each}
 			</div>
 		</div>
 	</div>

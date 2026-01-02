@@ -63,6 +63,8 @@
 			focus: 'Platform scale',
 			role: 'Strategic Advisor',
 			initials: 'AA',
+			logo: '/logos/amazon-icon.png',
+			logoClass: 'amazon',
 			description: 'Advises on secure foundation models, trust layers, and enterprise-grade guardrails.',
 			tags: ['Platform Scale', 'Trust & Safety', 'Enterprise']
 		},
@@ -72,6 +74,8 @@
 			focus: 'Narrative & architecture',
 			role: 'Storyteller & Systems Design',
 			initials: 'NV',
+			logo: '/logos/nvidia-icon.svg',
+			logoClass: 'nvidia',
 			description: 'Shapes the narrative and GPU-native architecture behind production rollouts.',
 			tags: ['GPU Systems', 'Narrative', 'Applied AI']
 		}
@@ -140,33 +144,74 @@
 			</p>
 		</div>
 
-		<div class="team-grid">
-			{#each teamMembers as member}
-				<article class="team-card">
-					<div class="portrait">
-						<div class="portrait-glow"></div>
-						<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
-					</div>
-					<div class="team-content">
-						<div class="name-row">
-							<h3>{member.name}</h3>
-							<span class="focus-tag">{member.focus}</span>
+		<div class="marquee-container">
+			<div class="marquee-track">
+				{#each teamMembers as member}
+					<article class="team-card">
+						<div class="portrait">
+							<div class="portrait-glow"></div>
+							<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
 						</div>
-						<p class="role-title">{member.role}</p>
-						<p class="background">{member.background}</p>
-						<p class="description">{member.description}</p>
-						{#if member.tags}
-							<div class="tag-row">
-								{#each member.tags as tag}
-									<span class="chip">{tag}</span>
-								{/each}
+						<div class="team-content">
+							<div class="name-row">
+								<h3>{member.name}</h3>
+								<span class="focus-tag">{member.focus}</span>
 							</div>
-						{/if}
-					</div>
-				</article>
+							<p class="role-title">{member.role}</p>
+							<p class="background">{member.background}</p>
+							<p class="description">{member.description}</p>
+							{#if member.tags}
+								<div class="tag-row">
+									{#each member.tags as tag}
+										<span class="chip">{tag}</span>
+									{/each}
+								</div>
+							{/if}
+						</div>
+					</article>
 				{/each}
+				<div
+					class="team-more"
+					aria-label="Two more team members"
+					style="font-size:1.1rem; font-weight:800; padding:0.75rem 1.2rem; min-width:120px; border-radius:20px; letter-spacing:0.08em; text-align:center;"
+				>
+					+2 More
+				</div>
+				<!-- Duplicate for seamless loop -->
+				{#each teamMembers as member}
+					<article class="team-card">
+						<div class="portrait">
+							<div class="portrait-glow"></div>
+							<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
+						</div>
+						<div class="team-content">
+							<div class="name-row">
+								<h3>{member.name}</h3>
+								<span class="focus-tag">{member.focus}</span>
+							</div>
+							<p class="role-title">{member.role}</p>
+							<p class="background">{member.background}</p>
+							<p class="description">{member.description}</p>
+							{#if member.tags}
+								<div class="tag-row">
+									{#each member.tags as tag}
+										<span class="chip">{tag}</span>
+									{/each}
+								</div>
+							{/if}
+						</div>
+					</article>
+				{/each}
+				<div
+					class="team-more"
+					aria-label="Two more team members"
+					style="font-size:1.1rem; font-weight:800; padding:0.75rem 1.2rem; min-width:120px; border-radius:20px; letter-spacing:0.08em; text-align:center;"
+				>
+					+2 More
+				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
 	<section class="more" id="more">
 		<div class="section-header">
@@ -181,8 +226,18 @@
 			{#each extendedCollaborators as person}
 				<article class="more-card">
 					<div class="more-card-header">
-						<div class="avatar" aria-hidden="true">
-							<span>{person.initials}</span>
+						<div
+							class="avatar"
+							class:logo={person.logo}
+							class:amazon={person.logoClass === 'amazon'}
+							class:nvidia={person.logoClass === 'nvidia'}
+							aria-hidden="true"
+						>
+							{#if person.logo}
+								<img src={person.logo} alt={`${person.name} logo`} loading="lazy" />
+							{:else}
+								<span>{person.initials}</span>
+							{/if}
 						</div>
 						<div class="more-card-titles">
 							<h3>{person.name}</h3>
@@ -706,13 +761,22 @@
 
 	.more-card-header {
 		display: grid;
-		grid-template-columns: auto 1fr auto;
+		grid-template-columns: auto minmax(0, 1fr) auto;
 		gap: 0.9rem;
-		align-items: center;
+		align-items: start;
+	}
+
+	.more-card-titles {
+		display: grid;
+		gap: 0.2rem;
 	}
 
 	.more-card-titles h3 {
 		margin: 0 0 0.25rem;
+	}
+
+	.more-card-titles .role-title {
+		margin: 0;
 	}
 
 	.avatar {
@@ -729,12 +793,36 @@
 		letter-spacing: 0.05em;
 		border: 1px solid var(--about-border-strong);
 		box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+		align-self: start;
+	}
+
+	.avatar.logo {
+		background: #ffffff;
+		border-color: rgba(255, 255, 255, 0.6);
+	}
+
+	:global(:root[data-theme='light']) .avatar.logo.amazon {
+		background: #0b1220;
+		border-color: rgba(15, 23, 42, 0.2);
+	}
+
+	:global(:root[data-theme='light']) .avatar.logo.amazon img {
+		filter: brightness(0) invert(1);
+	}
+
+	.avatar img {
+		max-width: 82%;
+		max-height: 70%;
+		object-fit: contain;
+		display: block;
 	}
 
 	.focus-tag.subdued {
 		border-color: var(--about-border);
 		background: var(--about-chip);
 		color: var(--about-subtle);
+		align-self: start;
+		margin-top: 0.2rem;
 	}
 
 	.principles {
@@ -851,6 +939,32 @@
 		z-index: 1;
 	}
 
+	.marquee-container {
+		margin-top: 2.5rem;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.marquee-track {
+		display: flex;
+		gap: 1.75rem;
+		animation: marquee 40s linear infinite;
+		width: max-content;
+	}
+
+	.marquee-track:hover {
+		animation-play-state: paused;
+	}
+
+	@keyframes marquee {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+
 	.team-grid {
 		margin-top: 2.5rem;
 		display: grid;
@@ -868,12 +982,36 @@
 		display: flex;
 		flex-direction: column;
 		transition: all 0.25s ease;
+		min-width: 360px;
+		max-width: 360px;
+		flex-shrink: 0;
 	}
 
 	.team-card:hover {
 		transform: translateY(-6px);
 		border-color: var(--about-border-strong);
 		box-shadow: var(--about-shadow), 0 0 0 1px var(--about-border-strong);
+	}
+
+	.team-more {
+		align-self: center;
+		justify-self: start;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: fit-content;
+		min-width: 180px;
+		padding: 0.75rem 1.2rem;
+		border-radius: 999px;
+		border: 1px dashed var(--about-border-strong);
+		background: var(--about-chip);
+		color: var(--about-subtle);
+		font-weight: 800;
+		font-size: 0.85rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		box-shadow: var(--about-soft-shadow);
+		flex-shrink: 0;
 	}
 
 	.portrait {
@@ -1029,6 +1167,10 @@
 			grid-template-columns: 1fr;
 		}
 
+		.team-more {
+			justify-self: center;
+		}
+
 		.more-grid {
 			grid-template-columns: 1fr;
 		}
@@ -1036,5 +1178,6 @@
 		.more-card-header {
 			grid-template-columns: 1fr;
 		}
+
 	}
 </style>

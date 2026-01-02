@@ -263,15 +263,7 @@
 						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
 					></span>
 				</a>
-				<a
-					href="/about-us#more"
-					class={`px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 relative group ${isMoreActive ? "text-red-600" : (isLight ? "text-zinc-600 hover:text-red-600" : "text-zinc-400 hover:text-red-600")}`}
-				>
-					+More
-					<span
-						class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"
-					></span>
-				</a>
+	
 			</div>
 
 			<!-- Mega Menu Panel -->
@@ -374,7 +366,7 @@
 					aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
 				>
 					{#if !isLight}
-						<Sun class="w-4 h-4 text-yellow-500" />
+						<Sun class="w-4 h-4 text-white-500" />
 						<span>Light</span>
 					{:else}
 						<Moon class="w-4 h-4 text-zinc-600" />

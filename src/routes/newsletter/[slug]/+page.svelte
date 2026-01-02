@@ -38,21 +38,21 @@
 <div class="min-h-screen transition-colors duration-500 font-serif pt-24 pb-20 px-4 flex justify-center selection:bg-red-500/30 
     {$themeStore === 'dark' ? 'bg-[#0f0f0f] text-white/90' : 'bg-[#f4f1ea] text-black'}">
     
-     <div class="w-full max-w-2xl">
+     <div class="w-full max-w-5xl">
         <!-- Newsletter Header -->
-        <header class="text-center mb-16 border-b-4 pb-8 transition-colors
+        <header class="text-center mb-16 border-b-4 pb-8 transition-colors max-w-3xl mx-auto
             {$themeStore === 'dark' ? 'border-red-900/30' : 'border-black'}">
             
             <nav class="flex items-center justify-start mb-8">
                 <a href="/blog" class="text-xs font-sans font-bold uppercase tracking-widest transition-colors flex items-center gap-1 group
                     {$themeStore === 'dark' ? 'text-red-600/60 hover:text-red-500' : 'text-gray-500 hover:text-black'}">
                     <span class="group-hover:-translate-x-1 transition-transform">←</span>
-                    The Bulletin
+                    Research and News
                 </a>
             </nav>
             
             <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight transition-colors">
-                The <span class="text-red-600">Spiked</span> {data.newsletter.title}
+                The <span class="text-red-600">Spiked</span>AI {data.newsletter.title}
             </h1>
             <p class="text-xl italic font-serif transition-colors
                 {$themeStore === 'dark' ? 'text-gray-400' : 'text-gray-700'}">
@@ -92,19 +92,19 @@
                             {/if}
                             <div class="flex-1">
                                 <h2 class="text-2xl font-bold mb-2 leading-tight">
-                                    <a href="/blog/{post.slug || post.data.slug || post._id}" class="hover:text-red-600 transition-colors">
-                                        {post.data.title || post.data.Title || 'Untitled'}
+                                    <a href="/blog/{post.slug || post.data?.slug || post._id}" class="hover:text-red-600 transition-colors">
+                                        {post.title || post.data?.title || post.data?.Title || 'Untitled'}
                                     </a>
                                 </h2>
                                 <time class="text-xs font-sans font-bold uppercase tracking-wider mb-3 block text-red-600/60">
-                                    {new Date(post.data.publishedDate || post.data['date-of-analysis'] || post.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
+                                    {new Date(post.publishedDate || post.data?.publishedDate || post.data?.['date-of-analysis'] || post.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
                                 </time>
                                 <p class="leading-relaxed font-serif transition-colors
                                     {$themeStore === 'dark' ? 'text-gray-400' : 'text-gray-800'}">
-                                    {getSummary(post.data || {})}
+                                    {post.excerpt || getSummary(post.data || {})}
                                 </p>
                                 <div class="mt-6">
-                                     <a href="/blog/{post.slug || post.data.slug || post._id}" 
+                                     <a href="/blog/{post.slug || post.data?.slug || post._id}" 
                                         class="text-sm font-sans font-black uppercase tracking-widest px-6 py-2 transition-all inline-block border-2
                                         {$themeStore === 'dark' 
                                             ? 'bg-red-600 text-white border-red-600 hover:bg-white hover:text-black' 

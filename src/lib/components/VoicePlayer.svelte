@@ -2,32 +2,39 @@
     import { Play, Pause, Square, Volume2 } from 'lucide-svelte';
     import { onMount, onDestroy } from 'svelte';
 
-    let { content = [] } = $props();
-
     let speaking = $state(false);
     let paused = $state(false);
     let synth = null;
     let utterance = null;
     let supported = $state(false);
 
-    // Flatten content into a single string
+    let { content = {}, blocks = [] } = $props();
+
     let textToRead = $derived.by(() => {
-        if (!content) return '';
         let fullText = '';
         
-        // Handle the structured data format we saw in the page
-        // data.post.data is an object with keys
+        // 1. Try New Blocks format first
+        if (blocks && Array.isArray(blocks) && blocks.length > 0) {
+            for (const b of blocks) {
+                // Blocks from the page are already processed into { type, value, name }
+                if (b.type === 'richtext' && b.value) {
+                    fullText += extractFromTiptap(b.value) + '. ';
+                } else if (typeof b.value === 'string' && !b.value.startsWith('data:image')) {
+                    fullText += b.value + '. ';
+                }
+            }
+            if (fullText) return fullText;
+        }
+
+        // 2. Fallback to legacy content object
+        if (!content) return '';
         const entries = Object.entries(content);
-        
         for (const [key, value] of entries) {
-             // Skip metadata fields
              if (['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate'].includes(key)) continue;
 
              if (value && typeof value === 'object' && value.type === 'doc') {
-                // Extract text from Tiptap JSON
                 fullText += extractFromTiptap(value) + '. ';
              } else if (typeof value === 'string' && !value.startsWith('data:image')) {
-                // Standard text fields
                 fullText += value + '. ';
              }
         }
@@ -35,8 +42,9 @@
     });
 
     function extractFromTiptap(node) {
+        if (!node) return '';
         if (node.type === 'text') return node.text;
-        if (node.content) {
+        if (node.content && Array.isArray(node.content)) {
             return node.content.map(child => extractFromTiptap(child)).join(' ');
         }
         return '';

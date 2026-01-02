@@ -90,7 +90,7 @@
 			label: "Resources",
 			links: [
 				{
-					title: "The Bulletin",
+					title: "Research and News",
 					desc: "Weekly AI strategies and trends.",
 					icon: Newspaper,
 					href: "/blog",

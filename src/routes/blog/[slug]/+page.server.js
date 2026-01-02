@@ -1,4 +1,4 @@
-import { getEntryBySlug, getContentModel } from '$lib/cms';
+import { getBlog } from '$lib/cms';
 import { error } from '@sveltejs/kit';
 
 function getBestImage(data) {
@@ -15,23 +15,20 @@ function getBestImage(data) {
 }
 
 export async function load({ params }) {
-    const post = await getEntryBySlug(null, params.slug);
+    const post = await getBlog(params.slug);
     
     if (!post) throw error(404, 'Article not found');
-
-    const model = await getContentModel(post.modelSlug);
 
     return {
         post: {
             ...post,
              _id: post._id.toString(),
-            title: post.data?.title || post.data?.Title,
-            coverImage: getBestImage(post.data || {}),
-            body: post.data?.body || post.data?.Body || {},
-            sidebar: post.data?.sidebar || post.data?.Sidebar,
-            author: post.data?.author || post.data?.Author,
-            publishedDate: post.data?.publishedDate || post.data?.['Published Date'] || post.createdAt
+            // Mapping for compatibility + new fields
+            title: post.title || post.data?.title || post.data?.Title,
+            coverImage: post.coverImage || getBestImage(post.data || {}) || (post.content?.find(b => b.type === 'image')?.data?.url),
+            author: post.author || post.data?.author || post.data?.Author || 'Editorial Staff',
+            publishedDate: post.publishedDate || post.data?.publishedDate || post.createdAt
         },
-        modelFields: model?.fields || []
+        modelFields: [] // No longer used for new system
     };
 }

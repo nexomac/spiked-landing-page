@@ -10,7 +10,6 @@
     import { page } from '$app/stores';
 
     let { data } = $props();
-    let layoutVersion = $derived($page.url.searchParams.get('version') || 'v1');
 
     // Helper to generate HTML for a specific field data
     function getFieldHtml(fieldData) {
@@ -30,6 +29,7 @@
     }
 
     function extractTextFromTiptap(node) {
+        if (!node) return '';
         if (node.type === 'text') return node.text;
         if (node.content) {
             return node.content.map(child => extractTextFromTiptap(child)).join(' ');
@@ -50,6 +50,17 @@
     // Calculate reading time
     let readingTime = $derived.by(() => {
         let textContent = '';
+        
+        // 1. Check new blocks
+        if (data.post.content && Array.isArray(data.post.content)) {
+            for (const b of data.post.content) {
+                if (b.type === 'text') textContent += b.data?.content + ' ';
+                if (b.type === 'richtext' && b.data?.html) textContent += extractTextFromTiptap(b.data.html) + ' ';
+                if (b.type === 'quote') textContent += b.data?.text + ' ';
+            }
+        }
+        
+        // 2. Check legacy data
         if (data.post.data) {
             for (const [key, value] of Object.entries(data.post.data)) {
                  if (['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate'].includes(key)) continue;
@@ -61,21 +72,85 @@
                  }
             }
         }
-        if (!textContent.trim()) textContent = "Short read";
+        
+        if (!textContent.trim()) return "2 min read";
         const words = textContent.trim().split(/\s+/).length;
-        const minutes = Math.ceil(words / 200); // 200 wpm average
+        const minutes = Math.ceil(words / 200); 
         return `${minutes} min read`;
     });
 
-    // Masonry Layout Logic: Prepare blocks
+    // Process blocks for rendering
     let contentBlocks = $derived.by(() => {
+        // 0. New Editor "Content" Blocks
+        if (data.post.content && Array.isArray(data.post.content) && data.post.content.length > 0) {
+            return data.post.content.map(b => {
+                if (b.type === 'header') {
+                    const level = b.data?.level || 2;
+                    return {
+                        id: b.id,
+                        type: 'richtext',
+                        value: {
+                            type: 'doc',
+                            content: [{
+                                type: 'heading',
+                                attrs: { level },
+                                content: [{ type: 'text', text: b.data?.text || '' }]
+                            }]
+                        }
+                    };
+                }
+                
+                if (b.type === 'text') {
+                     return {
+                        id: b.id,
+                        type: 'string_fallback',
+                        value: b.data?.content || ''
+                     };
+                }
+
+                if (b.type === 'richtext') {
+                    return {
+                        id: b.id,
+                        type: 'richtext',
+                        value: b.data?.html
+                    };
+                }
+
+                if (b.type === 'quote') {
+                    return {
+                        id: b.id,
+                        type: 'quote',
+                        value: b.data?.text || ''
+                    };
+                }
+
+                if (b.type === 'statistics') {
+                    return {
+                        id: b.id,
+                        type: 'statistic',
+                        value: `${b.data?.label || 'Metric'}|${b.data?.value || '0'}`
+                    };
+                }
+
+                if (b.type === 'image') {
+                    return {
+                        id: b.id,
+                        type: 'image',
+                        value: b.data?.url,
+                        name: b.data?.caption || 'Image'
+                    };
+                }
+                
+                return null;
+            }).filter(Boolean);
+        }
+
+        // 1. Fallback to Legacy model fields or data object
         const blocks = [];
         const ignoredKeys = ['title', 'slug', 'status', 'coverImage', 'author', 'publishedDate', 'publishDate', 'publish_date', 'published_date', 'date', 'newsletters', 'Cover Image', 'Featured Image', 'FeaturedImage', 'featured-image', 'Image', 'image', 'Thumbnail', 'thumbnail'];
-        
         const isIgnored = (k) => ignoredKeys.some(ignored => k.toLowerCase() === ignored.toLowerCase());
         const processed = new Set();
         
-        // 1. Model Fields
         if (data.modelFields) {
             for (const field of data.modelFields) {
                const val = data.post.data[field.slug] || data.post.data[field.name];
@@ -93,7 +168,6 @@
             }
         }
         
-        // 2. Fallbacks
         if (data.post.data) {
             for (const [k, v] of Object.entries(data.post.data)) {
                 if (!processed.has(k) && !isIgnored(k) && typeof v === 'string' && v.length > 0) {
@@ -108,10 +182,6 @@
         }
         return blocks;
     });
-
-    // Split for v2
-    let leftCol = $derived(contentBlocks.slice(0, Math.ceil(contentBlocks.length / 2)));
-    let rightCol = $derived(contentBlocks.slice(Math.ceil(contentBlocks.length / 2)));
 </script>
 
 {#snippet renderBlock(block)}
@@ -177,7 +247,7 @@
             <div class="h-0.5 flex-1 bg-red-600/30"></div>
         </div>
      {:else if block.type === 'string_fallback' || typeof block.value === 'string'}
-         <p class="mb-6 font-serif text-xl leading-relaxed">{block.value}</p>
+          <p class="mb-6 font-serif text-xl leading-relaxed">{block.value}</p>
      {/if}
 {/snippet}
 
@@ -185,182 +255,82 @@
 <div class="min-h-screen transition-colors duration-500 font-serif pt-24 pb-20 px-4 flex justify-center selection:bg-red-500/30 
     {$themeStore === 'dark' ? 'bg-[#0f0f0f] text-white/90' : 'bg-[#f8f8f0] text-black'}">
     
-    <!-- Render Based on Version -->
-    {#if layoutVersion === 'v3'}
-        <!-- v3: San Francisco Chronicle Style -->
-        <article class="w-full max-w-6xl mx-auto">
-            <!-- Header: Left aligned, massive -->
-            <header class="mb-12 border-b-2 pb-8 {$themeStore === 'dark' ? 'border-red-900/20' : 'border-black'}">
-                <div class="mb-4 text-xs font-sans font-bold uppercase tracking-widest text-[#dc2626]">
-                    The Bulletin / v3
-                </div>
-                <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6 font-serif tracking-tight max-w-4xl
-                    {$themeStore === 'dark' ? 'text-white' : 'text-black'}">
-                    {data.post.title || data.post.data?.Title || data.post.data?.title}
-                </h1>
-                
-                <div class="flex items-center gap-6 font-sans text-sm font-medium
-                    {$themeStore === 'dark' ? 'text-gray-400' : 'text-gray-600'}">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
-                             <!-- Placeholder avatar if no author image -->
-                             <div class="w-full h-full bg-[#dc2626] flex items-center justify-center text-white font-bold">
-                                {(data.post.author || 'ES').substring(0,2)}
-                             </div>
-                        </div>
-                        <div>
-                            <span class="block text-xs uppercase tracking-wider opacity-70">By</span>
-                            <span class="font-bold text-[#dc2626]">
-                                {data.post.author || data.post.data?.Author || 'Editorial Staff'}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="h-8 w-px bg-current opacity-20"></div>
-                    <div>
-                         <span class="block text-xs uppercase tracking-wider opacity-70">Published</span>
-                         {formattedDate}
-                    </div>
-                    <div class="h-8 w-px bg-current opacity-20"></div>
-                    <div>
-                         {readingTime}
-                    </div>
-                </div>
-            </header>
+    <!-- The "Vertical Newspaper Strip" Container -->
+    <article class="w-full max-w-5xl border-x shadow-2xl min-h-[80vh] flex flex-col items-center transition-colors duration-500
+        {$themeStore === 'dark' ? 'bg-[#1a1a1a] border-red-900/20' : 'bg-white border-black/10'}">
+        
+        <!-- Strip Header / Metaline -->
+        <header class="w-full border-b mb-8 px-8 pt-8 pb-4 text-center transition-colors
+            {$themeStore === 'dark' ? 'border-red-900/30' : 'border-black'}">
+            
+            <nav class="flex justify-between items-center text-xs font-sans font-bold uppercase tracking-widest mb-6 border-b pb-2
+                {$themeStore === 'dark' ? 'border-red-900/10 text-red-600/60' : 'border-black/5 text-gray-500'}">
+                <a href="/blog" class="flex items-center gap-1 transition-colors group {$themeStore === 'dark' ? 'hover:text-red-500' : 'hover:text-black'}">
+                    <span class="group-hover:-translate-x-1 transition-transform">←</span>
+                    Research and News
+                </a>
+                <span class="hidden md:block transition-colors {$themeStore === 'dark' ? 'text-gray-500' : 'text-gray-400'}">
+                    The SpikedAI Times
+                </span>
+                <span class="flex items-center gap-2">
+                    {formattedDate} 
+                    <span class="opacity-30">/</span> 
+                    {readingTime}
+                </span>
+                <span class="hidden sm:block">Vol. {new Date().getFullYear()}</span>
+            </nav>
+            
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 font-serif transition-colors
+                {$themeStore === 'dark' ? 'text-white' : 'text-black'}">
+                {data.post.title || data.post.data?.title || data.post.data?.Title}
+            </h1>
 
-            <!-- Hero Image -->
-             {#if data.post.coverImage || data.post.data?.coverImage || data.post.data?.['Cover Image']}
-                <div class="mb-16 w-full relative">
+            <div class="flex flex-col items-center justify-center gap-4 font-sans text-sm font-bold border-t pt-4 w-full px-4
+                {$themeStore === 'dark' ? 'border-red-900/10 text-gray-500' : 'border-black/10 text-gray-600'}">
+                <span class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
+                    By {data.post.author || data.post.data?.author || data.post.data?.Author || 'Editorial Staff'}
+                    <span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
+                </span>
+                
+                <div class="flex items-center gap-4">
+                    <VoicePlayer blocks={contentBlocks} content={rest || {}} />
+                    <ShareButton 
+                        title={data.post.title}
+                        text={`Read "${data.post.title}" on SpikedAI.`}
+                    />
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Column -->
+        <div class="w-full px-8 md:px-16 pb-12 transition-colors {$themeStore === 'dark' ? 'bg-[#1a1a1a]' : 'bg-white'}">
+            <!-- Optional Cover Image -->
+            {#if data.post.coverImage || data.post.data?.coverImage || data.post.data?.['Cover Image']}
+                <div class="mb-8 p-1 transition-colors">
                     <img 
                         src={data.post.coverImage || data.post.data?.coverImage || data.post.data?.['Cover Image']} 
                         alt={data.post.title} 
-                        class="w-full h-auto max-h-[70vh] object-cover object-center grayscale contrast-125 hover:grayscale-0 transition-all duration-700" 
+                        class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all duration-700" 
                     />
-                    <div class="absolute bottom-4 right-4 text-xs bg-black/50 text-white px-2 py-1 backdrop-blur-sm rounded">
-                        Staff Illustration
-                    </div>
                 </div>
             {/if}
 
-            <!-- Layout: Main Column + Rail (Optional rail space, but centered for now like many sub-pages) -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                <div class="lg:col-span-8 lg:col-start-3">
-                     <div class="prose prose-xl prose-serif max-w-none leading-relaxed text-justify tiptap-content transition-colors
-                        {$themeStore === 'dark' ? 'text-white/90' : 'text-gray-900'}">
-                        <!-- Dropcap handled by CSS -->
-                        {#each contentBlocks as block (block.id)}
-                            {@render renderBlock(block)}
-                        {/each}
-                     </div>
-                     
-                    <!-- End Mark -->
-                    <div class="flex justify-center mt-12 mb-8">
-                        <div class="text-3xl transition-colors font-bold tracking-widest opacity-50">###</div>
-                    </div>
-                </div>
+            <!-- Text Content -->
+            <div class="text-justify tiptap-content prose prose-lg prose-serif max-w-none transition-colors
+                 {$themeStore === 'dark' ? 'text-white/80' : 'text-black'}">
+                 
+                 {#each contentBlocks as block (block.id)}
+                     {@render renderBlock(block)}
+                 {/each}
             </div>
-        </article>
-    {:else}
-        <!-- v1 (Strip) & v2 (Split Column in Strip) share the 'Strip' container -->
-        <!-- The "Vertical Newspaper Strip" Container - WIDENED to max-w-3xl for text, but container is max-w-5xl -->
-        <article class="w-full max-w-5xl border-x shadow-2xl min-h-[80vh] flex flex-col items-center transition-colors duration-500
-            {$themeStore === 'dark' ? 'bg-[#1a1a1a] border-red-900/20' : 'bg-white border-black/10'}">
-            
-            <!-- Strip Header / Metaline -->
-            <header class="w-full border-b mb-8 px-8 pt-8 pb-4 text-center transition-colors
-                {$themeStore === 'dark' ? 'border-red-900/30' : 'border-black'}">
-                
-                <nav class="flex justify-between items-center text-xs font-sans font-bold uppercase tracking-widest mb-6 border-b pb-2
-                    {$themeStore === 'dark' ? 'border-red-900/10 text-red-600/60' : 'border-black/5 text-gray-500'}">
-                    <a href="/blog" class="flex items-center gap-1 transition-colors group {$themeStore === 'dark' ? 'hover:text-red-500' : 'hover:text-black'}">
-                        <span class="group-hover:-translate-x-1 transition-transform">←</span>
-                        The Bulletin
-                    </a>
-                    <span class="hidden md:block transition-colors {$themeStore === 'dark' ? 'text-gray-500' : 'text-gray-400'}">
-                        The SpikedAI Times {layoutVersion === 'v2' ? '(v2)' : ''}
-                    </span>
-                    <span class="flex items-center gap-2">
-                        {formattedDate} 
-                        <span class="opacity-30">/</span> 
-                        {readingTime}
-                    </span>
-                    <span class="hidden sm:block">Vol. {new Date().getFullYear()}</span>
-                </nav>
-                
-                <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 font-serif transition-colors
-                    {$themeStore === 'dark' ? 'text-white' : 'text-black'}">
-                    {data.post.title || data.post.data?.Title || data.post.data?.title}
-                </h1>
 
-                <div class="flex flex-col items-center justify-center gap-4 font-sans text-sm font-bold border-t pt-4 w-full px-4
-                    {$themeStore === 'dark' ? 'border-red-900/10 text-gray-500' : 'border-black/10 text-gray-600'}">
-                    <span class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
-                        By {data.post.author || data.post.data?.Author || data.post.data?.author || 'Editorial Staff'}
-                        <span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
-                    </span>
-                    
-                    <div class="flex items-center gap-4">
-                        <VoicePlayer content={rest || {}} />
-                        <ShareButton 
-                            title={data.post.title}
-                            text={`Read "${data.post.title}" on SpikedAI.`}
-                        />
-                    </div>
-                </div>
-            </header>
-
-            <!-- Main Content Column -->
-            <div class="w-full px-8 md:px-16 pb-12 transition-colors {$themeStore === 'dark' ? 'bg-[#1a1a1a]' : 'bg-white'}">
-                <!-- Optional Cover Image -->
-                {#if data.post.coverImage || data.post.data?.coverImage || data.post.data?.['Cover Image']}
-                    <div class="mb-8 border-2 p-1 transition-colors
-                        {$themeStore === 'dark' ? 'bg-[#0f0f0f] border-red-900/30' : 'bg-gray-100 border-black'}">
-                        <img 
-                            src={data.post.coverImage || data.post.data?.coverImage || data.post.data?.['Cover Image']} 
-                            alt={data.post.title} 
-                            class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all duration-700" 
-                        />
-                        <div class="text-[10px] font-sans uppercase tracking-wide mt-1 text-right px-1 opacity-40">Article Doc. Ref.</div>
-                    </div>
-                {/if}
-
-                <!-- Text Content -->
-                <div class="text-justify tiptap-content prose prose-lg prose-serif max-w-none transition-colors
-                     {$themeStore === 'dark' ? 'text-white/80' : 'text-black'}
-                     {layoutVersion === 'v2' ? 'grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0' : ''}">
-                     
-                     {#if layoutVersion === 'v2'}
-                         <div class="flex flex-col gap-0">
-                             {#each leftCol as block (block.id)}
-                                <div class="break-inside-avoid">
-                                    {@render renderBlock(block)}
-                                </div>
-                             {/each}
-                         </div>
-
-                         <div class="flex flex-col gap-0 md:pl-2">
-                             {#each rightCol as block (block.id)}
-                                 <div class="break-inside-avoid">
-                                     {@render renderBlock(block)}
-                                 </div>
-                             {/each}
-                         </div>
-                     {:else}
-                         <!-- v1: Original Linear Layout -->
-                         {#each contentBlocks as block (block.id)}
-                             {@render renderBlock(block)}
-                         {/each}
-                     {/if}
-                </div>
-
-                <!-- End Mark -->
-                <div class="flex justify-center mt-12 mb-8">
-                    <div class="text-2xl transition-colors {$themeStore === 'dark' ? 'text-red-900' : 'text-black'}">❦</div>
-                </div>
+            <!-- End Mark -->
+            <div class="flex justify-center mt-12 mb-8">
+                <div class="text-2xl transition-colors {$themeStore === 'dark' ? 'text-red-900' : 'text-black'}">❦</div>
             </div>
-            
-        </article>
-    {/if}
+        </div>
+    </article>
 </div>
 
 <style>

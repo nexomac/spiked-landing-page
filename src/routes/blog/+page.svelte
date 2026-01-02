@@ -88,7 +88,7 @@
         </section>
 
         <div class="flex items-center gap-4 mb-12">
-            <h2 class="text-2xl font-black uppercase tracking-widest">Latest Bulletins</h2>
+            <h2 class="text-2xl font-black uppercase tracking-widest">Latest Research and News</h2>
             <span class="h-1 flex-1 bg-red-600/10"></span>
         </div>
 
@@ -117,8 +117,7 @@
                                     </div>
                                 </div>
                                 {#if data.posts[0].coverImage}
-                                    <div class="aspect-[4/3] grayscale contrast-125 group-hover:grayscale-0 transition duration-500 border-2 p-1 
-                                        {$themeStore === 'dark' ? 'bg-[#1a1a1a] border-red-900/30' : 'bg-gray-200 border-red-600/20'} group-hover:border-red-600">
+                                    <div class="aspect-[4/3] grayscale contrast-125 group-hover:grayscale-0 transition duration-500  p-1">
                                         <div class="w-full h-full relative border overflow-hidden {$themeStore === 'dark' ? 'border-red-900/20' : 'border-black'}">
                                             <img src={data.posts[0].coverImage} alt={data.posts[0].title} class="w-full h-full object-cover" />
                                         </div>

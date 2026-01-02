@@ -22,6 +22,49 @@ export async function POST({ request, cookies }) {
     }
 
     try {
+        // NEW: Blog Editor Block Generation
+        if (modelSlug === 'blog') {
+             const systemInstruction = `
+                You are a helper for a Blog Editor.
+                Your task is to generate a JSON array of content blocks for a blog post based on the User Request.
+                
+                The output must be a valid JSON Array where each item is a Block Object.
+                
+                Block Types & Schemas:
+                1. Header: { "id": "uuid", "type": "header", "data": { "text": "Section Title", "level": 2 } }
+                2. Text: { "id": "uuid", "type": "text", "data": { "content": "Paragraph text..." } }
+                3. Quote: { "id": "uuid", "type": "quote", "data": { "text": "Quote body", "author": "Author Name" } }
+                4. Statistic: { "id": "uuid", "type": "statistics", "data": { "label": "Growth", "value": "50%" } }
+                5. Image: { "id": "uuid", "type": "image", "data": { "url": "https://placeholder.com/image.jpg", "caption": "Description" } }
+
+                Rules:
+                - Generate a comprehensive article structure logic.
+                - Use multiple text blocks for long content.
+                - Intersperse headers, quotes, and statistics where relevant.
+                - For IDs, use any random string.
+                - Do NOT use markdown. Return purely the JSON array.
+            `;
+
+            const aiModel = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+            const result = await aiModel.generateContent({
+                contents: [{ role: 'user', parts: [{ text: systemInstruction + "\nUser Request: " + prompt }] }],
+                generationConfig: { responseMimeType: "application/json" }
+            });
+
+            const text = result.response.text();
+            let generatedBlocks;
+            try {
+                generatedBlocks = JSON.parse(text);
+            } catch {
+                generatedBlocks = JSON.parse(text.replace(/```json/g, '').replace(/```/g, '').trim());
+            }
+
+            // Return content directly for the editor to consume
+            return json({ success: true, blocks: generatedBlocks });
+        }
+
+
+        // OLD: Legacy Content Model Entry Generation
         // 1. Fetch the Content Model to understand the schema
         const model = await getContentModel(modelSlug);
         if (!model) {

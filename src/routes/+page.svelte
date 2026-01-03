@@ -511,7 +511,7 @@
 						<!-- CTA Button -->
 						<a
 							href="/contact-sales"
-							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200"
+							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200 mb-12"
 						>
 							<span class="relative z-10">Request a Demo</span>
 							<span
@@ -522,6 +522,46 @@
 								/>
 							</span>
 						</a>
+
+						<!-- Founder Quote -->
+						<div
+							class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 max-w-lg"
+						>
+							<div class="flex gap-4 items-start">
+								<!-- Photo -->
+								<img
+									src="/Photos/Avi Sahi.jpeg"
+									alt="Avi Sahi"
+									class="w-16 h-16 rounded-full object-cover border-2 border-border flex-shrink-0"
+								/>
+								
+								<!-- Quote Content -->
+								<div class="flex-1 min-w-0">
+									<blockquote>
+										<p
+											class="text-base sm:text-lg font-semibold text-foreground leading-relaxed mb-3"
+										>
+											AI that respects judgment, because revenue decisions are human decisions.
+										</p>
+										<p
+											class="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3"
+										>
+											SpikedAI is built for leaders who make decisions in live customer moments, 
+											not after the fact, not from dashboards, but turning conversations into conversions.
+										</p>
+									</blockquote>
+									
+									<div class="pt-3 border-t border-border">
+										<p class="font-bold text-foreground text-sm">
+											Avi Sahi
+										</p>
+										<p class="text-xs text-muted-foreground">
+											Co-Founder & CEO, SpikedAI
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Right Column: Abstract Graphic (Mobile: Hidden, shown in background) -->
@@ -1629,8 +1669,8 @@
 		position: absolute;
 		top: 50%;
 		right: 5%;
-		width: 600px;
-		height: 600px;
+		width: 900px;
+		height: 900px;
 		transform: translateY(-50%);
 		opacity: 0.3;
 		pointer-events: none;
@@ -1639,8 +1679,8 @@
 
 	@media (max-width: 1024px) {
 		.contextual-graphic {
-			width: 400px;
-			height: 400px;
+			width: 600px;
+			height: 600px;
 			right: -10%;
 			opacity: 0.4;
 		}
@@ -1664,13 +1704,13 @@
 
 	/* Iridescent Tube Positions */
 	.iridescent-tube.tube-1 {
-		width: 140px;
-		height: 500px;
+		width: 210px;
+		height: 750px;
 		top: 15%;
 		right: 20%;
 		transform: rotate(35deg);
 		animation-delay: 0s;
-		border-radius: 70px;
+		border-radius: 105px;
 		background: linear-gradient(
 			135deg,
 			rgba(59, 130, 246, 0.5) 0%,
@@ -1681,13 +1721,13 @@
 	}
 
 	.iridescent-tube.tube-2 {
-		width: 120px;
-		height: 450px;
+		width: 180px;
+		height: 675px;
 		top: 25%;
 		right: 5%;
 		transform: rotate(-25deg);
 		animation-delay: 2s;
-		border-radius: 60px;
+		border-radius: 90px;
 		background: linear-gradient(
 			135deg,
 			rgba(236, 72, 153, 0.5) 0%,
@@ -1698,13 +1738,13 @@
 	}
 
 	.iridescent-tube.tube-3 {
-		width: 160px;
-		height: 420px;
+		width: 240px;
+		height: 630px;
 		top: 40%;
 		right: 15%;
 		transform: rotate(50deg);
 		animation-delay: 4s;
-		border-radius: 80px;
+		border-radius: 120px;
 		background: linear-gradient(
 			135deg,
 			rgba(168, 85, 247, 0.5) 0%,
@@ -1715,13 +1755,13 @@
 	}
 
 	.iridescent-tube.tube-4 {
-		width: 100px;
-		height: 480px;
+		width: 150px;
+		height: 720px;
 		top: 10%;
 		right: 35%;
 		transform: rotate(-40deg);
 		animation-delay: 6s;
-		border-radius: 50px;
+		border-radius: 75px;
 		background: linear-gradient(
 			135deg,
 			rgba(251, 146, 60, 0.5) 0%,
@@ -1732,13 +1772,13 @@
 	}
 
 	.iridescent-tube.tube-5 {
-		width: 130px;
-		height: 460px;
+		width: 195px;
+		height: 690px;
 		top: 50%;
 		right: 8%;
 		transform: rotate(20deg);
 		animation-delay: 8s;
-		border-radius: 65px;
+		border-radius: 97.5px;
 		background: linear-gradient(
 			135deg,
 			rgba(34, 197, 94, 0.5) 0%,
@@ -1749,13 +1789,13 @@
 	}
 
 	.iridescent-tube.tube-6 {
-		width: 110px;
-		height: 440px;
+		width: 165px;
+		height: 660px;
 		top: 30%;
 		right: 25%;
 		transform: rotate(-55deg);
 		animation-delay: 10s;
-		border-radius: 55px;
+		border-radius: 82.5px;
 		background: linear-gradient(
 			135deg,
 			rgba(59, 130, 246, 0.5) 0%,

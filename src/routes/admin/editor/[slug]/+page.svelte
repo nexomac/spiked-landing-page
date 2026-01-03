@@ -22,7 +22,7 @@
             case 'header': newBlock.data = { text: '', level: 2 }; break;
             case 'text': newBlock.data = { content: '' }; break;
             case 'richtext': newBlock.data = { html: '' }; break;
-            case 'quote': newBlock.data = { text: '', author: '' }; break;
+            case 'quote': newBlock.data = { text: '', author: '', authorUrl: '' }; break;
             case 'statistics': newBlock.data = { value: '', label: '' }; break;
             case 'image': newBlock.data = { url: '', caption: '' }; break;
             case 'code': newBlock.data = { code: '', language: 'javascript' }; break;
@@ -364,20 +364,44 @@
                             </div>
 
                         {:else if block.type === 'quote'}
-                            <div class="pl-4 border-l-4 border-indigo-500 space-y-3">
-                                <textarea
-                                    value={block.data.text}
-                                    oninput={(e) => updateBlockData(index, 'text', e.target.value)}
-                                    class="w-full bg-transparent border-none focus:ring-0 p-0 text-lg italic text-gray-300 resize-none"
-                                    placeholder="Quote text..."
-                                ></textarea>
-                                <input 
-                                    type="text" 
-                                    value={block.data.author} 
-                                    oninput={(e) => updateBlockData(index, 'author', e.target.value)}
-                                    class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm font-bold text-gray-500"
-                                    placeholder="- Author Name"
-                                />
+                            <div class="pl-6 border-l-4 border-red-600 bg-gray-900/40 p-6 rounded-r-xl space-y-4">
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-mono text-gray-500 uppercase tracking-widest" for="quote-body-{index}">Quote Body</label>
+                                    <textarea
+                                        id="quote-body-{index}"
+                                        value={block.data.text}
+                                        oninput={(e) => updateBlockData(index, 'text', e.target.value)}
+                                        class="w-full bg-transparent border-none focus:ring-0 p-0 text-xl font-bold italic text-white placeholder-gray-600 resize-none h-auto min-h-[60px]"
+                                        placeholder="Enter the wisdom here..."
+                                    ></textarea>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-800">
+                                    <div class="space-y-1">
+                                        <label class="block text-[10px] font-mono text-gray-500 uppercase tracking-widest" for="quote-author-{index}">Attributed To</label>
+                                        <input 
+                                            id="quote-author-{index}"
+                                            type="text" 
+                                            value={block.data.author} 
+                                            oninput={(e) => updateBlockData(index, 'author', e.target.value)}
+                                            class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm font-bold text-red-500 placeholder-gray-700"
+                                            placeholder="— Name"
+                                        />
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="block text-[10px] font-mono text-gray-500 uppercase tracking-widest" for="quote-link-{index}">Link (Optional)</label>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-gray-600 text-xs">🔗</span>
+                                            <input 
+                                                id="quote-link-{index}"
+                                                type="text" 
+                                                value={block.data.authorUrl} 
+                                                oninput={(e) => updateBlockData(index, 'authorUrl', e.target.value)}
+                                                class="w-full bg-transparent border-none focus:ring-0 p-0 text-xs text-indigo-400 placeholder-gray-700 underline underline-offset-4"
+                                                placeholder="https://..."
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         {:else if block.type === 'statistics'}

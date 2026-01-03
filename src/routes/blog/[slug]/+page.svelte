@@ -120,7 +120,9 @@
                     return {
                         id: b.id,
                         type: 'quote',
-                        value: b.data?.text || ''
+                        value: b.data?.text || '',
+                        author: b.data?.author,
+                        authorUrl: b.data?.authorUrl
                     };
                 }
 
@@ -195,12 +197,22 @@
             <img src={block.value} alt={block.name} class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all" />
         </div>
      {:else if block.type === 'quote'}
-        <div class="my-12 px-8 py-8 border-y-2 text-center transition-colors
-            {$themeStore === 'dark' ? 'border-red-900/30' : 'border-black'}">
-            <p class="text-3xl md:text-4xl font-black italic leading-tight transition-colors
-                {$themeStore === 'dark' ? 'text-red-500' : 'text-black'}">
+        <div class="my-10 p-10 border-l-[6px] border-red-600 transition-colors
+            {$themeStore === 'dark' ? 'bg-red-950/20 text-white/90' : 'bg-red-50 text-black'}">
+            <p class="text-2xl md:text-3xl font-black italic leading-snug mb-6">
                 "{block.value}"
             </p>
+            {#if block.author}
+                <div class="text-sm font-sans font-bold uppercase tracking-widest text-red-600">
+                    {#if block.authorUrl}
+                        <a href={block.authorUrl} target="_blank" class="hover:underline hover:text-red-500 transition-all">
+                            — {block.author}
+                        </a>
+                    {:else}
+                        — {block.author}
+                    {/if}
+                </div>
+            {/if}
         </div>
      {:else if block.type === 'highlight'}
         <div class="my-10 p-8 shadow-[12px_12px_0px_0px_rgba(220,38,38,1)] transition-colors

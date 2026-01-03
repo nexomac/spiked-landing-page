@@ -123,7 +123,7 @@
 			background: 'Google, Microsoft',
 			focus: 'Partnerships',
 			image: photo('Kaveesh Manchanda.jpeg'),
-			role: 'VP Engineering, Platform Reliability',
+			role: 'VP Partnerships',
 			description: 'Heads engineering reliability and secure platform delivery.',
 			tags: ['Partnerships', 'Go to Market', 'Customers']
 		}

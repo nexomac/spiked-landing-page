@@ -123,7 +123,7 @@
 			background: 'Google, Microsoft',
 			focus: 'Partnerships',
 			image: photo('Kaveesh Manchanda.jpeg'),
-			role: 'VP Engineering, Platform Reliability',
+			role: 'VP Partnerships',
 			description: 'Heads engineering reliability and secure platform delivery.',
 			tags: ['Partnerships', 'Go to Market', 'Customers']
 		}
@@ -144,72 +144,32 @@
 			</p>
 		</div>
 
-		<div class="marquee-container">
-			<div class="marquee-track">
-				{#each teamMembers as member}
-					<article class="team-card">
-						<div class="portrait">
-							<div class="portrait-glow"></div>
-							<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
+		<div class="team-grid">
+			{#each teamMembers as member}
+				<article class="team-card">
+					<div class="portrait">
+						<div class="portrait-glow"></div>
+						<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
+					</div>
+					<div class="team-content">
+						<div class="name-row">
+							<h3>{member.name}</h3>
+							<span class="focus-tag">{member.focus}</span>
 						</div>
-						<div class="team-content">
-							<div class="name-row">
-								<h3>{member.name}</h3>
-								<span class="focus-tag">{member.focus}</span>
+						<p class="role-title">{member.role}</p>
+						<p class="background">{member.background}</p>
+						<p class="description">{member.description}</p>
+						{#if member.tags}
+							<div class="tag-row">
+								{#each member.tags as tag}
+									<span class="chip">{tag}</span>
+								{/each}
 							</div>
-							<p class="role-title">{member.role}</p>
-							<p class="background">{member.background}</p>
-							<p class="description">{member.description}</p>
-							{#if member.tags}
-								<div class="tag-row">
-									{#each member.tags as tag}
-										<span class="chip">{tag}</span>
-									{/each}
-								</div>
-							{/if}
-						</div>
-					</article>
-				{/each}
-				<div
-					class="team-more"
-					aria-label="Two more team members"
-					style="font-size:1.1rem; font-weight:800; padding:0.75rem 1.2rem; min-width:120px; border-radius:20px; letter-spacing:0.08em; text-align:center;"
-				>
-					+2 More
-				</div>
-				<!-- Duplicate for seamless loop -->
-				{#each teamMembers as member}
-					<article class="team-card">
-						<div class="portrait">
-							<div class="portrait-glow"></div>
-							<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
-						</div>
-						<div class="team-content">
-							<div class="name-row">
-								<h3>{member.name}</h3>
-								<span class="focus-tag">{member.focus}</span>
-							</div>
-							<p class="role-title">{member.role}</p>
-							<p class="background">{member.background}</p>
-							<p class="description">{member.description}</p>
-							{#if member.tags}
-								<div class="tag-row">
-									{#each member.tags as tag}
-										<span class="chip">{tag}</span>
-									{/each}
-								</div>
-							{/if}
-						</div>
-					</article>
-				{/each}
-				<div
-					class="team-more"
-					aria-label="Two more team members"
-					style="font-size:1.1rem; font-weight:800; padding:0.75rem 1.2rem; min-width:120px; border-radius:20px; letter-spacing:0.08em; text-align:center;"
-				>
-					+2 More
-				</div>
-			</div>
+						{/if}
+					</div>
+				</article>
+			{/each}
+			<div class="team-more" aria-label="Two more team members">+2 More</div>
 		</div>
 	</section>
 
@@ -939,32 +899,6 @@
 		z-index: 1;
 	}
 
-	.marquee-container {
-		margin-top: 2.5rem;
-		overflow: hidden;
-		position: relative;
-	}
-
-	.marquee-track {
-		display: flex;
-		gap: 1.75rem;
-		animation: marquee 40s linear infinite;
-		width: max-content;
-	}
-
-	.marquee-track:hover {
-		animation-play-state: paused;
-	}
-
-	@keyframes marquee {
-		0% {
-			transform: translateX(0);
-		}
-		100% {
-			transform: translateX(-50%);
-		}
-	}
-
 	.team-grid {
 		margin-top: 2.5rem;
 		display: grid;
@@ -982,9 +916,8 @@
 		display: flex;
 		flex-direction: column;
 		transition: all 0.25s ease;
-		min-width: 360px;
-		max-width: 360px;
-		flex-shrink: 0;
+		min-width: 0;
+		width: 100%;
 	}
 
 	.team-card:hover {

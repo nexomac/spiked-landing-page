@@ -437,32 +437,6 @@
 	function scrollToSection(id) {
 		document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 	}
-
-	function handleTilt(event, intensity = 8) {
-		const card = event.currentTarget;
-		const rect = card.getBoundingClientRect();
-		const x = ((event.clientX - rect.left) / rect.width - 0.5) * intensity;
-		const y = ((event.clientY - rect.top) / rect.height - 0.5) * intensity;
-
-		card.style.setProperty("--tilt-x", `${-y}deg`);
-		card.style.setProperty("--tilt-y", `${x}deg`);
-		card.style.setProperty(
-			"--glow-x",
-			`${((event.clientX - rect.left) / rect.width) * 100}%`,
-		);
-		card.style.setProperty(
-			"--glow-y",
-			`${((event.clientY - rect.top) / rect.height) * 100}%`,
-		);
-	}
-
-	function resetTilt(event) {
-		const card = event.currentTarget;
-		card.style.setProperty("--tilt-x", "0deg");
-		card.style.setProperty("--tilt-y", "0deg");
-		card.style.setProperty("--glow-x", "50%");
-		card.style.setProperty("--glow-y", "50%");
-	}
 </script>
 
 <svelte:head>
@@ -537,9 +511,7 @@
 						<!-- CTA Button -->
 						<a
 							href="/contact-sales"
-							onmousemove={(event) => handleTilt(event, 8)}
-							onmouseleave={resetTilt}
-							class="tilt-card contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-300 hover:scale-[1.02] overflow-hidden"
+							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200 mb-12"
 						>
 							<span class="relative z-10">Request a Demo</span>
 							<span
@@ -550,6 +522,46 @@
 								/>
 							</span>
 						</a>
+
+						<!-- Founder Quote -->
+						<div
+							class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 max-w-lg"
+						>
+							<div class="flex gap-4 items-start">
+								<!-- Photo -->
+								<img
+									src="/Photos/Avi Sahi.jpeg"
+									alt="Avi Sahi"
+									class="w-16 h-16 rounded-full object-cover border-2 border-border flex-shrink-0"
+								/>
+								
+								<!-- Quote Content -->
+								<div class="flex-1 min-w-0">
+									<blockquote>
+										<p
+											class="text-base sm:text-lg font-semibold text-foreground leading-relaxed mb-3"
+										>
+											AI that respects judgment, because revenue decisions are human decisions.
+										</p>
+										<p
+											class="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3"
+										>
+											SpikedAI is built for leaders who make decisions in live customer moments, 
+											not after the fact, not from dashboards, but turning conversations into conversions.
+										</p>
+									</blockquote>
+									
+									<div class="pt-3 border-t border-border">
+										<p class="font-bold text-foreground text-sm">
+											Avi Sahi
+										</p>
+										<p class="text-xs text-muted-foreground">
+											Co-Founder & CEO, SpikedAI
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Right Column: Abstract Graphic (Mobile: Hidden, shown in background) -->
@@ -561,7 +573,7 @@
 
 			<!-- Smooth transition to next section -->
 			<div
-				class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none z-20"
+				class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
 			></div>
 		</section>
 
@@ -680,19 +692,15 @@
 												{@const FeatureIcon =
 													feature.icon}
 												<div
-													class="feature-card group relative bg-card/60 backdrop-blur-md rounded-xl p-4 border border-border/50 transition-all duration-500 {feature.highlight
-														? 'border-red-500/40 border-l-4 border-l-red-500 shadow-lg shadow-red-500/10'
-														: ''} hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1"
+													class="feature-card group relative bg-card rounded-xl p-4 border border-border transition-all duration-200 {feature.highlight
+														? 'border-red-500 border-l-4 border-l-red-500'
+														: ''} hover:border-primary"
 													in:fly={{
 														x: -30,
 														duration: 600,
 														delay: 300 + idx * 100,
 													}}
 												>
-													<!-- Animated background gradient -->
-													<div
-														class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
-													></div>
 
 													<div
 														class="flex items-start gap-3 relative z-10"
@@ -700,20 +708,15 @@
 														<div class="relative">
 															<div
 																class="w-10 h-10 rounded-lg {feature.highlight
-																	? 'bg-red-500/20'
-																	: 'bg-secondary/60'} flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+																	? 'bg-red-500/10'
+																	: 'bg-secondary'} flex items-center justify-center flex-shrink-0 transition-colors duration-200"
 															>
 																<FeatureIcon
 																	class="w-5 h-5 {feature.highlight
-																		? 'text-red-400'
-																		: 'text-muted-foreground group-hover:text-foreground'} transition-colors duration-300"
+																		? 'text-red-500'
+																		: 'text-muted-foreground group-hover:text-foreground'} transition-colors duration-200"
 																/>
 															</div>
-															{#if feature.highlight}
-																<div
-																	class="absolute -inset-1 bg-red-500/20 dark:bg-red-500/20 bg-red-400/30 rounded-lg blur-sm animate-pulse"
-																></div>
-															{/if}
 														</div>
 														<div
 															class="flex-1 min-w-0"
@@ -759,26 +762,13 @@
 									<!-- Right Column - Showcase Widget -->
 									<div class="relative showcase-widget">
 										<div
-											class="relative bg-card/90 backdrop-blur-2xl rounded-3xl border border-border/60 p-5 shadow-2xl showcase-widget-container"
+											class="relative bg-card rounded-3xl border border-border p-5 showcase-widget-container"
 											in:fly={{
 												x: 30,
 												duration: 800,
 												delay: 200,
 											}}
 										>
-											<!-- Multi-layer glow effects -->
-											<div
-												class="absolute -inset-1 bg-gradient-to-r from-red-600/20 via-red-500/10 to-blue-600/20 rounded-3xl blur-2xl opacity-60 animate-pulse"
-											></div>
-											<div
-												class="absolute -inset-0.5 bg-gradient-to-r from-red-500/10 via-transparent to-blue-500/10 rounded-3xl blur-xl"
-											></div>
-
-											<!-- Animated border -->
-											<div
-												class="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-red-500/20 via-transparent to-blue-500/20 opacity-0 hover:opacity-100 transition-opacity duration-500"
-												style="mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 2px;"
-											></div>
 
 											<div class="relative z-10">
 												{#if showcase.id === "ai-assistance"}
@@ -1117,33 +1107,21 @@
 									}, 400);
 								}
 							}}
-							class="group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-500 ease-out {currentShowcaseIndex ===
+							class="group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-200 ease-out {currentShowcaseIndex ===
 							i
-								? 'bg-gradient-to-br from-red-500/30 to-red-600/20 dark:from-red-500/30 dark:to-red-600/20 from-red-100 to-red-50 text-red-300 dark:text-red-300 text-red-700 border-2 border-red-500/50 dark:border-red-500/50 border-red-400/60 shadow-lg shadow-red-500/30 dark:shadow-red-500/30 shadow-red-200/40 scale-110'
-								: 'text-zinc-500 dark:text-zinc-500 text-gray-600 hover:text-zinc-300 dark:hover:text-zinc-300 hover:text-gray-800 hover:bg-zinc-800/60 dark:hover:bg-zinc-800/60 hover:bg-gray-100/80 border-2 border-zinc-800/50 dark:border-zinc-800/50 border-gray-200/60 hover:border-zinc-700/70 dark:hover:border-zinc-700/70 hover:border-gray-300/80 hover:scale-105'} backdrop-blur-md"
+								? 'bg-red-500 text-white border-2 border-red-500'
+								: 'text-zinc-500 dark:text-zinc-500 text-gray-600 hover:text-zinc-300 dark:hover:text-zinc-300 hover:text-gray-800 hover:bg-zinc-800/50 dark:hover:bg-zinc-800/50 hover:bg-gray-100/80 border-2 border-zinc-800/50 dark:border-zinc-800/50 border-gray-200/60 hover:border-zinc-700/60 dark:hover:border-zinc-700/60 hover:border-gray-300/70'}"
 							aria-label={`Show ${showcase.name}`}
 							title={showcase.name}
 						>
 							<div class="relative z-10">
 								<IconComponent
-									class="w-5 h-5 transition-all duration-300 {currentShowcaseIndex ===
+									class="w-5 h-5 transition-colors duration-200 {currentShowcaseIndex ===
 									i
-										? 'text-red-400 scale-110'
-										: 'group-hover:rotate-12 group-hover:scale-110'}"
+										? 'text-white'
+										: ''}"
 								/>
-								{#if currentShowcaseIndex === i}
-									<div
-										class="absolute inset-0 bg-red-500/40 rounded-full blur-lg animate-ping"
-									></div>
-									<div
-										class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent rounded-full"
-									></div>
-								{/if}
 							</div>
-							<!-- Hover glow effect -->
-							<div
-								class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/15 to-red-500/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-							></div>
 						</button>
 					{/each}
 				</div>
@@ -1259,25 +1237,16 @@
 				>
 					{#each [{ quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.", author: "Alex Rivera", role: "Senior Sales Engineer", metric: "5x", metricLabel: "Faster Responses" }, { quote: "Call simulator helped our team practice objection handling. We're closing 40% more deals since implementation.", author: "Sarah Thompson", role: "Sales Director", metric: "40%", metricLabel: "More Deals Closed" }, { quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual data entry.", author: "Michael Chen", role: "Account Executive", metric: "15hrs", metricLabel: "Saved Weekly" }, { quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.", author: "Jessica Lee", role: "VP of Sales", metric: "25%", metricLabel: "Efficiency Gain" }, { quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.", author: "Alex Rivera", role: "Senior Sales Engineer", metric: "5x", metricLabel: "Faster Responses" }, { quote: "Call simulator helped our team practice objection handling. We're closing 40% more deals since implementation.", author: "Sarah Thompson", role: "Sales Director", metric: "40%", metricLabel: "More Deals Closed" }, { quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual data entry.", author: "Michael Chen", role: "Account Executive", metric: "15hrs", metricLabel: "Saved Weekly" }, { quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.", author: "Jessica Lee", role: "VP of Sales", metric: "25%", metricLabel: "Efficiency Gain" }] as testimonial, i}
 						<div
-							onmousemove={(event) => handleTilt(event, 6)}
-							onmouseleave={resetTilt}
 							role="group"
 							aria-label={`Testimonial from ${testimonial.author}`}
-							class="tilt-card relative flex-shrink-0 w-96 bg-card border border-border rounded-lg p-6 hover:border-primary/50 hover:border-primary transition-all duration-500 group hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20 cursor-pointer overflow-hidden"
-							style="transform: translate3d(0, 0, 0);"
+							class="relative flex-shrink-0 w-96 bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 group cursor-pointer"
 						>
-							<div
-								class="absolute inset-0 bg-gradient-to-br from-red-950/0 to-red-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"
-							></div>
 							<div class="flex items-start gap-4 mb-4 relative">
 								<div class="flex-shrink-0">
 									<div
-										class="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300 relative"
+										class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-lg transition-colors duration-200"
 									>
 										{testimonial.author[0]}
-										<div
-											class="absolute inset-0 bg-red-500 rounded-full opacity-0 group-hover:opacity-20 animate-ping"
-										></div>
 									</div>
 								</div>
 								<div class="flex-1">
@@ -1294,7 +1263,7 @@
 								</div>
 								<div class="text-right">
 									<div
-										class="text-2xl font-black text-primary group-hover:scale-110 transition-transform duration-300"
+										class="text-2xl font-black text-primary transition-colors duration-200"
 									>
 										{testimonial.metric}
 									</div>
@@ -1316,12 +1285,8 @@
 			</div>
 			<div class="mt-20 max-w-7xl mx-auto px-6 relative z-20">
 				<div
-					class="bg-card border border-border/30 rounded-lg p-8 hover:border-border/50 hover:border-primary/60 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 group"
-					style="transform: translate3d(0, 0, 0); backdrop-filter: blur(24px) saturate(200%) brightness(1.05);"
+					class="bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-200 group"
 				>
-					<div
-						class="absolute inset-0 bg-gradient-to-br from-red-950/0 to-red-950/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"
-					></div>
 					<div class="text-center mb-8 relative">
 						<h3
 							class="text-2xl font-black text-foreground mb-2 group-hover:text-primary transition-colors"
@@ -1371,31 +1336,6 @@
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
-			<div class="absolute inset-0">
-				<div
-					class="absolute inset-0 animate-grid-pulse"
-					style="background-image: linear-gradient(rgba(220, 38, 38, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.05) 1px, transparent 1px); background-size: 50px 50px;"
-				></div>
-				<div
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-600/10 dark:bg-red-600/10 bg-red-500/5 rounded-full blur-3xl animate-pulse"
-				></div>
-				<div
-					class="absolute top-1/4 left-1/4 w-64 h-64 bg-red-500/5 dark:bg-red-500/5 bg-red-400/3 rounded-full blur-2xl animate-float"
-				></div>
-				<div
-					class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-red-700/5 dark:bg-red-700/5 bg-red-500/3 rounded-full blur-3xl animate-float-delayed"
-				></div>
-				{#each Array(25) as _, i}
-					<div
-						class="absolute w-1 h-1 bg-red-500/20 dark:bg-red-500/20 bg-red-500/10 rounded-full animate-particle-float"
-						style="left: {Math.random() *
-							100}%; top: {Math.random() *
-							100}%; animation-delay: {Math.random() *
-							5}s; animation-duration: {12 + Math.random() * 6}s;"
-					></div>
-				{/each}
-			</div>
-
 			<div
 				class="relative z-10 max-w-4xl mx-auto px-6 text-center transform transition-all duration-1000 {visibleSections.cta
 					? 'translate-y-0 opacity-100'
@@ -1421,9 +1361,7 @@
 				>
 					<button
 						onclick={onboardingStore.start}
-						onmousemove={(event) => handleTilt(event, 12)}
-						onmouseleave={resetTilt}
-						class="tilt-card group relative px-8 py-5 bg-gradient-to-r from-primary to-red-700 text-primary-foreground rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300 overflow-hidden hover:scale-105 hover:-translate-y-1"
+						class="group relative px-8 py-5 bg-primary text-primary-foreground rounded-xl font-bold text-lg transition-all duration-200 hover:bg-red-600"
 					>
 						<span
 							class="relative z-10 flex items-center justify-center gap-2"
@@ -1443,18 +1381,10 @@
 								/>
 							</svg>
 						</span>
-						<div
-							class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-						></div>
-						<div
-							class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"
-						></div>
 					</button>
 					<a
 						href="/contact-sales"
-						onmousemove={(event) => handleTilt(event, 10)}
-						onmouseleave={resetTilt}
-						class="tilt-card relative px-8 py-5 bg-transparent text-foreground rounded-xl font-semibold text-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all duration-300 text-center hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20 overflow-hidden"
+						class="relative px-8 py-5 bg-transparent text-foreground rounded-xl font-semibold text-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all duration-200 text-center"
 					>
 						Contact Sales
 					</a>
@@ -1471,12 +1401,6 @@
 		<footer
 			class="bg-background text-foreground py-16 border-t border-border relative overflow-hidden"
 		>
-			<div class="absolute inset-0 opacity-30">
-				<div
-					class="absolute inset-0"
-					style="background-image: linear-gradient(rgba(220, 38, 38, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(220, 38, 38, 0.02) 1px, transparent 1px); background-size: 30px 30px;"
-				></div>
-			</div>
 
 			<div class="max-w-7xl mx-auto px-6 relative z-10">
 				<div class="grid md:grid-cols-5 gap-12 mb-12">
@@ -1726,9 +1650,10 @@
 	/* Hero Background */
 	.contextual-hero {
 		position: relative;
-		background-color: var(--background);
+		background: var(--background);
 		isolation: isolate;
 		min-height: var(--hero-panel-height);
+		overflow: hidden;
 	}
 
 	.hero-panel-inner {
@@ -1744,20 +1669,20 @@
 		position: absolute;
 		top: 50%;
 		right: 5%;
-		width: 600px;
-		height: 600px;
+		width: 900px;
+		height: 900px;
 		transform: translateY(-50%);
-		opacity: 0.5;
+		opacity: 0.3;
 		pointer-events: none;
 		z-index: 1;
 	}
 
 	@media (max-width: 1024px) {
 		.contextual-graphic {
-			width: 400px;
-			height: 400px;
+			width: 600px;
+			height: 600px;
 			right: -10%;
-			opacity: 0.3;
+			opacity: 0.4;
 		}
 	}
 
@@ -1771,36 +1696,21 @@
 	.iridescent-tube {
 		position: absolute;
 		border-radius: 100px;
-		background: linear-gradient(
-			135deg,
-			rgba(59, 130, 246, 0.4) 0%,
-			rgba(168, 85, 247, 0.4) 20%,
-			rgba(236, 72, 153, 0.4) 40%,
-			rgba(251, 146, 60, 0.4) 60%,
-			rgba(34, 197, 94, 0.4) 80%,
-			rgba(59, 130, 246, 0.4) 100%
-		);
-		backdrop-filter: blur(40px);
-		border: 1.5px solid rgba(255, 255, 255, 0.3);
-		box-shadow:
-			0 20px 60px rgba(59, 130, 246, 0.2),
-			0 10px 30px rgba(168, 85, 247, 0.15),
-			inset 0 2px 4px rgba(255, 255, 255, 0.4),
-			inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+		background: rgba(239, 24, 32, 0.08);
+		border: 1px solid rgba(239, 24, 32, 0.15);
 		animation: iridescent-float 12s ease-in-out infinite;
-		filter: blur(0.5px);
-		opacity: 0.85;
+		opacity: 0.6;
 	}
 
 	/* Iridescent Tube Positions */
 	.iridescent-tube.tube-1 {
-		width: 140px;
-		height: 500px;
+		width: 210px;
+		height: 750px;
 		top: 15%;
 		right: 20%;
 		transform: rotate(35deg);
 		animation-delay: 0s;
-		border-radius: 70px;
+		border-radius: 105px;
 		background: linear-gradient(
 			135deg,
 			rgba(59, 130, 246, 0.5) 0%,
@@ -1811,13 +1721,13 @@
 	}
 
 	.iridescent-tube.tube-2 {
-		width: 120px;
-		height: 450px;
+		width: 180px;
+		height: 675px;
 		top: 25%;
 		right: 5%;
 		transform: rotate(-25deg);
 		animation-delay: 2s;
-		border-radius: 60px;
+		border-radius: 90px;
 		background: linear-gradient(
 			135deg,
 			rgba(236, 72, 153, 0.5) 0%,
@@ -1828,13 +1738,13 @@
 	}
 
 	.iridescent-tube.tube-3 {
-		width: 160px;
-		height: 420px;
+		width: 240px;
+		height: 630px;
 		top: 40%;
 		right: 15%;
 		transform: rotate(50deg);
 		animation-delay: 4s;
-		border-radius: 80px;
+		border-radius: 120px;
 		background: linear-gradient(
 			135deg,
 			rgba(168, 85, 247, 0.5) 0%,
@@ -1845,13 +1755,13 @@
 	}
 
 	.iridescent-tube.tube-4 {
-		width: 100px;
-		height: 480px;
+		width: 150px;
+		height: 720px;
 		top: 10%;
 		right: 35%;
 		transform: rotate(-40deg);
 		animation-delay: 6s;
-		border-radius: 50px;
+		border-radius: 75px;
 		background: linear-gradient(
 			135deg,
 			rgba(251, 146, 60, 0.5) 0%,
@@ -1862,13 +1772,13 @@
 	}
 
 	.iridescent-tube.tube-5 {
-		width: 130px;
-		height: 460px;
+		width: 195px;
+		height: 690px;
 		top: 50%;
 		right: 8%;
 		transform: rotate(20deg);
 		animation-delay: 8s;
-		border-radius: 65px;
+		border-radius: 97.5px;
 		background: linear-gradient(
 			135deg,
 			rgba(34, 197, 94, 0.5) 0%,
@@ -1879,13 +1789,13 @@
 	}
 
 	.iridescent-tube.tube-6 {
-		width: 110px;
-		height: 440px;
+		width: 165px;
+		height: 660px;
 		top: 30%;
 		right: 25%;
 		transform: rotate(-55deg);
 		animation-delay: 10s;
-		border-radius: 55px;
+		border-radius: 82.5px;
 		background: linear-gradient(
 			135deg,
 			rgba(59, 130, 246, 0.5) 0%,
@@ -1899,78 +1809,23 @@
 		0%,
 		100% {
 			transform: translateY(0) rotate(var(--base-rotation, 0deg));
-			filter: hue-rotate(0deg) blur(0.5px);
 		}
 		25% {
 			transform: translateY(-15px)
 				rotate(calc(var(--base-rotation, 0deg) + 3deg));
-			filter: hue-rotate(30deg) blur(0.5px);
 		}
 		50% {
 			transform: translateY(-8px) rotate(var(--base-rotation, 0deg));
-			filter: hue-rotate(60deg) blur(0.5px);
 		}
 		75% {
 			transform: translateY(-20px)
 				rotate(calc(var(--base-rotation, 0deg) - 3deg));
-			filter: hue-rotate(90deg) blur(0.5px);
 		}
 	}
 
-	/* Glass Loop Container */
+	/* Glass Loop Container - Hidden for flat design */
 	.glass-loop-container {
-		position: absolute;
-		top: 50%;
-		right: 10%;
-		width: 400px;
-		height: 400px;
-		transform: translateY(-50%);
-		opacity: 0;
-		pointer-events: none;
-		z-index: 2;
-	}
-
-	.glass-loop {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		border-radius: 50%;
-		animation: loop-rotate 20s linear infinite;
-	}
-
-	.glass-loop.base {
-		border: 3px solid rgba(255, 255, 255, 0.1);
-		box-shadow:
-			0 0 60px rgba(59, 130, 246, 0.3),
-			inset 0 0 40px rgba(168, 85, 247, 0.2);
-	}
-
-	.glass-loop.highlight {
-		border: 2px solid rgba(255, 255, 255, 0.2);
-		transform: scale(0.85);
-		animation-delay: -5s;
-	}
-
-	.glass-loop.sheen {
-		background: linear-gradient(
-			135deg,
-			transparent 0%,
-			rgba(255, 255, 255, 0.1) 45%,
-			rgba(255, 255, 255, 0.2) 50%,
-			rgba(255, 255, 255, 0.1) 55%,
-			transparent 100%
-		);
-		transform: scale(0.7);
-		animation-delay: -10s;
-	}
-
-	@keyframes loop-rotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
+		display: none;
 	}
 
 	/* Typography */
@@ -1980,8 +1835,6 @@
 		line-height: 1.05;
 		letter-spacing: -0.03em;
 		color: var(--foreground);
-		text-shadow: 0 20px 80px rgba(59, 130, 246, 0.3);
-		/* Better text rendering */
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
@@ -1999,30 +1852,24 @@
 
 	/* CTA Button */
 	.contextual-cta {
-		background: linear-gradient(145deg, #ef4444, #dc2626);
+		background: #ef4444;
 		color: var(--foreground);
-		border: 1.5px solid rgba(239, 68, 68, 0.5);
-		box-shadow:
-			0 20px 60px rgba(239, 68, 68, 0.4),
-			inset 0 1px 0 rgba(255, 255, 255, 0.2);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: 2px solid #ef4444;
+		transition: all 0.2s ease;
 	}
 
 	.contextual-cta:hover {
-		box-shadow:
-			0 30px 80px rgba(239, 68, 68, 0.5),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3);
-		transform: translateY(-2px) scale(1.02);
+		background: #dc2626;
+		border-color: #dc2626;
 	}
 
 	.cta-icon {
 		width: 2rem;
 		height: 2rem;
-		background: rgba(255, 255, 255, 0.15);
+		background: rgba(255, 255, 255, 0.1);
 		border-radius: 9999px;
 		border: 1px solid rgba(255, 255, 255, 0.2);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: all 0.2s ease;
 	}
 
 	/* ===== SHOWCASE SECTION ===== */
@@ -2030,59 +1877,14 @@
 	.showcase-section {
 		position: relative;
 		overflow: hidden;
-	}
-
-	.showcase-section::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(
-				circle at 20% 50%,
-				rgba(239, 68, 68, 0.1),
-				transparent 50%
-			),
-			radial-gradient(
-				circle at 80% 50%,
-				rgba(168, 85, 247, 0.08),
-				transparent 50%
-			);
-		pointer-events: none;
-		z-index: 0;
+		background: var(--background);
 	}
 
 	.showcase-grid-pattern {
-		background-image: linear-gradient(
-				rgba(239, 68, 68, 0.03) 1px,
-				transparent 1px
-			),
-			linear-gradient(90deg, rgba(239, 68, 68, 0.03) 1px, transparent 1px);
-		background-size: 50px 50px;
-		animation: grid-pulse 4s ease-in-out infinite;
-	}
-
-	@keyframes grid-pulse {
-		0%,
-		100% {
-			opacity: 0.2;
-		}
-		50% {
-			opacity: 0.4;
-		}
+		display: none;
 	}
 
 	/* ===== CARD ANIMATIONS ===== */
-
-	.tilt-card {
-		transition:
-			transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-			box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		will-change: transform;
-	}
-
-	.tilt-card:hover {
-		transform: translate3d(var(--tilt-x, 0), var(--tilt-y, 0), 0)
-			scale(1.02);
-	}
 
 	/* ===== ANIMATIONS ===== */
 
@@ -2107,23 +1909,10 @@
 		animation: particle-float linear infinite;
 	}
 
-	@keyframes shimmer {
-		0% {
-			transform: translateX(-100%) translateY(-100%) rotate(45deg);
-		}
-		100% {
-			transform: translateX(100%) translateY(100%) rotate(45deg);
-		}
-	}
-
-	.animate-shimmer {
-		animation: shimmer 2s infinite;
-	}
-
 	@keyframes fade-in-up {
 		from {
 			opacity: 0;
-			transform: translateY(20px);
+			transform: translateY(30px);
 		}
 		to {
 			opacity: 1;
@@ -2132,7 +1921,7 @@
 	}
 
 	.animate-fade-in-up {
-		animation: fade-in-up 0.8s ease-out forwards;
+		animation: fade-in-up 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
 	/* ===== ACCESSIBILITY ===== */
@@ -2141,7 +1930,6 @@
 		.iridescent-tube,
 		.glass-loop,
 		.animate-particle-float,
-		.animate-shimmer,
 		.animate-fade-in-up {
 			animation: none;
 		}

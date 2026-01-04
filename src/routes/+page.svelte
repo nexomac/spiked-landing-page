@@ -460,50 +460,62 @@
 	</div>
 
 	<div class="page-content relative z-10">
-		<!-- Contextual AI Style Hero Section -->
+		<!-- Minimalist Centered Hero Section -->
 		<section
 			data-section="hero"
-			class="relative flex items-center overflow-hidden bg-background contextual-hero min-h-[85vh] py-20 sm:py-24"
+			class="relative flex items-center justify-center overflow-hidden bg-background contextual-hero min-h-[90vh] py-20 sm:py-24"
 		>
-			<!-- Abstract Iridescent Graphic (Right Side) -->
+			<!-- Subtle Light Rays -->
+			<div class="light-rays"></div>
+			
+			<!-- Sophisticated Abstract Graphic System (Bottom Left Corner) -->
 			<div
 				class="contextual-graphic"
-				style={`transform: translate(${mouseX * 0.008}px, ${mouseY * 0.008}px);`}
+				style={`transform: translate(${-mouseX * 0.0015}px, ${mouseY * 0.0015}px);`}
 			>
+				<!-- Gradient Orbs for Depth -->
+				<div class="gradient-orb orb-primary"></div>
+				<div class="gradient-orb orb-secondary"></div>
+				<div class="gradient-orb orb-tertiary"></div>
+				
+				<!-- Mesh Gradient Background -->
+				<div class="mesh-gradient"></div>
+				
+				<!-- Iridescent Tubes with Enhanced Styling -->
 				<div class="iridescent-tube tube-1"></div>
 				<div class="iridescent-tube tube-2"></div>
 				<div class="iridescent-tube tube-3"></div>
 				<div class="iridescent-tube tube-4"></div>
 				<div class="iridescent-tube tube-5"></div>
 				<div class="iridescent-tube tube-6"></div>
-			</div>
-			<div class="glass-loop-container" aria-hidden="true">
-				<div class="glass-loop base"></div>
-				<div class="glass-loop highlight"></div>
-				<div class="glass-loop sheen"></div>
+				
+				<!-- Geometric Accents -->
+				<div class="geometric-accent accent-1"></div>
+				<div class="geometric-accent accent-2"></div>
+				<div class="geometric-accent accent-3"></div>
 			</div>
 
-			<!-- Content Container -->
+			<!-- Content Container - Centered -->
 			<div
-				class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner"
+				class="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner text-center"
 			>
 				<div
-					class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center hero-grid-shell"
+					class="flex flex-col items-center justify-center hero-grid-shell"
 				>
-					<!-- Left Column: Text Content -->
+					<!-- Centered Text Content -->
 					<div
-						class="contextual-content max-w-2xl lg:max-w-3xl mx-auto lg:mx-0 transform transition-all duration-1000 {visibleSections.hero
+						class="contextual-content max-w-3xl mx-auto transform transition-all duration-1000 {visibleSections.hero
 							? 'translate-y-0 opacity-100'
 							: 'translate-y-10 opacity-0'}"
 					>
 						<!-- Main Headline -->
-						<h1 class="contextual-headline mb-8 lg:mb-10">
+						<h1 class="contextual-headline mb-6 lg:mb-8">
 							<span class="block">Sell Like a CEO</span>
 						</h1>
 
 						<!-- Sub-headline -->
 						<p
-							class="contextual-subheadline mb-10 lg:mb-12 text-muted-foreground leading-relaxed max-w-[540px]"
+							class="contextual-subheadline mb-8 lg:mb-10 text-muted-foreground leading-relaxed mx-auto max-w-2xl"
 						>
 							The rise of the singular rep starts here
 						</p>
@@ -511,7 +523,7 @@
 						<!-- CTA Button -->
 						<a
 							href="/contact-sales"
-							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200 mb-12"
+							class="contextual-cta group relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-200 mb-16"
 						>
 							<span class="relative z-10">Request a Demo</span>
 							<span
@@ -523,20 +535,20 @@
 							</span>
 						</a>
 
-						<!-- Founder Quote -->
+						<!-- Founder Quote - Centered -->
 						<div
-							class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 max-w-lg"
+							class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 max-w-2xl mx-auto"
 						>
-							<div class="flex gap-4 items-start">
+							<div class="flex flex-col sm:flex-row gap-4 items-start">
 								<!-- Photo -->
 								<img
 									src="/Photos/Avi Sahi.jpeg"
 									alt="Avi Sahi"
-									class="w-16 h-16 rounded-full object-cover border-2 border-border flex-shrink-0"
+									class="w-16 h-16 rounded-full object-cover border-2 border-border flex-shrink-0 mx-auto sm:mx-0"
 								/>
 								
 								<!-- Quote Content -->
-								<div class="flex-1 min-w-0">
+								<div class="flex-1 min-w-0 text-left">
 									<blockquote>
 										<p
 											class="text-base sm:text-lg font-semibold text-foreground leading-relaxed mb-3"
@@ -562,11 +574,6 @@
 								</div>
 							</div>
 						</div>
-					</div>
-
-					<!-- Right Column: Abstract Graphic (Mobile: Hidden, shown in background) -->
-					<div class="hidden lg:block relative h-full min-h-[600px]">
-						<!-- Graphic is positioned absolutely in contextual-graphic -->
 					</div>
 				</div>
 			</div>
@@ -1656,198 +1663,395 @@
 		overflow: hidden;
 	}
 
+	/* Subtle Light Rays - Fortune 500 Style - Emanating from Bottom Left */
+	.light-rays {
+		position: absolute;
+		inset: 0;
+		background: 
+			linear-gradient(225deg, transparent 0%, rgba(239, 68, 68, 0.015) 50%, transparent 100%),
+			linear-gradient(315deg, transparent 0%, rgba(168, 85, 247, 0.01) 50%, transparent 100%);
+		opacity: 0.3;
+		pointer-events: none;
+		z-index: 0;
+		animation: rays-shift 20s ease-in-out infinite;
+	}
+
+	@keyframes rays-shift {
+		0%, 100% {
+			opacity: 0.2;
+			transform: translate(0, 0);
+		}
+		50% {
+			opacity: 0.35;
+			transform: translate(-15px, -15px);
+		}
+	}
+
 	.hero-panel-inner {
 		padding-block: var(--hero-panel-padding);
 	}
 
 	.hero-grid-shell {
-		min-height: clamp(520px, 70vh, 860px);
+		min-height: clamp(400px, 60vh, 700px);
 	}
 
-	/* Contextual Graphic Container */
+	/* Contextual Graphic Container - Bottom Left Corner - Enhanced */
 	.contextual-graphic {
 		position: absolute;
-		top: 50%;
-		right: 5%;
-		width: 900px;
-		height: 900px;
-		transform: translateY(-50%);
-		opacity: 0.3;
+		bottom: 0;
+		left: 0;
+		width: 1300px;
+		height: 1300px;
+		transform: translate(-18%, 18%);
 		pointer-events: none;
 		z-index: 1;
+		filter: blur(1px);
+		opacity: 0.85;
 	}
 
 	@media (max-width: 1024px) {
 		.contextual-graphic {
-			width: 600px;
-			height: 600px;
-			right: -10%;
-			opacity: 0.4;
+			width: 1000px;
+			height: 1000px;
+			transform: translate(-12%, 12%);
+			opacity: 0.75;
 		}
 	}
 
 	@media (max-width: 768px) {
 		.contextual-graphic {
-			display: none;
+			width: 800px;
+			height: 800px;
+			transform: translate(-8%, 8%);
+			opacity: 0.65;
 		}
 	}
 
-	/* Iridescent Tubes */
+	/* Gradient Orbs - Fortune 500 Style */
+	.gradient-orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(80px);
+		opacity: 0.35;
+		animation: orb-pulse 12s ease-in-out infinite;
+	}
+
+	.orb-primary {
+		width: 450px;
+		height: 450px;
+		bottom: 5%;
+		left: 10%;
+		background: radial-gradient(
+			circle at 30% 30%,
+			rgba(239, 68, 68, 0.2) 0%,
+			rgba(168, 85, 247, 0.15) 40%,
+			rgba(59, 130, 246, 0.1) 70%,
+			transparent 100%
+		);
+		animation-delay: 0s;
+	}
+
+	.orb-secondary {
+		width: 350px;
+		height: 350px;
+		bottom: 15%;
+		left: 25%;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(236, 72, 153, 0.18) 0%,
+			rgba(251, 146, 60, 0.12) 50%,
+			transparent 100%
+		);
+		animation-delay: 2.5s;
+	}
+
+	.orb-tertiary {
+		width: 300px;
+		height: 300px;
+		bottom: 25%;
+		left: 5%;
+		background: radial-gradient(
+			circle at 40% 40%,
+			rgba(59, 130, 246, 0.15) 0%,
+			rgba(34, 197, 94, 0.1) 60%,
+			transparent 100%
+		);
+		animation-delay: 5s;
+	}
+
+	@keyframes orb-pulse {
+		0%, 100% {
+			transform: scale(1);
+			opacity: 0.35;
+		}
+		50% {
+			transform: scale(1.08);
+			opacity: 0.45;
+		}
+	}
+
+	/* Mesh Gradient Background */
+	.mesh-gradient {
+		position: absolute;
+		inset: 0;
+		background: 
+			radial-gradient(at 20% 20%, rgba(239, 68, 68, 0.08) 0px, transparent 50%),
+			radial-gradient(at 80% 80%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+			radial-gradient(at 60% 40%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+		opacity: 0.5;
+		filter: blur(60px);
+		animation: mesh-shift 25s ease-in-out infinite;
+	}
+
+	@keyframes mesh-shift {
+		0%, 100% {
+			transform: translate(0, 0) scale(1);
+		}
+		33% {
+			transform: translate(-15px, -15px) scale(1.05);
+		}
+		66% {
+			transform: translate(10px, 10px) scale(0.98);
+		}
+	}
+
+	/* Iridescent Tubes - Enhanced Fortune 500 Style */
 	.iridescent-tube {
 		position: absolute;
 		border-radius: 100px;
-		background: rgba(239, 24, 32, 0.08);
-		border: 1px solid rgba(239, 24, 32, 0.15);
-		animation: iridescent-float 12s ease-in-out infinite;
-		opacity: 0.6;
+		background: rgba(239, 24, 32, 0.05);
+		border: 1px solid rgba(239, 24, 32, 0.1);
+		animation: iridescent-float 15s ease-in-out infinite;
+		opacity: 0.5;
+		filter: blur(1px);
+		backdrop-filter: blur(15px);
+		box-shadow: 
+			0 0 30px rgba(239, 68, 68, 0.06),
+			inset 0 0 50px rgba(168, 85, 247, 0.03);
 	}
 
-	/* Iridescent Tube Positions */
+	/* Iridescent Tube Positions - Enhanced Bottom Left Layout */
 	.iridescent-tube.tube-1 {
-		width: 210px;
-		height: 750px;
-		top: 15%;
-		right: 20%;
-		transform: rotate(35deg);
+		width: 300px;
+		height: 950px;
+		bottom: 8%;
+		left: 12%;
+		transform: rotate(-35deg);
 		animation-delay: 0s;
-		border-radius: 105px;
+		border-radius: 150px;
 		background: linear-gradient(
-			135deg,
-			rgba(59, 130, 246, 0.5) 0%,
-			rgba(168, 85, 247, 0.4) 30%,
-			rgba(236, 72, 153, 0.4) 60%,
-			rgba(59, 130, 246, 0.5) 100%
+			225deg,
+			rgba(59, 130, 246, 0.35) 0%,
+			rgba(168, 85, 247, 0.28) 25%,
+			rgba(236, 72, 153, 0.25) 50%,
+			rgba(239, 68, 68, 0.22) 75%,
+			rgba(59, 130, 246, 0.3) 100%
 		);
+		--base-rotation: -35deg;
 	}
 
 	.iridescent-tube.tube-2 {
-		width: 180px;
-		height: 675px;
-		top: 25%;
-		right: 5%;
-		transform: rotate(-25deg);
+		width: 260px;
+		height: 900px;
+		bottom: 18%;
+		left: 3%;
+		transform: rotate(25deg);
 		animation-delay: 2s;
-		border-radius: 90px;
+		border-radius: 130px;
 		background: linear-gradient(
-			135deg,
-			rgba(236, 72, 153, 0.5) 0%,
-			rgba(251, 146, 60, 0.4) 30%,
-			rgba(34, 197, 94, 0.4) 60%,
-			rgba(236, 72, 153, 0.5) 100%
+			225deg,
+			rgba(236, 72, 153, 0.35) 0%,
+			rgba(251, 146, 60, 0.28) 30%,
+			rgba(34, 197, 94, 0.25) 60%,
+			rgba(236, 72, 153, 0.3) 100%
 		);
+		--base-rotation: 25deg;
 	}
 
 	.iridescent-tube.tube-3 {
-		width: 240px;
-		height: 630px;
-		top: 40%;
-		right: 15%;
-		transform: rotate(50deg);
+		width: 340px;
+		height: 850px;
+		bottom: 3%;
+		left: 22%;
+		transform: rotate(-50deg);
 		animation-delay: 4s;
-		border-radius: 120px;
+		border-radius: 170px;
 		background: linear-gradient(
-			135deg,
-			rgba(168, 85, 247, 0.5) 0%,
-			rgba(59, 130, 246, 0.4) 30%,
-			rgba(34, 197, 94, 0.4) 60%,
-			rgba(168, 85, 247, 0.5) 100%
+			225deg,
+			rgba(168, 85, 247, 0.38) 0%,
+			rgba(59, 130, 246, 0.32) 25%,
+			rgba(34, 197, 94, 0.28) 50%,
+			rgba(168, 85, 247, 0.35) 100%
 		);
+		--base-rotation: -50deg;
 	}
 
 	.iridescent-tube.tube-4 {
-		width: 150px;
-		height: 720px;
-		top: 10%;
-		right: 35%;
-		transform: rotate(-40deg);
+		width: 220px;
+		height: 920px;
+		bottom: 12%;
+		left: 38%;
+		transform: rotate(40deg);
 		animation-delay: 6s;
-		border-radius: 75px;
+		border-radius: 110px;
 		background: linear-gradient(
-			135deg,
-			rgba(251, 146, 60, 0.5) 0%,
-			rgba(236, 72, 153, 0.4) 30%,
-			rgba(168, 85, 247, 0.4) 60%,
-			rgba(251, 146, 60, 0.5) 100%
+			225deg,
+			rgba(251, 146, 60, 0.35) 0%,
+			rgba(236, 72, 153, 0.28) 30%,
+			rgba(168, 85, 247, 0.25) 60%,
+			rgba(251, 146, 60, 0.32) 100%
 		);
+		--base-rotation: 40deg;
 	}
 
 	.iridescent-tube.tube-5 {
-		width: 195px;
-		height: 690px;
-		top: 50%;
-		right: 8%;
-		transform: rotate(20deg);
+		width: 280px;
+		height: 860px;
+		bottom: 6%;
+		left: 10%;
+		transform: rotate(-20deg);
 		animation-delay: 8s;
-		border-radius: 97.5px;
+		border-radius: 140px;
 		background: linear-gradient(
-			135deg,
-			rgba(34, 197, 94, 0.5) 0%,
-			rgba(59, 130, 246, 0.4) 30%,
-			rgba(168, 85, 247, 0.4) 60%,
-			rgba(34, 197, 94, 0.5) 100%
+			225deg,
+			rgba(34, 197, 94, 0.35) 0%,
+			rgba(59, 130, 246, 0.28) 30%,
+			rgba(168, 85, 247, 0.25) 60%,
+			rgba(34, 197, 94, 0.32) 100%
 		);
+		--base-rotation: -20deg;
 	}
 
 	.iridescent-tube.tube-6 {
-		width: 165px;
-		height: 660px;
-		top: 30%;
-		right: 25%;
-		transform: rotate(-55deg);
+		width: 240px;
+		height: 820px;
+		bottom: 22%;
+		left: 28%;
+		transform: rotate(55deg);
 		animation-delay: 10s;
-		border-radius: 82.5px;
+		border-radius: 120px;
 		background: linear-gradient(
-			135deg,
-			rgba(59, 130, 246, 0.5) 0%,
-			rgba(251, 146, 60, 0.4) 30%,
-			rgba(236, 72, 153, 0.4) 60%,
-			rgba(59, 130, 246, 0.5) 100%
+			225deg,
+			rgba(59, 130, 246, 0.35) 0%,
+			rgba(251, 146, 60, 0.28) 30%,
+			rgba(236, 72, 153, 0.25) 60%,
+			rgba(59, 130, 246, 0.32) 100%
 		);
+		--base-rotation: 55deg;
+	}
+
+	/* Geometric Accents - Fortune 500 Style */
+	.geometric-accent {
+		position: absolute;
+		border: 1px solid;
+		opacity: 0.18;
+		animation: geometric-rotate 30s linear infinite;
+	}
+
+	.accent-1 {
+		width: 100px;
+		height: 100px;
+		bottom: 30%;
+		left: 20%;
+		border-color: rgba(239, 68, 68, 0.25);
+		border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+		background: linear-gradient(
+			315deg,
+			rgba(239, 68, 68, 0.06) 0%,
+			transparent 100%
+		);
+		animation-delay: 0s;
+		filter: blur(2px);
+	}
+
+	.accent-2 {
+		width: 70px;
+		height: 70px;
+		bottom: 35%;
+		left: 8%;
+		border-color: rgba(168, 85, 247, 0.25);
+		border-radius: 50%;
+		background: radial-gradient(
+			circle,
+			rgba(168, 85, 247, 0.08) 0%,
+			transparent 70%
+		);
+		animation-delay: 10s;
+		filter: blur(1.5px);
+	}
+
+	.accent-3 {
+		width: 85px;
+		height: 85px;
+		bottom: 15%;
+		left: 35%;
+		border-color: rgba(59, 130, 246, 0.25);
+		clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+		background: linear-gradient(
+			225deg,
+			rgba(59, 130, 246, 0.07) 0%,
+			transparent 100%
+		);
+		animation-delay: 20s;
+		filter: blur(1.8px);
+	}
+
+	@keyframes geometric-rotate {
+		0% {
+			transform: rotate(0deg) scale(1);
+		}
+		50% {
+			transform: rotate(180deg) scale(1.05);
+		}
+		100% {
+			transform: rotate(360deg) scale(1);
+		}
 	}
 
 	@keyframes iridescent-float {
 		0%,
 		100% {
-			transform: translateY(0) rotate(var(--base-rotation, 0deg));
+			transform: translateY(0) translateX(0) rotate(var(--base-rotation, 0deg));
+			opacity: 0.5;
 		}
 		25% {
-			transform: translateY(-15px)
-				rotate(calc(var(--base-rotation, 0deg) + 3deg));
+			transform: translateY(-12px) translateX(6px)
+				rotate(calc(var(--base-rotation, 0deg) + 2deg));
+			opacity: 0.55;
 		}
 		50% {
-			transform: translateY(-8px) rotate(var(--base-rotation, 0deg));
+			transform: translateY(-6px) translateX(-3px) rotate(var(--base-rotation, 0deg));
+			opacity: 0.52;
 		}
 		75% {
-			transform: translateY(-20px)
-				rotate(calc(var(--base-rotation, 0deg) - 3deg));
+			transform: translateY(-15px) translateX(3px)
+				rotate(calc(var(--base-rotation, 0deg) - 2deg));
+			opacity: 0.58;
 		}
 	}
 
-	/* Glass Loop Container - Hidden for flat design */
-	.glass-loop-container {
-		display: none;
-	}
 
-	/* Typography */
+	/* Typography - Minimalist Centered */
 	.contextual-headline {
-		font-size: clamp(2.5rem, 8vw, 5.5rem);
+		font-size: clamp(3rem, 7vw, 6rem);
 		font-weight: 900;
-		line-height: 1.05;
-		letter-spacing: -0.03em;
+		line-height: 1.1;
+		letter-spacing: -0.04em;
 		color: var(--foreground);
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		text-align: center;
 	}
 
 	.contextual-subheadline {
-		font-size: clamp(1.125rem, 2vw, 1.375rem);
-		font-weight: 500;
+		font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+		font-weight: 400;
 		line-height: 1.6;
-		/* Better text rendering */
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		text-align: center;
 	}
 
 	/* CTA Button */
@@ -1928,7 +2132,10 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.iridescent-tube,
-		.glass-loop,
+		.gradient-orb,
+		.geometric-accent,
+		.mesh-gradient,
+		.light-rays,
 		.animate-particle-float,
 		.animate-fade-in-up {
 			animation: none;

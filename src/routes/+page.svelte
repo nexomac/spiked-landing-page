@@ -463,7 +463,7 @@
 		<!-- Contextual AI Style Hero Section -->
 		<section
 			data-section="hero"
-			class="relative flex items-center overflow-hidden bg-background contextual-hero min-h-[85vh] py-20 sm:py-24"
+			class="relative flex items-center overflow-hidden bg-background contextual-hero min-h-[70vh] py-12 sm:py-16"
 		>
 			<!-- Abstract Iridescent Graphic (Right Side) -->
 			<div
@@ -488,7 +488,7 @@
 				class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner"
 			>
 				<div
-					class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center hero-grid-shell"
+					class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center hero-grid-shell"
 				>
 					<!-- Left Column: Text Content -->
 					<div
@@ -497,13 +497,13 @@
 							: 'translate-y-10 opacity-0'}"
 					>
 						<!-- Main Headline -->
-						<h1 class="contextual-headline mb-8 lg:mb-10">
+						<h1 class="contextual-headline mb-4 lg:mb-5">
 							<span class="block">Sell Like a CEO</span>
 						</h1>
 
 						<!-- Sub-headline -->
 						<p
-							class="contextual-subheadline mb-10 lg:mb-12 text-muted-foreground leading-relaxed max-w-[540px]"
+							class="contextual-subheadline mb-6 lg:mb-8 text-muted-foreground leading-relaxed max-w-[540px]"
 						>
 							The rise of the singular rep starts here
 						</p>
@@ -511,7 +511,7 @@
 						<!-- CTA Button -->
 						<a
 							href="/contact-sales"
-							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200 mb-12"
+							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200 mb-6"
 						>
 							<span class="relative z-10">Request a Demo</span>
 							<span
@@ -525,37 +525,37 @@
 
 						<!-- Founder Quote -->
 						<div
-							class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 max-w-lg"
+							class="bg-card border border-border rounded-xl p-4 hover:border-primary transition-all duration-200 max-w-lg"
 						>
-							<div class="flex gap-4 items-start">
+							<div class="flex gap-3 items-start">
 								<!-- Photo -->
 								<img
 									src="/Photos/Avi Sahi.jpeg"
 									alt="Avi Sahi"
-									class="w-16 h-16 rounded-full object-cover border-2 border-border flex-shrink-0"
+									class="w-12 h-12 rounded-full object-cover border-2 border-border flex-shrink-0"
 								/>
 								
 								<!-- Quote Content -->
 								<div class="flex-1 min-w-0">
 									<blockquote>
 										<p
-											class="text-base sm:text-lg font-semibold text-foreground leading-relaxed mb-3"
+											class="text-sm sm:text-base font-semibold text-foreground leading-relaxed mb-2"
 										>
 											AI that respects judgment, because revenue decisions are human decisions.
 										</p>
 										<p
-											class="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3"
+											class="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-2"
 										>
 											SpikedAI is built for leaders who make decisions in live customer moments, 
 											not after the fact, not from dashboards, but turning conversations into conversions.
 										</p>
 									</blockquote>
 									
-									<div class="pt-3 border-t border-border">
-										<p class="font-bold text-foreground text-sm">
+									<div class="pt-2 border-t border-border">
+										<p class="font-bold text-foreground text-xs">
 											Avi Sahi
 										</p>
-										<p class="text-xs text-muted-foreground">
+										<p class="text-[10px] text-muted-foreground">
 											Co-Founder & CEO, SpikedAI
 										</p>
 									</div>
@@ -573,7 +573,7 @@
 
 			<!-- Smooth transition to next section -->
 			<div
-				class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
+				class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
 			></div>
 		</section>
 
@@ -581,7 +581,7 @@
 		<section
 			id="showcase"
 			data-section="showcase"
-			class="pt-24 pb-24 sm:pt-32 sm:pb-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
+			class="pt-16 pb-16 sm:pt-20 sm:pb-20 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -596,7 +596,7 @@
 			<div class="relative z-10 max-w-7xl mx-auto px-6">
 				<!-- Header -->
 				<div
-					class="text-center mb-16 sm:mb-20 transform transition-all duration-1000 {visibleSections.showcase
+					class="text-center mb-10 sm:mb-12 transform transition-all duration-1000 {visibleSections.showcase
 						? 'translate-y-0 opacity-100'
 						: 'translate-y-10 opacity-0'}"
 				>
@@ -619,7 +619,7 @@
 
 				<!-- Split Layout Showcase Container -->
 				<div
-					class="relative h-[1100px] lg:h-[650px] showcase-overlap-grid"
+					class="relative h-[900px] lg:h-[550px] showcase-overlap-grid"
 					role="region"
 					aria-label="Interactive feature showcase"
 					onmouseenter={() => (isPaused = true)}
@@ -636,11 +636,11 @@
 							>
 								<!-- Desktop Layout: Split -->
 								<div
-									class="hidden lg:grid lg:grid-cols-2 gap-10 items-center h-full"
+									class="hidden lg:grid lg:grid-cols-2 gap-8 items-center h-full"
 								>
 									<!-- Left Column - Feature Info -->
 									<div
-										class="space-y-6 showcase-left-content"
+										class="space-y-4 showcase-left-content"
 									>
 										<!-- Label Badge -->
 										<div
@@ -686,13 +686,13 @@
 
 										<!-- Feature Cards -->
 										<div
-											class="space-y-3 showcase-features"
+											class="space-y-2 showcase-features"
 										>
 											{#each showcase.features as feature, idx}
 												{@const FeatureIcon =
 													feature.icon}
 												<div
-													class="feature-card group relative bg-card rounded-xl p-4 border border-border transition-all duration-200 {feature.highlight
+													class="feature-card group relative bg-card rounded-lg p-3 border border-border transition-all duration-200 {feature.highlight
 														? 'border-red-500 border-l-4 border-l-red-500'
 														: ''} hover:border-primary"
 													in:fly={{
@@ -762,7 +762,7 @@
 									<!-- Right Column - Showcase Widget -->
 									<div class="relative showcase-widget">
 										<div
-											class="relative bg-card rounded-3xl border border-border p-5 showcase-widget-container"
+											class="relative bg-card rounded-2xl border border-border p-4 showcase-widget-container"
 											in:fly={{
 												x: 30,
 												duration: 800,
@@ -781,7 +781,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "notetaker"}
@@ -797,7 +797,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "followup"}
@@ -810,7 +810,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "simulator"}
@@ -835,21 +835,21 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "dev-tools"}
 													<DevToolsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "crm"}
 													<CRMShowcase
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "sentiment"}
@@ -862,14 +862,14 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "custom-goals"}
 													<CustomGoalsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="500px"
+														height="450px"
 														showAppChrome={true}
 													/>
 												{/if}
@@ -903,7 +903,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "notetaker"}
@@ -919,7 +919,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "followup"}
@@ -932,7 +932,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "simulator"}
@@ -957,21 +957,21 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "dev-tools"}
 													<DevToolsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "crm"}
 													<CRMShowcase
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "sentiment"}
@@ -984,14 +984,14 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "custom-goals"}
 													<CustomGoalsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="400px"
+														height="350px"
 														showAppChrome={true}
 													/>
 												{/if}
@@ -1088,7 +1088,7 @@
 
 				<!-- Navigation Icons - Desktop -->
 				<div
-					class="hidden md:flex justify-center gap-2 mt-10 showcase-navigation"
+					class="hidden md:flex justify-center gap-2 mt-6 showcase-navigation"
 				>
 					{#each showcases as showcase, i}
 						{@const IconComponent = showcase.icon}
@@ -1185,7 +1185,7 @@
 		<section
 			id="testimonials"
 			data-section="testimonials"
-			class="py-24 sm:py-32 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.testimonials
+			class="py-16 sm:py-20 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.testimonials
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -1204,7 +1204,7 @@
 				{/each}
 			</div>
 			<div
-				class="text-center mb-12 sm:mb-16 px-4 transform transition-all duration-1000 {visibleSections.testimonials
+				class="text-center mb-8 sm:mb-10 px-4 transform transition-all duration-1000 {visibleSections.testimonials
 					? 'translate-y-0 opacity-100'
 					: 'translate-y-10 opacity-0'} relative z-20"
 			>
@@ -1283,24 +1283,24 @@
 					{/each}
 				</div>
 			</div>
-			<div class="mt-20 max-w-7xl mx-auto px-6 relative z-20">
+			<div class="mt-12 max-w-7xl mx-auto px-6 relative z-20">
 				<div
-					class="bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-200 group"
+					class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 group"
 				>
-					<div class="text-center mb-8 relative">
+					<div class="text-center mb-6 relative">
 						<h3
-							class="text-2xl font-black text-foreground mb-2 group-hover:text-primary transition-colors"
+							class="text-xl font-black text-foreground mb-2 group-hover:text-primary transition-colors"
 						>
 							Built for Sales & Dev Teams
 						</h3>
 						<p
-							class="text-muted-foreground group-hover:text-muted-foreground/80 transition-colors font-semibold"
+							class="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors font-semibold"
 						>
 							Powerful conversational AI that integrates with your
 							entire workflow
 						</p>
 					</div>
-					<div class="grid md:grid-cols-3 gap-8 relative">
+					<div class="grid md:grid-cols-3 gap-6 relative">
 						{#each [{ number: "01", title: "Universal Integrations", description: "Connects with Salesforce, HubSpot, monday.com, Jira, Asana, Slack, Teams & more" }, { number: "02", title: "Real-Time Intelligence", description: "AI-powered insights during every sales conversation" }, { number: "03", title: "Auto Follow-Up & Tracking", description: "Never miss a task with intelligent automation and CRM sync" }] as feature, i}
 							<div
 								class="group/item relative animate-fade-in-up"
@@ -1332,7 +1332,7 @@
 
 		<section
 			data-section="cta"
-			class="py-24 sm:py-32 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.cta
+			class="py-16 sm:py-20 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.cta
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -1342,13 +1342,13 @@
 					: 'translate-y-10 opacity-0'}"
 			>
 				<h2
-					class="text-4xl sm:text-5xl md:text-7xl font-black text-foreground mb-6 tracking-tight leading-tight sm:leading-none animate-fade-in-up"
+					class="text-3xl sm:text-4xl md:text-5xl font-black text-foreground mb-4 tracking-tight leading-tight sm:leading-none animate-fade-in-up"
 				>
 					Empower Your Sales Team<br />
 					<span class="text-red-500"> With AI Intelligence </span>
 				</h2>
 				<p
-					class="text-lg sm:text-xl text-muted-foreground mb-10 sm:mb-12 max-w-2xl mx-auto font-semibold animate-fade-in-up"
+					class="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto font-semibold animate-fade-in-up"
 					style="animation-delay: 0.2s;"
 				>
 					Join sales teams accelerating revenue with conversational
@@ -1399,11 +1399,11 @@
 		</section>
 
 		<footer
-			class="bg-background text-foreground py-16 border-t border-border relative overflow-hidden"
+			class="bg-background text-foreground py-12 border-t border-border relative overflow-hidden"
 		>
 
 			<div class="max-w-7xl mx-auto px-6 relative z-10">
-				<div class="grid md:grid-cols-5 gap-12 mb-12">
+				<div class="grid md:grid-cols-5 gap-8 mb-8">
 					<div class="md:col-span-2">
 						<div
 							class="flex items-center gap-3 mb-4 group cursor-pointer"
@@ -1591,9 +1591,9 @@
 					</div>
 				</div>
 
-				<div class="border-t border-border pt-8">
+				<div class="border-t border-border pt-6">
 					<div
-						class="flex flex-col md:flex-row justify-between items-center gap-4"
+						class="flex flex-col md:flex-row justify-between items-center gap-3"
 					>
 						<div
 							class="text-center md:text-left text-muted-foreground text-sm hover:text-foreground transition-colors"
@@ -1631,8 +1631,8 @@
 
 	:global(:root) {
 		--nav-height: 80px;
-		--hero-panel-height: clamp(600px, calc(100dvh - var(--nav-height)), 1040px);
-		--hero-panel-padding: clamp(2.5rem, 9vh, 6.5rem);
+		--hero-panel-height: clamp(500px, calc(100dvh - var(--nav-height)), 800px);
+		--hero-panel-padding: clamp(2rem, 6vh, 4rem);
 	}
 
 	@supports not (height: 100dvh) {
@@ -1661,7 +1661,7 @@
 	}
 
 	.hero-grid-shell {
-		min-height: clamp(520px, 70vh, 860px);
+		min-height: clamp(400px, 60vh, 700px);
 	}
 
 	/* Contextual Graphic Container */

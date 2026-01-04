@@ -463,9 +463,9 @@
 		<!-- Contextual AI Style Hero Section -->
 		<section
 			data-section="hero"
-			class="relative flex items-center justify-center overflow-hidden bg-background contextual-hero min-h-[90vh] py-20 sm:py-24"
+			class="relative flex items-center overflow-hidden bg-background contextual-hero min-h-[85vh] py-20 sm:py-24"
 		>
-			<!-- Abstract Iridescent Graphic (Centered) -->
+			<!-- Abstract Iridescent Graphic (Right Side) -->
 			<div
 				class="contextual-graphic"
 				style={`transform: translate(${mouseX * 0.008}px, ${mouseY * 0.008}px);`}
@@ -483,79 +483,79 @@
 				<div class="glass-loop sheen"></div>
 			</div>
 
-			<!-- Content Container - Centered -->
+			<!-- Content Container -->
 			<div
-				class="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner"
+				class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner"
 			>
 				<div
-					class="flex flex-col items-center text-center hero-grid-shell"
+					class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center hero-grid-shell"
 				>
-					<!-- Centered Content -->
+					<!-- Left Column: Text Content -->
 					<div
-						class="contextual-content w-full max-w-4xl transform transition-all duration-1000 {visibleSections.hero
+						class="contextual-content max-w-2xl lg:max-w-3xl mx-auto lg:mx-0 transform transition-all duration-1000 {visibleSections.hero
 							? 'translate-y-0 opacity-100'
 							: 'translate-y-10 opacity-0'}"
 					>
-						<!-- Main Headline - Large and Centered -->
-						<h1 class="contextual-headline mb-6 lg:mb-8">
+						<!-- Main Headline -->
+						<h1 class="contextual-headline mb-8 lg:mb-10">
 							<span class="block">Sell Like a CEO</span>
 						</h1>
 
 						<!-- Sub-headline -->
 						<p
-							class="contextual-subheadline mb-12 lg:mb-16 text-muted-foreground leading-relaxed text-lg sm:text-xl max-w-2xl mx-auto"
+							class="contextual-subheadline mb-10 lg:mb-12 text-muted-foreground leading-relaxed max-w-[540px]"
 						>
 							The rise of the singular rep starts here
 						</p>
 
-						<!-- CTA Button - Large and Prominent -->
+						<!-- CTA Button -->
 						<a
 							href="/contact-sales"
-							class="contextual-cta group relative inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg transition-all duration-200 mb-16"
+							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200 mb-12"
 						>
 							<span class="relative z-10">Request a Demo</span>
 							<span
 								class="cta-icon relative z-10 grid place-items-center"
 							>
 								<ArrowRight
-									class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+									class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
 								/>
 							</span>
 						</a>
 
-						<!-- Founder Quote - Centered and Spacious -->
+						<!-- Founder Quote -->
 						<div
-							class="bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-200 max-w-3xl mx-auto"
+							class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 max-w-lg"
 						>
-							<div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+							<div class="flex gap-4 items-start">
 								<!-- Photo -->
 								<img
 									src="/Photos/Avi Sahi.jpeg"
 									alt="Avi Sahi"
-									class="w-20 h-20 rounded-full object-cover border-2 border-border flex-shrink-0"
+									class="w-16 h-16 rounded-full object-cover border-2 border-border flex-shrink-0"
 								/>
 								
 								<!-- Quote Content -->
-								<div class="flex-1 text-left sm:text-center">
+								<div class="flex-1 min-w-0">
 									<blockquote>
 										<p
-											class="text-lg sm:text-xl font-semibold text-foreground leading-relaxed mb-4"
+											class="text-base sm:text-lg font-semibold text-foreground leading-relaxed mb-3"
 										>
 											AI that respects judgment, because revenue decisions are human decisions.
 										</p>
 										<p
-											class="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4"
+											class="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3"
 										>
 											SpikedAI is built for leaders who make decisions in live customer moments, 
 											not after the fact, not from dashboards, but turning conversations into conversions.
 										</p>
 									</blockquote>
 									
-									<div class="pt-4 border-t border-border">
-										<p class="font-bold text-foreground text-base">
+									<div class="pt-3 border-t border-border">
+										<p class="font-bold text-foreground text-sm">
 											Avi Sahi
 										</p>
-										<p class="text-sm text-muted-foreground">
+										<p class="text-xs text-muted-foreground">
 											Co-Founder & CEO, SpikedAI
 										</p>
 									</div>
@@ -563,12 +563,17 @@
 							</div>
 						</div>
 					</div>
+
+					<!-- Right Column: Abstract Graphic (Mobile: Hidden, shown in background) -->
+					<div class="hidden lg:block relative h-full min-h-[600px]">
+						<!-- Graphic is positioned absolutely in contextual-graphic -->
+					</div>
 				</div>
 			</div>
 
 			<!-- Smooth transition to next section -->
 			<div
-				class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
+				class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
 			></div>
 		</section>
 
@@ -576,7 +581,7 @@
 		<section
 			id="showcase"
 			data-section="showcase"
-			class="pt-16 pb-16 sm:pt-20 sm:pb-20 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
+			class="pt-24 pb-24 sm:pt-32 sm:pb-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -591,7 +596,7 @@
 			<div class="relative z-10 max-w-7xl mx-auto px-6">
 				<!-- Header -->
 				<div
-					class="text-center mb-10 sm:mb-12 transform transition-all duration-1000 {visibleSections.showcase
+					class="text-center mb-16 sm:mb-20 transform transition-all duration-1000 {visibleSections.showcase
 						? 'translate-y-0 opacity-100'
 						: 'translate-y-10 opacity-0'}"
 				>
@@ -614,7 +619,7 @@
 
 				<!-- Split Layout Showcase Container -->
 				<div
-					class="relative h-[900px] lg:h-[550px] showcase-overlap-grid"
+					class="relative h-[1100px] lg:h-[650px] showcase-overlap-grid"
 					role="region"
 					aria-label="Interactive feature showcase"
 					onmouseenter={() => (isPaused = true)}
@@ -631,11 +636,11 @@
 							>
 								<!-- Desktop Layout: Split -->
 								<div
-									class="hidden lg:grid lg:grid-cols-2 gap-8 items-center h-full"
+									class="hidden lg:grid lg:grid-cols-2 gap-10 items-center h-full"
 								>
 									<!-- Left Column - Feature Info -->
 									<div
-										class="space-y-4 showcase-left-content"
+										class="space-y-6 showcase-left-content"
 									>
 										<!-- Label Badge -->
 										<div
@@ -681,13 +686,13 @@
 
 										<!-- Feature Cards -->
 										<div
-											class="space-y-2 showcase-features"
+											class="space-y-3 showcase-features"
 										>
 											{#each showcase.features as feature, idx}
 												{@const FeatureIcon =
 													feature.icon}
 												<div
-													class="feature-card group relative bg-card rounded-lg p-3 border border-border transition-all duration-200 {feature.highlight
+													class="feature-card group relative bg-card rounded-xl p-4 border border-border transition-all duration-200 {feature.highlight
 														? 'border-red-500 border-l-4 border-l-red-500'
 														: ''} hover:border-primary"
 													in:fly={{
@@ -757,7 +762,7 @@
 									<!-- Right Column - Showcase Widget -->
 									<div class="relative showcase-widget">
 										<div
-											class="relative bg-card rounded-2xl border border-border p-4 showcase-widget-container"
+											class="relative bg-card rounded-3xl border border-border p-5 showcase-widget-container"
 											in:fly={{
 												x: 30,
 												duration: 800,
@@ -776,7 +781,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "notetaker"}
@@ -792,7 +797,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "followup"}
@@ -805,7 +810,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "simulator"}
@@ -830,21 +835,21 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "dev-tools"}
 													<DevToolsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "crm"}
 													<CRMShowcase
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "sentiment"}
@@ -857,14 +862,14 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "custom-goals"}
 													<CustomGoalsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="450px"
+														height="500px"
 														showAppChrome={true}
 													/>
 												{/if}
@@ -898,7 +903,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "notetaker"}
@@ -914,7 +919,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "followup"}
@@ -927,7 +932,7 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "simulator"}
@@ -952,21 +957,21 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "dev-tools"}
 													<DevToolsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "crm"}
 													<CRMShowcase
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "sentiment"}
@@ -979,14 +984,14 @@
 														}
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{:else if showcase.id === "custom-goals"}
 													<CustomGoalsShowcase
 														mouseX={0}
 														mouseY={0}
-														height="350px"
+														height="400px"
 														showAppChrome={true}
 													/>
 												{/if}
@@ -1083,7 +1088,7 @@
 
 				<!-- Navigation Icons - Desktop -->
 				<div
-					class="hidden md:flex justify-center gap-2 mt-6 showcase-navigation"
+					class="hidden md:flex justify-center gap-2 mt-10 showcase-navigation"
 				>
 					{#each showcases as showcase, i}
 						{@const IconComponent = showcase.icon}
@@ -1180,7 +1185,7 @@
 		<section
 			id="testimonials"
 			data-section="testimonials"
-			class="py-16 sm:py-20 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.testimonials
+			class="py-24 sm:py-32 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.testimonials
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -1199,7 +1204,7 @@
 				{/each}
 			</div>
 			<div
-				class="text-center mb-8 sm:mb-10 px-4 transform transition-all duration-1000 {visibleSections.testimonials
+				class="text-center mb-12 sm:mb-16 px-4 transform transition-all duration-1000 {visibleSections.testimonials
 					? 'translate-y-0 opacity-100'
 					: 'translate-y-10 opacity-0'} relative z-20"
 			>
@@ -1278,24 +1283,24 @@
 					{/each}
 				</div>
 			</div>
-			<div class="mt-12 max-w-7xl mx-auto px-6 relative z-20">
+			<div class="mt-20 max-w-7xl mx-auto px-6 relative z-20">
 				<div
-					class="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-200 group"
+					class="bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-200 group"
 				>
-					<div class="text-center mb-6 relative">
+					<div class="text-center mb-8 relative">
 						<h3
-							class="text-xl font-black text-foreground mb-2 group-hover:text-primary transition-colors"
+							class="text-2xl font-black text-foreground mb-2 group-hover:text-primary transition-colors"
 						>
 							Built for Sales & Dev Teams
 						</h3>
 						<p
-							class="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors font-semibold"
+							class="text-muted-foreground group-hover:text-muted-foreground/80 transition-colors font-semibold"
 						>
 							Powerful conversational AI that integrates with your
 							entire workflow
 						</p>
 					</div>
-					<div class="grid md:grid-cols-3 gap-6 relative">
+					<div class="grid md:grid-cols-3 gap-8 relative">
 						{#each [{ number: "01", title: "Universal Integrations", description: "Connects with Salesforce, HubSpot, monday.com, Jira, Asana, Slack, Teams & more" }, { number: "02", title: "Real-Time Intelligence", description: "AI-powered insights during every sales conversation" }, { number: "03", title: "Auto Follow-Up & Tracking", description: "Never miss a task with intelligent automation and CRM sync" }] as feature, i}
 							<div
 								class="group/item relative animate-fade-in-up"
@@ -1327,7 +1332,7 @@
 
 		<section
 			data-section="cta"
-			class="py-16 sm:py-20 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.cta
+			class="py-24 sm:py-32 bg-background relative overflow-hidden transform transition-all duration-1000 {visibleSections.cta
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -1337,13 +1342,13 @@
 					: 'translate-y-10 opacity-0'}"
 			>
 				<h2
-					class="text-3xl sm:text-4xl md:text-5xl font-black text-foreground mb-4 tracking-tight leading-tight sm:leading-none animate-fade-in-up"
+					class="text-4xl sm:text-5xl md:text-7xl font-black text-foreground mb-6 tracking-tight leading-tight sm:leading-none animate-fade-in-up"
 				>
 					Empower Your Sales Team<br />
 					<span class="text-red-500"> With AI Intelligence </span>
 				</h2>
 				<p
-					class="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto font-semibold animate-fade-in-up"
+					class="text-lg sm:text-xl text-muted-foreground mb-10 sm:mb-12 max-w-2xl mx-auto font-semibold animate-fade-in-up"
 					style="animation-delay: 0.2s;"
 				>
 					Join sales teams accelerating revenue with conversational
@@ -1394,11 +1399,11 @@
 		</section>
 
 		<footer
-			class="bg-background text-foreground py-12 border-t border-border relative overflow-hidden"
+			class="bg-background text-foreground py-16 border-t border-border relative overflow-hidden"
 		>
 
 			<div class="max-w-7xl mx-auto px-6 relative z-10">
-				<div class="grid md:grid-cols-5 gap-8 mb-8">
+				<div class="grid md:grid-cols-5 gap-12 mb-12">
 					<div class="md:col-span-2">
 						<div
 							class="flex items-center gap-3 mb-4 group cursor-pointer"
@@ -1586,9 +1591,9 @@
 					</div>
 				</div>
 
-				<div class="border-t border-border pt-6">
+				<div class="border-t border-border pt-8">
 					<div
-						class="flex flex-col md:flex-row justify-between items-center gap-3"
+						class="flex flex-col md:flex-row justify-between items-center gap-4"
 					>
 						<div
 							class="text-center md:text-left text-muted-foreground text-sm hover:text-foreground transition-colors"
@@ -1626,8 +1631,8 @@
 
 	:global(:root) {
 		--nav-height: 80px;
-		--hero-panel-height: clamp(600px, calc(100dvh - var(--nav-height)), 1000px);
-		--hero-panel-padding: clamp(3rem, 8vh, 6rem);
+		--hero-panel-height: clamp(600px, calc(100dvh - var(--nav-height)), 1040px);
+		--hero-panel-padding: clamp(2.5rem, 9vh, 6.5rem);
 	}
 
 	@supports not (height: 100dvh) {
@@ -1656,30 +1661,28 @@
 	}
 
 	.hero-grid-shell {
-		min-height: clamp(500px, 70vh, 800px);
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		min-height: clamp(520px, 70vh, 860px);
 	}
 
-	/* Contextual Graphic Container - Centered */
+	/* Contextual Graphic Container */
 	.contextual-graphic {
 		position: absolute;
 		top: 50%;
-		left: 50%;
-		width: 1000px;
-		height: 1000px;
-		transform: translate(-50%, -50%);
-		opacity: 0.25;
+		right: 5%;
+		width: 900px;
+		height: 900px;
+		transform: translateY(-50%);
+		opacity: 0.3;
 		pointer-events: none;
 		z-index: 1;
 	}
 
 	@media (max-width: 1024px) {
 		.contextual-graphic {
-			width: 700px;
-			height: 700px;
-			opacity: 0.3;
+			width: 600px;
+			height: 600px;
+			right: -10%;
+			opacity: 0.4;
 		}
 	}
 
@@ -1699,12 +1702,12 @@
 		opacity: 0.6;
 	}
 
-	/* Iridescent Tube Positions - Centered around graphic */
+	/* Iridescent Tube Positions */
 	.iridescent-tube.tube-1 {
 		width: 210px;
 		height: 750px;
-		top: 10%;
-		left: 30%;
+		top: 15%;
+		right: 20%;
 		transform: rotate(35deg);
 		animation-delay: 0s;
 		border-radius: 105px;
@@ -1720,8 +1723,8 @@
 	.iridescent-tube.tube-2 {
 		width: 180px;
 		height: 675px;
-		top: 20%;
-		left: 15%;
+		top: 25%;
+		right: 5%;
 		transform: rotate(-25deg);
 		animation-delay: 2s;
 		border-radius: 90px;
@@ -1737,8 +1740,8 @@
 	.iridescent-tube.tube-3 {
 		width: 240px;
 		height: 630px;
-		top: 35%;
-		left: 25%;
+		top: 40%;
+		right: 15%;
 		transform: rotate(50deg);
 		animation-delay: 4s;
 		border-radius: 120px;
@@ -1754,8 +1757,8 @@
 	.iridescent-tube.tube-4 {
 		width: 150px;
 		height: 720px;
-		top: 5%;
-		left: 50%;
+		top: 10%;
+		right: 35%;
 		transform: rotate(-40deg);
 		animation-delay: 6s;
 		border-radius: 75px;
@@ -1771,8 +1774,8 @@
 	.iridescent-tube.tube-5 {
 		width: 195px;
 		height: 690px;
-		top: 45%;
-		left: 18%;
+		top: 50%;
+		right: 8%;
 		transform: rotate(20deg);
 		animation-delay: 8s;
 		border-radius: 97.5px;
@@ -1788,8 +1791,8 @@
 	.iridescent-tube.tube-6 {
 		width: 165px;
 		height: 660px;
-		top: 25%;
-		left: 40%;
+		top: 30%;
+		right: 25%;
 		transform: rotate(-55deg);
 		animation-delay: 10s;
 		border-radius: 82.5px;
@@ -1820,25 +1823,17 @@
 		}
 	}
 
-	/* Glass Loop Container - Centered */
+	/* Glass Loop Container - Hidden for flat design */
 	.glass-loop-container {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 500px;
-		height: 500px;
-		transform: translate(-50%, -50%);
-		opacity: 0.1;
-		pointer-events: none;
-		z-index: 2;
+		display: none;
 	}
 
 	/* Typography */
 	.contextual-headline {
-		font-size: clamp(3rem, 10vw, 7rem);
+		font-size: clamp(2.5rem, 8vw, 5.5rem);
 		font-weight: 900;
 		line-height: 1.05;
-		letter-spacing: -0.04em;
+		letter-spacing: -0.03em;
 		color: var(--foreground);
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
@@ -1846,7 +1841,7 @@
 	}
 
 	.contextual-subheadline {
-		font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+		font-size: clamp(1.125rem, 2vw, 1.375rem);
 		font-weight: 500;
 		line-height: 1.6;
 		/* Better text rendering */

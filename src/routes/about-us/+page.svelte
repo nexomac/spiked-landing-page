@@ -92,10 +92,10 @@
 			tags: ['Product thinking', 'AI workflows']
 		},
 		{
-			name: 'Ginnee Singh',
+			name: 'Ginniee Singh',
 			background: 'AWS, Microsoft',
 			focus: 'Go to Market',
-			image: photo('Ginnee Sahi.jpeg'),
+			image: photo('Ginniee Sahi.jpeg'),
 			role: 'Advisor, Co-Founder',
 			description: 'Drives Go to Market execution and operator enablement.',
 			tags: ['Go to Market', 'Customers', 'Partnerships']

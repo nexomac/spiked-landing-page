@@ -463,9 +463,9 @@
 		<!-- Contextual AI Style Hero Section -->
 		<section
 			data-section="hero"
-			class="relative flex items-center overflow-hidden bg-background contextual-hero min-h-[70vh] py-12 sm:py-16"
+			class="relative flex items-center justify-center overflow-hidden bg-background contextual-hero min-h-[90vh] py-20 sm:py-24"
 		>
-			<!-- Abstract Iridescent Graphic (Right Side) -->
+			<!-- Abstract Iridescent Graphic (Centered) -->
 			<div
 				class="contextual-graphic"
 				style={`transform: translate(${mouseX * 0.008}px, ${mouseY * 0.008}px);`}
@@ -483,90 +483,85 @@
 				<div class="glass-loop sheen"></div>
 			</div>
 
-			<!-- Content Container -->
+			<!-- Content Container - Centered -->
 			<div
-				class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner"
+				class="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 w-full hero-panel-inner"
 			>
 				<div
-					class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center hero-grid-shell"
+					class="flex flex-col items-center text-center hero-grid-shell"
 				>
-					<!-- Left Column: Text Content -->
+					<!-- Centered Content -->
 					<div
-						class="contextual-content max-w-2xl lg:max-w-3xl mx-auto lg:mx-0 transform transition-all duration-1000 {visibleSections.hero
+						class="contextual-content w-full max-w-4xl transform transition-all duration-1000 {visibleSections.hero
 							? 'translate-y-0 opacity-100'
 							: 'translate-y-10 opacity-0'}"
 					>
-						<!-- Main Headline -->
-						<h1 class="contextual-headline mb-4 lg:mb-5">
+						<!-- Main Headline - Large and Centered -->
+						<h1 class="contextual-headline mb-6 lg:mb-8">
 							<span class="block">Sell Like a CEO</span>
 						</h1>
 
 						<!-- Sub-headline -->
 						<p
-							class="contextual-subheadline mb-6 lg:mb-8 text-muted-foreground leading-relaxed max-w-[540px]"
+							class="contextual-subheadline mb-12 lg:mb-16 text-muted-foreground leading-relaxed text-lg sm:text-xl max-w-2xl mx-auto"
 						>
 							The rise of the singular rep starts here
 						</p>
 
-						<!-- CTA Button -->
+						<!-- CTA Button - Large and Prominent -->
 						<a
 							href="/contact-sales"
-							class="contextual-cta group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-200 mb-6"
+							class="contextual-cta group relative inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg transition-all duration-200 mb-16"
 						>
 							<span class="relative z-10">Request a Demo</span>
 							<span
 								class="cta-icon relative z-10 grid place-items-center"
 							>
 								<ArrowRight
-									class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+									class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
 								/>
 							</span>
 						</a>
 
-						<!-- Founder Quote -->
+						<!-- Founder Quote - Centered and Spacious -->
 						<div
-							class="bg-card border border-border rounded-xl p-4 hover:border-primary transition-all duration-200 max-w-lg"
+							class="bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-200 max-w-3xl mx-auto"
 						>
-							<div class="flex gap-3 items-start">
+							<div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
 								<!-- Photo -->
 								<img
 									src="/Photos/Avi Sahi.jpeg"
 									alt="Avi Sahi"
-									class="w-12 h-12 rounded-full object-cover border-2 border-border flex-shrink-0"
+									class="w-20 h-20 rounded-full object-cover border-2 border-border flex-shrink-0"
 								/>
 								
 								<!-- Quote Content -->
-								<div class="flex-1 min-w-0">
+								<div class="flex-1 text-left sm:text-center">
 									<blockquote>
 										<p
-											class="text-sm sm:text-base font-semibold text-foreground leading-relaxed mb-2"
+											class="text-lg sm:text-xl font-semibold text-foreground leading-relaxed mb-4"
 										>
 											AI that respects judgment, because revenue decisions are human decisions.
 										</p>
 										<p
-											class="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-2"
+											class="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4"
 										>
 											SpikedAI is built for leaders who make decisions in live customer moments, 
 											not after the fact, not from dashboards, but turning conversations into conversions.
 										</p>
 									</blockquote>
 									
-									<div class="pt-2 border-t border-border">
-										<p class="font-bold text-foreground text-xs">
+									<div class="pt-4 border-t border-border">
+										<p class="font-bold text-foreground text-base">
 											Avi Sahi
 										</p>
-										<p class="text-[10px] text-muted-foreground">
+										<p class="text-sm text-muted-foreground">
 											Co-Founder & CEO, SpikedAI
 										</p>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-
-					<!-- Right Column: Abstract Graphic (Mobile: Hidden, shown in background) -->
-					<div class="hidden lg:block relative h-full min-h-[600px]">
-						<!-- Graphic is positioned absolutely in contextual-graphic -->
 					</div>
 				</div>
 			</div>
@@ -1631,8 +1626,8 @@
 
 	:global(:root) {
 		--nav-height: 80px;
-		--hero-panel-height: clamp(500px, calc(100dvh - var(--nav-height)), 800px);
-		--hero-panel-padding: clamp(2rem, 6vh, 4rem);
+		--hero-panel-height: clamp(600px, calc(100dvh - var(--nav-height)), 1000px);
+		--hero-panel-padding: clamp(3rem, 8vh, 6rem);
 	}
 
 	@supports not (height: 100dvh) {
@@ -1661,28 +1656,30 @@
 	}
 
 	.hero-grid-shell {
-		min-height: clamp(400px, 60vh, 700px);
+		min-height: clamp(500px, 70vh, 800px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
-	/* Contextual Graphic Container */
+	/* Contextual Graphic Container - Centered */
 	.contextual-graphic {
 		position: absolute;
 		top: 50%;
-		right: 5%;
-		width: 900px;
-		height: 900px;
-		transform: translateY(-50%);
-		opacity: 0.3;
+		left: 50%;
+		width: 1000px;
+		height: 1000px;
+		transform: translate(-50%, -50%);
+		opacity: 0.25;
 		pointer-events: none;
 		z-index: 1;
 	}
 
 	@media (max-width: 1024px) {
 		.contextual-graphic {
-			width: 600px;
-			height: 600px;
-			right: -10%;
-			opacity: 0.4;
+			width: 700px;
+			height: 700px;
+			opacity: 0.3;
 		}
 	}
 
@@ -1702,12 +1699,12 @@
 		opacity: 0.6;
 	}
 
-	/* Iridescent Tube Positions */
+	/* Iridescent Tube Positions - Centered around graphic */
 	.iridescent-tube.tube-1 {
 		width: 210px;
 		height: 750px;
-		top: 15%;
-		right: 20%;
+		top: 10%;
+		left: 30%;
 		transform: rotate(35deg);
 		animation-delay: 0s;
 		border-radius: 105px;
@@ -1723,8 +1720,8 @@
 	.iridescent-tube.tube-2 {
 		width: 180px;
 		height: 675px;
-		top: 25%;
-		right: 5%;
+		top: 20%;
+		left: 15%;
 		transform: rotate(-25deg);
 		animation-delay: 2s;
 		border-radius: 90px;
@@ -1740,8 +1737,8 @@
 	.iridescent-tube.tube-3 {
 		width: 240px;
 		height: 630px;
-		top: 40%;
-		right: 15%;
+		top: 35%;
+		left: 25%;
 		transform: rotate(50deg);
 		animation-delay: 4s;
 		border-radius: 120px;
@@ -1757,8 +1754,8 @@
 	.iridescent-tube.tube-4 {
 		width: 150px;
 		height: 720px;
-		top: 10%;
-		right: 35%;
+		top: 5%;
+		left: 50%;
 		transform: rotate(-40deg);
 		animation-delay: 6s;
 		border-radius: 75px;
@@ -1774,8 +1771,8 @@
 	.iridescent-tube.tube-5 {
 		width: 195px;
 		height: 690px;
-		top: 50%;
-		right: 8%;
+		top: 45%;
+		left: 18%;
 		transform: rotate(20deg);
 		animation-delay: 8s;
 		border-radius: 97.5px;
@@ -1791,8 +1788,8 @@
 	.iridescent-tube.tube-6 {
 		width: 165px;
 		height: 660px;
-		top: 30%;
-		right: 25%;
+		top: 25%;
+		left: 40%;
 		transform: rotate(-55deg);
 		animation-delay: 10s;
 		border-radius: 82.5px;
@@ -1823,17 +1820,25 @@
 		}
 	}
 
-	/* Glass Loop Container - Hidden for flat design */
+	/* Glass Loop Container - Centered */
 	.glass-loop-container {
-		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 500px;
+		height: 500px;
+		transform: translate(-50%, -50%);
+		opacity: 0.1;
+		pointer-events: none;
+		z-index: 2;
 	}
 
 	/* Typography */
 	.contextual-headline {
-		font-size: clamp(2.5rem, 8vw, 5.5rem);
+		font-size: clamp(3rem, 10vw, 7rem);
 		font-weight: 900;
 		line-height: 1.05;
-		letter-spacing: -0.03em;
+		letter-spacing: -0.04em;
 		color: var(--foreground);
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
@@ -1841,7 +1846,7 @@
 	}
 
 	.contextual-subheadline {
-		font-size: clamp(1.125rem, 2vw, 1.375rem);
+		font-size: clamp(1.25rem, 2.5vw, 1.75rem);
 		font-weight: 500;
 		line-height: 1.6;
 		/* Better text rendering */

@@ -128,7 +128,7 @@
     ];
 </script>
 
-<div class="min-h-screen transition-colors duration-500 pt-32 pb-20 px-4 sm:px-6 overflow-hidden
+<div class="min-h-screen transition-colors duration-500 pt-32 overflow-hidden
     {$themeStore === 'dark' ? 'bg-[#0f0f0f] text-white' : 'bg-[#f8f8f0] text-black'}">
     <!-- Decorative Gradients -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] {$themeStore === 'dark' ? 'bg-red-900/10' : 'bg-red-500/5'} blur-[120px] pointer-events-none rounded-full"></div>
@@ -252,7 +252,7 @@
 
                     <!-- Footer Info -->
                     {#if plan.perfectFor}
-                        <div class="mt-8 pt-6 border-t {$themeStore === 'dark' ? 'border-zinc-800' : 'border-zinc-200'}">
+                        <div class="mt-8 pt-6 border-t pb-6 {$themeStore === 'dark' ? 'border-zinc-800' : 'border-zinc-200'}">
                             <p class="text-xs font-medium text-zinc-500">
                                 <span class="font-bold text-zinc-400">Perfect for:</span> {plan.perfectFor}
                             </p>
@@ -263,7 +263,7 @@
         </div>
 
         <!-- FAQ CTA -->
-        <div class="mt-16 text-center border-t pt-20 transition-colors {$themeStore === 'dark' ? 'border-zinc-900' : 'border-zinc-200'}">
+        <div class="mt-16 text-center border-t pb-20 pt-20 transition-colors {$themeStore === 'dark' ? 'border-zinc-900' : 'border-zinc-200'}">
             <h3 class="text-3xl font-black uppercase mb-4">Have Questions?</h3>
             <p class="mb-8 max-w-md mx-auto {$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-500'}">Our revenue experts are standing by to help you find the right setup for your team.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -274,8 +274,8 @@
             </div>
         </div>
     </div>
-</div>
 <Footer />
+</div>
 
 <style>
     /* Premium typeface fallbacks */

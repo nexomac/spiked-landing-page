@@ -8,8 +8,12 @@
     let showAll = $state(false);
     let isSubscribed = $state(false);
 
-    const initialPosts = $derived(data.posts.slice(0, 4));
-    const remainingPosts = $derived(data.posts.slice(4));
+    const sortedPosts = $derived([...data.posts].sort((a, b) => 
+        new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
+    ));
+
+    const initialPosts = $derived(sortedPosts.slice(0, 3));
+    const remainingPosts = $derived(sortedPosts.slice(3));
 
     function handleSubscribe() {
         return async ({ result }) => {
@@ -101,26 +105,30 @@
             <!-- Featured Section -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-b-2 pb-12 {$themeStore === 'dark' ? 'border-red-900/20' : 'border-black'}">
                 <!-- Main Feature -->
-                {#if data.posts[0]}
+                <!-- Main Feature -->
+                {#if sortedPosts[0]}
                     <article class="md:col-span-8 border-b md:border-b-0 md:border-r md:pr-8 pb-8 md:pb-0 {$themeStore === 'dark' ? 'border-red-900/20' : 'border-black'}">
-                        <a href="/blog/{data.posts[0].slug}" class="group block">
+                        <a href="/blog/{sortedPosts[0].slug}" class="group block">
                             <span class="inline-block bg-red-600 text-white text-xs font-bold px-2 py-1 mb-3 uppercase tracking-wider border border-red-600">Breaking Alpha</span>
                             <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-4 group-hover:text-red-600 transition-colors decoration-4 underline-offset-4 {$themeStore === 'dark' ? 'text-white' : 'text-black'}">
-                                {data.posts[0].title}
+                                {sortedPosts[0].title}
                             </h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <p class="text-lg leading-relaxed font-sans mb-4 {$themeStore === 'dark' ? 'text-gray-400' : 'text-gray-800'}">
-                                        {data.posts[0].excerpt || 'Click to read the full story...'}
+                                        {sortedPosts[0].excerpt || 'Click to read the full story...'}
                                     </p>
                                     <div class="text-sm font-bold uppercase tracking-wide text-red-600/70">
-                                        By {data.posts[0].author}
+                                        By {sortedPosts[0].author}
+                                    </div>
+                                    <div class="mt-4 text-xs text-gray-500 font-bold uppercase">
+                                        {new Date(sortedPosts[0].publishedDate).toLocaleDateString()}
                                     </div>
                                 </div>
-                                {#if data.posts[0].coverImage}
+                                {#if sortedPosts[0].coverImage}
                                     <div class="aspect-[4/3] grayscale contrast-125 group-hover:grayscale-0 transition duration-500  p-1">
                                         <div class="w-full h-full relative border overflow-hidden {$themeStore === 'dark' ? 'border-red-900/20' : 'border-black'}">
-                                            <img src={data.posts[0].coverImage} alt={data.posts[0].title} class="w-full h-full object-cover" />
+                                            <img src={sortedPosts[0].coverImage} alt={sortedPosts[0].title} class="w-full h-full object-cover" />
                                         </div>
                                     </div>
                                 {/if}
@@ -131,18 +139,27 @@
 
                 <!-- Side Column -->
                 <div class="md:col-span-4 space-y-8">
-                    {#each data.posts.slice(1, 4) as post}
+                    {#each sortedPosts.slice(1, 3) as post}
                         <article class="border-b border-dashed pb-6 last:border-0 {$themeStore === 'dark' ? 'border-red-900/20' : 'border-red-600/20'}">
                             <a href="/blog/{post.slug}" class="group block">
+                                {#if post.coverImage}
+                                    <div class="aspect-video grayscale contrast-110 group-hover:grayscale-0 transition duration-500 mb-4 p-1">
+                                        <div class="w-full h-full relative border overflow-hidden {$themeStore === 'dark' ? 'border-red-900/20' : 'border-black'}">
+                                            <img src={post.coverImage} alt={post.title} class="w-full h-full object-cover" />
+                                        </div>
+                                    </div>
+                                {/if}
                                 <h3 class="text-xl md:text-2xl font-bold leading-tight mb-2 group-hover:text-red-600 transition-colors {$themeStore === 'dark' ? 'text-white' : 'text-black'}">
                                     {post.title}
                                 </h3>
-                                <p class="text-sm font-sans line-clamp-3 mb-2 {$themeStore === 'dark' ? 'text-gray-500' : 'text-gray-600'}">
-                                    {post.excerpt}
-                                </p>
-                                <span class="text-xs font-bold uppercase text-red-600/60">
-                                    {new Date(post.publishedDate).toLocaleDateString()}
-                                </span>
+                                <div class="flex flex-col items-left gap-2 pt-2">
+                                    <span class="text-xs font-bold uppercase text-red-600/60">
+                                        By {post.author}
+                                    </span>
+                                    <span class="text-xs font-bold uppercase text-gray-600/60">
+                                        {new Date(post.publishedDate).toLocaleDateString()}
+                                    </span>
+                                </div>
                             </a>
                         </article>
                     {/each}
@@ -150,7 +167,7 @@
             </div>
 
             <!-- "See More" Transition Area -->
-            {#if !showAll && data.posts.length > 4}
+            {#if !showAll && sortedPosts.length > 3}
                 <div class="flex justify-center -mt-6 relative z-10">
                     <button 
                         onclick={() => showAll = true}

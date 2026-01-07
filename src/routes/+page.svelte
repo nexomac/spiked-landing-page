@@ -12,6 +12,7 @@
 	import CRMShowcase from "$lib/components/CRMShowcase.svelte";
 	import SentimentShowcase from "$lib/components/SentimentShowcase.svelte";
 	import CustomGoalsShowcase from "$lib/components/CustomGoalsShowcase.svelte";
+	import Footer from "$lib/components/Footer.svelte";
 	import {
 		Sparkles,
 		MessageSquare,
@@ -448,7 +449,7 @@
 	/>
 </svelte:head>
 
-<div class="page-shell">
+<div class="page-shell bg-background">
 	<div class="page-bg">
 		<!-- Background layers for other sections (not hero) -->
 		<div class="bg-layer grid-layer"></div>
@@ -463,16 +464,13 @@
 		<!-- Minimalist Centered Hero Section -->
 		<section
 			data-section="hero"
-			class="relative flex items-center justify-center overflow-hidden bg-background contextual-hero min-h-[90vh] py-20 sm:py-24"
+			class="relative flex items-center justify-center overflow-hidden bg-background contextual-hero min-h-[90vh] py-20 sm:py-24 z-[10]"
 		>
 			<!-- Subtle Light Rays -->
 			<div class="light-rays"></div>
 			
-			<!-- Sophisticated Abstract Graphic System (Bottom Left Corner) -->
-			<div
-				class="contextual-graphic"
-				style={`transform: translate(${-mouseX * 0.0015}px, ${mouseY * 0.0015}px);`}
-			>
+			<!-- Sophisticated Abstract Graphic System -->
+			<div class="contextual-graphic" style={`transform: translate(calc(var(--base-x, -80%) + ${-mouseX * 0.02}px), calc(var(--base-y, -60%) + ${mouseY * 0.02}px));`}>
 				<!-- Gradient Orbs for Depth -->
 				<div class="gradient-orb orb-primary"></div>
 				<div class="gradient-orb orb-secondary"></div>
@@ -579,16 +577,14 @@
 			</div>
 
 			<!-- Smooth transition to next section -->
-			<div
-				class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"
-			></div>
+			<div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-background pointer-events-none z-20"></div>
 		</section>
 
 		<!-- Interactive Showcase Section -->
 		<section
 			id="showcase"
 			data-section="showcase"
-			class="pt-24 pb-24 sm:pt-32 sm:pb-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
+			class="z-10 pt-24 pb-24 sm:pt-32 sm:pb-32 bg-background relative overflow-hidden showcase-section transform transition-all duration-1000 {visibleSections.showcase
 				? 'translate-y-0 opacity-100'
 				: 'translate-y-10 opacity-0'}"
 		>
@@ -1282,7 +1278,7 @@
 								</div>
 							</div>
 							<p
-								class="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground/90 transition-colors relative font-medium"
+								class="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground/90 transition-colors relative font-medium text-wrap"
 							>
 								{testimonial.quote}
 							</p>
@@ -1404,231 +1400,7 @@
 				</p>
 			</div>
 		</section>
-
-		<footer
-			class="bg-background text-foreground py-16 border-t border-border relative overflow-hidden"
-		>
-
-			<div class="max-w-7xl mx-auto px-6 relative z-10">
-				<div class="grid md:grid-cols-5 gap-12 mb-12">
-					<div class="md:col-span-2">
-						<div
-							class="flex items-center gap-3 mb-4 group cursor-pointer"
-						>
-							<div class="relative">
-								<div
-									class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-500"
-								></div>
-								<div
-									class="relative bg-background p-1.5 rounded-lg border border-border group-hover:border-primary transition-all duration-500 group-hover:scale-110 group-hover:rotate-6"
-								>
-									<img
-										src="/Spiked.ai-white-logo-icon-only.png"
-										alt="SpikedAI Logo"
-										class="h-6 w-6 object-contain"
-									/>
-								</div>
-							</div>
-							<span
-								class="text-xl font-black tracking-tight group-hover:text-red-500 transition-colors duration-300"
-							>
-								SPIKED<span
-									class="text-red-600 group-hover:text-red-400 transition-colors"
-									>AI</span
-								>
-							</span>
-						</div>
-						<p
-							class="text-muted-foreground text-sm mb-6 max-w-xs hover:text-foreground transition-colors"
-						>
-							Conversational AI for Sales Teams. Empower your team
-							with real-time intelligence and automated workflows.
-						</p>
-						<div class="flex gap-4">
-							<a
-								href="https://www.linkedin.com/company/spiked-ai"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="p-2 bg-secondary hover:bg-primary/20 border border-border hover:border-primary/50 rounded transition-all duration-300 group hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/30"
-								aria-label="Follow us on LinkedIn"
-							>
-								<svg
-									class="w-4 h-4 fill-muted-foreground group-hover:fill-primary transition-colors"
-									viewBox="0 0 24 24"
-								>
-									<path
-										d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-									/>
-								</svg>
-							</a>
-						</div>
-					</div>
-
-					<div class="group">
-						<h4
-							class="font-bold text-foreground mb-4 text-sm tracking-wider uppercase group-hover:text-primary transition-colors"
-						>
-							Features
-						</h4>
-						<ul class="space-y-2 text-muted-foreground text-sm">
-							<li>
-								<button
-									class="hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block"
-									>Call Simulator</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Knowledge Agent</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Meeting AI</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Follow-Up Planner</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>CRM Integrations</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Analytics</button
-								>
-							</li>
-						</ul>
-					</div>
-
-					<div class="group">
-						<h4
-							class="font-bold text-foreground mb-4 text-sm tracking-wider uppercase group-hover:text-primary transition-colors"
-						>
-							Integrations
-						</h4>
-						<ul class="space-y-2 text-muted-foreground text-sm">
-							<li>
-								<button
-									class="hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block"
-									>Salesforce</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>HubSpot</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Jira</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Asana</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Slack</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Teams</button
-								>
-							</li>
-						</ul>
-					</div>
-
-					<div class="group">
-						<h4
-							class="font-bold text-foreground mb-4 text-sm tracking-wider uppercase group-hover:text-primary transition-colors"
-						>
-							Company
-						</h4>
-						<ul class="space-y-2 text-muted-foreground text-sm">
-							<li>
-								<button
-									onclick={() => scrollToSection("pricing")}
-									class="hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block"
-									>Pricing</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Customers</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Security</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Docs</button
-								>
-							</li>
-							<li>
-								<button
-									class="hover:text-red-500 transition-all duration-300 hover:translate-x-1 inline-block"
-									>Contact</button
-								>
-							</li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="border-t border-border pt-8">
-					<div
-						class="flex flex-col md:flex-row justify-between items-center gap-4"
-					>
-						<div
-							class="text-center md:text-left text-muted-foreground text-sm hover:text-foreground transition-colors"
-						>
-							© 2025 SpikedAI. All rights reserved. <span
-								class="hidden md:inline"
-								>• 251 Rhode Island St, Suite 205, San
-								Francisco, CA 94103</span
-							>
-						</div>
-						<div class="flex gap-6 text-xs text-muted-foreground">
-							<button
-								class="hover:text-primary transition-all duration-300 hover:scale-105"
-								>Privacy Policy</button
-							>
-							<button
-								class="hover:text-red-500 transition-all duration-300 hover:scale-105"
-								>Terms of Service</button
-							>
-							<button
-								class="hover:text-red-500 transition-all duration-300 hover:scale-105"
-								>Status</button
-							>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>
+		<Footer />
 		<OnboardingFlow />
 	</div>
 </div>
@@ -1695,14 +1467,16 @@
 		min-height: clamp(400px, 60vh, 700px);
 	}
 
-	/* Contextual Graphic Container - Bottom Left Corner - Enhanced */
+	/* Contextual Graphic Container - Centered to the Left - Enhanced */
 	.contextual-graphic {
 		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 1300px;
-		height: 1300px;
-		transform: translate(-18%, 18%);
+		top: 50%;
+		left: 50%;
+		width: 1400px;
+		height: 1400px;
+		--base-x: -80%;
+		--base-y: -60%;
+		transform: translate(var(--base-x), var(--base-y));
 		pointer-events: none;
 		z-index: 1;
 		filter: blur(1px);
@@ -1713,7 +1487,7 @@
 		.contextual-graphic {
 			width: 1000px;
 			height: 1000px;
-			transform: translate(-12%, 12%);
+			--base-x: -75%;
 			opacity: 0.75;
 		}
 	}
@@ -1722,7 +1496,7 @@
 		.contextual-graphic {
 			width: 800px;
 			height: 800px;
-			transform: translate(-8%, 8%);
+			--base-x: -70%;
 			opacity: 0.65;
 		}
 	}

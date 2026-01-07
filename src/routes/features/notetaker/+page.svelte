@@ -2,7 +2,23 @@
 	import FeatureNav from '$lib/components/FeatureNav.svelte';
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
 	import NotetakerShowcase from '$lib/components/NotetakerShowcase.svelte';
-	import { MessageSquare, FileText, Brain, Zap, ArrowRight } from 'lucide-svelte';
+	import { 
+		MessageSquare, 
+		FileText, 
+		Brain, 
+		Zap, 
+		ArrowRight, 
+		Target, 
+		Mail, 
+		Activity, 
+		BarChart3, 
+		Users, 
+		TrendingUp, 
+		Clock, 
+		Sparkles, 
+		CheckCircle, 
+		Calendar 
+	} from 'lucide-svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
@@ -43,37 +59,6 @@
 </svelte:head>
 
 <style>
-	/* Custom scrollbar for template list */
-	.custom-scrollbar::-webkit-scrollbar {
-		width: 6px;
-	}
-	.custom-scrollbar::-webkit-scrollbar-track {
-		background: rgba(255, 255, 255, 0.02);
-		border-radius: 3px;
-	}
-	.custom-scrollbar::-webkit-scrollbar-thumb {
-		background: rgba(239, 68, 68, 0.3);
-		border-radius: 3px;
-	}
-	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-		background: rgba(239, 68, 68, 0.5);
-	}
-
-	/* Smooth scrollbar */
-	.scrollbar-thin::-webkit-scrollbar {
-		width: 4px;
-	}
-	.scrollbar-thin::-webkit-scrollbar-track {
-		background: transparent;
-	}
-	.scrollbar-thin::-webkit-scrollbar-thumb {
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 2px;
-	}
-	.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-		background: rgba(255, 255, 255, 0.2);
-	}
-
 	/* Gradient text */
 	.gradient-text {
 		background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
@@ -92,12 +77,6 @@
 			inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
 	}
 
-	.glass-subtle {
-		background: rgba(255, 255, 255, 0.02);
-		backdrop-filter: blur(8px);
-		border: 1px solid rgba(255, 255, 255, 0.03);
-	}
-
 	/* Enhanced hover lift with smooth shadows */
 	.hover-lift {
 		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -107,26 +86,6 @@
 		box-shadow: 
 			0 20px 60px rgba(0, 0, 0, 0.4),
 			0 0 40px rgba(239, 68, 68, 0.1);
-	}
-
-	/* Animated gradient border with shimmer */
-	.animated-border {
-		position: relative;
-		background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-		animation: borderShimmer 3s ease-in-out infinite;
-	}
-	.animated-border::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		padding: 1px;
-		background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.1), transparent, rgba(239, 68, 68, 0.2));
-		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
-		animation: rotateBorder 4s linear infinite;
 	}
 
 	@keyframes borderShimmer {
@@ -143,14 +102,6 @@
 	@keyframes pulse-ring {
 		0% { transform: scale(1); opacity: 1; }
 		100% { transform: scale(1.5); opacity: 0; }
-	}
-	.pulse-ring::before {
-		content: '';
-		position: absolute;
-		inset: -2px;
-		border-radius: 50%;
-		border: 2px solid currentColor;
-		animation: pulse-ring 1.5s ease-out infinite;
 	}
 
 	/* Floating animation for decorative elements */
@@ -173,15 +124,6 @@
 		animation: float-slow 8s ease-in-out infinite;
 	}
 
-	/* Glow effect for icons and cards */
-	.glow-red {
-		box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-	}
-	
-	.glow-red:hover {
-		box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
-	}
-
 	/* Enhanced grid pattern with depth */
 	.depth-grid {
 		background-image: 
@@ -190,25 +132,6 @@
 		background-size: 50px 50px;
 		mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
 		-webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-	}
-
-	/* Layered shadows for depth */
-	.depth-shadow {
-		box-shadow:
-			0 1px 2px rgba(0, 0, 0, 0.2),
-			0 4px 8px rgba(0, 0, 0, 0.15),
-			0 8px 16px rgba(0, 0, 0, 0.1),
-			0 16px 32px rgba(0, 0, 0, 0.05);
-	}
-
-	/* Tilt effect on hover */
-	.tilt-hover {
-		transform-style: preserve-3d;
-		transition: transform 0.3s ease;
-	}
-	
-	.tilt-hover:hover {
-		transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
 	}
 
 	/* Particle background effect */
@@ -249,7 +172,7 @@
 	</div>
 	
 	<!-- Hero Section - Writer.com Style Split Layout -->
-	<section class="relative min-h-screen pt-32 pb-24">
+	<section class="relative min-h-screen pt-32 pb-24 top-10">
 		<!-- Background gradient -->
 		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
 		

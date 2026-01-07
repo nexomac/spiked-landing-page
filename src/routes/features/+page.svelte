@@ -2,6 +2,7 @@
 	import FeaturesShowcase from "$lib/components/FeaturesShowcase.svelte";
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 	import { onboardingStore } from "$lib/stores/onboarding.js";
+	import Footer from '$lib/components/Footer.svelte';
 	import {
 		Sparkles,
 		MessageSquare,
@@ -145,7 +146,7 @@
 	<FeaturesShowcase />
 
 	<!-- All Features Grid -->
-	<section class="py-20 bg-muted/50">
+	<section class="py-20 bg-background">
 		<div class="max-w-7xl mx-auto px-6">
 			<div class="text-center mb-12">
 				<h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -217,8 +218,17 @@
 	</section>
 
 	<!-- CTA -->
-	<section class="py-20 bg-muted/50">
-		<div class="max-w-4xl mx-auto px-6 text-center">
+	<section class="relative pb-70 pt-50 bg-background overflow-hidden">
+		<!-- background blob -->
+		<div
+			class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+						w-[40rem] h-[40rem] rounded-full opacity-50
+						bg-gradient-to-br from-indigo-500/25 via-purple-500/20 to-pink-500/25
+						blur-[120px] pointer-events-none">
+		</div>
+
+		<!-- content -->
+		<div class="relative max-w-4xl mx-auto px-6 text-center">
 			<h2 class="text-4xl font-bold text-foreground mb-6">
 				Ready to Get Started?
 			</h2>
@@ -230,22 +240,15 @@
 				class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-all"
 			>
 				Get Started
-				<svg
-					class="w-5 h-5"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M14 5l7 7m0 0l-7 7m7-7H3"
-					/>
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M14 5l7 7m0 0l-7 7m7-7H3" />
 				</svg>
 			</button>
 		</div>
 	</section>
+
+	<Footer />
 </div>
 
 <!-- Onboarding Flow -->

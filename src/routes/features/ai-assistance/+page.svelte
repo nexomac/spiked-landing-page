@@ -205,7 +205,7 @@
 	</div>
 	
 	<!-- Hero Section - Writer.com Style Split Layout -->
-	<section class="relative min-h-screen pt-32 pb-24">
+	<section class="relative min-h-screen pt-32 pb-24 top-10">
 		<!-- Background gradient -->
 		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
 		

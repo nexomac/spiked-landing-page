@@ -1,6 +1,7 @@
 <script>
     import { fade } from 'svelte/transition';
     import { themeStore } from '$lib/stores/theme.js';
+    import Footer from '$lib/components/Footer.svelte';
     let { data } = $props();
 
     function extractTextFromTiptap(node) {
@@ -119,12 +120,12 @@
             </div>
         {/if}
         
-        <!-- Decorative End Mark -->
         <div class="flex justify-center mt-20 opacity-30">
             <span class="w-24 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent"></span>
         </div>
      </div>
 </div>
+<Footer />
 
 <style>
     :global(body) {

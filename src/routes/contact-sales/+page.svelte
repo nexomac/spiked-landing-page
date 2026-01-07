@@ -1,6 +1,7 @@
 <script>
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import OnboardingFlow from '$lib/components/OnboardingFlow.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 </script>
 
 <svelte:head>
@@ -507,6 +508,8 @@
 		</div>
 	</div>
 </section>
+
+<Footer />
 
 <style>
 	@keyframes float {

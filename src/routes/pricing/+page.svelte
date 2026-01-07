@@ -2,6 +2,7 @@
     import { Check, X, Zap, Shield, Rocket, Globe, Cpu, AlertTriangle, AlertCircle } from 'lucide-svelte';
     import { themeStore } from '$lib/stores/theme.js';
     import { fade, fly } from "svelte/transition";
+    import Footer from '$lib/components/Footer.svelte';
 
     let billingCycle = $state('monthly'); // 'monthly' or 'annual'
 
@@ -274,6 +275,7 @@
         </div>
     </div>
 </div>
+<Footer />
 
 <style>
     /* Premium typeface fallbacks */

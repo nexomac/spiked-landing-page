@@ -1,5 +1,6 @@
 <script>
 	import { Briefcase, MapPin, Clock, ArrowRight, Users, Code, Zap, Heart, TrendingUp } from 'lucide-svelte';
+	import Footer from '$lib/components/Footer.svelte';
 	
 	const photo = (file) => `/Photos/${encodeURIComponent(file)}`;
 
@@ -339,6 +340,8 @@
 		</a>
 	</div>
 </section>
+
+<Footer />
 
 <!-- Role Details Modal -->
 {#if selectedRole}

@@ -2,6 +2,7 @@
     import { fade, slide } from 'svelte/transition';
     import { enhance } from '$app/forms';
     import { themeStore } from '$lib/stores/theme.js';
+    import Footer from '$lib/components/Footer.svelte';
     let { data } = $props();
 
     let showAll = $state(false);
@@ -286,6 +287,7 @@
         </section>
     </div>
 </div>
+<Footer />
 
 <style>
     :global(body) {

@@ -42,7 +42,7 @@
 			links: [
 				{
 					title: "Core Agent OS",
-					desc: "The engine powering autonomous growth.",
+					desc: "Explore the engine powering autonomous growth.",
 					icon: Cpu,
 					href: "/features",
 				},
@@ -57,7 +57,7 @@
 					desc: "Seamlessly integrate with your CRM.",
 					icon: Zap,
 					href: "/features/crm",
-				},
+				}
 			],
 		},
 		solutions: {

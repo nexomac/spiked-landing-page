@@ -169,11 +169,8 @@
 				<div
 					class="text-center md:text-left text-zinc-600 text-xs hover:text-zinc-400 transition-colors"
 				>
-					© 2025 SpikedAI. All rights reserved. <span
-						class="hidden md:inline"
-						>• 251 Rhode Island St, Suite 205, San Francisco, CA
-						94103</span
-					>
+					© 2025 SpikedAI. All rights reserved.
+					<span class="hidden md:inline">• 600 California St, San Francisco, CA 94108</span>
 				</div>
 				<div class="flex gap-8 text-xs text-zinc-500">
 					<a

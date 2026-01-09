@@ -197,7 +197,7 @@
             <img src={block.value} alt={block.name} class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all" />
         </div>
      {:else if block.type === 'quote'}
-        <div class="my-10 p-10 border-l-[6px] border-red-600 transition-colors
+        <div class="my-10 p-10 border-l-[6px] border-red-600 transition-colors text-left
             {$themeStore === 'dark' ? 'bg-red-950/20 text-white/90' : 'bg-red-50 text-black'}">
             <p class="text-2xl md:text-3xl font-black italic leading-snug mb-6">
                 "{block.value}"

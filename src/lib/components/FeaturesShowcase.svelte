@@ -211,7 +211,7 @@
 														</div>
 														<div class="flex-1 min-w-0">
 															<div class="flex items-center gap-2 mb-0.5">
-																<span class="text-xs font-semibold text-foreground">CHIRAG CHINTAAL</span>
+																<span class="text-xs font-semibold text-foreground">DANE CRAYAN</span>
 																<span class="text-[10px] text-muted-foreground">10:23 AM</span>
 															</div>
 															<p class="text-xs text-zinc-400 leading-relaxed">
@@ -243,7 +243,7 @@
 														</div>
 														<div class="flex-1 min-w-0">
 															<div class="flex items-center gap-2 mb-0.5">
-																<span class="text-xs font-semibold text-foreground">CHIRAG CHINTAAL</span>
+																<span class="text-xs font-semibold text-foreground">DANE CRAYAN</span>
 																<span class="text-[10px] text-muted-foreground">10:24 AM</span>
 															</div>
 															<p class="text-xs text-zinc-300 leading-relaxed font-medium">
@@ -335,12 +335,6 @@
 																	<FileText class="w-3 h-3" />
 																	<span class="font-medium">Enterprise_Security_Guide.pdf</span>
 																</div>
-																<button class="flex items-center gap-1 px-2 py-1 bg-red-600 hover:bg-red-700 text-white text-[10px] font-semibold rounded transition-colors">
-																	<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-																		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-																	</svg>
-																	Use
-																</button>
 															</div>
 														</div>
 													</div>
@@ -349,9 +343,9 @@
 										</div>
 
 										<!-- Bottom Stats Bar -->
-										<div class="border-t border-border bg-secondary/50 px-4 py-2">
+										<div class="border-t border-border bg-background px-4 py-2">
 											<div class="flex items-center justify-between">
-												<div class="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Knowledge Base Active</div>
+												<div class="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide bg-zinc-900/30 px-3 py-1 rounded-full">Knowledge Base Active</div>
 												<div class="flex gap-2">
 													<!-- Compact knowledge-base summary to avoid visual overlap on small screens -->
 													<span class="px-3 py-1 bg-zinc-900/30 text-zinc-300 text-[11px] font-medium rounded-full border border-border">
@@ -364,15 +358,15 @@
 
 										<!-- Performance Metrics Footer -->
 										<div class="border-t border-border bg-card grid grid-cols-3 divide-x divide-zinc-800">
-											<div class="px-3 py-2 text-center">
+											<div class="bg-background px-3 py-2 text-center">
 												<div class="text-lg font-bold text-green-500">98%</div>
 												<div class="text-[10px] text-muted-foreground font-medium">Accuracy</div>
 											</div>
-											<div class="px-3 py-2 text-center">
+											<div class="bg-background px-3 py-2 text-center">
 												<div class="text-lg font-bold text-blue-500">&lt;2s</div>
 												<div class="text-[10px] text-muted-foreground font-medium">Response Time</div>
 											</div>
-											<div class="px-3 py-2 text-center">
+											<div class="bg-background px-3 py-2 text-center">
 												<div class="text-lg font-bold text-red-500">142</div>
 												<div class="text-[10px] text-muted-foreground font-medium">Questions Answered</div>
 											</div>

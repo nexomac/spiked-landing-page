@@ -1,6 +1,7 @@
 <script>
     /** @type {import('./$types').PageProps} */
     let { data } = $props();
+    import Footer from '$lib/components/Footer.svelte';
 </script>
 
 <svelte:head>
@@ -8,76 +9,81 @@
     <meta name="description" content="Watch expert interviews and insights from industry leaders" />
 </svelte:head>
 
-<div class="resources-page">
-    <div class="container">
-        <header class="page-header">
-            <h1>Resources</h1>
-            <p>Watch expert interviews and insights from industry leaders featured on theCUBE + NYSE Wired: Mixture of Experts</p>
-        </header>
+<div class="min-h-screen bg-[black] text-white resource-container">
+    <div class="resources-page">
+        <div class="container">
+            <header class="page-header">
+                <h1>Resources</h1>
+                <p>Watch expert interviews and insights from industry leaders featured on theCUBE + NYSE Wired: Mixture of Experts</p>
+            </header>
 
-        <div class="videos-grid">
-            {#each [
-                {
-                    id: "BQcw_UIRSKU",
-                    title: "Anushka Salinas, Nanit | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "6J9AgLJ8CiY",
-                    title: "Ginniee Singh, SpikedAI | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "0PUsnvhTxi4",
-                    title: "Tim Piemonte, Tribeca Softech & Ankur Patel, Multimodal | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "ZVidW_wUCwA",
-                    title: "Umesh Sachdev, Uniphore | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "2Q8XZfkYv9I",
-                    title: "Sid Sheth, d-Matrix | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "2pQhRDomSTw",
-                    title: "Aaron Katz, ClickHouse | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "DWVtGMYcXfg",
-                    title: "Muddu Sudhakar, Salesforce | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "3y_W7J214kQ",
-                    title: "Jim McNiel, TAE Technologies | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-                {
-                    id: "CmyrvW2m7Z8",
-                    title: "Alex Rinke, Celonis | theCUBE + NYSE Wired: Mixture of Experts",
-                },
-            ] as video}
-                <div class="video-card">
-                    <div class="video-frame">
-                        <iframe 
-                            src={`https://www.youtube.com/embed/${video.id}`} 
-                            title={video.title} 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" 
-                            allowfullscreen
-                            loading="lazy"
-                        ></iframe>
+            <div class="videos-grid">
+                {#each [
+                    {
+                        id: "BQcw_UIRSKU",
+                        title: "Anushka Salinas, Nanit | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "6J9AgLJ8CiY",
+                        title: "Ginniee Singh, SpikedAI | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "0PUsnvhTxi4",
+                        title: "Tim Piemonte, Tribeca Softech & Ankur Patel, Multimodal | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "ZVidW_wUCwA",
+                        title: "Umesh Sachdev, Uniphore | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "2Q8XZfkYv9I",
+                        title: "Sid Sheth, d-Matrix | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "2pQhRDomSTw",
+                        title: "Aaron Katz, ClickHouse | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "DWVtGMYcXfg",
+                        title: "Muddu Sudhakar, Salesforce | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "3y_W7J214kQ",
+                        title: "Jim McNiel, TAE Technologies | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                    {
+                        id: "CmyrvW2m7Z8",
+                        title: "Alex Rinke, Celonis | theCUBE + NYSE Wired: Mixture of Experts",
+                    },
+                ] as video}
+                    <div class="video-card">
+                        <div class="video-frame">
+                            <iframe 
+                                src={`https://www.youtube.com/embed/${video.id}`} 
+                                title={video.title} 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                        </div>
+                        <h3>{video.title}</h3>
                     </div>
-                    <h3>{video.title}</h3>
-                </div>
-            {/each}
+                {/each}
+            </div>
         </div>
     </div>
+    <Footer />
 </div>
-
 <style>
-    .resources-page {
+    .resource-container {
         min-height: 100vh;
-        padding: 6rem 0 4rem;
         background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+    }
+
+    .resources-page {
+        padding: 6rem 0 10rem;
     }
 
     .container {

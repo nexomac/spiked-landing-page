@@ -1,5 +1,6 @@
 <script>
 	const photo = (file) => `/Photos/${encodeURIComponent(file)}`;
+	import Footer from '$lib/components/Footer.svelte';
 
 	const highlights = [
 		{
@@ -134,166 +135,169 @@
 	<title>About Us - Spiked</title>
 </svelte:head>
 
-<div class="page">
-	<section class="team" id="team">
-		<div class="section-header">
-			<p class="eyebrow">Core team</p>
-			<h2>Builders, strategists, and Go to Market operators who live close to the customer.</h2>
-			<p class="muted">
-				We combine enterprise experience with a startup pace so you get AI that ships and sticks.
-			</p>
-		</div>
+<div class="page-container">
+	<div class="page">
+		<section class="team" id="team">
+			<div class="section-header">
+				<p class="eyebrow">Core team</p>
+				<h2>Builders, strategists, and Go to Market operators who live close to the customer.</h2>
+				<p class="muted">
+					We combine enterprise experience with a startup pace so you get AI that ships and sticks.
+				</p>
+			</div>
 
-		<div class="team-grid">
-			{#each teamMembers as member}
-				<article class="team-card">
-					<div class="portrait">
-						<div class="portrait-glow"></div>
-						<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
-					</div>
-					<div class="team-content">
-						<div class="name-row">
-							<h3>{member.name}</h3>
-							<span class="focus-tag">{member.focus}</span>
+			<div class="team-grid">
+				{#each teamMembers as member}
+					<article class="team-card">
+						<div class="portrait">
+							<div class="portrait-glow"></div>
+							<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
 						</div>
-						<p class="role-title">{member.role}</p>
-						<p class="background">{member.background}</p>
-						<p class="description">{member.description}</p>
-						{#if member.tags}
-							<div class="tag-row">
-								{#each member.tags as tag}
-									<span class="chip">{tag}</span>
-								{/each}
+						<div class="team-content">
+							<div class="name-row">
+								<h3>{member.name}</h3>
+								<span class="focus-tag">{member.focus}</span>
 							</div>
-						{/if}
-					</div>
-				</article>
-			{/each}
-			<div class="team-more" aria-label="Two more team members">+2 More</div>
-		</div>
-	</section>
-
-	<section class="more" id="more">
-		<div class="section-header">
-			<p class="eyebrow">+ More</p>
-			<h2>Advisory bench from the world’s AI leaders.</h2>
-			<p class="muted">
-				We tap trusted partners to pressure test architecture, security, and narrative so every rollout is durable.
-			</p>
-		</div>
-
-		<div class="more-grid">
-			{#each extendedCollaborators as person}
-				<article class="more-card">
-					<div class="more-card-header">
-						<div
-							class="avatar"
-							class:logo={person.logo}
-							class:amazon={person.logoClass === 'amazon'}
-							class:nvidia={person.logoClass === 'nvidia'}
-							aria-hidden="true"
-						>
-							{#if person.logo}
-								<img src={person.logo} alt={`${person.name} logo`} loading="lazy" />
-							{:else}
-								<span>{person.initials}</span>
+							<p class="role-title">{member.role}</p>
+							<p class="background">{member.background}</p>
+							<p class="description">{member.description}</p>
+							{#if member.tags}
+								<div class="tag-row">
+									{#each member.tags as tag}
+										<span class="chip">{tag}</span>
+									{/each}
+								</div>
 							{/if}
 						</div>
-						<div class="more-card-titles">
-							<h3>{person.name}</h3>
-							<p class="role-title">{person.role}</p>
-						</div>
-						<span class="focus-tag subdued">{person.focus}</span>
-					</div>
-					<p class="background">{person.background}</p>
-					<p class="description">{person.description}</p>
-					<div class="tag-row">
-						{#each person.tags as tag}
-							<span class="chip">{tag}</span>
-						{/each}
-					</div>
-				</article>
+					</article>
 				{/each}
+				<div class="team-more" aria-label="Two more team members">+2 More</div>
 			</div>
 		</section>
 
-	<nav class="section-nav" aria-label="About navigation">
-		{#each sections as section}
-			<a href={`#${section.id}`} class="section-link">
-				<span aria-hidden="true">+</span>
-				{section.label}
-			</a>
-		{/each}
-	</nav>
-
-	<section class="hero" id="how-we-work">
-		<div class="hero-copy">
-			<p class="eyebrow">About Spiked</p>
-			<h1>
-				Operators building revenue AI that feels sharp, safe, and immediate.
-			</h1>
-			<p class="lede">
-				We’re founders and operators who sit with customers, listen to calls, and ship applied AI
-				built for the moments that move revenue.
-			</p>
-
-			<div class="pill-row">
-				<span class="pill">Applied AI studio</span>
-				<span class="pill pill-ghost">Builder-led pods</span>
-				<span class="pill pill-primary">Enterprise ready</span>
+		<section class="more" id="more">
+			<div class="section-header">
+				<p class="eyebrow">+ More</p>
+				<h2>Advisory bench from the world’s AI leaders.</h2>
+				<p class="muted">
+					We tap trusted partners to pressure test architecture, security, and narrative so every rollout is durable.
+				</p>
 			</div>
 
-			<div class="highlight-grid">
-				{#each highlights as highlight}
-					<article class="highlight-card">
-						<h3>{highlight.title}</h3>
-						<p>{highlight.copy}</p>
-					</article>
-				{/each}
-			</div>
-		</div>
-
-		<div class="hero-panel">
-			<div class="panel-inner">
-				<p class="eyebrow soft">How we work</p>
-				<h3>We out-ship the market with discipline and care.</h3>
-
-				<div class="commitments">
-					{#each commitments as commitment}
-						<div class="commitment">
-							<div class="commitment-id">{commitment.id}</div>
-							<div>
-								<p class="commitment-title">{commitment.title}</p>
-								<p class="commitment-text">{commitment.description}</p>
+			<div class="more-grid">
+				{#each extendedCollaborators as person}
+					<article class="more-card">
+						<div class="more-card-header">
+							<div
+								class="avatar"
+								class:logo={person.logo}
+								class:amazon={person.logoClass === 'amazon'}
+								class:nvidia={person.logoClass === 'nvidia'}
+								aria-hidden="true"
+							>
+								{#if person.logo}
+									<img src={person.logo} alt={`${person.name} logo`} loading="lazy" />
+								{:else}
+									<span>{person.initials}</span>
+								{/if}
 							</div>
+							<div class="more-card-titles">
+								<h3>{person.name}</h3>
+								<p class="role-title">{person.role}</p>
+							</div>
+							<span class="focus-tag subdued">{person.focus}</span>
 						</div>
+						<p class="background">{person.background}</p>
+						<p class="description">{person.description}</p>
+						<div class="tag-row">
+							{#each person.tags as tag}
+								<span class="chip">{tag}</span>
+							{/each}
+						</div>
+					</article>
+					{/each}
+				</div>
+			</section>
+
+		<nav class="section-nav" aria-label="About navigation">
+			{#each sections as section}
+				<a href={`#${section.id}`} class="section-link">
+					<span aria-hidden="true">+</span>
+					{section.label}
+				</a>
+			{/each}
+		</nav>
+
+		<section class="hero" id="how-we-work">
+			<div class="hero-copy">
+				<p class="eyebrow">About Spiked</p>
+				<h1>
+					Operators building revenue AI that feels sharp, safe, and immediate.
+				</h1>
+				<p class="lede">
+					We’re founders and operators who sit with customers, listen to calls, and ship applied AI
+					built for the moments that move revenue.
+				</p>
+
+				<div class="pill-row">
+					<span class="pill">Applied AI studio</span>
+					<span class="pill pill-ghost">Builder-led pods</span>
+					<span class="pill pill-primary">Enterprise ready</span>
+				</div>
+
+				<div class="highlight-grid">
+					{#each highlights as highlight}
+						<article class="highlight-card">
+							<h3>{highlight.title}</h3>
+							<p>{highlight.copy}</p>
+						</article>
 					{/each}
 				</div>
 			</div>
-		</div>
-	</section>
 
-	<section class="principles" id="principles">
-		<div class="section-header">
-			<p class="eyebrow">Operating principles</p>
-			<h2>Everything we build is designed for measurable, durable revenue impact.</h2>
-			<p class="muted">
-				We stay close to the frontlines and keep the work clean, fast, and measurable.
-			</p>
-		</div>
+			<div class="hero-panel">
+				<div class="panel-inner">
+					<p class="eyebrow soft">How we work</p>
+					<h3>We out-ship the market with discipline and care.</h3>
 
-		<div class="pillars-grid">
-			{#each pillars as pillar}
-				<article class="pillar-card">
-					<div class="pillar-accent"></div>
-					<div>
-						<h3>{pillar.title}</h3>
-						<p>{pillar.body}</p>
+					<div class="commitments">
+						{#each commitments as commitment}
+							<div class="commitment">
+								<div class="commitment-id">{commitment.id}</div>
+								<div>
+									<p class="commitment-title">{commitment.title}</p>
+									<p class="commitment-text">{commitment.description}</p>
+								</div>
+							</div>
+						{/each}
 					</div>
-				</article>
-			{/each}
-		</div>
-	</section>
+				</div>
+			</div>
+		</section>
+
+		<section class="principles" id="principles">
+			<div class="section-header">
+				<p class="eyebrow">Operating principles</p>
+				<h2>Everything we build is designed for measurable, durable revenue impact.</h2>
+				<p class="muted">
+					We stay close to the frontlines and keep the work clean, fast, and measurable.
+				</p>
+			</div>
+
+			<div class="pillars-grid">
+				{#each pillars as pillar}
+					<article class="pillar-card">
+						<div class="pillar-accent"></div>
+						<div>
+							<h3>{pillar.title}</h3>
+							<p>{pillar.body}</p>
+						</div>
+					</article>
+				{/each}
+			</div>
+		</section>
+	</div>
+	<Footer />
 </div>
 
 <style>
@@ -349,11 +353,15 @@
 		--about-soft-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
 	}
 
-	.page {
+	.page-container {
 		min-height: 100vh;
 		background: var(--about-backdrop);
+	}
+
+	.page {
+		min-height: 100vh;
 		color: var(--foreground);
-		padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 5vw, 3.75rem) 4.5rem;
+		padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 5vw, 3.75rem) 7.5rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

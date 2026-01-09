@@ -50,25 +50,6 @@
 </svelte:head>
 
 <style>
-	/* Custom scrollbar styles */
-	.scrollbar-thin::-webkit-scrollbar {
-		width: 6px;
-	}
-
-	.scrollbar-thin::-webkit-scrollbar-track {
-		background: rgba(255, 255, 255, 0.02);
-		border-radius: 3px;
-	}
-
-	.scrollbar-thin::-webkit-scrollbar-thumb {
-		background: rgba(239, 68, 68, 0.3);
-		border-radius: 3px;
-	}
-
-	.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-		background: rgba(239, 68, 68, 0.5);
-	}
-
 	/* Gradient text */
 	.gradient-text {
 		background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
@@ -87,12 +68,6 @@
 			inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
 	}
 
-	.glass-subtle {
-		background: rgba(255, 255, 255, 0.02);
-		backdrop-filter: blur(8px);
-		border: 1px solid rgba(255, 255, 255, 0.03);
-	}
-
 	/* Hover lift */
 	.hover-lift {
 		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -102,25 +77,6 @@
 		box-shadow: 
 			0 20px 60px rgba(0, 0, 0, 0.4),
 			0 0 40px rgba(239, 68, 68, 0.1);
-	}
-
-	/* Animated border */
-	.animated-border {
-		position: relative;
-		background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-		animation: borderShimmer 3s ease-in-out infinite;
-	}
-	.animated-border::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		padding: 1px;
-		background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.1), transparent, rgba(239, 68, 68, 0.2));
-		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
 	}
 
 	@keyframes borderShimmer {
@@ -148,15 +104,6 @@
 		animation: float-slow 8s ease-in-out infinite;
 	}
 
-	/* Depth shadow */
-	.depth-shadow {
-		box-shadow:
-			0 1px 2px rgba(0, 0, 0, 0.2),
-			0 4px 8px rgba(0, 0, 0, 0.15),
-			0 8px 16px rgba(0, 0, 0, 0.1),
-			0 16px 32px rgba(0, 0, 0, 0.05);
-	}
-
 	/* Fade in animation */
 	@keyframes fadeIn {
 		from {
@@ -167,37 +114,6 @@
 			opacity: 1;
 			transform: translateY(0);
 		}
-	}
-
-	.animate-fadeIn {
-		animation: fadeIn 0.3s ease-out;
-	}
-
-	/* Typing indicator */
-	@keyframes typing {
-		0%, 100% { opacity: 0.2; }
-		50% { opacity: 1; }
-	}
-
-	.typing-dot {
-		animation: typing 1.4s infinite;
-	}
-
-	.typing-dot:nth-child(2) {
-		animation-delay: 0.2s;
-	}
-
-	.typing-dot:nth-child(3) {
-		animation-delay: 0.4s;
-	}
-
-	/* Glow effect */
-	.glow-red {
-		box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-	}
-	
-	.glow-red:hover {
-		box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
 	}
 </style>
 

@@ -140,7 +140,7 @@
 		<section class="team" id="team">
 			<div class="section-header">
 				<p class="eyebrow">Core team</p>
-				<h2>Builders, strategists, and Go to Market operators who live close to the customer.</h2>
+				<h2>Builders, Strategists, and Go-to-Market leaders who operate closest to the customer and the moment of decision.</h2>
 				<p class="muted">
 					We combine enterprise experience with a startup pace so you get AI that ships and sticks.
 				</p>

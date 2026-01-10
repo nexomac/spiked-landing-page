@@ -375,9 +375,7 @@
 											class="mt-4 pt-3 border-t border-border/50 grid grid-cols-4 gap-2 relative z-10"
 										>
 											{#each displayBriefingItems as item}
-												{@const Icon =
-													iconMap[item.icon] ||
-													FileText}
+												{@const Icon = iconMap[item.icon] || FileText}
 												<div
 													class="text-center group/item hover:scale-110 transition-transform cursor-pointer"
 												>

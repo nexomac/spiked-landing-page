@@ -149,9 +149,9 @@
     margin-top: 1.5rem;
     margin-bottom: 2rem;
     font-size: clamp(3.5rem, 8vw, 6rem);
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
     color: #fff;
     font-family: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   }
@@ -172,10 +172,10 @@
     margin: 0 auto;
     max-width: 760px;
     color: #a1a1aa;
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    line-height: 1.8;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
     font-weight: 400;
-    font-family: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
   }
 
   :global([data-theme='light']) .products-subhead {

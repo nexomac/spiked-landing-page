@@ -117,6 +117,7 @@
 				class="hidden lg:flex items-center gap-2 flex-1 justify-center"
 			>
 				{#each features as feature}
+					{@const Icon = feature.icon}
 					<a
 						href={feature.href}
 						class="p-2 rounded-lg transition-all {feature.id ===
@@ -125,7 +126,7 @@
 							: 'bg-card text-muted-foreground hover:bg-muted hover:text-foreground'}"
 						title={feature.title}
 					>
-						<feature.icon class="w-4 h-4" />
+						<Icon class="w-4 h-4" />
 					</a>
 				{/each}
 			</div>

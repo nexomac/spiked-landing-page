@@ -743,6 +743,7 @@
 					{ icon: Clock, title: 'Meeting Timeline', desc: 'Visual timeline of all interactions to quickly understand the relationship stage.', color: 'purple' },
 					{ icon: Users, title: 'Stakeholder Insights', desc: 'Track key contacts, their concerns, and engagement levels across meetings.', color: 'cyan' }
 				] as feature, i}
+					{@const Icon = feature.icon}
 					<div 
 						class="glass rounded-2xl p-6 hover-lift group relative overflow-hidden cursor-pointer"
 						in:fly={{ y: 30, delay: i * 100, duration: 600 }}
@@ -752,7 +753,7 @@
 						
 						<div class="relative z-10">
 							<div class="w-12 h-12 rounded-xl bg-{feature.color}-500/10 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 {feature.color === 'red' ? 'group-hover:shadow-lg group-hover:shadow-red-500/30' : ''}">
-								<feature.icon class="w-6 h-6 text-{feature.color}-500 group-hover:animate-pulse" />
+								<Icon class="w-6 h-6 text-{feature.color}-500 group-hover:animate-pulse" />
 							</div>
 							<h3 class="text-lg font-semibold text-white mb-2 group-hover:text-red-400 transition-colors">{feature.title}</h3>
 							<p class="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">{feature.desc}</p>

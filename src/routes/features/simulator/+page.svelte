@@ -3,13 +3,10 @@
 	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
 	import SimulatorShowcase from '$lib/components/SimulatorShowcase.svelte';
 	import { 
-		Users, Zap, TrendingUp, Target, Sparkles, Brain, MessageSquare, 
-		Play, Pause, RotateCcw, Award, AlertCircle, CheckCircle, 
-		BarChart3, Lightbulb, Shield, Clock, Star, TrendingDown,
-		ThumbsUp, ThumbsDown, FileText, Video, Mic, Activity, 
-		Circle, Send, Settings, Bot, ArrowRight, Calendar, Trophy
+		Users, TrendingUp, Target, Brain, Play, BarChart3, Shield, 
+		FileText, Activity, Bot, ArrowRight, Calendar, Trophy
 	} from 'lucide-svelte';
-	import { fly, fade } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	let simulationActive = $state(false);
@@ -19,6 +16,11 @@
 	let showCoaching = $state(true);
 	let hoveredDialogue = $state(null);
 	
+	function startSimulation() {
+		simulationActive = true;
+		isPaused = false;
+	}
+
 	// Parallax states
 	let mouseX = $state(0);
 	let mouseY = $state(0);

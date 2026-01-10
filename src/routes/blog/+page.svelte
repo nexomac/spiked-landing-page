@@ -214,7 +214,7 @@
             <div class="grid md:grid-cols-2 gap-12 items-center relative z-10">
                 <div>
                     <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4 leading-none {$themeStore === 'dark' ? 'text-white' : 'text-black'}">
-                        Join the <span class="bg-red-600 text-white px-2 italic">Inner Circle</span>
+                        Join the <span class="bg-red-600 text-white px-2 italic">Revenue AI Circle</span>
                     </h2>
                     <p class="text-xl font-serif italic mb-6 {$themeStore === 'dark' ? 'text-gray-400' : 'text-gray-700'}">
                         Get the weekly digest of AI strategies, revenue hacks, and technology trends delivered straight to your desk.

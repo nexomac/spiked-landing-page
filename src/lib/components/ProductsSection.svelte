@@ -82,7 +82,7 @@
           aria-label={workflow.title}
           onmousemove={(event) => handleTilt(event, 10)}
           onmouseleave={resetTilt}
-          onclick={() => setActiveTab(workflow.id)}
+          onmouseenter={() => setActiveTab(workflow.id)}
         >
           <div class="absolute inset-0 bg-gradient-to-br from-red-700/0 via-red-700/10 to-red-700/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
           <div class="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
@@ -147,11 +147,11 @@
 <style>
   .products-title {
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
+    margin-bottom: 2rem;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
     color: #fff;
     font-family: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   }

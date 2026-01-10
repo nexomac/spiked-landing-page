@@ -1,6 +1,6 @@
 <script>
     import { enhance } from '$app/forms';
-    import { Pencil, Plus, Trash, FileText, Newspaper } from 'lucide-svelte';
+    import { Pencil, Plus, Trash, FileText, Newspaper, MessageSquare, Layers } from 'lucide-svelte';
 
     let { data } = $props();
 
@@ -116,6 +116,31 @@
                         No blogs found. Create one to start writing.
                     </div>
                 {/if}
+            </div>
+        </section>
+
+        <!-- Section 3: Social -->
+        <section>
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-3">
+                    <MessageSquare class="w-6 h-6 text-sky-400" />
+                    <h2 class="text-2xl font-semibold">Social Media</h2>
+                </div>
+                 <a href="/admin/social" class="flex items-center gap-2 bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-lg transition text-sm font-medium">
+                    Manage Queue
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                 <a href="/admin/social" class="group block bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-sky-500/50 transition duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sky-400 bg-sky-500/10 p-2 rounded-lg">
+                            <Layers class="w-6 h-6" />
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-sky-400 transition">Social Queue</h3>
+                    <p class="text-gray-400 text-sm">Manage auto-publishing, manual threads, and AI content generation.</p>
+                 </a>
             </div>
         </section>
     </div>

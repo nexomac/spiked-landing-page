@@ -1401,9 +1401,9 @@
 			</div>
 		</section>
 		<Footer />
-		<OnboardingFlow />
 	</div>
 </div>
+<OnboardingFlow />
 
 <style>
 	/* ===== CONTEXTUAL AI HERO STYLES ===== */

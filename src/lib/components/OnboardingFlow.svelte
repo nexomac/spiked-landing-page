@@ -57,9 +57,9 @@
 </script>
 
 {#if isActive}
-	<!-- Overlay -->
+	<!-- Overlay with Viewport Height + High Z-Index -->
 	<div 
-		class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl"
+		class="fixed inset-0 z-[2000] overflow-hidden bg-black/95 backdrop-blur-xl flex flex-col"
 		transition:fade={{ duration: 300 }}
 	>
 		<!-- Close Button -->
@@ -67,7 +67,7 @@
 			type="button"
 			onclick={handleClose}
 			onkeydown={(e) => e.key === 'Enter' && handleClose()}
-			class="fixed top-6 right-6 z-[60] p-3 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-700 rounded-lg transition-all duration-300 group cursor-pointer hover:scale-110 active:scale-95"
+			class="absolute top-6 right-6 z-[2010] p-3 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-700 rounded-lg transition-all duration-300 group cursor-pointer hover:scale-110 active:scale-95"
 			aria-label="Close onboarding modal"
 		>
 			<svg class="w-6 h-6 text-zinc-400 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,9 +75,9 @@
 			</svg>
 		</button>
 		
-		<!-- Progress Bar -->
-		<div class="fixed top-0 left-0 right-0 z-10">
-			<div class="h-1 bg-zinc-900">
+		<!-- Progress Bar (Fixed at top of overlay) -->
+		<div class="relative w-full z-[2005] bg-black/50 backdrop-blur-sm border-b border-zinc-800">
+			<div class="h-1 bg-zinc-900 w-full">
 				<div 
 					class="h-full bg-gradient-to-r from-red-600 to-red-700 transition-all duration-500 ease-out"
 					style="width: {steps[currentStep].progress}%"
@@ -85,7 +85,7 @@
 			</div>
 			
 			<!-- Step Indicators -->
-			<div class="max-w-5xl mx-auto px-6 py-6">
+			<div class="max-w-5xl mx-auto px-6 py-4 hidden sm:block">
 				<div class="flex items-center justify-between">
 					{#each steps as step, i}
 						{#if i < steps.length - 1}
@@ -114,9 +114,9 @@
 			</div>
 		</div>
 		
-		<!-- Main Content -->
-		<div class="flex items-center justify-center min-h-screen px-6 py-24">
-			<div class="w-full max-w-5xl">
+		<!-- Main Content Area -->
+		<div class="flex-1 flex items-center justify-center w-full px-6 overflow-y-auto relative">
+			<div class="w-full max-w-5xl my-auto py-12">
 				{#key currentStep}
 					<div
 						in:fly={{ x: direction * 100, duration: 400, easing: cubicOut, delay: 200 }}
@@ -129,8 +129,8 @@
 		</div>
 		
 		<!-- Keyboard Navigation Hint -->
-		<div class="fixed bottom-6 left-1/2 transform -translate-x-1/2">
-			<div class="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-lg px-4 py-2 text-xs text-zinc-500">
+		<div class="py-6 text-center">
+			<div class="inline-block bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-lg px-4 py-2 text-xs text-zinc-500">
 				Press <kbd class="px-2 py-1 bg-zinc-800 rounded text-zinc-400 font-mono">Esc</kbd> to exit
 			</div>
 		</div>

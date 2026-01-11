@@ -75,10 +75,24 @@
             title: "Real-time AI answers", 
             subtitle: "from your knowledge base", 
             icon: Sparkles, 
+            link: "/features/ai-assistance",
             features: [
-                { icon: Brain, title: "Instant answers during calls", description: "Get contextual responses from your sales docs in real-time" },
-                { icon: MessageSquare, title: "Powered by your content", description: "AI trained on your specific solutions documentation", highlight: true },
-                { icon: FileText, title: "Handle every objection", description: "Confident responses for technical questions on the fly" }
+                { 
+                    icon: Brain, 
+                    title: "Instant answers during calls", 
+                    description: "Get contextual responses from your sales docs in real-time" 
+                },
+                { 
+                    icon: MessageSquare, 
+                    title: "Powered by your knowledge base", 
+                    description: "AI trained on your specific sales and solutions documentation", 
+                    highlight: true 
+                },
+                { 
+                    icon: FileText, 
+                    title: "Never miss a detail", 
+                    description: "Handle objections and technical questions with confidence" 
+                }
             ]
         },
         { 
@@ -88,10 +102,24 @@
             title: "Capture every detail", 
             subtitle: "transcribe and summarize", 
             icon: MessageSquare, 
+            link: "/features/notetaker",
             features: [
-                { icon: FileText, title: "High-fidelity transcription", description: "AI-powered transcription with speaker identification" },
-                { icon: Brain, title: "Executive summaries", description: "Auto-generate meeting highlights and action items", highlight: true },
-                { icon: Zap, title: "Workflow automation", description: "Send follow-ups and sync to your CRM instantly" }
+                { 
+                    icon: FileText, 
+                    title: "Smart transcription", 
+                    description: "AI-powered transcription with speaker identification" 
+                },
+                { 
+                    icon: Brain, 
+                    title: "Intelligent summaries", 
+                    description: "Auto-generate meeting summaries and action items", 
+                    highlight: true 
+                },
+                { 
+                    icon: Zap, 
+                    title: "Take automatic actions", 
+                    description: "Send follow-ups, sync to CRM, track stakeholders" 
+                }
             ]
         },
         { 
@@ -101,10 +129,24 @@
             title: "Never walk in cold", 
             subtitle: "Auto-compile preparation docs", 
             icon: Calendar, 
+            link: "/features/followup",
             features: [
-                { icon: FileText, title: "Meeting prep on auto-pilot", description: "Compile everything you need before every call" },
-                { icon: Brain, title: "Past context recall", description: "Recall every past conversation and commitment instantly", highlight: true },
-                { icon: CheckCircle2, title: "Action item tracking", description: "Never let a commitment slip through the cracks" }
+                { 
+                    icon: FileText, 
+                    title: "Smart Preparation", 
+                    description: "Automatically compile everything you need before every meeting" 
+                },
+                { 
+                    icon: Brain, 
+                    title: "Context Recall", 
+                    description: "Instantly recall every past conversation, commitment, and detail", 
+                    highlight: true 
+                },
+                { 
+                    icon: CheckCircle2, 
+                    title: "Action Tracking", 
+                    description: "Track commitments automatically and get reminded before follow-ups" 
+                }
             ]
         },
         { 
@@ -114,10 +156,24 @@
             title: "Master the pitch", 
             subtitle: "Practice with AI prospects", 
             icon: Users, 
+            link: "/features/simulator",
             features: [
-                { icon: Users, title: "Hyper-realistic scenarios", description: "Practice discovery and closing with AI personas" },
-                { icon: Target, title: "Master every objection", description: "Train against your toughest customer pushbacks", highlight: true },
-                { icon: TrendingUp, title: "Real-time feedback", description: "Live coaching on your performance and tonality" }
+                { 
+                    icon: Users, 
+                    title: "Realistic scenarios", 
+                    description: "Practice with AI-powered prospects in various situations" 
+                },
+                { 
+                    icon: Target, 
+                    title: "Practice Every Scenario", 
+                    description: "Master discovery, demos, objections, and closing", 
+                    highlight: true 
+                },
+                { 
+                    icon: TrendingUp, 
+                    title: "Live coaching feedback", 
+                    description: "Get real-time insights and improvement suggestions" 
+                }
             ]
         },
         { 
@@ -127,10 +183,24 @@
             title: "Seamlessly connect sales", 
             subtitle: "with development workflow", 
             icon: GitBranch, 
+            link: "/features/dev-tools",
             features: [
-                { icon: GitBranch, title: "Jira & Asana Integration", description: "Sync sales conversations with development tickets" },
-                { icon: Activity, title: "Automated workflows", description: "Create tickets and track progress automatically", highlight: true },
-                { icon: Settings, title: "Custom integrations", description: "Connect with your existing dev tools and workflows" }
+                { 
+                    icon: GitBranch, 
+                    title: "Jira & Asana Integration", 
+                    description: "Sync sales conversations with development tickets" 
+                },
+                { 
+                    icon: Activity, 
+                    title: "Automated workflows", 
+                    description: "Create tickets and track progress automatically", 
+                    highlight: true 
+                },
+                { 
+                    icon: Settings, 
+                    title: "Custom integrations", 
+                    description: "Connect with your existing dev tools and workflows" 
+                }
             ]
         },
         { 
@@ -140,10 +210,24 @@
             title: "Keep your CRM updated", 
             subtitle: "automatically in real-time", 
             icon: BarChart3, 
+            link: "/features/crm",
             features: [
-                { icon: BarChart3, title: "Salesforce & HubSpot", description: "Seamless integration with major CRM platforms" },
-                { icon: Zap, title: "Auto-sync everything", description: "Contacts, deals, and activities updated automatically", highlight: true },
-                { icon: TrendingUp, title: "Real-time updates", description: "Never miss a beat with instant CRM synchronization" }
+                { 
+                    icon: BarChart3, 
+                    title: "Salesforce & HubSpot", 
+                    description: "Seamless integration with major CRM platforms" 
+                },
+                { 
+                    icon: Zap, 
+                    title: "Auto-sync everything", 
+                    description: "Contacts, deals, and activities updated automatically", 
+                    highlight: true 
+                },
+                { 
+                    icon: TrendingUp, 
+                    title: "Real-time updates", 
+                    description: "Never miss a beat with instant CRM synchronization" 
+                }
             ]
         },
         { 
@@ -153,10 +237,24 @@
             title: "Understand customer emotions", 
             subtitle: "in real-time during calls", 
             icon: Heart, 
+            link: "/features/sentiment",
             features: [
-                { icon: Heart, title: "Real-time sentiment", description: "Track emotional tone and engagement throughout calls" },
-                { icon: TrendingUp, title: "Buying signals", description: "Identify positive signals and buying intent automatically", highlight: true },
-                { icon: Activity, title: "Sentiment timeline", description: "Visualize sentiment changes over the conversation" }
+                { 
+                    icon: Heart, 
+                    title: "Real-time sentiment", 
+                    description: "Track emotional tone and engagement throughout calls" 
+                },
+                { 
+                    icon: TrendingUp, 
+                    title: "Buying signals", 
+                    description: "Identify positive signals and buying intent automatically", 
+                    highlight: true 
+                },
+                { 
+                    icon: Activity, 
+                    title: "Sentiment timeline", 
+                    description: "Visualize sentiment changes over the conversation" 
+                }
             ]
         },
         { 
@@ -166,19 +264,33 @@
             title: "Track what matters", 
             subtitle: "to your business", 
             icon: Target, 
+            link: "/features/custom-goals",
             features: [
-                { icon: Target, title: "Custom metrics", description: "Define and track goals specific to your sales process" },
-                { icon: Settings, title: "Flexible configuration", description: "Set up goals that align with your business objectives", highlight: true },
-                { icon: TrendingUp, title: "Progress tracking", description: "Monitor progress toward your custom goals in real-time" }
+                { 
+                    icon: Target, 
+                    title: "Custom metrics", 
+                    description: "Define and track goals specific to your sales process" 
+                },
+                { 
+                    icon: Settings, 
+                    title: "Flexible configuration", 
+                    description: "Set up goals that align with your business objectives", 
+                    highlight: true 
+                },
+                { 
+                    icon: TrendingUp, 
+                    title: "Progress tracking", 
+                    description: "Monitor progress toward your custom goals in real-time" 
+                }
             ]
         }
     ];
 
     const testimonials = [
-        { quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling through docs mid-pitch.", author: "Alex Rivera", role: "Senior Sales Engineer", metric: "5x", metricLabel: "Faster Responses" },
-        { quote: "Call simulator helped our team practice objection handling. We're closing 40% more deals since implementation.", author: "Sarah Thompson", role: "Sales Director", metric: "40%", metricLabel: "More Deals Closed" },
-        { quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual data entry.", author: "Michael Chen", role: "Account Executive", metric: "15hrs", metricLabel: "Saved Weekly" },
-        { quote: "The insight engine identified budget issues early. We stopped wasting time on deals that wouldn't close.", author: "Jessica Lee", role: "VP of Sales", metric: "25%", metricLabel: "Efficiency Gain" }
+        { quote: "The real-time knowledge agent gives me instant answers during calls. No more fumbling.", author: "Alex Rivera", role: "Senior Sales Engineer", metric: "5x", metricLabel: "Faster Responses" },
+        { quote: "Call simulator helped our team practice objection handling. We're closing more deals.", author: "Sarah Thompson", role: "Sales Director", metric: "40%", metricLabel: "More Deals" },
+        { quote: "Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual work.", author: "Michael Chen", role: "Account Executive", metric: "15hrs", metricLabel: "Saved Weekly" },
+        { quote: "The insight engine identified budget issues early. We stopped wasting time on dead deals.", author: "Jessica Lee", role: "VP of Sales", metric: "25%", metricLabel: "Efficiency" }
     ];
 
     onMount(() => {
@@ -275,8 +387,6 @@
         card.style.setProperty('--tilt-x', '0deg');
         card.style.setProperty('--tilt-y', '0deg');
     }
-
-    const abstractGraphic = "/abstract-loop.png";
 </script>
 
 <svelte:head>
@@ -284,213 +394,202 @@
 </svelte:head>
 
 <div class="page-shell min-h-screen transition-colors duration-500 font-sans selection:bg-red-500/30 overflow-x-hidden
-    {$themeStore === 'dark' ? 'bg-[#0a0a0a] text-zinc-100' : 'bg-white text-zinc-900'}">
-    
-    <!-- Ambient Background Effects - Theme Aware -->
-    <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="absolute top-0 left-[-10%] w-[40%] h-[40%] blur-[150px] opacity-30
-            {$themeStore === 'dark' ? 'bg-red-900/10' : 'bg-red-500/10'}"></div>
-        <div class="absolute bottom-0 right-[-10%] w-[40%] h-[40%] blur-[150px] opacity-20
-            {$themeStore === 'dark' ? 'bg-blue-900/5' : 'bg-blue-500/10'}"></div>
-    </div>
+    {$themeStore === 'dark' ? 'bg-[#030712] text-zinc-100' : 'bg-white text-zinc-900'}">
 
-    <Navigation />
-
-    <main class="relative z-10 w-full">
-        <!-- Enterprise Hero Section - Full Width -->
+    <main class="relative z-10 w-full overflow-hidden max-w-[1900px] mx-auto bg-transparent">
+        
+        <!-- BIG HERO -->
         <section 
             data-section="hero"
-            class="relative w-full min-h-[90vh] flex flex-col items-center justify-center px-6 py-32 lg:py-48 transition-all duration-1000
-            {$themeStore === 'dark' ? 'bg-[#0a0a0a]' : 'bg-white'}"
-            class:translate-y-0={visibleSections.hero}
-            class:opacity-100={visibleSections.hero}
-            class:translate-y-10={!visibleSections.hero}
-            class:opacity-0={!visibleSections.hero}
+            class="relative w-full min-h-[90vh] flex flex-col justify-center
+            {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
+            style="padding: clamp(2rem, 4vw, 5rem);"
         >
-            <!-- Minimalist Grid Pattern -->
-            <div class="absolute inset-0 z-0 pointer-events-none 
-                {$themeStore === 'dark' ? 'opacity-[0.1]' : 'opacity-[0.05]'} 
-                bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-            
-            <div class="relative z-20 flex flex-col items-center text-center max-w-6xl w-full">
-                <!-- Headline - Clear and Expansive -->
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-500/20 bg-red-500/5 mb-10">
-                    <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-red-500">Revenue Intelligence Platform</span>
-                    <div class="w-1 h-1 rounded-full bg-red-500"></div>
-                    <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-500">Enterprise v1.0</span>
-                </div>
-
+            <div class="w-full relative z-10 pt-[clamp(8rem,15vh,12rem)]">
+                <!-- HUGE HEADLINE -->
                 <h1 
-                    class="text-5xl sm:text-7xl lg:text-8xl font-black leading-[1.1] tracking-tight mb-10 px-2
+                    class="font-black tracking-tighter mb-8
                     {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
+                    style="
+                        font-size: clamp(3.5rem, 11vw, 11rem); 
+                        line-height: 0.85;
+                        letter-spacing: -0.04em;
+                    "
                 >
-                    Sell Like a CEO.
+                    Sell like <span class="text-red-600 block sm:inline">a CEO.</span>
                 </h1>
 
-                <!-- Sub-headline - More Spacing -->
-                <p class="text-lg sm:text-xl lg:text-2xl font-normal mb-16 max-w-3xl px-6 leading-relaxed
-                    {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}">
-                    Empower your revenue teams with the world's first AI copilot that lives inside customer moments. Turn every interaction into a strategic conversion.
+                <!-- SUBTEXT -->
+                <p class="font-medium leading-relaxed max-w-4xl
+                    {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
+                    style="font-size: clamp(1.1rem, 1.5vw, 2rem);">
+                    The rise of the singular rep starts here.
                 </p>
 
-                <!-- Documents & Objections Workspace - Clean & Structured -->
-                <div 
-                    class="w-full max-w-4xl rounded-3xl border p-3 transition-all duration-300
-                    {$themeStore === 'dark' ? 'bg-zinc-900/50 border-zinc-800' : 'bg-white border-zinc-200 shadow-xl'}"
+                <!-- Request Demo Button (FIXED, PROMINENT) -->
+                <a
+                    href="/contact-sales"
+                    class="mt-30 mb-0 contextual-cta group relative inline-flex items-center gap-3 px-16 py-8 rounded-full font-semibold text-base transition-all duration-200 mb-16"
                 >
-                    <div class="flex flex-col sm:flex-row items-center gap-4">
-                        <button class="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-4 rounded-xl transition-colors font-bold uppercase tracking-widest text-[11px]
-                            {$themeStore === 'dark' ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-300' : 'bg-zinc-100 hover:bg-zinc-200 text-zinc-600'}">
-                            <FileUp class="w-4 h-4" />
-                            <span>Upload Docs</span>
-                        </button>
-                        
-                        <div class="flex-1 flex items-center px-4 py-3 gap-3 w-full">
-                            <Search class="w-5 h-5 shrink-0 {$themeStore === 'dark' ? 'text-zinc-600' : 'text-zinc-400'}" />
-                            <input 
-                                type="text" 
-                                placeholder="Paste client pushback or objection here..."
-                                class="flex-1 bg-transparent border-none outline-none font-medium text-base sm:text-lg
-                                {$themeStore === 'dark' ? 'text-white placeholder:text-zinc-600' : 'text-zinc-900 placeholder:text-zinc-400'}"
-                            />
-                        </div>
+                    <span class="relative z-10 text-[34px]">Request a Demo</span>
+                    <span
+                        class="cta-icon relative z-10 grid place-items-center"
+                    >
+                        <ArrowRight
+                            class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                        />
+                    </span>
+                </a>
+            </div>
+            
+            <!-- Brands Marquee at bottom -->
+            <div class="mt-[clamp(4rem,10vh,12rem)] border-t border-zinc-800/20 pt-12 opacity-40 grayscale mix-blend-difference">
+               <div class="flex justify-between items-center flex-wrap gap-8">
+                   {#each ['Salesforce', 'HubSpot', 'Microsoft', 'SAP', 'Oracle', 'Zendesk'] as brand}
+                       <span class="font-bold tracking-tighter" style="font-size: clamp(1.5rem, 3vw, 4rem);">{brand}</span>
+                   {/each}
+               </div>
+            </div>
+        </section>
 
-                        <button class="w-full sm:w-auto px-10 py-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold uppercase tracking-widest text-[11px] transition-all shadow-lg active:scale-95 flex items-center justify-center gap-3">
-                            <span>Get Intelligence</span>
-                            <Send class="w-4 h-4" />
-                        </button>
+        <!-- REDESIGNED QUOTE SECTION (Card Style) -->
+        <section data-section="quote" class="w-full relative py-24 sm:py-32 px-4 sm:px-8 {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-zinc-50'}">
+             <div class="max-w-6xl mx-auto relative group">
+                 <!-- Glow Effect -->
+                 <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-red-900 rounded-[2.5rem] opacity-20 group-hover:opacity-30 blur-xl transition duration-1000"></div>
+                 
+                 <div class="relative rounded-[2rem] border border-red-900/30 p-8 sm:p-16 flex flex-col md:flex-row gap-10 items-start
+                    {$themeStore === 'dark' ? 'bg-[#050915]' : 'bg-white shadow-2xl'}">
+                    
+                    <div class="flex-shrink-0">
+                         <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-red-500/20">
+                             <img src="/Photos/Avi Sahi.jpeg" alt="Avi Sahi" class="w-full h-full object-cover transition-all duration-500" />
+                         </div>
                     </div>
-                </div>
 
-                <!-- Trusted Brands - Full Opacity / Clearer -->
-                <div class="mt-24 pt-12 border-t border-zinc-800/30 w-full">
-                    <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 mb-10">Trusted by Global Enterprise Teams</p>
-                    <div class="flex flex-wrap items-center justify-center gap-x-16 gap-y-8 grayscale opacity-60">
-                        {#each ['Asana', 'Salesforce', 'HubSpot', 'Netflix', 'Monday.com'] as brand}
-                            <span class="text-lg sm:text-xl font-bold tracking-tighter text-zinc-400">{brand}</span>
+                    <div class="flex-1 space-y-8">
+                         <h2 class="font-bold leading-tight
+                            {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
+                            style="font-size: clamp(1.5rem, 2.5vw, 2.5rem);">
+                            AI that respects judgment, because revenue decisions are human decisions.
+                         </h2>
+                         <p class="text-lg sm:text-2xl font-medium leading-relaxed {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}">
+                            SpikedAI is built for leaders who make decisions in live customer moments, not after the fact, not from dashboards, but turning conversations into conversions.
+                         </p>
+                         
+                         <div class="pt-4 border-t border-zinc-800/50">
+                             <div class="font-bold text-lg pointer-events-none {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Avi Sahi</div>
+                             <div class="text-red-500 font-medium tracking-wide text-sm uppercase">Co-Founder & CEO, SpikedAI</div>
+                         </div>
+                    </div>
+                 </div>
+             </div>
+        </section>
+
+        <!-- EXPANDED SHOWCASE (Reduced Padding, Bigger Text, Progress Bar) -->
+        <section data-section="showcase" class="w-full relative {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}" style="padding: 2rem 0;">
+            
+            <div class="px-[clamp(2rem,4vw,5rem)] mb-[clamp(2rem,6vh,6rem)]">
+                <span class="block font-bold text-red-600 uppercase tracking-[0.3em] mb-4">All Features</span>
+                <h2 class="font-black leading-none {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
+                    style="font-size: clamp(3rem, 8vw, 8rem);">
+                    Experience<br/>Every Feature.
+                </h2>
+                <!-- sub text big visible -->
+                <p class="font-medium leading-relaxed max-w-4xl pt-10
+                    {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
+                    style="font-size: clamp(1.1rem, 1.5vw, 2rem);">
+                    Explore our complete suite of AI-powered features with interactive demos.
+                </p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-8 w-full min-h-[1000px] px-[clamp(1rem,2vw,3rem)]">
+                <!-- Navigation / Detail Panel -->
+                <div class="lg:w-5/12 flex flex-col h-full overflow-y-auto no-scrollbar pr-2 sm:pr-4">
+                    <div class="flex flex-col">
+                        {#each showcases as showcase, i}
+                            <div class="border-b border-zinc-800/20 last:border-0 relative">
+                                <!-- Progress Bar if active -->
+                                {#if currentShowcaseIndex === i && !isPaused}
+                                    <div class="absolute bottom-0 left-0 h-[2px] bg-red-500 transition-all duration-100 ease-linear z-10"
+                                         style="width: {showcaseProgress}%"></div>
+                                {/if}
+
+                                <button 
+                                    onclick={() => selectShowcase(i)}
+                                    class="w-full text-left py-6 group flex items-start gap-4 transition-all duration-300"
+                                >
+                                    <!-- Number/Icon Indicator -->
+                                    <div class="flex-shrink-0 pt-1">
+                                        {#if currentShowcaseIndex === i}
+                                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-sm font-bold" in:fade>
+                                                {i + 1}
+                                            </div>
+                                        {:else}
+                                            <div class="text-zinc-500 font-mono text-base group-hover:text-red-500 transition-colors pl-2">
+                                                {(i + 1).toString().padStart(2, '0')}
+                                            </div>
+                                        {/if}
+                                    </div>
+
+                                    <div class="flex-1">
+                                        <!-- Header (Always Visible) -->
+                                        <h3 class="font-bold uppercase tracking-widest transition-colors duration-300
+                                            {currentShowcaseIndex === i ? 'text-red-500 mb-4' : 'text-zinc-500 group-hover:text-zinc-300'}"
+                                            style="font-size: {currentShowcaseIndex === i ? '1.5rem' : '1.1rem'};">
+                                            {showcase.name}
+                                        </h3>
+
+                                        <!-- Expanded Content -->
+                                        {#if currentShowcaseIndex === i}
+                                            <div class="space-y-8" in:slide={{ duration: 300 }}>
+                                                <!-- Main Title & Subtitle -->
+                                                <div>
+                                                    <h4 class="text-3xl sm:text-4xl font-bold leading-tight mb-3 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">
+                                                        {showcase.title}
+                                                    </h4>
+                                                    <p class="text-xl sm:text-2xl text-zinc-500">
+                                                        {showcase.subtitle}
+                                                    </p>
+                                                </div>
+
+                                                <!-- 3 Points System - INCREASED SIZE -->
+                                                <div class="space-y-8 pl-6 border-l-2 border-zinc-800/50">
+                                                    {#each showcase.features as feature}
+                                                        <div>
+                                                            <div class="flex items-center gap-3 mb-2">
+                                                                <feature.icon class="w-5 h-5 text-red-500" />
+                                                                <span class="font-bold text-base uppercase tracking-wide {$themeStore === 'dark' ? 'text-zinc-200' : 'text-zinc-800'}">{feature.title}</span>
+                                                            </div>
+                                                            <!-- Subtext increased to text-lg/xl for readability -->
+                                                            <p class="text-lg sm:text-xl text-zinc-400 leading-relaxed font-medium">
+                                                                {feature.description}
+                                                            </p>
+                                                        </div>
+                                                    {/each}
+                                                </div>
+                                                
+                                                <a href={showcase.link} class="text-red-500 font-bold uppercase text-sm tracking-widest hover:text-red-400 transition-colors flex items-center gap-2 pt-4">
+                                                    Learn more about {showcase.name.toLowerCase()} <ArrowRight class="w-4 h-4" />
+                                                </a>
+                                            </div>
+                                        {/if}
+                                    </div>
+                                </button>
+                            </div>
                         {/each}
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Enterprise Quote Section - Full Width Background -->
-        <section 
-            data-section="quote"
-            class="py-32 lg:py-48 w-full transition-all duration-1000
-            {$themeStore === 'dark' ? 'bg-[#111111]' : 'bg-white border-y border-zinc-100'}"
-        >
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col lg:flex-row gap-16 items-center">
-                    <div class="shrink-0 relative group">
-                        <div class="absolute -inset-1 bg-red-600 rounded-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <img 
-                            src="/Photos/Avi Sahi.jpeg" 
-                            alt="Avi Sahi" 
-                            class="relative w-48 h-48 lg:w-64 lg:h-64 rounded-2xl object-cover shadow-2xl grayscale hover:grayscale-0 transition-all duration-500"
-                        />
-                    </div>
-                    <div class="flex-1 space-y-10">
-                        <blockquote class="text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight
-                            {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">
-                            "AI that respects judgment, because revenue decisions are <span class="text-red-500">human decisions</span>. We build for the moments that matter."
-                        </blockquote>
-                        <div class="flex items-center gap-6">
-                            <div class="w-12 h-0.5 bg-red-600"></div>
-                            <div>
-                                <p class="text-xl font-bold {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Avi Sahi</p>
-                                <p class="text-sm font-bold text-zinc-500 uppercase tracking-widest">Co-Founder & CEO, SpikedAI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Connector -->
-        <div class="flex justify-center h-24 sm:h-32">
-            <div class="w-[1px] h-full bg-gradient-to-b from-transparent via-zinc-800/20 to-red-600/50 relative">
-                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-600 blur-[2px]"></div>
-            </div>
-        </div>
-
-        <!-- Enterprise Showcase Section - Full Width Background -->
-        <section 
-            data-section="showcase"
-            class="py-32 lg:py-48 w-full transition-all duration-1000
-            {$themeStore === 'dark' ? 'bg-[#0a0a0a]' : 'bg-[#f9fafb]'}"
-        >
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center mb-24">
-                    <span class="text-[11px] font-bold text-red-500 uppercase tracking-[0.4em] mb-6 block">Capabilities</span>
-                    <h2 class="text-4xl sm:text-6xl font-black tracking-tight mb-8
-                        {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Built for Global Sales Ops</h2>
-                    <p class="text-zinc-500 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-                        A centralized intelligence engine that integrates with every facet of your revenue stack.
-                    </p>
-                </div>
-
-                <!-- Navigation Tabs - Professional & Clean -->
-                <div class="flex flex-wrap justify-center gap-1 mb-16 border-b border-zinc-800/20">
-                    {#each showcases as showcase, i}
-                        <button 
-                            onclick={() => selectShowcase(i)}
-                            class="flex items-center gap-3 px-8 py-5 transition-all duration-300 relative group
-                            {currentShowcaseIndex === i 
-                                ? 'text-red-500' 
-                                : 'text-zinc-500 hover:text-zinc-300'}"
-                        >
-                            <showcase.icon class="w-4 h-4 shrink-0" />
-                            <span class="text-[11px] font-bold uppercase tracking-[0.15em]">{showcase.name}</span>
-                            
-                            {#if currentShowcaseIndex === i}
-                                <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-red-600" in:fade></div>
-                            {/if}
-                        </button>
-                    {/each}
-                </div>
-
-                <!-- Showcase Content - Cleaner Borders -->
-                <div class="relative rounded-2xl border overflow-hidden min-h-[500px] lg:min-h-[700px]
-                    {$themeStore === 'dark' ? 'bg-zinc-900/40 border-zinc-800' : 'bg-white border-zinc-100 shadow-xl'}">
-                {#each showcases as showcase, i}
-                    {#if currentShowcaseIndex === i}
-                        <div 
-                            class="lg:grid lg:grid-cols-2 gap-12 p-8 sm:p-12 items-center h-full"
-                            in:fade={{ duration: 300 }}
-                        >
-                            <!-- Info Side -->
-                            <div class="mb-10 lg:mb-0 text-center lg:text-left">
-                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-red-500 mb-4 block" in:fly={{ y: 20, duration: 400 }}>{showcase.label}</span>
-                                <h3 class="text-3xl sm:text-5xl font-black leading-tight mb-8
-                                    {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}" in:fly={{ y: 20, duration: 500, delay: 100 }}>
-                                    {showcase.title} <br/>
-                                    <span class="{$themeStore === 'dark' ? 'text-zinc-600' : 'text-zinc-400'}">{showcase.subtitle}</span>
-                                </h3>
-
-                                <div class="space-y-3 sm:space-y-4 max-w-lg mx-auto lg:mx-0">
-                                    {#each showcase.features as f, fi}
-                                        <div class="flex items-start gap-4 p-4 sm:p-5 rounded-2xl border text-left transition-all hover:scale-[1.02]
-                                            {$themeStore === 'dark' ? 'bg-zinc-900/50 border-zinc-800/50' : 'bg-zinc-50 border-zinc-100'}"
-                                            in:fly={{ x: -20, duration: 400, delay: 200 + (fi * 100) }}>
-                                            <div class="p-2 sm:p-2.5 bg-zinc-800 rounded-xl shrink-0
-                                                {$themeStore === 'dark' ? 'bg-zinc-800' : 'bg-zinc-200'}">
-                                                <f.icon class="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
-                                            </div>
-                                            <div>
-                                                <h4 class="font-bold text-sm mb-1 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">{f.title}</h4>
-                                                <p class="text-[11px] sm:text-xs leading-relaxed font-medium {$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-400'}">{f.description}</p>
-                                            </div>
-                                        </div>
-                                    {/each}
-                                </div>
-                            </div>
-
-                            <!-- Showcase View Side -->
-                            <div class="relative overflow-hidden rounded-3xl border shadow-2xl aspect-square sm:aspect-video lg:aspect-auto lg:h-[550px]
-                                {$themeStore === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-zinc-50 border-zinc-100'}"
-                                in:fade={{ duration: 600, delay: 200 }}>
-                                <div class="absolute inset-0 p-4 transform scale-95 sm:scale-100 origin-center transition-transform duration-500">
+                <!-- Visual (Right Side - Sticky/Fixed) -->
+                <!-- Increased min-height to accommodate Notetaker content -->
+                <div class="lg:w-7/12 h-[1000px] lg:h-auto min-h-[1000px] sticky top-8 rounded-[2rem] overflow-hidden border-4
+                    {$themeStore === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'}">
+                     {#each showcases as showcase, i}
+                        {#if currentShowcaseIndex === i}
+                           <div class="absolute inset-0 w-full h-full" in:fade={{ duration: 400 }}>
+                                <div class="w-full h-full p-4 md:p-8 flex items-center justify-center bg-zinc-50/5 dark:bg-zinc-900/50 overflow-hidden">
+                                     <!-- Enforce 100% height boundaries on children -->
                                     {#if showcase.id === 'ai-assistance'}
                                         <AIAssistanceShowcase showAppChrome={true} height="100%" />
                                     {:else if showcase.id === 'notetaker'}
@@ -509,247 +608,222 @@
                                         <CustomGoalsShowcase showAppChrome={true} height="100%" />
                                     {/if}
                                 </div>
+                           </div>
+                        {/if}
+                     {/each}
+                </div>
+            </div>
+        </section>
+
+        <!-- PROVEN IMPACT & FEATURES (Redesigned Layout) -->
+        <section class="w-full relative py-32 {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}" overflow-hidden id="testimonials">
+            
+            <!-- Centered Header -->
+            <div class="text-center mb-20 px-4">
+                <span class="text-red-600 font-bold tracking-[0.2em] text-xs sm:text-sm uppercase mb-6 block">Trusted by Sales Leaders</span>
+                <h2 class="text-6xl sm:text-8xl font-black tracking-tight mb-4 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">
+                    AI That Empowers
+                </h2>
+                <h2 class="text-6xl sm:text-8xl font-black tracking-tight text-red-600">
+                    Sales & Dev Teams
+                </h2>
+            </div>
+
+            <div class="w-full overflow-hidden pb-12 mb-12 px-[clamp(2rem,6vw,6rem)]">
+                <div class="marquee-wrapper">
+                    <div class="marquee-track">
+                        {#each testimonials as t}
+                        <div class="w-[350px] sm:w-[450px] p-8 rounded-2xl border transition-all hover:border-red-500/30 group
+                             {$themeStore === 'dark' ? 'bg-[#050915] border-zinc-800' : 'bg-white border-zinc-200'}">
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="flex items-center gap-3">
+                                     <div class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-sm">
+                                        {t.author[0]}
+                                     </div>
+                                     <div>
+                                         <div class="font-bold text-sm text-white pointer-events-none">{t.author}</div>
+                                         <div class="text-xs text-zinc-500 uppercase tracking-wider">{t.role}</div>
+                                     </div>
+                                </div>
+                                <div class="text-2xl font-black text-red-600">{t.metric}</div>
+                            </div>
+                            <p class="text-base sm:text-lg leading-relaxed font-medium
+                                 {$themeStore === 'dark' ? 'text-zinc-300' : 'text-zinc-600'}">
+                                "{t.quote}"
+                            </p>
+                             <div class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right">
+                                {t.metricLabel}
                             </div>
                         </div>
-                    {/if}
-                {/each}
+                        {/each}
+                    </div>
 
-                    <!-- Navigation Arrows -->
-                    <button onclick={goToPrevShowcase} class="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full border text-white hover:bg-zinc-800 transition-colors hidden lg:flex
-                        {$themeStore === 'dark' ? 'bg-zinc-900/80 border-zinc-800' : 'bg-white border-zinc-200 text-zinc-900 shadow-lg'}">
-                        <ChevronLeft class="w-5 h-5 sm:w-6 sm:h-6 {$themeStore === 'dark' ? '' : 'text-zinc-900'}" />
-                    </button>
-                    <button onclick={goToNextShowcase} class="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full border text-white hover:bg-zinc-800 transition-colors hidden lg:flex
-                        {$themeStore === 'dark' ? 'bg-zinc-900/80 border-zinc-800' : 'bg-white border-zinc-200 text-zinc-900 shadow-lg'}">
-                        <ChevronRight class="w-5 h-5 sm:w-6 sm:h-6 {$themeStore === 'dark' ? '' : 'text-zinc-900'}" />
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Connector -->
-        <div class="flex justify-center h-32">
-            <div class="w-[1px] h-full bg-gradient-to-b from-red-600/50 via-zinc-800/20 to-transparent relative">
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-600 blur-[2px]"></div>
-            </div>
-        </div>
-
-        <!-- Preserved Products Section -->
-        <section class="mt-48 px-6">
-            <ProductsSection
-                activeTab={activeTab}
-                setActiveTab={(id) => activeTab = id}
-                visible={visibleSections.products}
-                {handleTilt}
-                {resetTilt}
-            />
-        </section>
-
-        <!-- Section Connector -->
-        <div class="flex justify-center h-32">
-            <div class="w-[1px] h-full bg-gradient-to-b from-transparent via-zinc-800/20 to-red-600/50 relative">
-                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-600 blur-[2px]"></div>
-            </div>
-        </div>
-
-        <!-- NEW: Testimonials Section - Expansive & Enterprise -->
-        <section
-            data-section="testimonials"
-            class="py-32 lg:py-64 relative overflow-hidden flex flex-col items-center w-full
-            {$themeStore === 'dark' ? 'bg-[#111111]' : 'bg-white border-y border-zinc-100'}"
-        >
-            <div class="text-center mb-24 px-4 relative z-20">
-                <span class="text-[11px] font-bold text-red-500 tracking-[0.4em] uppercase mb-6 block">Customer Success</span>
-                <h2 class="text-4xl sm:text-7xl lg:text-8xl font-black mb-8 leading-tight tracking-tight
-                    {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">
-                    Validated by Revenue Leaders.
-                </h2>
-                <p class="text-zinc-500 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-                    Hear from the teams redefining their sales velocity with SpikedAI.
-                </p>
-            </div>
-
-            <!-- Infinite Scroll Marquee - Cleaner Styling -->
-            <div class="relative overflow-hidden group/marquee py-12 w-full">
-                <div class="flex animate-marquee hover:pause whitespace-nowrap">
-                    <!-- Set 1 -->
-                    <div class="flex gap-8 pr-8">
-                        {#each testimonials as testimonial}
-                            <div class="flex-shrink-0 w-[400px] sm:w-[500px] p-10 rounded-2xl border transition-all duration-300 cursor-default
-                                {$themeStore === 'dark' ? 'bg-zinc-900/60 border-zinc-800' : 'bg-[#f9fafb] border-zinc-200'}">
-                                <div class="flex items-start gap-6 mb-8">
-                                    <div class="w-14 h-14 rounded-xl bg-red-600 flex items-center justify-center text-white font-black text-xl">
-                                        {testimonial.author[0]}
-                                    </div>
-                                    <div class="flex-1">
-                                        <p class="font-bold text-lg {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">{testimonial.author}</p>
-                                        <p class="text-xs font-bold text-zinc-500 uppercase tracking-widest leading-none mt-1">{testimonial.role}</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-3xl font-black text-red-600">{testimonial.metric}</div>
-                                        <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{testimonial.metricLabel}</div>
-                                    </div>
+                    <div class="marquee-track">
+                        {#each testimonials as t}
+                        <div class="w-[350px] sm:w-[450px] p-8 rounded-2xl border transition-all hover:border-red-500/30 group
+                             {$themeStore === 'dark' ? 'bg-[#050915] border-zinc-800' : 'bg-white border-zinc-200'}">
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="flex items-center gap-3">
+                                     <div class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-sm">
+                                        {t.author[0]}
+                                     </div>
+                                     <div>
+                                         <div class="font-bold text-sm text-white pointer-events-none">{t.author}</div>
+                                         <div class="text-xs text-zinc-500 uppercase tracking-wider">{t.role}</div>
+                                     </div>
                                 </div>
-                                <p class="text-base sm:text-lg leading-relaxed font-normal text-wrap
-                                    {$themeStore === 'dark' ? 'text-zinc-300' : 'text-zinc-600'}">
-                                    "{testimonial.quote}"
-                                </p>
+                                <div class="text-2xl font-black text-red-600">{t.metric}</div>
                             </div>
-                        {/each}
-                    </div>
-                    <!-- Set 2 -->
-                    <div class="flex gap-8 pr-8">
-                        {#each testimonials as testimonial}
-                            <div class="flex-shrink-0 w-[400px] sm:w-[500px] p-10 rounded-2xl border transition-all duration-300 cursor-default
-                                {$themeStore === 'dark' ? 'bg-zinc-900/60 border-zinc-800' : 'bg-[#f9fafb] border-zinc-200'}">
-                                <div class="flex items-start gap-6 mb-8">
-                                    <div class="w-14 h-14 rounded-xl bg-red-600 flex items-center justify-center text-white font-black text-xl">
-                                        {testimonial.author[0]}
-                                    </div>
-                                    <div class="flex-1">
-                                        <p class="font-bold text-lg {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">{testimonial.author}</p>
-                                        <p class="text-xs font-bold text-zinc-500 uppercase tracking-widest leading-none mt-1">{testimonial.role}</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-3xl font-black text-red-600">{testimonial.metric}</div>
-                                        <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{testimonial.metricLabel}</div>
-                                    </div>
-                                </div>
-                                <p class="text-base sm:text-lg leading-relaxed font-normal
-                                    {$themeStore === 'dark' ? 'text-zinc-300' : 'text-zinc-600'}">
-                                    "{testimonial.quote}"
-                                </p>
+                            <p class="text-base sm:text-lg leading-relaxed font-medium
+                                 {$themeStore === 'dark' ? 'text-zinc-300' : 'text-zinc-600'}">
+                                "{t.quote}"
+                            </p>
+                             <div class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right">
+                                {t.metricLabel}
                             </div>
+                        </div>
                         {/each}
                     </div>
                 </div>
             </div>
 
-            <!-- Built for Revenue Teams - Professional Grid -->
-            <div class="mt-48 max-w-7xl mx-auto px-6 relative z-20">
-                <div class="rounded-3xl p-12 lg:p-20 border
-                    {$themeStore === 'dark' ? 'bg-black/40 border-zinc-800' : 'bg-[#f4f4f5] border-zinc-200'}">
-                    <div class="text-center mb-20">
-                        <h3 class="text-3xl font-black mb-4 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Infrastructure for Revenue Excellence</h3>
-                        <p class="text-zinc-500 font-bold uppercase tracking-[0.2em] text-[11px]">Empowering every stage of the sales lifecycle</p>
+            <!-- Built For ... Feature Box (Centered) -->
+            <div class="max-w-[90vw] mx-auto">
+                <div class="rounded-[2.5rem] p-8 sm:p-16 border relative overflow-hidden
+                     {$themeStore === 'dark' ? 'bg-[#050915] border-zinc-800' : 'bg-zinc-50 border-zinc-200'}">
+                    
+                    <div class="text-center mb-16">
+                        <h3 class="text-2xl font-bold mb-2 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Built for Sales & Dev Teams</h3>
+                        <p class="text-sm uppercase tracking-widest {$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-500'}">Powerful conversational AI that integrates with your entire workflow</p>
                     </div>
-                    <div class="grid md:grid-cols-3 gap-16">
-                        {#each [
-                            { n: "01", t: "Deep Integrations", d: "Native bidirectional sync with Salesforce, HubSpot, and your entire dev stack including Jira & Asana." },
-                            { n: "02", t: "Edge Intelligence", d: "Patented AI models delivering millisecond-latency insights directly during live client interactions." },
-                            { n: "03", t: "Actionable Insights", d: "Automatic meeting forensics and CRM-ready follow-ups that eliminate 15+ hours of manual overhead weekly." }
-                        ] as item}
-                            <div class="relative pt-12">
-                                <span class="absolute top-0 left-0 text-3xl font-black text-red-600/30">{item.n}</span>
-                                <h4 class="text-xl font-bold mb-4 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">{item.t}</h4>
-                                <p class="text-base font-normal text-zinc-500 leading-relaxed">{item.d}</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+                        <!-- 01 -->
+                        <div class="relative group">
+                            <span class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
+                                {$themeStore === 'dark' ? 'text-zinc-800/50' : 'text-zinc-200'}">01</span>
+                            <div class="relative z-10">
+                                <h4 class="text-xl font-bold mb-4 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Universal Integrations</h4>
+                                <p class="leading-relaxed {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}">Connects with Salesforce, HubSpot, monday.com, Jira, Asana, Slack, Teams & more.</p>
                             </div>
-                        {/each}
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Connector -->
-        <div class="flex justify-center h-32">
-            <div class="w-[1px] h-full bg-gradient-to-b from-transparent via-zinc-800/20 to-red-600/50 relative">
-                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-600 blur-[2px]"></div>
-            </div>
-        </div>
-
-        <!-- CTA Section - Toned Down Enterprise Version -->
-        <section 
-            data-section="cta"
-            class="py-32 lg:py-64 transition-all duration-1000
-            {$themeStore === 'dark' ? 'bg-[#0a0a0a]' : 'bg-white border-t border-zinc-100'}"
-        >
-            <div class="max-w-7xl mx-auto px-6 text-center">
-                <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-                    <h2 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-10 leading-tight
-                        {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">
-                        Empower Your Revenue Team
-                    </h2>
-                    <p class="text-xl sm:text-2xl font-normal mb-16 max-w-2xl leading-relaxed
-                        {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}">
-                        Join leading enterprise teams accelerating growth with conversational intelligence.
-                    </p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-6">
-                        <button 
-                            onclick={onboardingStore.start}
-                            class="px-12 py-5 bg-red-600 text-white rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-red-700 transition-all shadow-xl active:scale-95 flex items-center justify-center gap-4">
-                            Start Free Trial
-                            <ArrowRight class="w-4 h-4" />
-                        </button>
-                        <a 
-                            href="/contact-sales"
-                            class="px-12 py-5 bg-transparent border-2 rounded-xl font-bold uppercase tracking-widest text-xs transition-all text-center flex items-center justify-center
-                            {$themeStore === 'dark' ? 'border-zinc-800 text-white hover:bg-white/5' : 'border-zinc-200 text-zinc-900 hover:bg-zinc-50'}">
-                            Speak to Sales
-                        </a>
+                        </div>
+                         <!-- 02 -->
+                         <div class="relative group">
+                             <span class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
+                                {$themeStore === 'dark' ? 'text-zinc-800/50' : 'text-zinc-200'}">02</span>
+                             <div class="relative z-10">
+                                <h4 class="text-xl font-bold mb-4 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Real-Time Intelligence</h4>
+                                <p class="leading-relaxed {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}">AI-powered insights during every sales conversation, giving your team the edge they need instantly.</p>
+                             </div>
+                        </div>
+                         <!-- 03 -->
+                         <div class="relative group">
+                             <span class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
+                                {$themeStore === 'dark' ? 'text-zinc-800/50' : 'text-zinc-200'}">03</span>
+                            <div class="relative z-10">
+                                <h4 class="text-xl font-bold mb-4 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}">Auto Follow-Up & Tracking</h4>
+                                <p class="leading-relaxed {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}">Never miss a task with intelligent automation and CRM sync that captures every commitment.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- CTA - UPDATED TEXT -->
+        <section class="w-full relative overflow-hidden flex flex-col justify-center items-center text-center
+            {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-zinc-50'}"
+            style="padding: clamp(6rem, 12vh, 12rem) clamp(2rem, 4vw, 4rem);">
+            
+            <h2 class="font-black leading-[0.85] tracking-tighter mb-8 max-w-5xl
+                {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
+                style="font-size: clamp(3.5rem, 8vw, 8rem);">
+                Empower Your Sales Team With<br />
+                <span class="text-red-600 block sm:inline">AI Intelligence</span>
+            </h2>
+
+            <p class="text-xl sm:text-2xl font-medium mb-12 max-w-3xl leading-relaxed
+                {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}">
+                Join sales teams accelerating revenue with conversational AI. Real-time insights, automated follow-ups, and seamless integrations.
+            </p>
+            
+            <div class="flex flex-col items-center gap-6 w-full max-w-3xl justify-center z-10">
+                 <a 
+                    href="/contact-sales"
+                    class="bg-red-600 text-white font-bold rounded-full hover:bg-red-700 hover:scale-105 transition-all flex items-center justify-center gap-4 shadow-xl"
+                    style="height: clamp(3.5rem, 5vw, 5rem); padding: 0 clamp(3rem, 6vw, 6rem); font-size: clamp(1rem, 1.3vw, 1.5rem);">
+                    Contact Sales
+                    <ArrowRight class="w-5 h-5" />
+                </a>
+                <div class="text-sm sm:text-base font-medium text-zinc-500">
+                    Free forever plan • No credit card required • Quick setup
+                </div>
+            </div>
+
+            <!-- Background Decoration -->
+            <div class="absolute inset-0 opacity-20 pointer-events-none">
+                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle,rgba(128,128,128,0.2)_0%,transparent_60%)]"></div>
+            </div>
+        </section>
+
     </main>
 
     <Footer />
-    <OnboardingFlow />
 </div>
+<OnboardingFlow />
 
 <style>
-    @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(-1deg); }
-        50% { transform: translateY(-30px) rotate(2deg); }
+    /* Utility for hiding scrollbar but allowing scroll */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
     }
-    @keyframes float-delayed {
-        0%, 100% { transform: translateY(0) rotate(12deg); }
-        50% { transform: translateY(-30px) rotate(14deg); }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
-    .animate-float {
-        animation: float 8s ease-in-out infinite;
-    }
-    .animate-float-delayed {
-        animation: float-delayed 10s ease-in-out infinite;
-        animation-delay: 1s;
-    }
-
-    @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    .animate-marquee {
-        animation: marquee 40s linear infinite;
+    .marquee-wrapper {
         display: flex;
         width: max-content;
+        animation: marquee 40s linear infinite;
+        gap: 2rem;
     }
-    .animate-marquee:hover {
+
+    .marquee-wrapper:hover {
         animation-play-state: paused;
     }
 
-    :global(body) {
-        background-color: black;
-        color: white;
+    .marquee-track {
+        display: flex;
+        gap: 2rem;
     }
 
-    /* Custom scrollbar */
-    :global(::-webkit-scrollbar) {
-        width: 10px;
+    @keyframes marquee {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
     }
-    :global(::-webkit-scrollbar-track) {
-        background: #000;
-    }
-    :global(::-webkit-scrollbar-thumb) {
-        background: #27272a;
-        border-radius: 10px;
-        border: 2px solid #000;
-    }
-    :global(::-webkit-scrollbar-thumb:hover) {
-        background: #ef4444;
-    }
+	/* CTA Button */
+	.contextual-cta {
+		background: #ef4444;
+		color: var(--foreground);
+		border: 2px solid #ef4444;
+		transition: all 0.2s ease;
+	}
 
-    /* Prevent horizontal scroll on some mobile browsers */
-    :global(html, body) {
-        max-width: 100vw;
-        overflow-x: hidden;
-    }
+	.contextual-cta:hover {
+		background: #dc2626;
+		border-color: #dc2626;
+	}
+
+	.cta-icon {
+		width: 2rem;
+		height: 2rem;
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 9999px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		transition: all 0.2s ease;
+	}
 </style>

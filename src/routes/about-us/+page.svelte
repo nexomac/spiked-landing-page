@@ -1,133 +1,138 @@
 <script>
 	const photo = (file) => `/Photos/${encodeURIComponent(file)}`;
-	import Footer from '$lib/components/Footer.svelte';
+	import Footer from "$lib/components/Footer.svelte";
 
 	const highlights = [
 		{
-			title: 'Operator-led pods',
-			copy: 'Small, hands-on builders who ship beside you.'
+			title: "Operator-led pods",
+			copy: "Small, hands-on builders who ship beside you.",
 		},
 		{
-			title: 'AI-first workflows',
-			copy: 'Reasoning-grade UX that feels like a teammate.'
+			title: "AI-first workflows",
+			copy: "Reasoning-grade UX that feels like a teammate.",
 		},
 		{
-			title: 'Enterprise-ready delivery',
-			copy: 'Security, governance, and quality by default.'
-		}
+			title: "Enterprise-ready delivery",
+			copy: "Security, governance, and quality by default.",
+		},
 	];
 
 	const commitments = [
 		{
-			id: '01',
-			title: 'Embedded partnership',
-			description: 'We join your Go to Market, product, and engineering rhythms.'
+			id: "01",
+			title: "Embedded partnership",
+			description:
+				"We join your Go to Market, product, and engineering rhythms.",
 		},
 		{
-			id: '02',
-			title: 'Quality with velocity',
-			description: 'Tight release cycles with crisp demos every week.'
+			id: "02",
+			title: "Quality with velocity",
+			description: "Tight release cycles with crisp demos every week.",
 		},
 		{
-			id: '03',
-			title: 'Measurable lift',
-			description: 'Everything ladders to activation, usage, and revenue.'
-		}
+			id: "03",
+			title: "Measurable lift",
+			description: "Everything ladders to activation, usage, and revenue.",
+		},
 	];
 
 	const pillars = [
 		{
-			title: 'Think in workflows',
-			body: 'We map the revenue journey end-to-end so AI augments every interaction instead of adding noise.'
+			title: "Think in workflows",
+			body: "We map the revenue journey end-to-end so AI augments every interaction instead of adding noise.",
 		},
 		{
-			title: 'Ship small, learn fast',
-			body: 'Weekly releases, real adoption data, and direct time with users to keep solutions sharp.'
+			title: "Ship small, learn fast",
+			body: "Weekly releases, real adoption data, and direct time with users to keep solutions sharp.",
 		},
 		{
-			title: 'Own the rollout',
-			body: 'Enablement, playbooks, and instrumentation are part of the build—not an afterthought.'
-		}
+			title: "Own the rollout",
+			body: "Enablement, playbooks, and instrumentation are part of the build—not an afterthought.",
+		},
 	];
 
 	const sections = [
-		{ id: 'team', label: 'Core team' },
-		{ id: 'more', label: '+More' },
-		{ id: 'how-we-work', label: 'How we work' },
-		{ id: 'principles', label: 'Principles' }
+		{ id: "team", label: "Core team" },
+		{ id: "more", label: "+More" },
+		{ id: "how-we-work", label: "How we work" },
+		{ id: "principles", label: "Principles" },
 	];
 
 	const extendedCollaborators = [
 		{
-			name: 'Amazon AI CTO',
-			background: 'Amazon AI, AWS',
-			focus: 'Platform scale',
-			role: 'Strategic Advisor',
-			initials: 'AA',
-			logo: '/logos/amazon-icon.png',
-			logoClass: 'amazon',
-			description: 'Advises on secure foundation models, trust layers, and enterprise-grade guardrails.',
-			tags: ['Platform Scale', 'Trust & Safety', 'Enterprise']
+			name: "Amazon AI CTO",
+			background: "Amazon AI, AWS",
+			focus: "Platform scale",
+			role: "Strategic Advisor",
+			initials: "AA",
+			logo: "/logos/amazon-icon.png",
+			logoClass: "amazon",
+			description:
+				"Advises on secure foundation models, trust layers, and enterprise-grade guardrails.",
+			tags: ["Platform Scale", "Trust & Safety", "Enterprise"],
 		},
 		{
-			name: 'Storyteller, NVIDIA AI Architect',
-			background: 'NVIDIA, GPU-native systems',
-			focus: 'Narrative & architecture',
-			role: 'Storyteller & Systems Design',
-			initials: 'NV',
-			logo: '/logos/nvidia-icon.svg',
-			logoClass: 'nvidia',
-			description: 'Shapes the narrative and GPU-native architecture behind production rollouts.',
-			tags: ['GPU Systems', 'Narrative', 'Applied AI']
-		}
+			name: "Storyteller, NVIDIA AI Architect",
+			background: "NVIDIA, GPU-native systems",
+			focus: "Narrative & architecture",
+			role: "Storyteller & Systems Design",
+			initials: "NV",
+			logo: "/logos/nvidia-icon.svg",
+			logoClass: "nvidia",
+			description:
+				"Shapes the narrative and GPU-native architecture behind production rollouts.",
+			tags: ["GPU Systems", "Narrative", "Applied AI"],
+		},
 	];
 
 	const teamMembers = [
 		{
-			name: 'Avi Sahi',
-			background: 'KoreAI, Salesforce',
-			focus: 'Product',
-			image: photo('Avi Sahi.jpeg'),
-			role: 'CEO, Co-Founder',
-			description: 'Directs product strategy and AI workflow rollouts.',
-			tags: ['Product thinking', 'AI workflows']
+			name: "Avi Sahi",
+			background: "KoreAI, Salesforce",
+			focus: "Product",
+			image: photo("Avi Sahi.jpeg"),
+			role: "CEO, Co-Founder",
+			description: "Directs product strategy and AI workflow rollouts.",
+			tags: ["Product thinking", "AI workflows"],
 		},
 		{
-			name: 'Ginniee Singh',
-			background: 'AWS, Microsoft',
-			focus: 'Go to Market',
-			image: photo('Ginniee Sahi.jpeg'),
-			role: 'Advisor, Co-Founder',
-			description: 'Drives Go to Market execution and operator enablement.',
-			tags: ['Go to Market', 'Customers', 'Partnerships']
+			name: "Ginniee Singh",
+			background: "AWS, Microsoft",
+			focus: "Go to Market",
+			image: photo("Ginniee Sahi.jpeg"),
+			role: "Advisor, Co-Founder",
+			description: "Drives Go to Market execution and operator enablement.",
+			tags: ["Go to Market", "Customers", "Partnerships"],
 		},
 		{
-			name: 'Tom Davenport',
-			background: 'Babson, MIT, Harvard',
-			focus: 'AI Strategy',
-			image: photo('Tom Davenport.png'),
-			role: 'AI Strategy',
-			description: 'Leads executive AI strategy and governance for enterprise programs.',
-			tags: ['Applied AI', 'Strategy']
+			name: "Tom Davenport",
+			background: "Babson, MIT, Harvard",
+			focus: "AI Strategy",
+			image: photo("Tom Davenport.png"),
+			role: "AI Strategy",
+			description:
+				"Leads executive AI strategy and governance for enterprise programs.",
+			tags: ["Applied AI", "Strategy"],
 		},
 		{
-			name: 'Praneet Gill',
-			background: 'KoreAI, AI Circle',
-			focus: 'Go to Market',
-			image: photo('Praneet Gill.jpeg'),
-			role: 'Go to Market',
-			description: 'Runs Go to Market motions and customer programs.',
-			tags: ['Go to Market', 'Customers']
+			name: "Praneet Gill",
+			background: "KoreAI, AI Circle",
+			focus: "Go to Market",
+			image: photo("Praneet Gill.jpeg"),
+			role: "Go to Market",
+			description: "Runs Go to Market motions and customer programs.",
+			tags: ["Go to Market", "Customers"],
 		},
 		{
-			name: 'Kaveesh Manchanda',
-			background: 'Google, Microsoft',
-			focus: 'Partnerships',
-			image: photo('Kaveesh Manchanda.jpeg'),
-			role: 'VP Partnerships',
-			description: 'Heads engineering reliability and secure platform delivery.',
-			tags: ['Partnerships', 'Go to Market', 'Customers']
-		}
+			name: "Kaveesh Manchanda",
+			background: "Google, Microsoft",
+			focus: "Partnerships",
+			image: photo("Kaveesh Manchanda.jpeg"),
+			role: "VP Partnerships",
+			description:
+				"Heads engineering reliability and secure platform delivery.",
+			tags: ["Partnerships", "Go to Market", "Customers"],
+		},
 	];
 </script>
 
@@ -140,9 +145,13 @@
 		<section class="team" id="team">
 			<div class="section-header">
 				<p class="eyebrow">Core team</p>
-				<h2>Builders, Strategists, and Go-to-Market leaders who operate closest to the customer and the moment of decision.</h2>
+				<h2>
+					Builders, Strategists, and Go-to-Market leaders who operate closest to
+					the customer and the moment of decision.
+				</h2>
 				<p class="muted">
-					We combine enterprise experience with a startup pace so you get AI that ships and sticks.
+					We combine enterprise experience with a startup pace so you get AI
+					that ships and sticks.
 				</p>
 			</div>
 
@@ -151,7 +160,11 @@
 					<article class="team-card">
 						<div class="portrait">
 							<div class="portrait-glow"></div>
-							<img src={member.image} alt={`Portrait of ${member.name}`} loading="lazy" />
+							<img
+								src={member.image}
+								alt={`Portrait of ${member.name}`}
+								loading="lazy"
+							/>
 						</div>
 						<div class="team-content">
 							<div class="name-row">
@@ -171,7 +184,25 @@
 						</div>
 					</article>
 				{/each}
-				<div class="team-more" aria-label="Two more team members">+2 More</div>
+				<a
+					href="#more"
+					class="team-more group"
+					aria-label="View 2 more strategic advisors"
+				>
+					<span class="team-more-text">+2 More</span>
+					<div class="team-more-logos">
+						<img
+							src={extendedCollaborators[0].logo}
+							alt="Amazon"
+							class="mini-logo amazon-mini"
+						/>
+						<img
+							src={extendedCollaborators[1].logo}
+							alt="NVIDIA"
+							class="mini-logo nvidia-mini"
+						/>
+					</div>
+				</a>
 			</div>
 		</section>
 
@@ -180,7 +211,8 @@
 				<p class="eyebrow">+ More</p>
 				<h2>Advisory bench from the world’s AI leaders.</h2>
 				<p class="muted">
-					We tap trusted partners to pressure test architecture, security, and narrative so every rollout is durable.
+					We tap trusted partners to pressure test architecture, security, and
+					narrative so every rollout is durable.
 				</p>
 			</div>
 
@@ -191,12 +223,16 @@
 							<div
 								class="avatar"
 								class:logo={person.logo}
-								class:amazon={person.logoClass === 'amazon'}
-								class:nvidia={person.logoClass === 'nvidia'}
+								class:amazon={person.logoClass === "amazon"}
+								class:nvidia={person.logoClass === "nvidia"}
 								aria-hidden="true"
 							>
 								{#if person.logo}
-									<img src={person.logo} alt={`${person.name} logo`} loading="lazy" />
+									<img
+										src={person.logo}
+										alt={`${person.name} logo`}
+										loading="lazy"
+									/>
 								{:else}
 									<span>{person.initials}</span>
 								{/if}
@@ -215,9 +251,9 @@
 							{/each}
 						</div>
 					</article>
-					{/each}
-				</div>
-			</section>
+				{/each}
+			</div>
+		</section>
 
 		<nav class="section-nav" aria-label="About navigation">
 			{#each sections as section}
@@ -235,8 +271,8 @@
 					Operators building revenue AI that feels sharp, safe, and immediate.
 				</h1>
 				<p class="lede">
-					We’re founders and operators who sit with customers, listen to calls, and ship applied AI
-					built for the moments that move revenue.
+					We’re founders and operators who sit with customers, listen to calls,
+					and ship applied AI built for the moments that move revenue.
 				</p>
 
 				<div class="pill-row">
@@ -278,9 +314,13 @@
 		<section class="principles" id="principles">
 			<div class="section-header">
 				<p class="eyebrow">Operating principles</p>
-				<h2>Everything we build is designed for measurable, durable revenue impact.</h2>
+				<h2>
+					Everything we build is designed for measurable, durable revenue
+					impact.
+				</h2>
 				<p class="muted">
-					We stay close to the frontlines and keep the work clean, fast, and measurable.
+					We stay close to the frontlines and keep the work clean, fast, and
+					measurable.
 				</p>
 			</div>
 
@@ -306,8 +346,16 @@
 	}
 
 	:global(:root) {
-		--about-backdrop: radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.03), transparent 38%),
-			radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.02), transparent 30%),
+		--about-backdrop: radial-gradient(
+				circle at 20% 10%,
+				rgba(255, 255, 255, 0.03),
+				transparent 38%
+			),
+			radial-gradient(
+				circle at 80% 0%,
+				rgba(255, 255, 255, 0.02),
+				transparent 30%
+			),
 			linear-gradient(180deg, #060910 0%, #0a0f17 100%);
 		--about-surface: rgba(14, 18, 26, 0.9);
 		--about-surface-soft: rgba(12, 16, 24, 0.9);
@@ -318,14 +366,23 @@
 		--about-subtle: #aeb6c5;
 		--about-chip: rgba(255, 255, 255, 0.06);
 		--about-chip-border: rgba(255, 255, 255, 0.1);
-		--about-line: linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
+		--about-line: linear-gradient(
+			90deg,
+			rgba(255, 255, 255, 0.16),
+			rgba(255, 255, 255, 0.06)
+		);
 		--about-portrait-fade: linear-gradient(
 			180deg,
 			transparent 52%,
 			rgba(3, 5, 10, 0.32) 78%,
 			rgba(3, 5, 10, 0.52) 100%
 		);
-		--about-portrait-glow: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02), transparent);
+		--about-portrait-glow: radial-gradient(
+			ellipse at center,
+			rgba(255, 255, 255, 0.05),
+			rgba(255, 255, 255, 0.02),
+			transparent
+		);
 		--about-shadow: 0 10px 32px rgba(0, 0, 0, 0.28);
 		--about-soft-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
 	}
@@ -341,14 +398,22 @@
 		--about-subtle: #4b5563;
 		--about-chip: rgba(0, 0, 0, 0.04);
 		--about-chip-border: rgba(0, 0, 0, 0.08);
-		--about-line: linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.08));
+		--about-line: linear-gradient(
+			90deg,
+			rgba(0, 0, 0, 0.2),
+			rgba(0, 0, 0, 0.08)
+		);
 		--about-portrait-fade: linear-gradient(
 			180deg,
 			transparent 42%,
 			rgba(0, 0, 0, 0.16) 78%,
 			rgba(0, 0, 0, 0.3) 100%
 		);
-		--about-portrait-glow: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.08), transparent);
+		--about-portrait-glow: radial-gradient(
+			ellipse at center,
+			rgba(0, 0, 0, 0.08),
+			transparent
+		);
 		--about-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
 		--about-soft-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
 	}
@@ -384,7 +449,11 @@
 		padding: 0.85rem;
 		border-radius: 20px;
 		border: 1px solid var(--about-border-strong);
-		background: linear-gradient(145deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(
+			145deg,
+			var(--about-surface),
+			var(--about-surface-soft)
+		);
 		box-shadow: var(--about-soft-shadow);
 		backdrop-filter: blur(16px);
 	}
@@ -413,7 +482,7 @@
 		box-shadow: 0 10px 32px rgba(0, 0, 0, 0.2);
 	}
 
-	.section-link span[aria-hidden='true'] {
+	.section-link span[aria-hidden="true"] {
 		font-size: 1rem;
 		color: var(--about-subtle);
 	}
@@ -430,7 +499,11 @@
 	.hero-copy,
 	.hero-panel {
 		position: relative;
-		background: linear-gradient(160deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(
+			160deg,
+			var(--about-surface),
+			var(--about-surface-soft)
+		);
 		border: 1px solid var(--about-border);
 		border-radius: 28px;
 		padding: clamp(2rem, 4vw, 3.5rem);
@@ -452,15 +525,23 @@
 	.hero-panel {
 		isolation: isolate;
 		overflow: hidden;
-		background: linear-gradient(160deg, var(--about-panel), var(--about-surface));
+		background: linear-gradient(
+			160deg,
+			var(--about-panel),
+			var(--about-surface)
+		);
 	}
 
 	.hero-panel::before {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: -20% -10% auto;
 		height: 70%;
-		background: radial-gradient(ellipse at 30% 25%, var(--about-chip), transparent 65%);
+		background: radial-gradient(
+			ellipse at 30% 25%,
+			var(--about-chip),
+			transparent 65%
+		);
 		z-index: 0;
 		filter: blur(32px);
 		opacity: 0.9;
@@ -574,7 +655,11 @@
 		position: relative;
 		padding: 1.5rem 1.5rem 1.75rem;
 		border-radius: 20px;
-		background: linear-gradient(145deg, var(--about-surface-soft), var(--about-surface));
+		background: linear-gradient(
+			145deg,
+			var(--about-surface-soft),
+			var(--about-surface)
+		);
 		border: 1px solid var(--about-border);
 		box-shadow:
 			var(--about-soft-shadow),
@@ -584,7 +669,7 @@
 	}
 
 	.highlight-card::before {
-		content: '';
+		content: "";
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -636,7 +721,11 @@
 		align-items: start;
 		padding: 1.25rem 1.5rem;
 		border-radius: 20px;
-		background: linear-gradient(145deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(
+			145deg,
+			var(--about-surface),
+			var(--about-surface-soft)
+		);
 		border: 1px solid var(--about-border);
 		transition: all 0.3s ease;
 		box-shadow: var(--about-soft-shadow);
@@ -644,7 +733,9 @@
 
 	.commitment:hover {
 		border-color: var(--about-border-strong);
-		box-shadow: var(--about-soft-shadow), 0 0 0 1px var(--about-border-strong) inset;
+		box-shadow:
+			var(--about-soft-shadow),
+			0 0 0 1px var(--about-border-strong) inset;
 		transform: translateX(4px);
 	}
 
@@ -681,18 +772,26 @@
 		padding: clamp(2.25rem, 4vw, 3.25rem);
 		border-radius: 32px;
 		border: 1px solid var(--about-border);
-		background: linear-gradient(150deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(
+			150deg,
+			var(--about-surface),
+			var(--about-surface-soft)
+		);
 		box-shadow: var(--about-shadow);
 		position: relative;
 		overflow: hidden;
 	}
 
 	.more::before {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: -35% 0 auto;
 		height: 70%;
-		background: radial-gradient(ellipse at 75% 20%, var(--about-chip), transparent 60%);
+		background: radial-gradient(
+			ellipse at 75% 20%,
+			var(--about-chip),
+			transparent 60%
+		);
 		opacity: 0.8;
 		pointer-events: none;
 	}
@@ -712,7 +811,11 @@
 	.more-card {
 		padding: 1.5rem;
 		border-radius: 20px;
-		background: linear-gradient(170deg, var(--about-surface), var(--about-panel));
+		background: linear-gradient(
+			170deg,
+			var(--about-surface),
+			var(--about-panel)
+		);
 		border: 1px solid var(--about-border);
 		box-shadow: var(--about-soft-shadow);
 		display: flex;
@@ -751,8 +854,11 @@
 		width: 3rem;
 		height: 3rem;
 		border-radius: 0.9rem;
-		background:
-			radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 60%),
+		background: radial-gradient(
+				circle at 30% 30%,
+				rgba(255, 255, 255, 0.12),
+				transparent 60%
+			),
 			var(--about-line);
 		display: grid;
 		place-items: center;
@@ -769,12 +875,12 @@
 		border-color: rgba(255, 255, 255, 0.6);
 	}
 
-	:global(:root[data-theme='light']) .avatar.logo.amazon {
+	:global(:root[data-theme="light"]) .avatar.logo.amazon {
 		background: #0b1220;
 		border-color: rgba(15, 23, 42, 0.2);
 	}
 
-	:global(:root[data-theme='light']) .avatar.logo.amazon img {
+	:global(:root[data-theme="light"]) .avatar.logo.amazon img {
 		filter: brightness(0) invert(1);
 	}
 
@@ -798,7 +904,11 @@
 		padding: clamp(2.5rem, 4vw, 3.5rem);
 		border-radius: 32px;
 		border: 1px solid var(--about-border);
-		background: linear-gradient(145deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(
+			145deg,
+			var(--about-surface),
+			var(--about-surface-soft)
+		);
 		box-shadow: var(--about-shadow);
 	}
 
@@ -829,7 +939,11 @@
 		gap: 1.25rem;
 		padding: 1.75rem 1.75rem 2rem;
 		border-radius: 24px;
-		background: linear-gradient(145deg, var(--about-surface-soft), var(--about-surface));
+		background: linear-gradient(
+			145deg,
+			var(--about-surface-soft),
+			var(--about-surface)
+		);
 		border: 1px solid var(--about-border);
 		transition: all 0.3s ease;
 		box-shadow: var(--about-soft-shadow);
@@ -837,7 +951,7 @@
 	}
 
 	.pillar-card::after {
-		content: '';
+		content: "";
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -850,7 +964,9 @@
 
 	.pillar-card:hover {
 		border-color: var(--about-border-strong);
-		box-shadow: var(--about-soft-shadow), 0 0 0 1px var(--about-border-strong) inset;
+		box-shadow:
+			var(--about-soft-shadow),
+			0 0 0 1px var(--about-border-strong) inset;
 		transform: translateY(-4px);
 	}
 
@@ -862,7 +978,11 @@
 		width: 4px;
 		height: 100%;
 		border-radius: 10px;
-		background: linear-gradient(180deg, var(--about-border-strong), var(--about-border));
+		background: linear-gradient(
+			180deg,
+			var(--about-border-strong),
+			var(--about-border)
+		);
 		box-shadow: none;
 	}
 
@@ -882,7 +1002,11 @@
 		padding: clamp(2.5rem, 4vw, 3.5rem);
 		border-radius: 32px;
 		border: 1px solid var(--about-border);
-		background: linear-gradient(160deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(
+			160deg,
+			var(--about-surface),
+			var(--about-surface-soft)
+		);
 		box-shadow: var(--about-shadow);
 		position: relative;
 		overflow: hidden;
@@ -893,11 +1017,15 @@
 	}
 
 	.team::before {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: -35% 0 auto;
 		height: 65%;
-		background: radial-gradient(ellipse at 20% 30%, var(--about-chip), transparent 60%);
+		background: radial-gradient(
+			ellipse at 20% 30%,
+			var(--about-chip),
+			transparent 60%
+		);
 		opacity: 0.9;
 		pointer-events: none;
 	}
@@ -916,7 +1044,11 @@
 
 	.team-card {
 		position: relative;
-		background: linear-gradient(180deg, var(--about-surface), var(--about-surface-soft));
+		background: linear-gradient(
+			180deg,
+			var(--about-surface),
+			var(--about-surface-soft)
+		);
 		border: 1px solid var(--about-border);
 		border-radius: 28px;
 		overflow: hidden;
@@ -931,7 +1063,9 @@
 	.team-card:hover {
 		transform: translateY(-6px);
 		border-color: var(--about-border-strong);
-		box-shadow: var(--about-shadow), 0 0 0 1px var(--about-border-strong);
+		box-shadow:
+			var(--about-shadow),
+			0 0 0 1px var(--about-border-strong);
 	}
 
 	.team-more {
@@ -940,9 +1074,10 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
+		gap: 1.25rem;
 		width: fit-content;
-		min-width: 180px;
-		padding: 0.75rem 1.2rem;
+		min-width: 200px;
+		padding: 0.75rem 1.5rem;
 		border-radius: 999px;
 		border: 1px dashed var(--about-border-strong);
 		background: var(--about-chip);
@@ -953,6 +1088,48 @@
 		text-transform: uppercase;
 		box-shadow: var(--about-soft-shadow);
 		flex-shrink: 0;
+		text-decoration: none;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		cursor: pointer;
+	}
+
+	.team-more:hover {
+		background: var(--about-surface-soft);
+		border-style: solid;
+		border-color: var(--foreground);
+		color: var(--foreground);
+		transform: translateY(-2px);
+		box-shadow: var(--about-shadow);
+	}
+
+	.team-more-text {
+		white-space: nowrap;
+	}
+
+	.team-more-logos {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.mini-logo {
+		width: 1.5rem;
+		height: 1.5rem;
+		object-fit: contain;
+		filter: grayscale(1) opacity(0.6);
+		transition: all 0.3s ease;
+	}
+
+	.team-more:hover .mini-logo {
+		filter: grayscale(0) opacity(1);
+		transform: scale(1.1);
+	}
+
+	:global(:root[data-theme="light"]) .amazon-mini {
+		filter: brightness(0) grayscale(1) opacity(0.6);
+	}
+	:global(:root[data-theme="light"]) .team-more:hover .amazon-mini {
+		filter: brightness(0) grayscale(0) opacity(1);
 	}
 
 	.portrait {
@@ -976,7 +1153,7 @@
 	}
 
 	.portrait::after {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: 0;
 		background: linear-gradient(180deg, transparent 68%, rgba(0, 0, 0, 0.35));
@@ -1119,6 +1296,5 @@
 		.more-card-header {
 			grid-template-columns: 1fr;
 		}
-
 	}
 </style>

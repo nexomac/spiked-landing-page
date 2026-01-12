@@ -55,6 +55,7 @@
 		"canvas-confetti": "^1.9.4",
 		"clsx": "^2.1.1",
 		"gsap": "^3.14.1",
+		"html2pdf.js": "^0.14.0",
 		"lucide-svelte": "^0.544.0",
 		"mongo-sanitize": "^1.1.0",
 		"mongodb": "^7.0.0",

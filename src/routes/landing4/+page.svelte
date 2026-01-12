@@ -3,18 +3,10 @@
     import { fade, fly, slide } from 'svelte/transition';
     import { themeStore } from '$lib/stores/theme.js';
     import { 
-        Search, 
         Users, 
-        Building2, 
-        Briefcase, 
         ArrowRight, 
         Sparkles,
-        Command,
-        LayoutGrid,
-        FileUp,
         MessageSquare,
-        Send,
-        Play,
         CheckCircle2,
         Brain,
         Target,
@@ -27,13 +19,9 @@
         Heart,
         Settings,
         Activity,
-        ChevronRight,
-        ChevronLeft
     } from 'lucide-svelte';
     
     // Components
-    import Navigation from "$lib/components/Navigation.svelte";
-    import ProductsSection from "$lib/components/ProductsSection.svelte";
     import AIAssistanceShowcase from "$lib/components/AIAssistanceShowcase.svelte";
     import NotetakerShowcase from "$lib/components/NotetakerShowcase.svelte";
     import FollowupShowcase from "$lib/components/FollowupShowcase.svelte";
@@ -44,7 +32,6 @@
     import CustomGoalsShowcase from "$lib/components/CustomGoalsShowcase.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
-    import { onboardingStore } from "$lib/stores/onboarding.js";
     import { innerWidth } from "svelte/reactivity/window";
 
     // State
@@ -351,17 +338,6 @@
         }, 150); 
     }
 
-    function goToPrevShowcase() {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        showcaseProgress = 0; // Reset progress on manual click
-        // Reduced delay to feel snappier
-        setTimeout(() => {
-            currentShowcaseIndex = (currentShowcaseIndex - 1 + showcases.length) % showcases.length;
-            isTransitioning = false;
-        }, 150);
-    }
-
     function selectShowcase(index) {
         if (currentShowcaseIndex === index || isTransitioning) return;
         isTransitioning = true;
@@ -371,21 +347,6 @@
             currentShowcaseIndex = index;
             isTransitioning = false;
         }, 150);
-    }
-
-    function handleTilt(event, intensity = 8) {
-        const card = event.currentTarget;
-        const rect = card.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width - 0.5) * intensity;
-        const y = ((event.clientY - rect.top) / rect.height - 0.5) * intensity;
-        card.style.setProperty('--tilt-x', `${-y}deg`);
-        card.style.setProperty('--tilt-y', `${x}deg`);
-    }
-
-    function resetTilt(event) {
-        const card = event.currentTarget;
-        card.style.setProperty('--tilt-x', '0deg');
-        card.style.setProperty('--tilt-y', '0deg');
     }
 </script>
 
@@ -443,11 +404,16 @@
             </div>
             
             <!-- Brands Marquee at bottom -->
-            <div class="mt-[clamp(4rem,10vh,12rem)] border-t border-zinc-800/20 pt-12 opacity-40 grayscale mix-blend-difference">
+            <div class="border-t border-zinc-800/20 text-white mix-blend-difference mt-[clamp(1rem,10vh,6rem)]">
                <div class="flex justify-between items-center flex-wrap gap-8">
-                   {#each ['Salesforce', 'HubSpot', 'Microsoft', 'SAP', 'Oracle', 'Zendesk'] as brand}
-                       <span class="font-bold tracking-tighter" style="font-size: clamp(1.5rem, 3vw, 4rem);">{brand}</span>
-                   {/each}
+                    <span class="font-[1000] text-white mr-40" style="font-size: clamp(1.5rem, 3vw, 4rem);">
+                        Companies are leaving millions on the table as sales teams struggle with cognitive overload and CRMs that have become legacy SaaS.
+                        Client interactions are fragmented, conversions are low, and the workforce is misaligned with how modern revenue actually happens.
+                        SpikedAI is redefining the sales workforce. <span class="text-red-600">Solved.</span>
+                    </span>
+                    <span class="text-white mr-50" style="font-size: clamp(1.5rem, 3vw, 2rem);">
+                        It’s the first end-to-end model built for real revenue work, from preparation, to live conversations, to post-call execution, all powered by SpikedAI.
+                    </span>
                </div>
             </div>
         </section>

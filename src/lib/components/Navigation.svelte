@@ -512,12 +512,22 @@
 				<div
 					class={`pt-10 border-t ${isLight ? "border-zinc-100" : "border-zinc-800"}`}
 				>
-					<div class="grid grid-cols-2 gap-4">
+					<div class="grid grid-cols-3 gap-4">
 						<a
 							href="/pricing"
 							class={`p-5 rounded-3xl border text-center font-black text-lg ${isLight ? "bg-zinc-50 border-zinc-100 text-zinc-900" : "bg-zinc-900 border-zinc-800 text-white"}`}
 							onclick={() => toggleMobileMenu(false)}>Pricing</a
 						>
+						<button
+							onclick={toggleTheme}
+							class={`p-3 flex items-center justify-center rounded-3xl transition-all duration-300 hover:scale-110 ${isLight ? "bg-zinc-100 text-zinc-600 hover:text-red-600" : "bg-zinc-900 text-zinc-400 hover:text-white"}`}
+						>
+							{#if !isLight}
+								<Sun class="w-5 h-5" />
+							{:else}
+								<Moon class="w-5 h-5" />
+							{/if}
+						</button>
 						<a
 							href="/about-us"
 							class={`p-5 rounded-3xl border text-center font-black text-lg ${isLight ? "bg-zinc-50 border-zinc-100 text-zinc-900" : "bg-zinc-900 border-zinc-800 text-white"}`}

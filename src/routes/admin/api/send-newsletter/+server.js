@@ -15,9 +15,8 @@ export async function POST({ cookies }) {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     
-    const recentPosts = await db.collection('content_entries').find({
-        status: 'live',
-        createdAt: { $gte: sevenDaysAgo }
+    const recentPosts = await db.collection('blogs').find({
+        status: 'published',
     }).toArray();
 
     if (recentPosts.length === 0) {

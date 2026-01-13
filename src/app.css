@@ -47,8 +47,10 @@
 	/* Animations can be defined here if needed, keeping default for now */
 }
 
-html, body, #root {
-  height: 100%;
+html,
+body,
+#root {
+	height: 100%;
 }
 
 /* Base Variables - Default is Dark Mode (based on previous app preference) */
@@ -151,14 +153,14 @@ html, body, #root {
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-rendering: optimizeLegibility;
-		
+
 		/* Better text sharpness */
 		font-feature-settings: "kern" 1;
 		font-kerning: normal;
-		
+
 		/* Smooth scrolling */
 		scroll-behavior: smooth;
-		
+
 		/* Hardware acceleration for smoother rendering */
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
@@ -170,7 +172,7 @@ html, body, #root {
 		@apply bg-background text-foreground;
 		font-feature-settings: "rlig" 1, "calt" 1, "kern" 1;
 		transition: background-color 0.3s ease, color 0.3s ease;
-		
+
 		/* Better text rendering */
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
@@ -190,9 +192,9 @@ html, body, #root {
 		shape-rendering: geometricPrecision;
 	}
 
-	/* Smooth animations with hardware acceleration - removing explicit will-change to avoid layer explosion */
-	[class*="animate"],
-	[class*="transition"] {
+	/* Smooth animations with hardware acceleration - avoiding top-level containers to prevent breaking position: fixed */
+	:not(body):not(html):not(#site-root)[class*="animate"],
+	:not(body):not(html):not(#site-root)[class*="transition"] {
 		-webkit-transform: translateZ(0);
 		transform: translateZ(0);
 		-webkit-backface-visibility: hidden;

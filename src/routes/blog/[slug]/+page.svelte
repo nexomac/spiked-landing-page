@@ -1,8 +1,4 @@
 <script>
-	import { generateHTML } from "@tiptap/html";
-	import StarterKit from "@tiptap/starter-kit";
-	import Image from "@tiptap/extension-image";
-	import Link from "@tiptap/extension-link";
 	import ShareButton from "$lib/components/ShareButton.svelte";
 	import VoicePlayer from "$lib/components/VoicePlayer.svelte";
 	import { themeStore } from "$lib/stores/theme.js";
@@ -33,21 +29,6 @@
 	let { data } = $props();
 
 	// Helper to generate HTML for a specific field data
-	function getFieldHtml(fieldData) {
-		try {
-			if (
-				fieldData &&
-				typeof fieldData === "object" &&
-				fieldData.type === "doc"
-			) {
-				return generateHTML(fieldData, [StarterKit, Image, Link]);
-			}
-			return "";
-		} catch (e) {
-			console.error(e);
-			return "";
-		}
-	}
 
 	function extractTextFromTiptap(node) {
 		if (!node) return "";
@@ -130,21 +111,12 @@
 		) {
 			return data.post.content
 				.map((b) => {
-					if (b.type === "header") {
-						const level = b.data?.level || 2;
+					if (b.type === "richtext" || b.type === "header") {
 						return {
 							id: b.id,
 							type: "richtext",
-							value: {
-								type: "doc",
-								content: [
-									{
-										type: "heading",
-										attrs: { level },
-										content: [{ type: "text", text: b.data?.text || "" }],
-									},
-								],
-							},
+							value: b.data?.html || b.data, // fallback for header data
+							renderedHtml: b.renderedHtml,
 						};
 					}
 
@@ -155,15 +127,6 @@
 							value: b.data?.content || "",
 						};
 					}
-
-					if (b.type === "richtext") {
-						return {
-							id: b.id,
-							type: "richtext",
-							value: b.data?.html,
-						};
-					}
-
 					if (b.type === "quote") {
 						return {
 							id: b.id,
@@ -316,13 +279,17 @@
 		// Flatten blocks into atomic units (e.g. splitting richtext into paragraphs if needed,
 		// but for simplicity we'll keep them as blocks and just calculate their weights)
 		for (const block of contentBlocks) {
-			if (block.type === "richtext" && block.value?.content) {
+			if (block.type === "richtext" && block.renderedNodes) {
 				// Split Tiptap doc into individual top-level nodes for granular control
-				for (const node of block.value.content) {
-					const nodeWeight = estimateWeight({ type: "richtext", value: node });
+				for (const atom of block.renderedNodes) {
+					const nodeWeight = estimateWeight({
+						type: "richtext",
+						value: atom.node,
+					});
 					atoms.push({
 						type: "richtext_atom",
-						value: { type: "doc", content: [node] },
+						value: atom.node,
+						renderedHtml: atom.html,
 						weight: nodeWeight,
 					});
 				}
@@ -487,7 +454,7 @@
 {#snippet renderBlock(block)}
 	{#if block.type === "richtext"}
 		<div class="mb-10 theme-prose-colors">
-			{@html getFieldHtml(block.value)}
+			{@html block.renderedHtml || ""}
 		</div>
 	{:else if block.type === "image" || (typeof block.value === "string" && (block.value.startsWith("data:image") || block.value.match(/\.(jpeg|jpg|gif|png|webp)$/i)))}
 		<div
@@ -818,7 +785,7 @@
 					{#each pageBlocks as block}
 						<div class="pdf-block pdf-block-{block.type}">
 							{#if block.type === "richtext" || block.type === "richtext_atom"}
-								{@html getFieldHtml(block.value)}
+								{@html block.renderedHtml || ""}
 							{:else if block.type === "quote"}
 								<blockquote class="pdf-quote">
 									"{block.value}"

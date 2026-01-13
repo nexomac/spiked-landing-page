@@ -1,48 +1,49 @@
 <script>
-    import { navigating } from "$app/stores";
+	import { navigating } from "$app/stores";
+	import { fade } from "svelte/transition";
+	import { onMount } from "svelte";
+
+	let showDeepLoader = $state(false);
+	let timer;
+
+	$effect(() => {
+		if ($navigating) {
+			timer = setTimeout(() => {
+				showDeepLoader = true;
+			}, 400); // Only show deep loader for loads over 400ms
+		} else {
+			clearTimeout(timer);
+			showDeepLoader = false;
+		}
+	});
 </script>
 
 {#if $navigating}
-    <div class="fixed top-0 left-0 w-full h-1 z-[100] bg-secondary">
-        <div class="h-full bg-primary animate-progress"></div>
-    </div>
-
-    <div
-        class="fixed bottom-4 right-4 bg-popover text-popover-foreground px-4 py-2 rounded-lg shadow-lg text-sm border border-border flex items-center gap-2 z-[100] animate-fade-in"
-    >
-        <div
-            class="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"
-        ></div>
-        Loading...
-    </div>
+	<!-- Top Progress Bar with Glow -->
+	<div class="fixed top-0 left-0 w-full h-1 z-[9999] pointer-events-none">
+		<div
+			class="h-full bg-primary shadow-[0_0_10px_#ef1820,0_0_20px_#ef1820] animate-progress transition-all duration-300"
+		></div>
+	</div>
 {/if}
 
 <style>
-    @keyframes progress {
-        0% {
-            width: 0%;
-        }
-        50% {
-            width: 70%;
-        }
-        100% {
-            width: 90%;
-        }
-    }
-    .animate-progress {
-        animation: progress 2s ease-in-out infinite;
-    }
-    .animate-fade-in {
-        animation: fadeIn 0.2s ease-out;
-    }
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+	@keyframes progress {
+		0% {
+			width: 0%;
+			opacity: 1;
+		}
+		50% {
+			width: 70%;
+			opacity: 1;
+		}
+		100% {
+			width: 95%;
+			opacity: 0.8;
+		}
+	}
+
+	.animate-progress {
+		animation: progress 8s cubic-bezier(0.1, 0, 0.1, 1) forwards;
+	}
 </style>

@@ -54,10 +54,9 @@
 	function extractTextFromTiptap(node) {
 		if (!node) return "";
 		if (node.type === "text") return node.text;
+		if (node.type === "hardBreak") return "\n";
 		if (node.content) {
-			return node.content
-				.map((child) => extractTextFromTiptap(child))
-				.join(" ");
+			return node.content.map((child) => extractTextFromTiptap(child)).join("");
 		}
 		return "";
 	}
@@ -260,8 +259,104 @@
 				}
 			}
 		}
-		return blocks;
 	});
+
+	// --- MANUAL PDF PAGINATION LOGIC ---
+	const MAX_LINES_PER_PAGE = 22; // Calibrated for A4 with current styling
+
+	function estimateWeight(block) {
+		const node =
+			block.type === "richtext" || block.type === "richtext_atom"
+				? block.value
+				: null;
+
+		if (node && node.type) {
+			if (node.type === "heading") {
+				if (node.attrs?.level === 2) return 2.2;
+				if (node.attrs?.level === 3) return 1.5;
+				return 0.8;
+			}
+			if (node.type === "blockquote") {
+				const text = extractTextFromTiptap(node);
+				// Calculate lines based on a narrower width (70 chars) and add exactly 1 line for padding
+				const lines = text
+					.split("\n")
+					.reduce((acc, line) => acc + Math.max(1, line.length / 70), 0);
+				return lines + 1.0;
+			}
+			if (node.type === "bulletList" || node.type === "orderedList") {
+				const items = node.content?.length || 0;
+				return items * 0.85;
+			}
+			if (node.type === "horizontalRule") return 0.7;
+			if (node.type === "hardBreak") return 0.7;
+
+			const text = extractTextFromTiptap(node);
+			// If it's a paragraph node but has no text content, count it as one line
+			if (node.type === "paragraph" && !text.trim()) return 0.5;
+
+			// Split by newlines (from hardBreaks) and calculate weight per visual line
+			const visualLines = text.split("\n");
+			return visualLines.reduce(
+				(acc, line) => acc + Math.max(1, line.length / 85),
+				0,
+			);
+		}
+
+		if (block.type === "quote") return 2.0;
+		if (block.type === "image") return 8.0;
+		if (block.type === "statistic") return 7.5;
+		if (block.type === "highlight") return 2.0;
+		if (block.type === "string_fallback") {
+			return Math.max(1, block.value.length / 85);
+		}
+		return 2.0;
+	}
+
+	let pdfPages = $derived.by(() => {
+		const atoms = [];
+		// Flatten blocks into atomic units (e.g. splitting richtext into paragraphs if needed,
+		// but for simplicity we'll keep them as blocks and just calculate their weights)
+		for (const block of contentBlocks) {
+			if (block.type === "richtext" && block.value?.content) {
+				// Split Tiptap doc into individual top-level nodes for granular control
+				for (const node of block.value.content) {
+					const nodeWeight = estimateWeight({ type: "richtext", value: node });
+					atoms.push({
+						type: "richtext_atom",
+						value: { type: "doc", content: [node] },
+						weight: nodeWeight,
+					});
+				}
+			} else {
+				atoms.push({
+					...block,
+					weight: estimateWeight(block),
+				});
+			}
+		}
+
+		const pages = [];
+		let currentPage = [];
+		let currentWeight = 0;
+
+		for (const atom of atoms) {
+			if (
+				currentWeight + atom.weight > MAX_LINES_PER_PAGE &&
+				currentPage.length > 0
+			) {
+				pages.push(currentPage);
+				currentPage = [atom];
+				currentWeight = atom.weight;
+			} else {
+				currentPage.push(atom);
+				currentWeight += atom.weight;
+			}
+		}
+		if (currentPage.length > 0) pages.push(currentPage);
+		return pages;
+	});
+
 	let isGeneratingPDF = $state(false);
 
 	async function downloadPDF() {
@@ -287,7 +382,7 @@
 		console.log("Generating PDF for element:", element);
 
 		const opt = {
-			margin: [0, 0, 0, 0],
+			margin: 0, // Set to 0 to allow full-bleed background on cover page and internal margin management
 			filename: `${data.post.slug || "spikedai-blog"}.pdf`,
 			image: { type: "jpeg", quality: 0.98 },
 			html2canvas: {
@@ -297,7 +392,7 @@
 				logging: true,
 			},
 			jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-			pagebreak: { mode: ["css", "legacy"] },
+			pagebreak: { mode: ["css"] }, // Using 'css' only for more predictable behavior with Tailwind 4
 		};
 
 		try {
@@ -370,7 +465,7 @@
 
 							// Footer Content
 							pdf.text(
-								"Source: spikedai.com/blog/" + data.post.slug,
+								"Source: spiked.ai/blog/" + data.post.slug,
 								25,
 								pageHeight - 10,
 							);
@@ -622,6 +717,7 @@
 						{/if}
 						<span class="text-xs uppercase tracking-wider font-bold">PDF</span>
 					</button>
+
 					<ShareButton
 						title={data.post.title}
 						text={`Read "${data.post.title}" on SpikedAI.`}
@@ -681,8 +777,9 @@
 	<div id="blog-pdf-template" class="pdf-export-container">
 		<!-- COVER PAGE -->
 		<div class="pdf-cover-page">
+			<div class="pdf-cover-background"></div>
 			<a
-				href="https://spikedai.com"
+				href="https://spiked.ai"
 				class="pdf-logo"
 				style="text-decoration: none;"
 			>
@@ -716,44 +813,49 @@
 			<div class="pdf-footer-brand">
 				© {new Date().getFullYear()} SpikedAI Technologies. All Rights Reserved.
 			</div>
-
-			<div class="pdf-page-break"></div>
+			<!-- Manual break after cover -->
+			<div style="page-break-after: always;"></div>
 		</div>
 
 		<!-- CONTENT PAGES CONTAINER -->
-		<div class="pdf-main-body">
-			<div class="pdf-content-prose">
-				{#each contentBlocks as block}
-					<div class="pdf-block pdf-block-{block.type}">
-						{#if block.type === "richtext"}
-							{@html getFieldHtml(block.value)}
-						{:else if block.type === "quote"}
-							<blockquote class="pdf-quote">
-								"{block.value}"
-								{#if block.author}
-									<cite>— {block.author}</cite>
-								{/if}
-							</blockquote>
-						{:else if block.type === "image" || (typeof block.value === "string" && (block.value.startsWith("data:image") || block.value.match(/\.(jpeg|jpg|gif|png|webp)$/i)))}
-							<img src={block.value} alt={block.name} class="pdf-image" />
-						{:else if block.type === "highlight"}
-							<div class="pdf-highlight">
-								<strong>BRIEFING:</strong>
-								{block.value}
-							</div>
-						{:else if block.type === "statistic"}
-							{@const [label, val] = (block.value || "").split("|")}
-							<div class="pdf-stat">
-								<span class="pdf-stat-val">{val}</span>
-								<span class="pdf-stat-label">{label}</span>
-							</div>
-						{:else if block.type === "string_fallback" || typeof block.value === "string"}
-							<p>{block.value}</p>
-						{/if}
-					</div>
-				{/each}
+		{#each pdfPages as pageBlocks, idx}
+			<div class="pdf-main-body">
+				<div class="pdf-content-prose">
+					{#each pageBlocks as block}
+						<div class="pdf-block pdf-block-{block.type}">
+							{#if block.type === "richtext" || block.type === "richtext_atom"}
+								{@html getFieldHtml(block.value)}
+							{:else if block.type === "quote"}
+								<blockquote class="pdf-quote">
+									"{block.value}"
+									{#if block.author}
+										<cite>— {block.author}</cite>
+									{/if}
+								</blockquote>
+							{:else if block.type === "image" || (typeof block.value === "string" && (block.value.startsWith("data:image") || block.value.match(/\.(jpeg|jpg|gif|png|webp)$/i)))}
+								<img src={block.value} alt={block.name} class="pdf-image" />
+							{:else if block.type === "highlight"}
+								<div class="pdf-highlight">
+									<strong>BRIEFING:</strong>
+									{block.value}
+								</div>
+							{:else if block.type === "statistic"}
+								{@const [label, val] = (block.value || "").split("|")}
+								<div class="pdf-stat">
+									<span class="pdf-stat-val">{val}</span>
+									<span class="pdf-stat-label">{label}</span>
+								</div>
+							{:else if block.type === "string_fallback" || typeof block.value === "string"}
+								<p>{block.value}</p>
+							{/if}
+						</div>
+					{/each}
+				</div>
 			</div>
-		</div>
+			{#if idx < pdfPages.length - 1}
+				<div style="page-break-after: always;"></div>
+			{/if}
+		{/each}
 	</div>
 </div>
 
@@ -778,14 +880,26 @@
 	}
 
 	.pdf-cover-page {
-		height: 297mm; /* Full A4 height */
+		height: 296mm;
+		width: 210mm;
 		background: #030712;
 		color: white;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		padding: 40mm 25mm;
+		padding: 30mm 25mm 20mm;
 		position: relative;
+		overflow: hidden;
+	}
+
+	.pdf-cover-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #030712;
+		z-index: -1;
 	}
 
 	.pdf-logo {
@@ -857,10 +971,11 @@
 	}
 
 	.pdf-main-body {
-		padding: 25mm 25mm 20mm;
+		padding: 20mm 25mm;
 		background: white;
-		min-height: 297mm;
+		height: 296mm;
 		position: relative;
+		overflow: hidden;
 	}
 
 	.pdf-content-prose {
@@ -870,12 +985,19 @@
 	}
 
 	.pdf-block {
-		margin-bottom: 10mm;
-		page-break-inside: avoid;
+		margin-bottom: 6mm; /* Tighter layout to avoid orphan quotes and empty space */
+		page-break-inside: auto;
+	}
+
+	.pdf-block-quote,
+	.pdf-block-statistic,
+	.pdf-block-image,
+	.pdf-block-highlight {
+		page-break-inside: avoid; /* These specific blocks should not split */
 	}
 
 	.pdf-content-prose p {
-		margin-bottom: 6mm;
+		margin-bottom: 4mm; /* Tighter spacing */
 		page-break-inside: avoid;
 	}
 
@@ -898,14 +1020,20 @@
 		page-break-after: avoid;
 	}
 
-	.pdf-quote {
-		background: #fdf2f2;
-		border-left: 5px solid #dc2626;
-		padding: 10mm;
-		font-style: italic;
-		font-size: 14pt;
-		margin: 10mm 0;
-		page-break-inside: avoid;
+	.pdf-quote,
+	:global(.pdf-content-prose blockquote) {
+		background: #fdf2f2 !important;
+		border-left: 4px solid #dc2626 !important;
+		padding: 6mm 8mm !important;
+		font-style: italic !important;
+		font-size: 13pt !important;
+		margin: 4mm 0 !important;
+		page-break-inside: avoid !important;
+		display: block !important;
+	}
+
+	:global(.pdf-content-prose blockquote p) {
+		margin-bottom: 0 !important;
 	}
 
 	.pdf-quote cite {
@@ -958,10 +1086,6 @@
 		justify-content: space-between;
 		font-size: 8pt;
 		color: #9ca3af;
-	}
-
-	.pdf-page-break {
-		page-break-after: always;
 	}
 
 	/* Custom Typography Tweaks for the 'Sherwood' feel */

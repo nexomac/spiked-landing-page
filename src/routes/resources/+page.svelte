@@ -15,7 +15,7 @@
 <div class="min-h-screen bg-[black] text-white resource-container">
 	<div class="resources-page">
 		<div class="container">
-			<header class="page-header">
+			<header class="page-header" id="events">
 				<h1>Events</h1>
 				<p>Connect with us at these upcoming industry events and conferences</p>
 			</header>
@@ -51,7 +51,7 @@
 				{/each}
 			</div>
 
-			<header class="page-header" style="margin-top: 8rem;">
+			<header class="page-header" style="margin-top: 8rem;" id="videos">
 				<h1>Resources</h1>
 				<p>
 					Watch expert interviews and insights from industry leaders featured on

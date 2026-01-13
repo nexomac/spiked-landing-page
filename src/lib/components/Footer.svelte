@@ -33,8 +33,8 @@
 
 	const companyLinks = [
 		{ name: "Pricing", href: "/pricing", icon: CreditCard },
-		{ name: "Customers", href: "/#testimonials", icon: Users },
-		{ name: "Security", href: "/#security", icon: Shield },
+		{ name: "Customers", href: "/customers", icon: Users },
+		{ name: "Security", href: "/security", icon: Shield },
 		{ name: "Docs", href: "/docs", icon: FileText },
 		{ name: "Contact Us", href: "/contact-sales", icon: Mail }
 	];

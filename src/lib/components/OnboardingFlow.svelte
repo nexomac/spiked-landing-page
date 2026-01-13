@@ -1,42 +1,42 @@
 <script>
-	import { onboardingStore } from '$lib/stores/onboarding.js';
-	import { fly, fade } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
-	
-	import WelcomeStep from './onboarding/WelcomeStep.svelte';
-	import RoleStep from './onboarding/RoleStep.svelte';
-	import UseCaseStep from './onboarding/UseCaseStep.svelte';
-	import TeamSizeStep from './onboarding/TeamSizeStep.svelte';
-	import GoalsStep from './onboarding/GoalsStep.svelte';
-	import IntegrationsStep from './onboarding/IntegrationsStep.svelte';
-	import CompletionStep from './onboarding/CompletionStep.svelte';
-	
+	import { onboardingStore } from "$lib/stores/onboarding.js";
+	import { fly, fade } from "svelte/transition";
+	import { cubicOut } from "svelte/easing";
+
+	import WelcomeStep from "./onboarding/WelcomeStep.svelte";
+	import RoleStep from "./onboarding/RoleStep.svelte";
+	import UseCaseStep from "./onboarding/UseCaseStep.svelte";
+	import TeamSizeStep from "./onboarding/TeamSizeStep.svelte";
+	import GoalsStep from "./onboarding/GoalsStep.svelte";
+	import IntegrationsStep from "./onboarding/IntegrationsStep.svelte";
+	import CompletionStep from "./onboarding/CompletionStep.svelte";
+
 	let { isActive, currentStep } = $derived($onboardingStore);
-	
+
 	const steps = [
-		{ component: WelcomeStep, label: 'Welcome', progress: 0 },
-		{ component: RoleStep, label: 'Your Role', progress: 16 },
-		{ component: UseCaseStep, label: 'Use Cases', progress: 33 },
-		{ component: TeamSizeStep, label: 'Team Size', progress: 50 },
-		{ component: GoalsStep, label: 'Goals', progress: 66 },
-		{ component: IntegrationsStep, label: 'Integrations', progress: 83 },
-		{ component: CompletionStep, label: 'Complete', progress: 100 }
+		{ component: WelcomeStep, label: "Welcome", progress: 0 },
+		{ component: RoleStep, label: "Your Role", progress: 16 },
+		{ component: UseCaseStep, label: "Use Cases", progress: 33 },
+		{ component: TeamSizeStep, label: "Team Size", progress: 50 },
+		{ component: GoalsStep, label: "Goals", progress: 66 },
+		{ component: IntegrationsStep, label: "Integrations", progress: 83 },
+		{ component: CompletionStep, label: "Complete", progress: 100 },
 	];
-	
+
 	let CurrentComponent = $derived(steps[currentStep].component);
-	
+
 	let direction = $state(1); // 1 for forward, -1 for backward
 	let previousStep = $state(0);
-	
+
 	$effect(() => {
 		if (currentStep !== previousStep) {
 			direction = currentStep > previousStep ? 1 : -1;
 			previousStep = currentStep;
 		}
 	});
-	
+
 	function handleClose() {
-		if (confirm('Are you sure you want to exit? Your progress will be lost.')) {
+		if (confirm("Are you sure you want to exit? Your progress will be lost.")) {
 			onboardingStore.close();
 		}
 	}
@@ -46,19 +46,19 @@
 		if (!isActive) return;
 
 		const handleKeyDown = (e) => {
-			if (e.key === 'Escape') {
+			if (e.key === "Escape") {
 				handleClose();
 			}
 		};
 
-		document.addEventListener('keydown', handleKeyDown);
-		return () => document.removeEventListener('keydown', handleKeyDown);
+		document.addEventListener("keydown", handleKeyDown);
+		return () => document.removeEventListener("keydown", handleKeyDown);
 	});
 </script>
 
 {#if isActive}
 	<!-- Overlay with Viewport Height + High Z-Index -->
-	<div 
+	<div
 		class="fixed inset-0 z-[2000] overflow-hidden bg-black/95 backdrop-blur-xl flex flex-col"
 		transition:fade={{ duration: 300 }}
 	>
@@ -66,24 +66,36 @@
 		<button
 			type="button"
 			onclick={handleClose}
-			onkeydown={(e) => e.key === 'Enter' && handleClose()}
+			onkeydown={(e) => e.key === "Enter" && handleClose()}
 			class="absolute top-6 right-6 z-[2010] p-3 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-700 rounded-lg transition-all duration-300 group cursor-pointer hover:scale-110 active:scale-95"
 			aria-label="Close onboarding modal"
 		>
-			<svg class="w-6 h-6 text-zinc-400 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+			<svg
+				class="w-6 h-6 text-zinc-400 group-hover:text-red-500 transition-colors"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M6 18L18 6M6 6l12 12"
+				/>
 			</svg>
 		</button>
-		
+
 		<!-- Progress Bar (Fixed at top of overlay) -->
-		<div class="relative w-full z-[2005] bg-black/50 backdrop-blur-sm border-b border-zinc-800">
+		<div
+			class="relative w-full z-[2005] bg-black/50 backdrop-blur-sm border-b border-zinc-800"
+		>
 			<div class="h-1 bg-zinc-900 w-full">
-				<div 
+				<div
 					class="h-full bg-gradient-to-r from-red-600 to-red-700 transition-all duration-500 ease-out"
 					style="width: {steps[currentStep].progress}%"
 				></div>
 			</div>
-			
+
 			<!-- Step Indicators -->
 			<div class="max-w-5xl mx-auto px-6 py-4 hidden sm:block">
 				<div class="flex items-center justify-between">
@@ -91,21 +103,49 @@
 						{#if i < steps.length - 1}
 							<div class="flex items-center gap-3">
 								<div class="flex items-center gap-2">
-									<div class="w-8 h-8 rounded-full border-2 {i < currentStep ? 'bg-red-600 border-red-600' : i === currentStep ? 'border-red-600' : 'border-zinc-800'} flex items-center justify-center transition-all duration-300">
+									<div
+										class="w-8 h-8 rounded-full border-2 {i < currentStep
+											? 'bg-red-600 border-red-600'
+											: i === currentStep
+												? 'border-red-600'
+												: 'border-zinc-800'} flex items-center justify-center transition-all duration-300"
+									>
 										{#if i < currentStep}
-											<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+											<svg
+												class="w-4 h-4 text-white"
+												fill="none"
+												stroke="currentColor"
+												viewBox="0 0 24 24"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2"
+													d="M5 13l4 4L19 7"
+												/>
 											</svg>
 										{:else}
-											<span class="text-xs font-bold {i === currentStep ? 'text-red-500' : 'text-zinc-600'}">{i + 1}</span>
+											<span
+												class="text-xs font-bold {i === currentStep
+													? 'text-red-500'
+													: 'text-zinc-600'}">{i + 1}</span
+											>
 										{/if}
 									</div>
-									<span class="hidden md:block text-sm font-medium {i <= currentStep ? 'text-zinc-300' : 'text-zinc-600'} transition-colors">
+									<span
+										class="hidden md:block text-sm font-medium {i <= currentStep
+											? 'text-zinc-300'
+											: 'text-zinc-600'} transition-colors"
+									>
 										{step.label}
 									</span>
 								</div>
 								{#if i < steps.length - 2}
-									<div class="hidden md:block w-12 h-0.5 {i < currentStep ? 'bg-red-600' : 'bg-zinc-800'} transition-colors duration-300"></div>
+									<div
+										class="hidden md:block w-12 h-0.5 {i < currentStep
+											? 'bg-red-600'
+											: 'bg-zinc-800'} transition-colors duration-300"
+									></div>
 								{/if}
 							</div>
 						{/if}
@@ -113,13 +153,20 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Main Content Area -->
-		<div class="flex-1 flex items-center justify-center w-full px-6 overflow-y-auto relative">
+		<div
+			class="flex-1 flex items-center justify-center w-full px-6 overflow-y-auto relative"
+		>
 			<div class="w-full max-w-5xl my-auto py-12">
 				{#key currentStep}
 					<div
-						in:fly={{ x: direction * 100, duration: 400, easing: cubicOut, delay: 200 }}
+						in:fly={{
+							x: direction * 100,
+							duration: 400,
+							easing: cubicOut,
+							delay: 200,
+						}}
 						out:fly={{ x: direction * -100, duration: 200, easing: cubicOut }}
 					>
 						<CurrentComponent />
@@ -127,11 +174,41 @@
 				{/key}
 			</div>
 		</div>
-		
-		<!-- Keyboard Navigation Hint -->
-		<div class="py-6 text-center">
-			<div class="inline-block bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-lg px-4 py-2 text-xs text-zinc-500">
-				Press <kbd class="px-2 py-1 bg-zinc-800 rounded text-zinc-400 font-mono">Esc</kbd> to exit
+
+		<!-- Keyboard Navigation Hint & Sales Redirect -->
+		<div class="py-6 flex flex-col items-center gap-4">
+			<div class="inline-flex items-center gap-4">
+				<div
+					class="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-lg px-4 py-2 text-xs text-zinc-500"
+				>
+					Press <kbd
+						class="px-2 py-1 bg-zinc-800 rounded text-zinc-400 font-mono"
+						>Esc</kbd
+					> to exit
+				</div>
+
+				<div class="h-4 w-px bg-zinc-800"></div>
+
+				<a
+					href="/contact-sales"
+					class="text-xs font-bold text-red-500 hover:text-red-400 flex items-center gap-1.5 transition-colors group/sales"
+					onclick={() => onboardingStore.close()}
+				>
+					<span>Prefer to talk? Contact Sales</span>
+					<svg
+						class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M13 7l5 5m0 0l-5 5m5-5H6"
+						/>
+					</svg>
+				</a>
 			</div>
 		</div>
 	</div>

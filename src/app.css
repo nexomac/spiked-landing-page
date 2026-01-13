@@ -186,14 +186,13 @@
 		shape-rendering: geometricPrecision;
 	}
 
-	/* Smooth animations with hardware acceleration */
+	/* Smooth animations with hardware acceleration - removing explicit will-change to avoid layer explosion */
 	[class*="animate"],
 	[class*="transition"] {
 		-webkit-transform: translateZ(0);
 		transform: translateZ(0);
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
-		will-change: transform;
 	}
 }
 

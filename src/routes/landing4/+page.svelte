@@ -410,7 +410,7 @@
 		<!-- BIG HERO -->
 		<section
 			data-section="hero"
-			class="relative w-full min-h-[90vh] flex flex-col justify-center
+			class="relative w-full flex flex-col justify-center
             {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
 			style="padding: clamp(2rem, 4vw, 5rem);"
 		>
@@ -442,9 +442,9 @@
 				<!-- Request Demo Button (FIXED, PROMINENT) -->
 				<a
 					href="/contact-sales"
-					class="mt-30 mb-0 contextual-cta group relative inline-flex items-center gap-3 px-16 py-8 rounded-full font-semibold text-base transition-all duration-200 mb-16"
+					class="mt-10 mb-0 contextual-cta group relative inline-flex items-center gap-3 px-[clamp(1rem,4vw,4rem)] py-[clamp(1rem,2vw,2rem)] rounded-full font-semibold text-base transition-all duration-200 mb-16"
 				>
-					<span class="relative z-10 text-[34px]">Request a Demo</span>
+					<span class="relative z-10 text-[clamp(1rem, 3vw, 4rem)]">Request a Demo</span>
 					<span class="cta-icon relative z-10 grid place-items-center">
 						<ArrowRight
 							class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"

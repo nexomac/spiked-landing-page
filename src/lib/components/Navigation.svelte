@@ -102,7 +102,7 @@
 					desc: "Automated follow-ups, aligned tasks, and bi-directional CRM sync.",
 					icon: Terminal,
 					href: "/features/dev-tools",
-				}
+				},
 			],
 		},
 		resources: {
@@ -157,10 +157,10 @@
 
 	/* Dynamic background based on scroll or route */
 	const navShellClass = $derived(
-		isScrolled
+		isScrolled || mobileMenuOpen
 			? isLight
-				? "bg-white/90 backdrop-blur-xl border-b border-zinc-200 shadow-sm"
-				: "bg-zinc-950/90 backdrop-blur-xl border-b border-zinc-900 shadow-lg"
+				? "bg-white/95 backdrop-blur-2xl border-b border-zinc-200 shadow-sm"
+				: "bg-zinc-950/95 backdrop-blur-2xl border-b border-zinc-900 shadow-lg"
 			: "bg-transparent border-b border-transparent",
 	);
 
@@ -204,7 +204,7 @@
 
 <!-- Navbar -->
 <nav
-	class={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navShellClass}`}
+	class={`fixed top-0 left-0 right-0 z-[100] ${navShellClass}`}
 	onmouseleave={handleMouseLeave}
 >
 	<div class="max-w-[1900px] mx-auto px-6 sm:px-12 py-4">
@@ -459,32 +459,46 @@
 			</button>
 		</div>
 	</div>
+</nav>
 
-	<!-- Mobile Menu Overlay -->
-	{#if mobileMenuOpen}
-		<div
-			class={`fixed inset-0 top-[90px] z-40 lg:hidden overflow-y-auto ${isLight ? "bg-white" : "bg-[#030712]"}`}
-			transition:fade
-		>
-			<div class="px-6 py-8 pb-32 space-y-8">
+<!-- Mobile Menu Overlay - Move outside <nav> to prevent layout clipping -->
+{#if mobileMenuOpen}
+	<div
+		class={`fixed inset-0 z-[90] lg:hidden ${isLight ? "bg-white" : "bg-black"} flex flex-col`}
+		transition:fade={{ duration: 150 }}
+	>
+		<div class="flex-1 overflow-y-auto no-scrollbar pt-24 pb-32 px-6">
+			<div class="space-y-10">
 				{#each Object.entries(navData) as [id, menu]}
-					<div class="space-y-4">
+					<div class="space-y-5">
 						<h3
-							class="text-xs font-black uppercase tracking-widest text-red-600"
+							class="text-xs font-black uppercase tracking-widest text-red-600 px-2"
 						>
 							{menu.label}
 						</h3>
-						<div class="grid gap-4">
+						<div class="grid gap-3">
 							{#each menu.links as link}
 								<a
 									href={link.href}
 									onclick={() => toggleMobileMenu(false)}
-									class="flex items-center gap-4 p-4 rounded-xl border border-zinc-800/50 bg-zinc-900/20"
+									class={`flex items-center gap-4 p-4 rounded-3xl border transition-all active:scale-[0.96] ${isLight ? "bg-zinc-50 border-zinc-100" : "bg-zinc-900 border-zinc-800/50"}`}
 								>
-									<link.icon class="w-6 h-6 text-zinc-400" />
-									<div>
-										<div class="font-bold text-lg text-white">{link.title}</div>
-										<div class="text-sm text-zinc-500">{link.desc}</div>
+									<div
+										class={`w-12 h-12 rounded-2xl flex items-center justify-center ${isLight ? "bg-white text-red-600 shadow-sm" : "bg-zinc-800 text-red-500"}`}
+									>
+										<link.icon size={26} />
+									</div>
+									<div class="flex-1">
+										<div
+											class={`font-black text-lg leading-tight mb-1 ${isLight ? "text-zinc-900" : "text-white"}`}
+										>
+											{link.title}
+										</div>
+										<div
+											class={`text-sm font-medium leading-snug ${isLight ? "text-zinc-500" : "text-zinc-400"}`}
+										>
+											{link.desc}
+										</div>
 									</div>
 								</a>
 							{/each}
@@ -492,21 +506,46 @@
 					</div>
 				{/each}
 
-				<div class="pt-8 border-t border-zinc-800">
-					<a href="/pricing" class="block py-3 text-xl font-bold text-zinc-400"
-						>Pricing</a
-					>
-					<a href="/about-us" class="block py-3 text-xl font-bold text-zinc-400"
-						>About Us</a
-					>
-					<a href="/login" class="block py-3 text-xl font-bold text-zinc-400"
-						>Log In</a
+				<div
+					class={`pt-10 border-t ${isLight ? "border-zinc-100" : "border-zinc-800"}`}
+				>
+					<div class="grid grid-cols-2 gap-4">
+						<a
+							href="/pricing"
+							class={`p-5 rounded-3xl border text-center font-black text-lg ${isLight ? "bg-zinc-50 border-zinc-100 text-zinc-900" : "bg-zinc-900 border-zinc-800 text-white"}`}
+							onclick={() => toggleMobileMenu(false)}>Pricing</a
+						>
+						<a
+							href="/about-us"
+							class={`p-5 rounded-3xl border text-center font-black text-lg ${isLight ? "bg-zinc-50 border-zinc-100 text-zinc-900" : "bg-zinc-900 border-zinc-800 text-white"}`}
+							onclick={() => toggleMobileMenu(false)}>About</a
+						>
+					</div>
+					<a
+						href="/login"
+						class={`block mt-4 p-5 rounded-3xl border text-center font-black text-lg ${isLight ? "bg-zinc-50 border-zinc-100 text-zinc-900" : "bg-zinc-900 border-zinc-800 text-white"}`}
+						onclick={() => toggleMobileMenu(false)}>Log In</a
 					>
 				</div>
 			</div>
 		</div>
-	{/if}
-</nav>
+
+		<!-- Mobile Fixed Bottom CTA -->
+		<div
+			class={`absolute bottom-0 left-0 right-0 p-6 pt-10 pb-8 bg-gradient-to-t ${isLight ? "from-white via-white to-transparent" : "from-black via-black to-transparent"}`}
+		>
+			<button
+				onclick={() => {
+					onboardingStore.start();
+					toggleMobileMenu(false);
+				}}
+				class="w-full py-5 bg-red-600 text-white font-black text-xl rounded-full shadow-2xl shadow-red-600/40 active:scale-[0.98] transition-all"
+			>
+				Get Started
+			</button>
+		</div>
+	</div>
+{/if}
 
 <style>
 	@keyframes slide-down-fade {

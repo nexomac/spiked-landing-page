@@ -47,6 +47,10 @@
 	/* Animations can be defined here if needed, keeping default for now */
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 /* Base Variables - Default is Dark Mode (based on previous app preference) */
 :root {
 	--background: #030712;
@@ -225,12 +229,6 @@
 #site-root {
 	min-height: 100vh;
 	display: flow-root;
-}
-
-#site-root.scaled,
-:root.site-scaled #site-root {
-	zoom: 0.75;
-	min-height: 133.333333vh;
 }
 
 /* Hero Shell - Updated to use semantic variables or just cleaner gradients */

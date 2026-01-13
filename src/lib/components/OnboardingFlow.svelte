@@ -54,12 +54,18 @@
 		document.addEventListener("keydown", handleKeyDown);
 		return () => document.removeEventListener("keydown", handleKeyDown);
 	});
+	// Handle scroll lock
+	$effect(() => {
+		if (typeof document !== "undefined") {
+			document.documentElement.classList.toggle("onboarding-locked", isActive);
+		}
+	});
 </script>
 
 {#if isActive}
 	<!-- Overlay with Viewport Height + High Z-Index -->
 	<div
-		class="fixed inset-0 z-[2000] h-[100dvh] overflow-hidden bg-black/95 backdrop-blur-xl flex flex-col"
+		class="fixed inset-0 z-[2000] h-[100dvh] w-full overflow-hidden bg-black/95 backdrop-blur-xl flex flex-col no-scrollbar"
 		transition:fade={{ duration: 300 }}
 	>
 		<!-- Close Button -->
@@ -217,5 +223,18 @@
 <style>
 	kbd {
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	:global(.onboarding-locked) {
+		overflow: hidden;
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	}
 </style>

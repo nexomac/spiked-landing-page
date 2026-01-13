@@ -8,23 +8,15 @@
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 
 	let { children } = $props();
-	// Enable 75% scaling by default for that "browser zoom" look
-	let enableScale = $state(true);
-
 	injectAnalytics();
 
 	onMount(() => {
 		// Initialize theme based on saved preference or system settings
 		themeStore.init();
-
-		// Add class to html for global selectors
-		if (enableScale) {
-			document.documentElement.classList.add("site-scaled");
-		}
 	});
 </script>
 
-<div id="site-root" class:scaled={enableScale}>
+<div id="site-root">
 	<GlobalLoader />
 	<Navigation />
 	<OnboardingFlow />

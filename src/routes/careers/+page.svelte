@@ -254,6 +254,7 @@
 
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 			{#each benefits as benefit}
+				{@const Icon = benefit.icon}
 				<div
 					class="group p-6 {$themeStore === 'dark'
 						? 'bg-zinc-950/50 border-zinc-800'
@@ -264,10 +265,7 @@
 							? 'bg-red-500/10'
 							: 'bg-red-50'} rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-500/20 transition-all duration-300 group-hover:scale-110"
 					>
-						<svelte:component
-							this={benefit.icon}
-							class="w-6 h-6 text-red-600"
-						/>
+						<Icon class="w-6 h-6 text-red-600" />
 						<div
 							class="absolute inset-0 bg-red-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
 						></div>
@@ -644,17 +642,27 @@
 	<div
 		class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-6"
 		onclick={closeRole}
+		onkeydown={(e) => e.key === "Escape" && closeRole()}
+		role="button"
+		tabindex="0"
+		aria-label="Close modal"
 	>
 		<div
 			class="{$themeStore === 'dark'
 				? 'bg-[#030712] border-zinc-800'
 				: 'bg-white border-zinc-200'} border rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
 			onclick={(e) => e.stopPropagation()}
+			onkeydown={(e) => e.stopPropagation()}
+			role="dialog"
+			tabindex="-1"
+			aria-modal="true"
+			aria-labelledby="modal-title"
 		>
 			<div class="p-8">
 				<div class="flex items-start justify-between mb-6">
 					<div>
 						<h2
+							id="modal-title"
 							class="text-3xl font-black mb-2 tracking-tight {$themeStore ===
 							'dark'
 								? 'text-white'
@@ -689,6 +697,7 @@
 						class="{$themeStore === 'dark'
 							? 'text-gray-400 hover:text-white'
 							: 'text-gray-500 hover:text-black'} transition-colors"
+						aria-label="Close role details"
 					>
 						<svg
 							class="w-6 h-6"

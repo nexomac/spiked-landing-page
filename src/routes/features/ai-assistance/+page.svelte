@@ -44,21 +44,6 @@
 </svelte:head>
 
 <style>
-	/* Smooth scrollbar */
-	.scrollbar-thin::-webkit-scrollbar {
-		width: 4px;
-	}
-	.scrollbar-thin::-webkit-scrollbar-track {
-		background: transparent;
-	}
-	.scrollbar-thin::-webkit-scrollbar-thumb {
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 2px;
-	}
-	.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-		background: rgba(255, 255, 255, 0.2);
-	}
-
 	/* Gradient text */
 	.gradient-text {
 		background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
@@ -86,26 +71,6 @@
 		box-shadow: 
 			0 20px 60px rgba(0, 0, 0, 0.4),
 			0 0 40px rgba(239, 68, 68, 0.1);
-	}
-
-	/* Animated gradient border with shimmer */
-	.animated-border {
-		position: relative;
-		background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-		animation: borderShimmer 3s ease-in-out infinite;
-	}
-	.animated-border::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		padding: 1px;
-		background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.1), transparent, rgba(239, 68, 68, 0.2));
-		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
-		animation: rotateBorder 4s linear infinite;
 	}
 
 	@keyframes borderShimmer {
@@ -146,25 +111,6 @@
 		background-size: 50px 50px;
 		mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
 		-webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-	}
-
-	/* Layered shadows for depth */
-	.depth-shadow {
-		box-shadow:
-			0 1px 2px rgba(0, 0, 0, 0.2),
-			0 4px 8px rgba(0, 0, 0, 0.15),
-			0 8px 16px rgba(0, 0, 0, 0.1),
-			0 16px 32px rgba(0, 0, 0, 0.05);
-	}
-
-	/* Tilt effect on hover */
-	.tilt-hover {
-		transform-style: preserve-3d;
-		transition: transform 0.3s ease;
-	}
-	
-	.tilt-hover:hover {
-		transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
 	}
 
 	/* Particle background effect */

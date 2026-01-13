@@ -2,7 +2,7 @@
 	import FeaturesShowcase from "$lib/components/FeaturesShowcase.svelte";
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 	import { onboardingStore } from "$lib/stores/onboarding.js";
-	import Footer from '$lib/components/Footer.svelte';
+	import Footer from "$lib/components/Footer.svelte";
 	import {
 		Sparkles,
 		MessageSquare,
@@ -19,8 +19,7 @@
 			id: "ai-assistance",
 			title: "Real-Time AI Assistance",
 			subtitle: "Based on Your Sales and Solutions Docs",
-			description:
-				"Get instant, contextual answers during your sales calls.",
+			description: "Get instant, contextual answers during your sales calls.",
 			icon: Sparkles,
 			color: "red",
 			href: "/features/ai-assistance",
@@ -48,8 +47,7 @@
 			id: "simulator",
 			title: "Meeting Simulator & Coaching",
 			subtitle: "Practice Makes Perfect",
-			description:
-				"Run realistic sales simulations with AI-powered feedback.",
+			description: "Run realistic sales simulations with AI-powered feedback.",
 			icon: Users,
 			color: "purple",
 			href: "/features/simulator",
@@ -95,9 +93,12 @@
 	const colorClasses = {
 		red: "from-red-600 to-red-700 border-red-900/50 hover:border-red-700",
 		blue: "from-blue-600 to-blue-700 border-blue-900/50 hover:border-blue-700",
-		green: "from-green-600 to-green-700 border-green-900/50 hover:border-green-700",
-		purple: "from-purple-600 to-purple-700 border-purple-900/50 hover:border-purple-700",
-		orange: "from-orange-600 to-orange-700 border-orange-900/50 hover:border-orange-700",
+		green:
+			"from-green-600 to-green-700 border-green-900/50 hover:border-green-700",
+		purple:
+			"from-purple-600 to-purple-700 border-purple-900/50 hover:border-purple-700",
+		orange:
+			"from-orange-600 to-orange-700 border-orange-900/50 hover:border-orange-700",
 		pink: "from-pink-600 to-pink-700 border-pink-900/50 hover:border-pink-700",
 		gray: "from-gray-600 to-gray-700 border-gray-900/50 hover:border-gray-700",
 	};
@@ -135,8 +136,8 @@
 					>
 				</h1>
 				<p class="text-xl text-muted-foreground max-w-3xl mx-auto">
-					Discover how SpikedAI transforms your sales process with
-					AI-powered tools and integrations.
+					Discover how SpikedAI transforms your sales process with AI-powered
+					tools and integrations.
 				</p>
 			</div>
 		</div>
@@ -158,10 +159,9 @@
 			</div>
 
 			<!-- Features Grid -->
-			<div
-				class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
-			>
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
 				{#each features as feature}
+					{@const Icon = feature.icon}
 					<a
 						href={feature.href}
 						class="group relative p-6 bg-card rounded-xl border-2 {colorClasses[
@@ -172,14 +172,9 @@
 							<div
 								class="w-14 h-14 rounded-xl bg-gradient-to-br {colorClasses[
 									feature.color
-								].split(
-									' ',
-								)[0]} flex items-center justify-center shadow-lg"
+								].split(' ')[0]} flex items-center justify-center shadow-lg"
 							>
-								<svelte:component
-									this={feature.icon}
-									class="w-7 h-7 text-white"
-								/>
+								<Icon class="w-7 h-7 text-white" />
 							</div>
 						</div>
 						<h3 class="text-xl font-bold text-foreground mb-2">
@@ -195,8 +190,7 @@
 						<div
 							class="mt-4 flex items-center gap-2 text-red-500 group-hover:gap-3 transition-all"
 						>
-							<span class="text-sm font-semibold">Learn More</span
-							>
+							<span class="text-sm font-semibold">Learn More</span>
 							<svg
 								class="w-4 h-4"
 								fill="none"
@@ -224,8 +218,8 @@
 			class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
 						w-[40rem] h-[40rem] rounded-full opacity-50
 						bg-gradient-to-br from-indigo-500/25 via-purple-500/20 to-pink-500/25
-						blur-[120px] pointer-events-none">
-		</div>
+						blur-[120px] pointer-events-none"
+		></div>
 
 		<!-- content -->
 		<div class="relative max-w-4xl mx-auto px-6 text-center">
@@ -240,9 +234,18 @@
 				class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-all"
 			>
 				Get Started
-				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-								d="M14 5l7 7m0 0l-7 7m7-7H3" />
+				<svg
+					class="w-5 h-5"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M14 5l7 7m0 0l-7 7m7-7H3"
+					/>
 				</svg>
 			</button>
 		</div>
@@ -250,6 +253,3 @@
 
 	<Footer />
 </div>
-
-<!-- Onboarding Flow -->
-<OnboardingFlow />

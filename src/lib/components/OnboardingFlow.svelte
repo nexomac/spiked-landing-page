@@ -59,7 +59,7 @@
 {#if isActive}
 	<!-- Overlay with Viewport Height + High Z-Index -->
 	<div
-		class="fixed inset-0 z-[2000] overflow-hidden bg-black/95 backdrop-blur-xl flex flex-col"
+		class="fixed inset-0 z-[2000] h-[100dvh] overflow-hidden bg-black/95 backdrop-blur-xl flex flex-col"
 		transition:fade={{ duration: 300 }}
 	>
 		<!-- Close Button -->

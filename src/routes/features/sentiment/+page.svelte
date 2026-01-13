@@ -735,16 +735,4 @@
 			transform: translateY(0);
 		}
 	}
-
-	.float {
-		animation: float 6s ease-in-out infinite;
-	}
-
-	.float-slow {
-		animation: float-slow 8s ease-in-out infinite;
-	}
-
-	.animate-fadeIn {
-		animation: fadeIn 0.5s ease-out forwards;
-	}
 </style>

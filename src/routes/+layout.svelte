@@ -5,6 +5,7 @@
 	import Navigation from "$lib/components/Navigation.svelte";
 	import GlobalLoader from "$lib/components/GlobalLoader.svelte";
 	import { themeStore } from "$lib/stores/theme.js";
+	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 
 	let { children } = $props();
 	// Enable 75% scaling by default for that "browser zoom" look
@@ -26,5 +27,6 @@
 <div id="site-root" class:scaled={enableScale}>
 	<GlobalLoader />
 	<Navigation />
+	<OnboardingFlow />
 	{@render children()}
 </div>

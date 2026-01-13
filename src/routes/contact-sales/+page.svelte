@@ -771,9 +771,6 @@
 
 <Footer />
 
-<!-- Onboarding Flow Component -->
-<OnboardingFlow />
-
 <style>
 	@keyframes float {
 		0%,

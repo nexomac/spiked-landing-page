@@ -1403,7 +1403,6 @@
 		<Footer />
 	</div>
 </div>
-<OnboardingFlow />
 
 <style>
 	/* ===== CONTEXTUAL AI HERO STYLES ===== */

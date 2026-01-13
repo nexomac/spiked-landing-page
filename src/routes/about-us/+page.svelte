@@ -61,7 +61,7 @@
 	const extendedCollaborators = [
 		{
 			name: "Amazon AI CTO",
-			background: "Amazon AI, AWS",
+			background: "",
 			focus: "Platform scale",
 			role: "Strategic Advisor",
 			initials: "AA",

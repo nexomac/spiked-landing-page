@@ -71,7 +71,7 @@
 				"Revenue acceleration focus",
 				"Consistent high-quality conversations",
 				"Scalable cognitive augmentation",
-				"Priority 6–24h support",
+				"Priority 6–24 hour support",
 			],
 			perfectFor: "Large sales organizations and leaders.",
 			cta: "Get In Touch",

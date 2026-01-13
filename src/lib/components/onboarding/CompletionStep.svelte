@@ -26,17 +26,17 @@
 
 			if (response.ok) {
 				onboardingStore.complete();
-				window.location.href = "/dashboard";
+				window.location.href = "https://spikedai.vercel.app/";
 			} else {
 				console.error("Failed to submit onboarding data");
 				// Still complete the flow for the user experience, or show an error
 				onboardingStore.complete();
-				window.location.href = "/dashboard";
+				window.location.href = "https://spikedai.vercel.app/";
 			}
 		} catch (error) {
 			console.error("Error submitting onboarding:", error);
 			onboardingStore.complete();
-			window.location.href = "/dashboard";
+			window.location.href = "https://spikedai.vercel.app/";
 		}
 	}
 

@@ -15,7 +15,6 @@
 		try {
 			const mod = await import("html2pdf.js");
 			html2pdf = mod.default || mod;
-			console.log("PDF library loaded successfully via import");
 		} catch (e) {
 			console.warn(
 				"Failed to import html2pdf.js dynamically, checking window...",
@@ -23,7 +22,6 @@
 			);
 			if (window.html2pdf) {
 				html2pdf = window.html2pdf;
-				console.log("PDF library found on window object");
 			} else {
 				console.error(
 					"html2pdf.js could not be loaded. Please ensure it is installed correctly.",
@@ -362,7 +360,6 @@
 	async function downloadPDF() {
 		if (typeof window === "undefined") return;
 
-		console.log("Download PDF triggered, html2pdf status:", !!html2pdf);
 		if (!html2pdf) {
 			console.error("html2pdf library not loaded yet.");
 			alert(
@@ -378,8 +375,6 @@
 			isGeneratingPDF = false;
 			return;
 		}
-
-		console.log("Generating PDF for element:", element);
 
 		const opt = {
 			margin: 0, // Set to 0 to allow full-bleed background on cover page and internal margin management
@@ -480,7 +475,6 @@
 					}
 				})
 				.save();
-			console.log("PDF generation successful");
 			document.body.removeChild(clone);
 		} catch (error) {
 			console.error("PDF Generation Error:", error);

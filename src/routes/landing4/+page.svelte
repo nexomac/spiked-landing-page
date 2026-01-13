@@ -411,49 +411,50 @@
 		<section
 			data-section="hero"
 			class="relative w-full flex flex-col justify-center
-            {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
-			style="padding: clamp(2rem, 4vw, 5rem);"
+			{$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
+			style="padding: clamp(2.5rem, 6vw, 5rem);"
 		>
-			<div class="w-full relative z-10 pt-[clamp(8rem,15vh,12rem)]">
+			<div class="w-full relative z-10 pt-[clamp(7rem,14vh,11rem)]">
 				<!-- HUGE HEADLINE -->
 				<h1
-					class="font-black tracking-tighter mb-8
-                    {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
+					class="font-black tracking-tighter mb-6
+					{$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
 					style="
-                        font-size: clamp(3.5rem, 11vw, 11rem); 
-                        line-height: 0.85;
-                        letter-spacing: -0.04em;
-                    "
+						font-size: clamp(3.75rem, 10vw, 11rem);
+						line-height: 0.88;
+						letter-spacing: -0.04em;
+					"
 				>
 					Sell like <span class="text-red-600 block sm:inline">a CEO.</span>
 				</h1>
 
 				<!-- SUBTEXT -->
 				<p
-					class="font-medium leading-relaxed max-w-4xl
-                    {$themeStore === 'dark'
-						? 'text-zinc-400'
-						: 'text-zinc-500'}"
-					style="font-size: clamp(1.1rem, 1.5vw, 2rem);"
+					class="font-medium max-w-3xl
+					{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
+					style="font-size: clamp(1.2rem, 3.5vw, 1.9rem);"
 				>
 					The rise of the singular rep starts here.
 				</p>
 
-				<!-- Request Demo Button (FIXED, PROMINENT) -->
+				<!-- Request Demo Button -->
 				<a
 					href="/contact-sales"
-					class="mt-10 mb-0 contextual-cta group relative inline-flex items-center gap-3 px-[clamp(1rem,4vw,4rem)] py-[clamp(1rem,2vw,2rem)] rounded-full font-semibold text-base transition-all duration-200 mb-16"
+					class="mt-10 mb-16 contextual-cta group relative inline-flex items-center gap-3
+					px-[clamp(1.75rem,4.5vw,3.25rem)]
+					py-[clamp(1.05rem,2.8vw,1.5rem)]
+					rounded-full font-semibold transition-all duration-200"
 				>
-					<span class="relative z-10 text-[clamp(1rem, 3vw, 4rem)]">Request a Demo</span>
+					<span class="relative z-10 text-[clamp(1.05rem,2.2vw,1.35rem)]">
+						Request a Demo
+					</span>
 					<span class="cta-icon relative z-10 grid place-items-center">
 						<ArrowRight
-							class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+							class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
 						/>
 					</span>
 				</a>
 			</div>
-
-			<!-- Brands Marquee at bottom -->
 		</section>
 
 		<!-- ANTHROPIC-STYLE VARIED SECTION -->

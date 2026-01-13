@@ -42,7 +42,6 @@ function getBestImage(data) {
 }
 
 export async function load() {
-    console.log('Fetching live blog posts...');
     const db = await getDb();
     
     // Fetch ALL published entries for the blog listing

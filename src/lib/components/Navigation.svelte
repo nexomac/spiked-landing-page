@@ -464,10 +464,13 @@
 <!-- Mobile Menu Overlay - Move outside <nav> to prevent layout clipping -->
 {#if mobileMenuOpen}
 	<div
-		class={`fixed inset-0 z-[90] lg:hidden ${isLight ? "bg-white" : "bg-black"} flex flex-col`}
+		class={`fixed inset-0 z-[90] lg:hidden ${isLight ? "bg-white" : "bg-black"} flex flex-col overflow-hidden`}
 		transition:fade={{ duration: 150 }}
 	>
-		<div class="flex-1 overflow-y-auto no-scrollbar pt-24 pb-32 px-6">
+		<div
+			class="flex-1 overflow-y-auto no-scrollbar pt-24 pb-32 px-6 overscroll-contain"
+			style="-webkit-overflow-scrolling: touch; touch-action: pan-y;"
+		>
 			<div class="space-y-10">
 				{#each Object.entries(navData) as [id, menu]}
 					<div class="space-y-5">
@@ -532,14 +535,14 @@
 
 		<!-- Mobile Fixed Bottom CTA -->
 		<div
-			class={`absolute bottom-0 left-0 right-0 p-6 pt-10 pb-8 bg-gradient-to-t ${isLight ? "from-white via-white to-transparent" : "from-black via-black to-transparent"}`}
+			class={`absolute bottom-0 left-0 right-0 p-6 pt-10 pb-8 bg-gradient-to-t ${isLight ? "from-white via-white to-transparent" : "from-black via-black to-transparent"} pointer-events-none`}
 		>
 			<button
 				onclick={() => {
 					onboardingStore.start();
 					toggleMobileMenu(false);
 				}}
-				class="w-full py-5 bg-red-600 text-white font-black text-xl rounded-full shadow-2xl shadow-red-600/40 active:scale-[0.98] transition-all"
+				class="w-full py-5 bg-red-600 text-white font-black text-xl rounded-full shadow-2xl shadow-red-600/40 active:scale-[0.98] transition-all pointer-events-auto"
 			>
 				Get Started
 			</button>
@@ -578,5 +581,18 @@
 
 	.animate-shimmer {
 		animation: shimmer 2s infinite;
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	.overscroll-contain {
+		overscroll-behavior-y: contain;
 	}
 </style>

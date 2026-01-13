@@ -464,7 +464,7 @@
 <!-- Mobile Menu Overlay - Move outside <nav> to prevent layout clipping -->
 {#if mobileMenuOpen}
 	<div
-		class={`fixed inset-0 z-[90] lg:hidden ${isLight ? "bg-white" : "bg-black"} flex flex-col overflow-hidden`}
+		class={`fixed inset-0 h-[100dvh] w-full z-[90] lg:hidden ${isLight ? "bg-white" : "bg-black"} flex flex-col overflow-hidden`}
 		transition:fade={{ duration: 150 }}
 	>
 		<div
@@ -535,7 +535,7 @@
 
 		<!-- Mobile Fixed Bottom CTA -->
 		<div
-			class={`absolute bottom-0 left-0 right-0 p-6 pt-10 pb-8 bg-gradient-to-t ${isLight ? "from-white via-white to-transparent" : "from-black via-black to-transparent"} pointer-events-none`}
+			class={`absolute bottom-0 left-0 right-0 z-20 p-6 pt-12 pb-8 bg-gradient-to-t ${isLight ? "from-white via-white to-transparent" : "from-black via-black to-transparent"} pointer-events-none`}
 		>
 			<button
 				onclick={() => {

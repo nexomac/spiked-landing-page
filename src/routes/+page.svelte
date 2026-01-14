@@ -316,6 +316,43 @@
 		},
 	];
 
+	const impactItems = [
+		{
+			id: "01",
+			title: "Replaces cognitive overload with amplified cognitive ability",
+			description: "For every rep, before, during, and after the conversation.",
+			darkBg: "bg-[#0A1A12]",
+			darkBorder: "border-green-900/20",
+			lightBg: "bg-[#F2FBF6]",
+		},
+		{
+			id: "02",
+			title: "Rise of the Singular Rep",
+			description: "Fewer teams required, sharper execution, tighter accountability.",
+			darkBg: "bg-[#1A1A0A]",
+			darkBorder: "border-yellow-900/20",
+			lightBg: "bg-[#FEFBF2]",
+		},
+		{
+			id: "03",
+			title: "One-shot selling.",
+			description:
+				"Confidence and clarity at the level of a CEO.",
+			darkBg: "bg-[#1A0A0A]",
+			darkBorder: "border-red-900/20",
+			lightBg: "bg-[#FFF2F2]",
+		},
+		{
+			id: "04",
+			title: "Unified customer actions",
+			description:
+				"Every motion aligned, every outcome intentional.",
+			darkBg: "bg-[#0A0F1A]",
+			darkBorder: "border-blue-900/20",
+			lightBg: "bg-[#F2F6FF]",
+		},
+	];
+
 	onMount(() => {
 		themeStore.init();
 		const handleScroll = () => (scrollY = window.scrollY);
@@ -598,78 +635,31 @@
 				></div>
 
 				<!-- 4. Impact Grid (3 Column) -->
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-					<div
-						class="rounded-[2.5rem] p-10 transition-all duration-300
-                        {$themeStore === 'dark'
-							? 'bg-[#0A1A12] border border-green-900/20'
-							: 'bg-[#F2FBF6]'}"
-					>
-						<div class="text-4xl font-black text-red-600 mb-6">01</div>
-						<h4
-							class="text-2xl font-black mb-4 {$themeStore === 'dark'
-								? 'text-white'
-								: 'text-zinc-900'}"
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+					{#each impactItems as item}
+						<div
+							class="rounded-[2.5rem] p-10 transition-all duration-300
+								{$themeStore === 'dark'
+								? `border ${item.darkBg} ${item.darkBorder}`
+								: item.lightBg}"
 						>
-							Clearer conversations.
-						</h4>
-						<p
-							class="font-medium {$themeStore === 'dark'
-								? 'text-zinc-400'
-								: 'text-zinc-600'}"
-						>
-							Eliminating noise and distraction to focus on what truly matters
-							in every interaction.
-						</p>
-					</div>
-
-					<div
-						class="rounded-[2.5rem] p-10 transition-all duration-300
-                        {$themeStore === 'dark'
-							? 'bg-[#1A1A0A] border border-yellow-900/20'
-							: 'bg-[#FEFBF2]'}"
-					>
-						<div class="text-4xl font-black text-red-600 mb-6">02</div>
-						<h4
-							class="text-2xl font-black mb-4 {$themeStore === 'dark'
-								? 'text-white'
-								: 'text-zinc-900'}"
-						>
-							Consistent execution.
-						</h4>
-						<p
-							class="font-medium {$themeStore === 'dark'
-								? 'text-zinc-400'
-								: 'text-zinc-600'}"
-						>
-							Standardizing excellence across your entire team, from startups to
-							enterprise level.
-						</p>
-					</div>
-
-					<div
-						class="rounded-[2.5rem] p-10 transition-all duration-300
-                        {$themeStore === 'dark'
-							? 'bg-[#1A0A0A] border border-red-900/20'
-							: 'bg-[#FFF2F2]'}"
-					>
-						<div class="text-4xl font-black text-red-600 mb-6">03</div>
-						<h4
-							class="text-2xl font-black mb-4 {$themeStore === 'dark'
-								? 'text-white'
-								: 'text-zinc-900'}"
-						>
-							Higher revenue.
-						</h4>
-						<p
-							class="font-medium {$themeStore === 'dark'
-								? 'text-zinc-400'
-								: 'text-zinc-600'}"
-						>
-							Shaping the future of how real selling gets done to maximize your
-							bottom line.
-						</p>
-					</div>
+							<div class="text-4xl font-black text-red-600 mb-6">{item.id}</div>
+							<h4
+								class="text-2xl font-black mb-4 {$themeStore === 'dark'
+									? 'text-white'
+									: 'text-zinc-900'}"
+							>
+								{item.title}
+							</h4>
+							<p
+								class="font-medium {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'}"
+							>
+								{item.description}
+							</p>
+						</div>
+					{/each}
 				</div>
 
 				<div class="pt-8 text-center">

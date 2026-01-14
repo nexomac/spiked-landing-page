@@ -335,7 +335,7 @@
 		},
 		{
 			id: "03",
-			title: "One-shot selling.",
+			title: "One-shot selling",
 			description:
 				"Confidence and clarity at the level of a CEO.",
 			darkBg: "bg-[#1A0A0A]",

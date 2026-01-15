@@ -31,7 +31,7 @@
 			],
 			perfectFor: "Individuals curious about selling with authority.",
 			cta: "Get Started",
-			link: "https://vercel.spikedai.app/",
+			link: "https://app.spiked.ai",
 			highlight: false,
 			icon: User,
 			color: "from-zinc-500/20 to-transparent",
@@ -53,7 +53,7 @@
 			],
 			perfectFor: "Sales professionals and small teams.",
 			cta: "Start Scaling",
-			link: "https://vercel.spikedai.app/",
+			link: "https://app.spiked.ai",
 			highlight: false,
 			icon: Briefcase,
 			color: "from-red-500/20 to-transparent",
@@ -97,7 +97,12 @@
 				"Web Agent",
 				"AI Tune-Up",
 				"Personalization Hub",
-				"Know Your Customer",
+			],
+		},
+		{
+			title: "Know Your Customer Hub",
+			icon: User,
+			items: [
 				"Account Intelligence",
 				"Customer Persona",
 				"Answer Style",
@@ -152,15 +157,15 @@
 			<h1
 				class="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9]"
 			>
-				FUEL YOUR <span
+				FUEL YOUR<br /><span
 					class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-red-400"
-					>GROWTH</span
+					>REVENUE GROWTH</span
 				>
 			</h1>
 			<p
 				class="text-zinc-200 text-2xl max-w-2xl mx-auto font-medium leading-relaxed"
 			>
-				Unlimited capture for everyone.
+				<!-- Unlimited capture for everyone. -->
 				<span
 					class="text-white underline decoration-red-500/50 underline-offset-8"
 					>Intelligence for those who close.</span
@@ -328,7 +333,7 @@
 				</p>
 			</div>
 
-			<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 px-10 pb-20">
+			<div class="grid md:grid-cols-2 lg:grid-cols-5 gap-12 px-10 pb-20">
 				{#each capabilityGroups as group}
 					<div class="group/cap">
 						<div class="flex items-center gap-4 mb-8">

@@ -535,7 +535,7 @@
 						>
 					</div>
 					<a
-						href="/login"
+						href="https://app.spiked.ai/login"
 						class={`block mt-4 p-5 rounded-3xl border text-center font-black text-lg ${isLight ? "bg-zinc-50 border-zinc-100 text-zinc-900" : "bg-zinc-900 border-zinc-800 text-white"}`}
 						onclick={() => toggleMobileMenu(false)}>Log In</a
 					>

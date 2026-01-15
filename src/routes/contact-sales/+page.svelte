@@ -3,258 +3,15 @@
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 	import Footer from "$lib/components/Footer.svelte";
 	import { themeStore } from "$lib/stores/theme.js";
+	import { enhance } from "$app/forms";
+	import { fade, fly } from "svelte/transition";
+
+	let { form } = $props();
+	let isSubmitting = $state(false);
 </script>
 
 <svelte:head>
 	<title>Contact Sales - SpikedAI</title>
-	<script>
-		// Zoho Form Validation Scripts
-		var dateAndMonthRegexFormateArray = [
-			"^(([0][1-9])|([1-2][0-9])|([3][0-1]))[-](Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[-](?:(?:19|20)[0-9]{2})$",
-			"^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[-](?:(?:19|20)[0-9]{2})$",
-		];
-		var zf_DateRegex = new RegExp(dateAndMonthRegexFormateArray[0]);
-		var zf_MonthYearRegex = new RegExp(dateAndMonthRegexFormateArray[1]);
-		var zf_MandArray = [
-			"Name_First",
-			"Name_Last",
-			"SingleLine",
-			"SingleLine2",
-			"Email",
-			"PhoneNumber_countrycode",
-			"PhoneNumber_countrycodeval",
-			"MultiLine",
-		];
-		var zf_FieldArray = [
-			"Name_First",
-			"Name_Last",
-			"SingleLine",
-			"SingleLine2",
-			"Email",
-			"PhoneNumber_countrycode",
-			"PhoneNumber_countrycodeval",
-			"SingleLine1",
-			"MultiLine",
-		];
-		var isSalesIQIntegrationEnabled = true;
-		var salesIQFieldsArray = [
-			{ formFieldName: "Email", formFieldType: 9, salesIQFieldName: "Email" },
-			{
-				formFieldName: "PhoneNumber",
-				formFieldType: 11,
-				salesIQFieldName: "Phone",
-			},
-			{
-				formFieldName: "Name",
-				formFieldType: 7,
-				salesIQFieldName: "Name",
-				fieldCompLinkName: "Name_First",
-			},
-		];
-
-		function zf_ValidateAndSubmit() {
-			if (zf_CheckMandatory()) {
-				if (zf_ValidCheck()) {
-					if (isSalesIQIntegrationEnabled) {
-						zf_addDataToSalesIQ();
-					}
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
-
-		function zf_CheckMandatory() {
-			for (var i = 0; i < zf_MandArray.length; i++) {
-				var fieldObj = document.forms.form[zf_MandArray[i]];
-				if (fieldObj) {
-					if (fieldObj.nodeName != null) {
-						if (fieldObj.value.replace(/^\s+|\s+$/g, "").length == 0) {
-							fieldObj.focus();
-							zf_ShowErrorMsg(zf_MandArray[i]);
-							return false;
-						} else if (fieldObj.nodeName == "SELECT") {
-							if (
-								fieldObj.options[fieldObj.selectedIndex].value == "-Select-"
-							) {
-								fieldObj.focus();
-								zf_ShowErrorMsg(zf_MandArray[i]);
-								return false;
-							}
-						}
-					}
-				}
-			}
-			return true;
-		}
-
-		function zf_ValidCheck() {
-			var isValid = true;
-			for (var ind = 0; ind < zf_FieldArray.length; ind++) {
-				var fieldObj = document.forms.form[zf_FieldArray[ind]];
-				if (fieldObj) {
-					if (fieldObj.nodeName != null) {
-						var checkType = fieldObj.getAttribute("checktype");
-						if (checkType == "c5") {
-							if (!zf_ValidateEmailID(fieldObj)) {
-								isValid = false;
-								fieldObj.focus();
-								zf_ShowErrorMsg(zf_FieldArray[ind]);
-								return false;
-							}
-						} else if (checkType == "c7") {
-							if (!zf_ValidatePhone(fieldObj)) {
-								isValid = false;
-								fieldObj.focus();
-								zf_ShowErrorMsg(zf_FieldArray[ind]);
-								return false;
-							}
-						}
-					}
-				}
-			}
-			return isValid;
-		}
-
-		function zf_ShowErrorMsg(uniqName) {
-			for (var errInd = 0; errInd < zf_FieldArray.length; errInd++) {
-				var fldLinkName = zf_FieldArray[errInd].split("_")[0];
-				var errElem = document.getElementById(fldLinkName + "_error");
-				if (errElem) errElem.style.display = "none";
-			}
-			var linkName = uniqName.split("_")[0];
-			var errElem = document.getElementById(linkName + "_error");
-			if (errElem) errElem.style.display = "block";
-		}
-
-		function zf_ValidateEmailID(elem) {
-			var check = 0;
-			var emailValue = elem.value;
-			if (emailValue != null && emailValue != "") {
-				var emailArray = emailValue.split(",");
-				for (var i = 0; i < emailArray.length; i++) {
-					var emailExp =
-						/^[\w]([\w\-.+&'/]*)@([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,22}$/;
-					if (!emailExp.test(emailArray[i].replace(/^\s+|\s+$/g, ""))) {
-						check = 1;
-					}
-				}
-				if (check == 0) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return true;
-			}
-		}
-
-		function zf_ValidatePhone(inpElem) {
-			var ZFPhoneRegex = {
-				PHONE_INTE_ALL_REG: /^[+]{0,1}[()0-9-. ]+$/,
-				PHONE_INTE_NUMERIC_REG: /^[0-9]+$/,
-				PHONE_CONT_CODE_REG: /^[+][0-9]{1,4}$/,
-			};
-			var phoneFormat = parseInt(inpElem.getAttribute("phoneFormat"));
-			var fieldInpVal = inpElem.value.replace(/^\s+|\s+$/g, "");
-			var toReturn = true;
-			if (phoneFormat === 1) {
-				if (inpElem.getAttribute("valType") == "code") {
-					var codeRexp = ZFPhoneRegex.PHONE_CONT_CODE_REG;
-					if (fieldInpVal != "" && !codeRexp.test(fieldInpVal)) {
-						return false;
-					}
-				} else {
-					var IRexp = ZFPhoneRegex.PHONE_INTE_ALL_REG;
-					if (inpElem.getAttribute("phoneFormatType") == "2") {
-						IRexp = ZFPhoneRegex.PHONE_INTE_NUMERIC_REG;
-					}
-					if (fieldInpVal != "" && !IRexp.test(fieldInpVal)) {
-						toReturn = false;
-						return toReturn;
-					}
-				}
-				return toReturn;
-			}
-		}
-
-		function getSalesiqPhoneVal(inpElem) {
-			var fieldLinkName = inpElem.getAttribute("compname");
-			var phoneFormat = inpElem.getAttribute("phoneFormat");
-			var salesIQValue = "";
-			if (phoneFormat === "1") {
-				var isCodeEnabled = inpElem.getAttribute("isCountryCodeEnabled");
-				salesIQValue = document.getElementById(
-					"international_" + fieldLinkName + "_countrycode",
-				).value;
-				if (
-					salesIQValue != null &&
-					salesIQValue !== "" &&
-					isCodeEnabled === "true"
-				) {
-					salesIQValue =
-						document.getElementById(
-							"international_" + fieldLinkName + "_countrycodeval",
-						).value + salesIQValue;
-				}
-			}
-			return salesIQValue;
-		}
-
-		function zf_addDataToSalesIQ() {
-			var visitorinfo = {};
-			var zfFieldValueMap = {};
-			var elements = document.getElementById("form").elements;
-			for (var elmIdx = 0; elmIdx < elements.length; elmIdx++) {
-				var inpElem = elements[elmIdx];
-				var fieldType = inpElem.getAttribute("fieldType");
-				if (
-					fieldType === "1" ||
-					fieldType === "7" ||
-					fieldType === "9" ||
-					fieldType === "11"
-				) {
-					var nameAttr = inpElem.getAttribute("name");
-					if (fieldType === "1" || fieldType === "7" || fieldType === "9") {
-						zfFieldValueMap[nameAttr] = inpElem.value;
-					}
-					if (fieldType === "11") {
-						var compLinkAttr = inpElem.getAttribute("compname");
-						zfFieldValueMap[compLinkAttr] = getSalesiqPhoneVal(inpElem);
-					}
-				}
-			}
-			for (var siqIdx = 0; siqIdx < salesIQFieldsArray.length; siqIdx++) {
-				var salesIQObj = salesIQFieldsArray[siqIdx];
-				var salesIQFieldName = salesIQObj.salesIQFieldName;
-				var zfFieldName = salesIQObj.formFieldName;
-				var zfFldCompLinkName = salesIQObj.fieldCompLinkName;
-				var value = "";
-				if (zfFieldValueMap.hasOwnProperty(zfFieldName)) {
-					value = zfFieldValueMap[zfFieldName];
-				} else if (zfFieldValueMap.hasOwnProperty(zfFldCompLinkName)) {
-					value = zfFieldValueMap[zfFldCompLinkName];
-				}
-				if (salesIQFieldName === "Phone") {
-					visitorinfo.contactnumber = value;
-				} else if (salesIQFieldName === "Email") {
-					visitorinfo.email = value;
-				} else if (salesIQFieldName === "Name") {
-					visitorinfo.name = value;
-				}
-			}
-			parent.postMessage(
-				JSON.stringify({
-					type: "zoho.salesiq.apimessage",
-					visitor: visitorinfo,
-				}),
-				"*",
-			);
-		}
-	</script>
 </svelte:head>
 
 <!-- Contact Sales Hero Section -->
@@ -417,322 +174,16 @@
 						: 'bg-white border-zinc-200 shadow-xl'} backdrop-blur-xl border rounded-2xl p-8"
 				>
 					<!-- Zoho Form Integration -->
-					<div class="space-y-2 mb-6">
-						<h2
-							class="text-2xl font-bold {$themeStore === 'dark'
-								? 'text-white'
-								: 'text-zinc-900'}"
+					{#if form?.success}
+						<div
+							in:fly={{ y: 20, duration: 500 }}
+							class="text-center py-12 space-y-6"
 						>
-							Get Started Today
-						</h2>
-						<p class="text-sm text-zinc-500">
-							Fill out the form and we'll be in touch shortly.
-						</p>
-					</div>
-
-					<form
-						action="https://forms.zohopublic.in/einsteini/form/CONTACTUS/formperma/JxLWUxq9cpXYKp2TuFg7u3HCZHJgh6X6zBNWzYYeXSM/htmlRecords/submit"
-						name="form"
-						method="POST"
-						accept-charset="UTF-8"
-						enctype="multipart/form-data"
-						id="form"
-						class="space-y-6"
-						onsubmit={(e) => {
-							document.charset = "UTF-8";
-							if (!window.zf_ValidateAndSubmit()) {
-								e.preventDefault();
-								return false;
-							}
-						}}
-					>
-						<input type="hidden" name="zf_referrer_name" value="" />
-						<input type="hidden" name="zf_redirect_url" value="" />
-						<input type="hidden" name="zc_gad" value="" />
-
-						<!-- Name Fields -->
-						<div class="grid grid-cols-2 gap-4">
-							<div class="space-y-2">
-								<label
-									for="Name_First"
-									class="block text-sm font-semibold {$themeStore === 'dark'
-										? 'text-zinc-300'
-										: 'text-zinc-700'}"
-								>
-									First Name <span class="text-red-500">*</span>
-								</label>
-								<input
-									type="text"
-									id="Name_First"
-									name="Name_First"
-									fieldType="7"
-									maxlength="255"
-									placeholder="John"
-									class="w-full px-4 py-3 {$themeStore === 'dark'
-										? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-										: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-								/>
-							</div>
-							<div class="space-y-2">
-								<label
-									for="Name_Last"
-									class="block text-sm font-semibold {$themeStore === 'dark'
-										? 'text-zinc-300'
-										: 'text-zinc-700'}"
-								>
-									Last Name <span class="text-red-500">*</span>
-								</label>
-								<input
-									type="text"
-									id="Name_Last"
-									name="Name_Last"
-									fieldType="7"
-									maxlength="255"
-									placeholder="Doe"
-									class="w-full px-4 py-3 {$themeStore === 'dark'
-										? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-										: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-								/>
-							</div>
-						</div>
-						<p
-							id="Name_error"
-							class="zf-errorMessage text-xs text-red-500"
-							style="display:none;"
-						>
-							Please enter your name
-						</p>
-
-						<!-- Company -->
-						<div class="space-y-2">
-							<label
-								for="SingleLine"
-								class="block text-sm font-semibold {$themeStore === 'dark'
-									? 'text-zinc-300'
-									: 'text-zinc-700'}"
+							<div
+								class="w-20 h-20 bg-green-500/10 border border-green-500/20 rounded-full flex items-center justify-center mx-auto"
 							>
-								Company <span class="text-red-500">*</span>
-							</label>
-							<input
-								type="text"
-								id="SingleLine"
-								name="SingleLine"
-								checktype="c1"
-								fieldType="1"
-								maxlength="255"
-								placeholder="Your Company Name"
-								class="w-full px-4 py-3 {$themeStore === 'dark'
-									? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-									: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-							/>
-							<p
-								id="SingleLine_error"
-								class="zf-errorMessage text-xs text-red-500"
-								style="display:none;"
-							>
-								Please enter company name
-							</p>
-						</div>
-
-						<!-- Company URL -->
-						<div class="space-y-2">
-							<label
-								for="SingleLine2"
-								class="block text-sm font-semibold {$themeStore === 'dark'
-									? 'text-zinc-300'
-									: 'text-zinc-700'}"
-							>
-								Company URL <span class="text-red-500">*</span>
-							</label>
-							<input
-								type="text"
-								id="SingleLine2"
-								name="SingleLine2"
-								checktype="c1"
-								fieldType="1"
-								maxlength="255"
-								placeholder="https://your-company.com"
-								class="w-full px-4 py-3 {$themeStore === 'dark'
-									? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-									: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-							/>
-							<p
-								id="SingleLine2_error"
-								class="zf-errorMessage text-xs text-red-500"
-								style="display:none;"
-							>
-								Please enter company URL
-							</p>
-						</div>
-
-						<!-- Email -->
-						<div class="space-y-2">
-							<label
-								for="Email"
-								class="block text-sm font-semibold {$themeStore === 'dark'
-									? 'text-zinc-300'
-									: 'text-zinc-700'}"
-							>
-								Work Email <span class="text-red-500">*</span>
-							</label>
-							<input
-								type="email"
-								id="Email"
-								name="Email"
-								checktype="c5"
-								fieldType="9"
-								maxlength="255"
-								placeholder="john@company.com"
-								class="w-full px-4 py-3 {$themeStore === 'dark'
-									? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-									: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-							/>
-							<p
-								id="Email_error"
-								class="zf-errorMessage text-xs text-red-500"
-								style="display:none;"
-							>
-								Please enter valid email
-							</p>
-						</div>
-
-						<!-- Phone -->
-						<div class="space-y-2">
-							<label
-								for="international_PhoneNumber_countrycode"
-								class="block text-sm font-semibold {$themeStore === 'dark'
-									? 'text-zinc-300'
-									: 'text-zinc-700'}"
-							>
-								Phone <span class="text-red-500">*</span>
-							</label>
-							<div class="grid grid-cols-3 gap-4">
-								<div>
-									<input
-										type="text"
-										compname="PhoneNumber_countrycodeval"
-										name="PhoneNumber_countrycodeval"
-										checktype="c7"
-										maxlength="10"
-										phoneFormat="1"
-										isCountryCodeEnabled="true"
-										id="international_PhoneNumber_countrycodeval"
-										valType="code"
-										placeholder="+1"
-										class="w-full px-4 py-3 {$themeStore === 'dark'
-											? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-											: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-									/>
-									<label
-										for="international_PhoneNumber_countrycodeval"
-										class="block text-xs text-zinc-500 mt-1">Code</label
-									>
-								</div>
-								<div class="col-span-2">
-									<input
-										type="text"
-										compname="PhoneNumber"
-										name="PhoneNumber_countrycode"
-										maxlength="20"
-										checktype="c7"
-										phoneFormat="1"
-										isCountryCodeEnabled="true"
-										fieldType="11"
-										id="international_PhoneNumber_countrycode"
-										valType="number"
-										phoneFormatType="2"
-										placeholder="555-123-4567"
-										class="w-full px-4 py-3 {$themeStore === 'dark'
-											? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-											: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-									/>
-									<label
-										for="international_PhoneNumber_countrycode"
-										class="block text-xs text-zinc-500 mt-1">Number</label
-									>
-								</div>
-							</div>
-							<p
-								id="PhoneNumber_error"
-								class="zf-errorMessage text-xs text-red-500"
-								style="display:none;"
-							>
-								Please enter valid phone
-							</p>
-						</div>
-
-						<!-- How did you hear about us -->
-						<div class="space-y-2">
-							<label
-								for="SingleLine1"
-								class="block text-sm font-semibold {$themeStore === 'dark'
-									? 'text-zinc-300'
-									: 'text-zinc-700'}"
-							>
-								How Did You Hear About Us?
-							</label>
-							<input
-								type="text"
-								id="SingleLine1"
-								name="SingleLine1"
-								checktype="c1"
-								fieldType="1"
-								maxlength="255"
-								placeholder="e.g., Search Engine, Social Media, Referral"
-								class="w-full px-4 py-3 {$themeStore === 'dark'
-									? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-									: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
-							/>
-							<p
-								id="SingleLine1_error"
-								class="zf-errorMessage text-xs text-red-500"
-								style="display:none;"
-							>
-								Invalid value
-							</p>
-						</div>
-
-						<!-- Business Details -->
-						<div class="space-y-2">
-							<label
-								for="MultiLine"
-								class="block text-sm font-semibold {$themeStore === 'dark'
-									? 'text-zinc-300'
-									: 'text-zinc-700'}"
-							>
-								Your Business Details <span class="text-red-500">*</span>
-							</label>
-							<textarea
-								id="MultiLine"
-								name="MultiLine"
-								checktype="c1"
-								maxlength="65535"
-								rows="4"
-								placeholder="Please describe your business needs or the challenges you are facing in your sales and revenue conversions."
-								class="w-full px-4 py-3 {$themeStore === 'dark'
-									? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
-									: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none resize-none"
-							></textarea>
-							<p
-								id="MultiLine_error"
-								class="zf-errorMessage text-xs text-red-500"
-								style="display:none;"
-							>
-								Please describe your needs
-							</p>
-						</div>
-
-						<!-- Submit Button -->
-						<button
-							type="submit"
-							class="group relative w-full px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50"
-						>
-							<span
-								class="relative z-10 flex items-center justify-center gap-2"
-							>
-								Submit
 								<svg
-									class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+									class="w-10 h-10 text-green-500"
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
@@ -740,29 +191,342 @@
 									<path
 										stroke-linecap="round"
 										stroke-linejoin="round"
-										stroke-width="2"
-										d="M13 7l5 5m0 0l-5 5m5-5H6"
+										stroke-width="3"
+										d="M5 13l4 4L19 7"
 									/>
 								</svg>
-							</span>
-							<div
-								class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-							></div>
-						</button>
+							</div>
+							<div class="space-y-2">
+								<h2
+									class="text-3xl font-black {$themeStore === 'dark'
+										? 'text-white'
+										: 'text-zinc-900'}"
+								>
+									Message Sent!
+								</h2>
+								<p class="text-zinc-500 text-lg">
+									Thanks for reaching out. Our team will get back to you within
+									24 hours.
+								</p>
+							</div>
+							<button
+								onclick={() => (window.location.href = "/")}
+								class="px-8 py-3 bg-zinc-900 text-white rounded-lg font-bold hover:bg-black transition-colors"
+							>
+								Back to Home
+							</button>
+						</div>
+					{:else}
+						<div class="space-y-2 mb-6">
+							<h2
+								class="text-2xl font-bold {$themeStore === 'dark'
+									? 'text-white'
+									: 'text-zinc-900'}"
+							>
+								Get Started Today
+							</h2>
+							<p class="text-sm text-zinc-500">
+								Fill out the form and we'll be in touch shortly.
+							</p>
+						</div>
 
-						<p class="text-xs text-zinc-600 text-center">
-							By submitting this form, you agree to our
-							<a
-								href="/privacy"
-								class="text-red-500 hover:text-red-400 underline"
-								>Privacy Policy</a
+						<form
+							method="POST"
+							use:enhance={() => {
+								isSubmitting = true;
+								return async ({ update }) => {
+									isSubmitting = false;
+									await update();
+								};
+							}}
+							id="form"
+							class="space-y-6"
+						>
+							{#if form?.error}
+								<div
+									transition:fade
+									class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm font-medium"
+								>
+									{form.error}
+								</div>
+							{/if}
+
+							<!-- Name Fields -->
+							<div class="grid grid-cols-2 gap-4">
+								<div class="space-y-2">
+									<label
+										for="Name_First"
+										class="block text-sm font-semibold {$themeStore === 'dark'
+											? 'text-zinc-300'
+											: 'text-zinc-700'}"
+									>
+										First Name <span class="text-red-500">*</span>
+									</label>
+									<input
+										type="text"
+										id="Name_First"
+										name="Name_First"
+										maxlength="255"
+										placeholder="John"
+										required
+										class="w-full px-4 py-3 {$themeStore === 'dark'
+											? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+											: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+									/>
+								</div>
+								<div class="space-y-2">
+									<label
+										for="Name_Last"
+										class="block text-sm font-semibold {$themeStore === 'dark'
+											? 'text-zinc-300'
+											: 'text-zinc-700'}"
+									>
+										Last Name <span class="text-red-500">*</span>
+									</label>
+									<input
+										type="text"
+										id="Name_Last"
+										name="Name_Last"
+										maxlength="255"
+										placeholder="Doe"
+										required
+										class="w-full px-4 py-3 {$themeStore === 'dark'
+											? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+											: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+									/>
+								</div>
+							</div>
+
+							<!-- Company -->
+							<div class="space-y-2">
+								<label
+									for="SingleLine"
+									class="block text-sm font-semibold {$themeStore === 'dark'
+										? 'text-zinc-300'
+										: 'text-zinc-700'}"
+								>
+									Company <span class="text-red-500">*</span>
+								</label>
+								<input
+									type="text"
+									id="SingleLine"
+									name="SingleLine"
+									maxlength="255"
+									placeholder="Your Company Name"
+									required
+									class="w-full px-4 py-3 {$themeStore === 'dark'
+										? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+										: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+								/>
+							</div>
+
+							<!-- Company URL -->
+							<div class="space-y-2">
+								<label
+									for="SingleLine2"
+									class="block text-sm font-semibold {$themeStore === 'dark'
+										? 'text-zinc-300'
+										: 'text-zinc-700'}"
+								>
+									Company URL <span class="text-red-500">*</span>
+								</label>
+								<input
+									type="text"
+									id="SingleLine2"
+									name="SingleLine2"
+									maxlength="255"
+									placeholder="https://your-company.com"
+									required
+									class="w-full px-4 py-3 {$themeStore === 'dark'
+										? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+										: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+								/>
+							</div>
+
+							<!-- Email -->
+							<div class="space-y-2">
+								<label
+									for="Email"
+									class="block text-sm font-semibold {$themeStore === 'dark'
+										? 'text-zinc-300'
+										: 'text-zinc-700'}"
+								>
+									Work Email <span class="text-red-500">*</span>
+								</label>
+								<input
+									type="email"
+									id="Email"
+									name="Email"
+									maxlength="255"
+									placeholder="john@company.com"
+									required
+									class="w-full px-4 py-3 {$themeStore === 'dark'
+										? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+										: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+								/>
+							</div>
+
+							<!-- Phone -->
+							<div class="space-y-2">
+								<label
+									for="international_PhoneNumber_countrycode"
+									class="block text-sm font-semibold {$themeStore === 'dark'
+										? 'text-zinc-300'
+										: 'text-zinc-700'}"
+								>
+									Phone <span class="text-red-500">*</span>
+								</label>
+								<div class="grid grid-cols-3 gap-4">
+									<div>
+										<input
+											type="text"
+											name="PhoneNumber_countrycodeval"
+											maxlength="10"
+											id="international_PhoneNumber_countrycodeval"
+											placeholder="+1"
+											class="w-full px-4 py-3 {$themeStore === 'dark'
+												? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+												: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+										/>
+										<label
+											for="international_PhoneNumber_countrycodeval"
+											class="block text-xs text-zinc-500 mt-1">Code</label
+										>
+									</div>
+									<div class="col-span-2">
+										<input
+											type="text"
+											name="PhoneNumber_countrycode"
+											maxlength="20"
+											id="international_PhoneNumber_countrycode"
+											placeholder="555-123-4567"
+											required
+											class="w-full px-4 py-3 {$themeStore === 'dark'
+												? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+												: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+										/>
+										<label
+											for="international_PhoneNumber_countrycode"
+											class="block text-xs text-zinc-500 mt-1">Number</label
+										>
+									</div>
+								</div>
+							</div>
+
+							<!-- How did you hear about us -->
+							<div class="space-y-2">
+								<label
+									for="SingleLine1"
+									class="block text-sm font-semibold {$themeStore === 'dark'
+										? 'text-zinc-300'
+										: 'text-zinc-700'}"
+								>
+									How Did You Hear About Us?
+								</label>
+								<input
+									type="text"
+									id="SingleLine1"
+									name="SingleLine1"
+									maxlength="255"
+									placeholder="e.g., Search Engine, Social Media, Referral"
+									class="w-full px-4 py-3 {$themeStore === 'dark'
+										? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+										: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none"
+								/>
+							</div>
+
+							<!-- Business Details -->
+							<div class="space-y-2">
+								<label
+									for="MultiLine"
+									class="block text-sm font-semibold {$themeStore === 'dark'
+										? 'text-zinc-300'
+										: 'text-zinc-700'}"
+								>
+									Your Business Details <span class="text-red-500">*</span>
+								</label>
+								<textarea
+									id="MultiLine"
+									name="MultiLine"
+									maxlength="65535"
+									rows="4"
+									placeholder="Please describe your business needs or the challenges you are facing in your sales and revenue conversions."
+									required
+									class="w-full px-4 py-3 {$themeStore === 'dark'
+										? 'bg-zinc-900 border-zinc-800 text-white placeholder-zinc-600'
+										: 'bg-zinc-50 border-zinc-200 text-zinc-900 placeholder-zinc-400'} border rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all duration-300 outline-none resize-none"
+								></textarea>
+							</div>
+
+							<!-- Submit Button -->
+							<button
+								type="submit"
+								disabled={isSubmitting}
+								class="group relative w-full px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-							and
-							<a href="/terms" class="text-red-500 hover:text-red-400 underline"
-								>Terms of Service</a
-							>
-						</p>
-					</form>
+								<span
+									class="relative z-10 flex items-center justify-center gap-2"
+								>
+									{#if isSubmitting}
+										<svg
+											class="animate-spin h-5 w-5 text-white"
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+										>
+											<circle
+												class="opacity-25"
+												cx="12"
+												cy="12"
+												r="10"
+												stroke="currentColor"
+												stroke-width="4"
+											></circle>
+											<path
+												class="opacity-75"
+												fill="currentColor"
+												d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+											></path>
+										</svg>
+										Sending...
+									{:else}
+										Submit
+										<svg
+											class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M13 7l5 5m0 0l-5 5m5-5H6"
+											/>
+										</svg>
+									{/if}
+								</span>
+								<div
+									class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+								></div>
+							</button>
+
+							<p class="text-xs text-zinc-600 text-center">
+								By submitting this form, you agree to our
+								<a
+									href="/privacy"
+									class="text-red-500 hover:text-red-400 underline"
+									>Privacy Policy</a
+								>
+								and
+								<a
+									href="/terms"
+									class="text-red-500 hover:text-red-400 underline"
+									>Terms of Service</a
+								>
+							</p>
+						</form>
+					{/if}
 				</div>
 			</div>
 		</div>

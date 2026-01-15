@@ -328,7 +328,8 @@
 		{
 			id: "02",
 			title: "Rise of the Singular Rep",
-			description: "Fewer teams required, sharper execution, tighter accountability.",
+			description:
+				"Fewer teams required, sharper execution, tighter accountability.",
 			darkBg: "bg-[#1A1A0A]",
 			darkBorder: "border-yellow-900/20",
 			lightBg: "bg-[#FEFBF2]",
@@ -336,8 +337,7 @@
 		{
 			id: "03",
 			title: "One-shot selling",
-			description:
-				"Confidence and clarity at the level of a CEO.",
+			description: "Confidence and clarity at the level of a CEO.",
 			darkBg: "bg-[#1A0A0A]",
 			darkBorder: "border-red-900/20",
 			lightBg: "bg-[#FFF2F2]",
@@ -345,8 +345,7 @@
 		{
 			id: "04",
 			title: "Unified customer actions",
-			description:
-				"Every motion aligned, every outcome intentional.",
+			description: "Every motion aligned, every outcome intentional.",
 			darkBg: "bg-[#0A0F1A]",
 			darkBorder: "border-blue-900/20",
 			lightBg: "bg-[#F2F6FF]",
@@ -889,11 +888,14 @@
 						? 'text-white'
 						: 'text-zinc-900'}"
 				>
-					AI That Empowers
+					AI That Eliminates
 				</h2>
 				<h2 class="text-6xl sm:text-8xl font-black tracking-tight text-red-600">
-					Sales & Dev Teams
+					Cognitive Overload
 				</h2>
+				<p class="text-xl sm:text-2xl text-zinc-500 mt-4">
+					CROs, Sales, and Technical Sales Teams can finally think clearly.
+				</p>
 			</div>
 
 			<div class="w-full overflow-hidden pb-12 mb-12 px-[clamp(2rem,6vw,6rem)]">
@@ -1008,15 +1010,14 @@
 								? 'text-white'
 								: 'text-zinc-900'}"
 						>
-							Built for Sales & Dev Teams
+							Built for Revenue Teams
 						</h3>
 						<p
 							class="text-sm uppercase tracking-widest {$themeStore === 'dark'
 								? 'text-zinc-500'
 								: 'text-zinc-500'}"
 						>
-							Powerful conversational AI that integrates with your entire
-							workflow
+							Empowering every role to perform with unparalleled clarity
 						</p>
 					</div>
 
@@ -1037,15 +1038,15 @@
 										? 'text-white'
 										: 'text-zinc-900'}"
 								>
-									Universal Integrations
+									CROs & Revenue Leaders
 								</h4>
 								<p
 									class="leading-relaxed {$themeStore === 'dark'
 										? 'text-zinc-400'
 										: 'text-zinc-600'}"
 								>
-									Connects with Salesforce, HubSpot, monday.com, Jira, Asana,
-									Slack, Teams & more.
+									Gain ultimate visibility into pipeline health and performance
+									with AI-driven analytics and forecasting.
 								</p>
 							</div>
 						</div>
@@ -1063,15 +1064,15 @@
 										? 'text-white'
 										: 'text-zinc-900'}"
 								>
-									Real-Time Intelligence
+									Sales & Account Executives
 								</h4>
 								<p
 									class="leading-relaxed {$themeStore === 'dark'
 										? 'text-zinc-400'
 										: 'text-zinc-600'}"
 								>
-									AI-powered insights during every sales conversation, giving
-									your team the edge they need instantly.
+									Focus on closing while AI handles the grunt work—real-time
+									coaching, instant follow-ups, and CRM automation.
 								</p>
 							</div>
 						</div>
@@ -1089,15 +1090,15 @@
 										? 'text-white'
 										: 'text-zinc-900'}"
 								>
-									Auto Follow-Up & Tracking
+									Technical Sales Teams
 								</h4>
 								<p
 									class="leading-relaxed {$themeStore === 'dark'
 										? 'text-zinc-400'
 										: 'text-zinc-600'}"
 								>
-									Never miss a task with intelligent automation and CRM sync
-									that captures every commitment.
+									Dominate complex deals with instant access to technical specs
+									and automated tracking of solution commitments.
 								</p>
 							</div>
 						</div>
@@ -1117,7 +1118,7 @@
                 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
 				style="font-size: clamp(3.5rem, 8vw, 8rem);"
 			>
-				Empower Your Sales Team With<br />
+				Empower Your Revenue Team With<br />
 				<span class="text-red-600 block sm:inline">AI Intelligence</span>
 			</h2>
 
@@ -1125,8 +1126,8 @@
 				class="text-xl sm:text-2xl font-medium mb-12 max-w-3xl leading-relaxed
                 {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}"
 			>
-				Join sales teams accelerating revenue with conversational AI. Real-time
-				insights, automated follow-ups, and seamless integrations.
+				Join revenue teams accelerating performance with conversational AI.
+				Real-time insights, automated follow-ups, and seamless integrations.
 			</p>
 
 			<div

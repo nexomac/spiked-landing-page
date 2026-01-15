@@ -179,7 +179,7 @@
 				>
 					© 2025 SpikedAI. All rights reserved.
 					<span class="hidden md:inline mx-2">•</span>
-					<span class="hidden md:inline">600 California St, San Francisco, CA 94108</span>
+					<span class="hidden md:inline">335 Bryant St, 2nd Floor, Palo Alto, CA 94301, USA</span>
 				</div>
 				<div class="flex gap-10 text-sm text-zinc-500 font-medium">
 					<a

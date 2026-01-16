@@ -100,13 +100,14 @@
 			],
 		},
 		{
-			title: "Know Your Customer Hub",
+			title: "Customer Hub",
 			icon: User,
 			items: [
-				"Account Intelligence",
-				"Customer Persona",
-				"Answer Style",
-				"Customer Focus",
+				"Know Your Customer",
+				"Customer Intelligence",
+				"Dynamic Research",
+				"Action Playbooks",
+				"Customer Signals",
 			],
 		},
 		{

@@ -432,7 +432,7 @@
 				</button>
 
 				<a
-					href="/login"
+					href="https://app.spiked.ai/login"
 					class={`text-base font-bold px-4 py-2 hover:text-red-600 transition-colors ${isLight ? "text-zinc-600" : "text-zinc-300"}`}
 				>
 					Log In
@@ -529,9 +529,9 @@
 							{/if}
 						</button>
 						<a
-							href="/about-us"
+							href="https://app.spiked.ai/login"
 							class={`p-5 rounded-3xl border text-center font-black text-lg ${isLight ? "bg-zinc-50 border-zinc-100 text-zinc-900" : "bg-zinc-900 border-zinc-800 text-white"}`}
-							onclick={() => toggleMobileMenu(false)}>About</a
+							onclick={() => toggleMobileMenu(false)}>Log In</a
 						>
 					</div>
 					<a

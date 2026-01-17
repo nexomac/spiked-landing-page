@@ -81,7 +81,8 @@
 			</div>
 
 			<h1
-				class="font-black tracking-tighter mb-8 text-white"
+				class="font-black tracking-tighter mb-8
+				{$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
 				style="font-size: clamp(3rem, 8vw, 6rem); line-height: 0.9;"
 			>
 				Trusted by the world's<br />

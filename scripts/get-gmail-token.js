@@ -4,6 +4,9 @@ import { URL } from 'url';
 import open from 'open';
 
 // Replace these with your OAuth credentials from Google Cloud Console
+const CLIENT_ID = '';
+const CLIENT_SECRET = '';
+const REDIRECT_URI = '';
 
 const oauth2Client = new google.auth.OAuth2(
     CLIENT_ID,
@@ -29,8 +32,8 @@ console.log('Steps:');
 console.log('1. Copy the URL above');
 console.log('2. Paste it in the browser where you\'re logged into Google Workspace');
 console.log('3. Authorize the application');
-console.log('4. You will be redirected back to localhost:5173\n');
-console.log('Server is listening on port 5173...\n');
+console.log('4. You will be redirected back to localhost:0000\n');
+console.log('Server is listening on port 0000...\n');
 
 // Try to open in default browser (but user can ignore and use their own)
 try {
@@ -122,6 +125,6 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-server.listen(5173, () => {
+server.listen(1111, () => {
     // Server started message already printed above
 });

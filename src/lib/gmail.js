@@ -31,7 +31,7 @@ function createMessage(to, subject, body, isHtml = true, cc = [], bcc = [], atta
     const boundary = `boundary_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     
     const messageParts = [
-        `From: ${GMAIL_USER_EMAIL}`,
+        `From: SpikedAI <${GMAIL_USER_EMAIL}>`,
         `To: ${to}`
     ];
     

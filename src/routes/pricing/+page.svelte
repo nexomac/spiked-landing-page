@@ -68,7 +68,7 @@
 			desc: "Built for sales teams and leaders operating at scale. Designed to reduce revenue cycles, improve pipeline accuracy, and lower cognitive overload across teams. Custom plans available.",
 			features: [
 				"Tailored deployment & onboarding",
-				"Revenue acceleration focus",
+				"Cognitive Intelligence focus",
 				"Consistent high-quality conversations",
 				"Scalable cognitive augmentation",
 				"Priority 6–24 hour support",

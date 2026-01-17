@@ -94,7 +94,7 @@
 						</div>
 						<span
 							class="hero-eyebrow text-foreground/90 font-semibold tracking-wider uppercase text-xs sm:text-sm"
-							>Reimagining revenue acceleration</span
+							>Reimagining Cognitive Intelligence</span
 						>
 					</div>
 				</div>

@@ -745,7 +745,7 @@
 				style="text-decoration: none;"
 			>
 				<span class="logo-main">SPIKED<span class="logo-alt">AI</span></span>
-				<span class="logo-sub">REVENUE ACCELERATION INTELLIGENCE</span>
+				<span class="logo-sub">Cognitive Intelligence INTELLIGENCE</span>
 			</a>
 
 			<div class="pdf-cover-content">

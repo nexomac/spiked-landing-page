@@ -240,7 +240,7 @@
 					<span
 						class={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isLight ? "text-zinc-500" : "text-zinc-400"}`}
 					>
-						Revenue Acceleration AI
+						Cognitive Intelligence AI
 					</span>
 				</div>
 			</a>

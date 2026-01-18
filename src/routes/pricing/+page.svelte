@@ -7,6 +7,7 @@
 		Building2,
 		Sparkles,
 		Shield,
+		Book,
 		Target,
 		Cpu,
 	} from "lucide-svelte";
@@ -128,6 +129,16 @@
 				"CRM Management",
 				"Technical Management",
 				"Program Management",
+			],
+		},
+		{
+			title: "Learning Hub",
+			icon: Book,
+			items: [
+				"Personalization",
+				"Document Management",
+				"Conversational Intelligence",
+				"Cognitive AI Coaching",
 			],
 		},
 	];
@@ -334,7 +345,7 @@
 				</p>
 			</div>
 
-			<div class="grid md:grid-cols-2 lg:grid-cols-5 gap-12 px-10 pb-20">
+			<div class="grid md:grid-cols-2 lg:grid-cols-6 gap-12 px-10 pb-20">
 				{#each capabilityGroups as group}
 					<div class="group/cap">
 						<div class="flex items-center gap-4 mb-8">

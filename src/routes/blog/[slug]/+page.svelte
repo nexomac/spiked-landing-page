@@ -470,7 +470,7 @@
 
 {#snippet renderBlock(block)}
 	{#if block.type === "richtext"}
-		<div class="mb-10 theme-prose-colors">
+		<div class="mb-10 theme-prose-colors text-left">
 			{@html block.renderedHtml || ""}
 		</div>
 	{:else if block.type === "image" || (typeof block.value === "string" && (block.value.startsWith("data:image") || block.value.match(/\.(jpeg|jpg|gif|png|webp)$/i)))}
@@ -526,7 +526,7 @@
 			>
 				Intelligence Brief
 			</p>
-			<p class="text-2xl font-bold leading-snug">
+			<p class="text-2xl font-bold leading-snug text-left">
 				{block.value}
 			</p>
 		</div>
@@ -539,7 +539,7 @@
 		>
 			<div class="flex items-start gap-4">
 				<span class="text-4xl">📢</span>
-				<p class="text-xl font-medium italic">{block.value}</p>
+				<p class="text-xl font-medium italic text-left">{block.value}</p>
 			</div>
 		</div>
 	{:else if block.type === "link"}
@@ -620,7 +620,7 @@
 			<div class="h-0.5 flex-1 bg-red-600/30"></div>
 		</div>
 	{:else if block.type === "string_fallback" || typeof block.value === "string"}
-		<p class="mb-6 font-serif text-xl leading-relaxed">{block.value}</p>
+		<p class="mb-6 font-serif text-xl leading-relaxed text-left">{block.value}</p>
 	{/if}
 {/snippet}
 
@@ -696,12 +696,12 @@
 					<span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
 				</span>
 
-				<div class="flex items-center gap-8">
+				<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
 					<VoicePlayer blocks={contentBlocks} content={rest || {}} />
 					<button
 						onclick={downloadPDF}
 						disabled={isGeneratingPDF}
-						class="flex items-center gap-2 px-10 py-1.5 rounded-lg border border-red-900/10 hover:bg-red-600 hover:text-white transition-all disabled:opacity-50"
+						class="flex items-center gap-2 px-10 py-1.5 rounded-full border border-red-900/10 hover:bg-red-600 hover:text-white transition-all disabled:opacity-50 bg-white"
 						title="Download as PDF"
 					>
 						{#if isGeneratingPDF}
@@ -742,7 +742,7 @@
 
 			<!-- Text Content -->
 			<div
-				class="text-justify tiptap-content prose prose-lg prose-serif max-w-none transition-colors
+				class="text-left tiptap-content prose prose-lg prose-serif max-w-none transition-colors
                  {$themeStore === 'dark' ? 'text-white/80' : 'text-black'}"
 			>
 				{#each contentBlocks as block (block.id)}

@@ -205,4 +205,15 @@
 		border-bottom: 1px solid rgba(220, 38, 38, 0.3);
 		margin-top: 1.5rem;
 	}
+	:global(.tiptap-editor-container .ProseMirror ul) {
+		list-style-type: disc;
+		padding-left: 1.5rem;
+		margin-bottom: 1rem;
+	}
+	:global(.tiptap-editor-container .ProseMirror li) {
+		margin-bottom: 0.25rem;
+	}
+	:global(.tiptap-editor-container .ProseMirror li p) {
+		margin: 0 !important;
+	}
 </style>

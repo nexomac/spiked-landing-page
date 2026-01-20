@@ -50,32 +50,68 @@ export const actions = {
         }
     },
     createBlog: async ({ request }) => {
-        const data = await request.formData();
-        // Create draft blog with defaults
-        const result = await createBlog({
+        const formData = await request.formData();
+        const jsonStr = formData.get('json');
+        
+        let initialData = {
             title: 'Untitled Post',
             author: 'Editorial Staff',
-            slug: `post-${Date.now()}` // Temporary slug
-        });
-        
-        // Redirect to editor using the new slug (which was just generated/returned if I updated createBlog to return it... wait, createBlog returns insert result)
-        // I need to use the slug I generated.
-        // Wait, createBlog in cms.js:
-        // const blogData = { slug: data.slug || ... }
-        // return await db.collection('blogs').insertOne(blogData);
-        // insertOne returns { insertedId: ... }
-        // It doesn't return the full object.
-        // So I should generate slug here to know it.
-        
-        // Let's refine the logic inside the action:
-        const slug = `post-${Date.now()}`;
-        
-        try {
-             await createBlog({
-                title: 'Untitled Post',
-                author: 'Editorial Staff',
-                slug
+            content: []
+        };
+
+        // Utility to clean strings of [text](url) pattern if text and url are the same or just clean it
+        function cleanString(val) {
+            if (typeof val !== 'string') return val;
+            // Matches [something](url)
+            return val.replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
+                return url || text;
             });
+        }
+
+        function cleanObject(obj) {
+            if (!obj || typeof obj !== 'object') return obj;
+            if (Array.isArray(obj)) return obj.map(cleanObject);
+            const newObj = {};
+            for (const key in obj) {
+                newObj[key] = typeof obj[key] === 'string' ? cleanString(obj[key]) : cleanObject(obj[key]);
+            }
+            return newObj;
+        }
+
+        if (jsonStr) {
+            try {
+                let parsed = JSON.parse(jsonStr);
+                parsed = cleanObject(parsed); // Clean markdown links from LLM/Copy-paste
+
+                if (Array.isArray(parsed)) {
+                    // It's a list of blocks
+                    initialData.content = parsed;
+                } else {
+                    // It's a full blog object
+                    initialData = { ...initialData, ...parsed };
+                }
+
+                // If no title was provided in JSON, try to extract it from content
+                if (initialData.title === 'Untitled Post' && initialData.content.length > 0) {
+                    const firstHeader = initialData.content.find(b => b.type === 'header');
+                    if (firstHeader && firstHeader.data && firstHeader.text) {
+                        initialData.title = firstHeader.text;
+                    } else if (firstHeader && firstHeader.data && firstHeader.data.text) {
+                        initialData.title = firstHeader.data.text;
+                    }
+                }
+            } catch (e) {
+                console.error('Import Error:', e);
+                return fail(400, { error: 'Invalid JSON data: ' + e.message });
+            }
+        }
+
+        // Generate slug if not in initialData
+        const slug = initialData.slug || `post-${Date.now()}`;
+        initialData.slug = slug;
+
+        try {
+             await createBlog(initialData);
         } catch (e) {
              return fail(500, { error: e.message });
         }

@@ -40,6 +40,14 @@
 		return "";
 	}
 
+	function getYoutubeId(url) {
+		if (!url) return null;
+		const regExp =
+			/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+		const match = url.match(regExp);
+		return match && match[2].length === 11 ? match[2] : null;
+	}
+
 	// Format date format: "Friday, December 12, 2025"
 	let formattedDate = $derived(
 		new Date(data.post.publishedDate || data.post.createdAt).toLocaleDateString(
@@ -151,6 +159,14 @@
 							type: "image",
 							value: b.data?.url,
 							name: b.data?.caption || "Image",
+						};
+					}
+
+					if (b.type === "link") {
+						return {
+							id: b.id,
+							type: "link",
+							value: b.data?.value || "",
 						};
 					}
 
@@ -268,6 +284,7 @@
 		if (block.type === "image") return 8.0;
 		if (block.type === "statistic") return 7.5;
 		if (block.type === "highlight") return 2.0;
+		if (block.type === "link") return getYoutubeId(block.value) ? 8.0 : 1.5;
 		if (block.type === "string_fallback") {
 			return Math.max(1, block.value.length / 85);
 		}
@@ -527,6 +544,21 @@
 		</div>
 	{:else if block.type === "link"}
 		<div class="mb-8 font-sans">
+			{#if getYoutubeId(block.value)}
+				<div
+					class="w-full aspect-video mb-4 rounded-xl overflow-hidden bg-black shadow-2xl border border-red-900/10"
+				>
+					<iframe
+						width="100%"
+						height="100%"
+						src="https://www.youtube.com/embed/{getYoutubeId(block.value)}"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowfullscreen
+					></iframe>
+				</div>
+			{:else}
 			<a
 				href={block.value}
 				target="_blank"
@@ -537,6 +569,7 @@
 				</span>
 				<span class="group-hover:text-white">↗</span>
 			</a>
+			{/if}
 		</div>
 	{:else if block.type === "statistic"}
 		{@const [statLabel, statVal] = (block.value || "").split("|")}
@@ -805,6 +838,18 @@
 								<div class="pdf-stat">
 									<span class="pdf-stat-val">{val}</span>
 									<span class="pdf-stat-label">{label}</span>
+								</div>
+							{:else if block.type === "link"}
+								<div
+									style="margin: 5mm 0; border-bottom: 1px solid #dc2626; padding-bottom: 2mm;"
+								>
+									<span
+										style="color: #dc2626; font-weight: bold; font-size: 10pt;"
+										>LINK:</span
+									>
+									<span style="font-size: 10pt; color: #1a1a1a;"
+										>{block.value}</span
+									>
 								</div>
 							{:else if block.type === "string_fallback" || typeof block.value === "string"}
 								<p>{block.value}</p>
@@ -1133,7 +1178,11 @@
 	:global(.tiptap-content li) {
 		position: relative;
 		padding-left: 1.5em;
-		margin-bottom: 0.5em;
+		margin-bottom: 0.25em;
+	}
+	:global(.tiptap-content li p) {
+		margin-bottom: 0 !important;
+		margin-top: 0 !important;
 	}
 	:global(.tiptap-content li::before) {
 		content: "◆";

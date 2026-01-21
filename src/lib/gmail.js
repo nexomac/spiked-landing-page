@@ -363,7 +363,7 @@ export function generateCustomerConfirmationEmail(firstName) {
 export async function sendCustomerConfirmation({ to, firstName, cc = [], bcc = [] }) {
     try {
         // Read the PDF file
-        const pdfPath = 'static/SpikedAI - Solution Overview.pdf';
+        const pdfPath = '/SpikedAI - Solution Overview.pdf';
         const pdfBuffer = await readFile(pdfPath);
         const pdfBase64 = pdfBuffer.toString('base64');
 

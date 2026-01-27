@@ -46,8 +46,8 @@ export const actions = {
             // Send email notification via Gmail API
             try {
                 // CC/BCC arrays for internal notification (customize as needed)
-                const internalCC = []; // e.g., ['sales@spikedai.com']
-                const internalBCC = []; // e.g., ['archive@spikedai.com']
+                const internalCC = ['ginniee@spiked.ai']; // e.g., ['sales@spikedai.com']
+                const internalBCC = ['saibhuwan.dev@outlook.com']; // e.g., ['archive@spikedai.com']
                 
                 // Send internal notification
                 await sendEmail({

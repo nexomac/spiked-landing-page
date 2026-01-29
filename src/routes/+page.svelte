@@ -434,15 +434,8 @@
 	<title>SpikedAI | Next-Gen Revenue Intelligence</title>
 </svelte:head>
 
-<div
-	class="page-shell min-h-screen transition-colors duration-500 font-sans selection:bg-red-500/30 overflow-x-hidden
-    {$themeStore === 'dark'
-		? 'bg-[#030712] text-zinc-100'
-		: 'bg-white text-zinc-900'}"
->
-	<main
-		class="relative z-10 w-full overflow-hidden max-w-[1900px] mx-auto bg-transparent"
-	>
+<div class="page-shell min-h-screen transition-colors duration-500 font-sans selection:bg-red-500/30 overflow-x-hidden {$themeStore === 'dark' ? 'bg-[#030712] text-zinc-100' : 'bg-white text-zinc-900'}">
+	<main class="relative z-10 w-full overflow-hidden max-w-[1900px] mx-auto bg-transparent">
 		<!-- BIG HERO -->
 		<section
 			data-section="hero"
@@ -451,55 +444,67 @@
 			style="padding: clamp(2.5rem, 6vw, 5rem);"
 		>
 			<div class="w-full relative z-10 pt-[clamp(7rem,14vh,11rem)]">
-				<!-- HUGE HEADLINE -->
-				<h1
-					class="font-black tracking-tighter mb-6
-					{$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
-					style="
-						font-size: clamp(3.75rem, 10vw, 11rem);
-						line-height: 0.88;
-						letter-spacing: -0.04em;
-					"
-				>
-					Sell like <span class="text-red-600 block sm:inline">a CEO.</span>
-				</h1>
+			<!-- Body Text Above Headline -->
+			<p
+				class="font-medium mb-8 max-w-3xl
+				{$themeStore === 'dark' ? 'text-zinc-300' : 'text-zinc-700'}"
+				style="font-size: clamp(1.1rem, 2.5vw, 1.5rem); line-height: 1.5;"
+			>
+				Sales doesn't fail from lack of skill. It fails from cognitive overload.<br />
+				SpikedAI is the Executive Cognition System that turns every seller into a Singular Rep.
+			</p>
 
-				<!-- SUBTEXT -->
-				<p
-					class="font-medium max-w-3xl
-					{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
-					style="font-size: clamp(1.2rem, 3.5vw, 1.9rem);"
-				>
-					The rise of the singular rep starts here.
-				</p>
+			<!-- HUGE HEADLINE -->
+			<h1
+				class="font-black tracking-tighter mb-6
+				{$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
+				style="
+					font-size: clamp(3.75rem, 10vw, 11rem);
+					line-height: 0.88;
+					letter-spacing: -0.04em;
+				"
+			>
+				Sell like <span class="text-red-600 block sm:inline">a CEO.</span>
+			</h1>
 
-				<!-- Request Demo Button -->
-				<a
-					href="/contact-sales"
-					class="mt-10 mb-16 contextual-cta group relative inline-flex items-center gap-3
-					px-[clamp(1.75rem,4.5vw,3.25rem)]
-					py-[clamp(1.05rem,2.8vw,1.5rem)]
-					rounded-full font-semibold transition-all duration-200"
-				>
-					<span class="relative z-10 text-[clamp(1.05rem,2.2vw,1.35rem)]">
-						Request a Demo
-					</span>
-					<span class="cta-icon relative z-10 grid place-items-center">
-						<ArrowRight
-							class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
-						/>
-					</span>
-				</a>
-			</div>
-		</section>
+			<!-- SUBTEXT -->
+			<p
+				class="font-medium max-w-3xl
+				{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
+				style="font-size: clamp(1.2rem, 3.5vw, 1.9rem);"
+			>
+				The rise of the singular rep starts here.
+			</p>
 
-		<!-- ANTHROPIC-STYLE VARIED SECTION -->
-		<section
-			data-section="quote"
-			class="w-full py-32 px-[clamp(1rem,4vw,4rem)] transition-colors duration-500
-            {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
+			<!-- Additional Subtext -->
+			<p
+				class="font-medium mt-6 max-w-3xl
+				{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}"
+				style="font-size: clamp(1rem, 2.2vw, 1.3rem); line-height: 1.6;"
+			>
+				Real-time conversational, contextual, and computational intelligence.<br />
+				One-shot selling. Unified customer actions. No cognitive drag.
+		</p>
+
+		<!-- Book Demo Button -->
+		<a
+			href="/contact-sales"
+			class="mt-10 mb-16 contextual-cta group relative inline-flex items-center gap-3
+			px-[clamp(1.75rem,4.5vw,3.25rem)]
+			py-[clamp(1.05rem,2.8vw,1.5rem)]
+			rounded-full font-semibold transition-all duration-200"
 		>
-			<div class="max-w-[1700px] mx-auto space-y-16">
+			<span class="relative z-10 text-[clamp(1.05rem,2.2vw,1.35rem)]">
+				Book a Demo
+			</span>
+			<span class="cta-icon relative z-10 grid place-items-center">
+				<ArrowRight
+					class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+				/>
+			</span>
+		</a>
+	</div>
+</section>
 				<!-- 1. The Asymmetrical Problem Box -->
 				<div
 					class="rounded-[3rem] p-12 sm:p-20 flex flex-col lg:flex-row items-center gap-16 transition-all duration-300
@@ -575,7 +580,7 @@
 					>
 						<div class="space-y-6">
 							<span
-								class="text-4xl lg:text-6xl font-serif text-red-600 italic opacity-50 block inline"
+								class="text-4xl lg:text-6xl font-serif text-red-600 italic opacity-50 inline"
 								>“</span
 							>
 							<h3
@@ -669,7 +674,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
+
 
 		<!-- EXPANDED SHOWCASE (Reduced Padding, Bigger Text, Progress Bar) -->
 		<section
@@ -1153,10 +1158,10 @@
 				></div>
 			</div>
 		</section>
-	</main>
+
 
 	<Footer />
-</div>
+
 
 <style>
 	/* Utility for hiding scrollbar but allowing scroll */

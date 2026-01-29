@@ -321,6 +321,8 @@
 			id: "01",
 			title: "Replaces cognitive overload with amplified cognitive ability",
 			description: "For every rep, before, during, and after the conversation.",
+			image: "/visualizations/1.png",
+			imageAlt: "Signal consolidation into a single focused result",
 			darkBg: "bg-[#0A1A12]",
 			darkBorder: "border-green-900/20",
 			lightBg: "bg-[#F2FBF6]",
@@ -330,6 +332,8 @@
 			title: "Rise of the Singular Rep",
 			description:
 				"Fewer teams required, sharper execution, tighter accountability.",
+			image: "/visualizations/2.png",
+			imageAlt: "From crowded effort to one augmented rep",
 			darkBg: "bg-[#1A1A0A]",
 			darkBorder: "border-yellow-900/20",
 			lightBg: "bg-[#FEFBF2]",
@@ -338,6 +342,8 @@
 			id: "03",
 			title: "One-shot selling",
 			description: "Confidence and clarity at the level of a CEO.",
+			image: "/visualizations/3.png",
+			imageAlt: "Checklist condensed into one clean result",
 			darkBg: "bg-[#1A0A0A]",
 			darkBorder: "border-red-900/20",
 			lightBg: "bg-[#FFF2F2]",
@@ -346,6 +352,8 @@
 			id: "04",
 			title: "Unified customer actions",
 			description: "Every motion aligned, every outcome intentional.",
+			image: "/visualizations/4.png",
+			imageAlt: "Multiple systems merged into one unified stream",
 			darkBg: "bg-[#0A0F1A]",
 			darkBorder: "border-blue-900/20",
 			lightBg: "bg-[#F2F6FF]",
@@ -642,19 +650,35 @@
 				<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
 					{#each impactItems as item}
 						<div
-							class="rounded-[2.5rem] p-10 transition-all duration-300
+							class="rounded-[2.5rem] p-10 transition-all duration-300 flex flex-col h-full
 								{$themeStore === 'dark'
 								? `border ${item.darkBg} ${item.darkBorder}`
 								: item.lightBg}"
 						>
-							<div class="text-4xl font-black text-red-600 mb-6">{item.id}</div>
-							<h4
-								class="text-2xl font-black mb-4 {$themeStore === 'dark'
-									? 'text-white'
-									: 'text-zinc-900'}"
+							<div class="min-h-[120px] sm:min-h-[140px] lg:min-h-[160px]">
+								<div class="text-4xl font-black text-red-600 mb-6">
+									{item.id}
+								</div>
+								<h4
+									class="text-2xl font-black mb-4 {$themeStore === 'dark'
+										? 'text-white'
+										: 'text-zinc-900'}"
+								>
+									{item.title}
+								</h4>
+							</div>
+							<div
+								class="rounded-2xl p-4 mb-6 {$themeStore === 'dark'
+									? 'bg-black/30 border border-white/5'
+									: 'bg-white border border-zinc-200 shadow-sm'}"
 							>
-								{item.title}
-							</h4>
+								<img
+									src={item.image}
+									alt={item.imageAlt}
+									class="w-full aspect-[16/9] object-cover rounded-xl"
+									loading="lazy"
+								/>
+							</div>
 							<p
 								class="font-medium {$themeStore === 'dark'
 									? 'text-zinc-400'

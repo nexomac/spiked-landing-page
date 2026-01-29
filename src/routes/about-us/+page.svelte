@@ -146,12 +146,20 @@
 			<div class="section-header">
 				<p class="eyebrow">Core team</p>
 				<h2>
-					Builders, Strategists, and Go-to-Market leaders who operate closest to
-					the customer and the moment of decision.
+					Revenue leadership for the decisive second.
 				</h2>
 				<p class="muted">
-					We combine enterprise experience with a startup pace so you get AI
-					that ships and sticks.
+					Our core team comprises sales and revenue leaders who've closed more than
+					$10B in ARR across enterprise, global accounts, and high-velocity segments.
+					Nothing sits closer to a company's growth than sales, marketing, product,
+					and customer support, and we've operated at that front line for nearly two
+					decades.
+					<br /><br />
+					Builders, strategists, technical sellers, and GTM leaders closest to the
+					customer know one truth: revenue outcomes aren't shaped by quarters,
+					they're shaped in seconds. SpikedAI gives sellers real-time conversational
+					and cognitive intelligence so those seconds count, helping companies
+					scale from $1B to $10B with precision, not chaos.
 				</p>
 			</div>
 

@@ -1,7 +1,7 @@
 <script>
-	import FeatureNav from "$lib/components/FeatureNav.svelte";
-	import FeatureFooter from "$lib/components/FeatureFooter.svelte";
-	import SentimentShowcase from "$lib/components/SentimentShowcase.svelte";
+	import FeatureNav from "$lib/components/features/FeatureNav.svelte";
+	import FeatureFooter from "$lib/components/features/FeatureFooter.svelte";
+	import SentimentShowcase from "$lib/components/features/SentimentShowcase.svelte";
 	import {
 		Heart,
 		TrendingUp,

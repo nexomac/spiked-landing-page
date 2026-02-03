@@ -23,6 +23,10 @@
 		Menu,
 		X,
 		Book,
+		Briefcase,
+		ShieldCheck,
+		LineChart as ChartLine,
+		Zap as ZapIcon,
 	} from "lucide-svelte";
 
 	let isScrolled = $state(false);
@@ -138,6 +142,35 @@
 					desc: "Watch how Spiked AI can transform your business.",
 					icon: Video,
 					href: "/resources#videos",
+				},
+			],
+		},
+		forYou: {
+			label: "For You",
+			links: [
+				{
+					title: "Account Executives",
+					desc: "Close more deals with real-time intelligence and zero admin.",
+					icon: Sparkles,
+					href: "/solutions/account-executives",
+				},
+				{
+					title: "Sales Leaders",
+					desc: "Scale top-performer behavior across your whole team.",
+					icon: Users,
+					href: "/solutions/sales-leaders",
+				},
+				{
+					title: "Sales Ops & Enablement",
+					desc: "Automate CRM hygiene and playbook adherence.",
+					icon: ShieldCheck,
+					href: "/solutions/sales-ops",
+				},
+				{
+					title: "Revenue Leaders (CROs)",
+					desc: "Full pipeline visibility and revenue execution clarity.",
+					icon: ChartLine,
+					href: "/solutions/revenue-leaders",
 				},
 			],
 		},

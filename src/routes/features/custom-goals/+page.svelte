@@ -1,7 +1,7 @@
 <script>
-	import FeatureNav from "$lib/components/FeatureNav.svelte";
-	import FeatureFooter from "$lib/components/FeatureFooter.svelte";
-	import CustomGoalsShowcase from "$lib/components/CustomGoalsShowcase.svelte";
+	import FeatureNav from "$lib/components/features/FeatureNav.svelte";
+	import FeatureFooter from "$lib/components/features/FeatureFooter.svelte";
+	import CustomGoalsShowcase from "$lib/components/features/CustomGoalsShowcase.svelte";
 	import {
 		Target,
 		TrendingUp,

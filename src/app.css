@@ -54,87 +54,69 @@ body,
 }
 
 /* Base Variables - Default is Dark Mode (based on previous app preference) */
+/* Base Variables - Default is Dark Mode (B2B SaaS Clean) */
 :root {
-	--background: #030712;
-	/* gray-950 */
-	--foreground: #f9fafb;
-	/* gray-50 */
+	--background: #030712; /* Deep, clean dark (gray-950) */
+	--foreground: #f9fafb; /* gray-50 */
 
-	--card: #030712;
+	--card: #111827; /* gray-900 - Cleaner surface than purely black */
 	--card-foreground: #f9fafb;
 
 	--popover: #030712;
 	--popover-foreground: #f9fafb;
 
-	--primary: #ef1820;
-	/* Brand Red */
+	--primary: #ef1820; /* Brand Red - Strategic accents */
 	--primary-foreground: #ffffff;
 
-	--secondary: #1f2937;
-	/* gray-800 */
+	--secondary: #1f2937; /* gray-800 */
 	--secondary-foreground: #f9fafb;
 
 	--muted: #1f2937;
-	/* gray-800 */
-	--muted-foreground: #9ca3af;
-	/* gray-400 */
+	--muted-foreground: #9ca3af; /* gray-400 */
 
 	--accent: #1f2937;
-	/* gray-800 */
 	--accent-foreground: #f9fafb;
 
 	--destructive: #7f1d1d;
-	/* red-900 */
 	--destructive-foreground: #fef2f2;
-	/* red-50 */
 
-	--border: #1f2937;
-	/* gray-800 */
+	--border: #1f2937; /* Subtle borders */
 	--input: #1f2937;
 	--ring: #ef1820;
 
-	--radius: 0.5rem;
+	--radius: 1.5rem; /* rounded-3xl - Friendly yet professional */
 
 	/* Logo filter: normal (no invert) in dark mode */
 	--logo-filter: none;
 }
 
-/* Light Mode Overrides */
-/* Note: The store sets data-theme="light", but usually class="light" or data-theme="light" works. 
-   We'll target data-theme="light" as per existing setup. */
+/* Light Mode Overrides (Clean, Clarity-focused) */
 :root[data-theme="light"] {
 	--background: #ffffff;
 	--foreground: #09090b;
-	/* zinc-950 */
 
-	--card: #ffffff;
+	--card: #f4f4f5; /* zinc-100 - Distinct from background */
 	--card-foreground: #09090b;
 
 	--popover: #ffffff;
 	--popover-foreground: #09090b;
 
 	--primary: #ef1820;
-	/* Keep brand red */
 	--primary-foreground: #ffffff;
 
-	--secondary: #f4f4f5;
-	/* zinc-100 */
+	--secondary: #e4e4e7; /* zinc-200 */
 	--secondary-foreground: #18181b;
-	/* zinc-900 */
 
 	--muted: #f4f4f5;
 	--muted-foreground: #71717a;
-	/* zinc-500 */
 
 	--accent: #f4f4f5;
 	--accent-foreground: #18181b;
 
 	--destructive: #ef4444;
-	/* red-500 */
 	--destructive-foreground: #fafafa;
 
 	--border: #e4e4e7;
-	/* zinc-200 */
 	--input: #e4e4e7;
 	--ring: #ef1820;
 

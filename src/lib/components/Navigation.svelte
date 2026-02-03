@@ -201,6 +201,8 @@
 			? isLight
 				? "bg-white/95 backdrop-blur-2xl border-b border-zinc-200 shadow-sm"
 				: "bg-zinc-950/95 backdrop-blur-2xl border-b border-zinc-900 shadow-lg"
+			: $page.url.pathname === "/"
+			? "bg-black/20 backdrop-blur-sm border-b border-white/10"
 			: "bg-transparent border-b border-transparent",
 	);
 

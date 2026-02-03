@@ -493,7 +493,7 @@
 		<!-- BIG HERO (NVIDIA STYLE) -->
 		<section
 			data-section="hero"
-			class="relative w-full min-h-[90vh] flex flex-col justify-end overflow-hidden bg-black text-white"
+			class="relative w-full min-h-screen flex flex-col justify-between overflow-hidden bg-black text-white pt-24 sm:pt-28 md:pt-32"
 		>
 			<!-- Background Images Carousel -->
 			<div class="absolute inset-0 z-0">
@@ -508,41 +508,44 @@
 					</div>
 				{/each}
 				<div
-					class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"
+					class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"
 				></div>
 			</div>
 
+			<!-- Spacer for top navigation -->
+			<div class="flex-shrink-0"></div>
+
 			<!-- Hero Content -->
-			<div class="relative z-10 w-full px-[clamp(2rem,6vw,10rem)] pb-32">
-				<div class="max-w-6xl space-y-8" in:fade={{ duration: 800 }}>
+			<div class="relative z-10 w-full px-4 sm:px-8 md:px-[clamp(2rem,6vw,10rem)] pb-16 sm:pb-24 md:pb-32 flex-grow flex items-center">
+				<div class="max-w-6xl space-y-4 sm:space-y-6 md:space-y-8" in:fade={{ duration: 800 }}>
 					{#key currentHeroIndex}
 						<div
 							in:fly={{ y: 30, duration: 800 }}
 							out:fade={{ duration: 400 }}
-							class="space-y-6"
+							class="space-y-4 sm:space-y-6"
 						>
 							<span
-								class="text-sm font-black uppercase tracking-[0.3em] text-red-500"
+								class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-red-500"
 							>
 								{heroEvents[currentHeroIndex].category}
 							</span>
 							<h1
-								class="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter"
+								class="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] sm:leading-[0.9] tracking-tighter"
 							>
 								{heroEvents[currentHeroIndex].title}
 							</h1>
 							<p
-								class="text-xl md:text-2xl text-zinc-300 max-w-3xl font-medium leading-relaxed"
+								class="text-base sm:text-xl md:text-2xl text-zinc-300 max-w-3xl font-medium leading-relaxed"
 							>
 								{heroEvents[currentHeroIndex].description}
 							</p>
-							<div class="pt-6">
+							<div class="pt-4 sm:pt-6">
 								<a
 									href={heroEvents[currentHeroIndex].href}
-									class="inline-flex items-center gap-4 px-10 py-5 bg-red-600 text-white font-black text-xl hover:bg-red-700 transition-all rounded-sm shadow-2xl hover:scale-105"
+									class="inline-flex items-center gap-2 sm:gap-4 px-6 sm:px-10 py-3 sm:py-5 bg-red-600 text-white font-black text-base sm:text-xl hover:bg-red-700 transition-all rounded-sm shadow-2xl hover:scale-105"
 								>
 									{heroEvents[currentHeroIndex].cta}
-									<ArrowRight class="w-6 h-6" />
+									<ArrowRight class="w-5 h-5 sm:w-6 sm:h-6" />
 								</a>
 							</div>
 						</div>
@@ -554,13 +557,13 @@
 			<div
 				class="relative z-10 w-full border-t border-white/10 bg-black/40 backdrop-blur-md"
 			>
-				<div class="grid grid-cols-1 md:grid-cols-3 divide-x divide-white/10">
+				<div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
 					{#each heroEvents as event, i}
 						<button
 							onclick={() => selectHero(i)}
-							class="relative px-8 py-6 text-left group transition-all hover:bg-white/5"
+							class="relative px-4 sm:px-8 py-4 sm:py-6 text-left group transition-all hover:bg-white/5"
 						>
-							<div class="flex flex-col gap-2">
+							<div class="flex flex-col gap-1 sm:gap-2">
 								<span
 									class="text-[10px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-red-500 transition-colors"
 								>
@@ -593,39 +596,47 @@
 
 		<!-- RECOMMENDED FOR YOU (NVIDIA STYLE) -->
 		<section
-			class="w-full py-24 bg-black text-white px-[clamp(2rem,6vw,10rem)]"
+			class="w-full py-12 sm:py-16 md:py-24 px-4 sm:px-8 md:px-[clamp(2rem,6vw,10rem)] transition-colors duration-500
+			{$themeStore === 'dark' ? 'bg-black text-white' : 'bg-zinc-50 text-zinc-900'}"
 		>
-			<div class="flex items-center justify-between mb-12">
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 sm:mb-12">
 				<h2
-					class="text-4xl md:text-5xl font-black tracking-tight flex items-center gap-4"
+					class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight flex items-center gap-2 sm:gap-4 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
 				>
 					Recommended For You
-					<Settings class="w-6 h-6 text-zinc-600 animate-spin-slow" />
+					<Settings class="w-5 h-5 sm:w-6 sm:h-6 text-zinc-600 animate-spin-slow" />
 				</h2>
 				<div class="flex gap-2">
 					<button
 						onclick={() => scrollRecommended("left")}
-						class="p-3 bg-zinc-800 hover:bg-red-600 transition-colors rounded-sm"
+						class="p-2 sm:p-3 transition-colors rounded-sm {$themeStore === 'dark' 
+							? 'bg-zinc-800 hover:bg-red-600' 
+							: 'bg-white border border-zinc-200 hover:bg-red-600 hover:border-red-600 hover:text-white'}"
 					>
-						<ArrowRight class="w-5 h-5 rotate-180" />
+						<ArrowRight class="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
 					</button>
 					<button
 						onclick={() => scrollRecommended("right")}
-						class="p-3 bg-zinc-800 hover:bg-red-600 transition-colors rounded-sm"
+						class="p-2 sm:p-3 transition-colors rounded-sm {$themeStore === 'dark' 
+							? 'bg-zinc-800 hover:bg-red-600' 
+							: 'bg-white border border-zinc-200 hover:bg-red-600 hover:border-red-600 hover:text-white'}"
 					>
-						<ArrowRight class="w-5 h-5" />
+						<ArrowRight class="w-4 h-4 sm:w-5 sm:h-5" />
 					</button>
 				</div>
 			</div>
 
 			<div
 				bind:this={recommendedScrollContainer}
-				class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory"
+				class="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory"
 			>
 				{#each recommendedResources as res}
 					<a
 						href={res.href}
-						class="flex-shrink-0 w-[clamp(300px,80vw,400px)] flex flex-col group bg-zinc-900 border border-zinc-800 hover:border-red-600/50 transition-all rounded-sm overflow-hidden snap-start"
+						class="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[380px] lg:w-[400px] flex flex-col group rounded-sm overflow-hidden snap-start transition-all
+						{$themeStore === 'dark' 
+							? 'bg-zinc-900 border border-zinc-800 hover:border-red-600/50' 
+							: 'bg-white border border-zinc-200 hover:border-red-500 shadow-sm hover:shadow-lg'}"
 					>
 						<div class="aspect-video overflow-hidden">
 							<img
@@ -634,20 +645,20 @@
 								class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
 							/>
 						</div>
-						<div class="p-6 space-y-4 flex-1 flex flex-col">
+						<div class="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-1 flex flex-col">
 							<div
-								class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500"
+								class="flex items-center gap-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest {$themeStore === 'dark' ? 'text-zinc-500' : 'text-zinc-600'}"
 							>
 								<span>{res.category}</span>
 								<span>|</span>
 								<span class="text-red-500">{res.type}</span>
 							</div>
 							<h3
-								class="text-lg font-bold leading-tight group-hover:text-red-500 transition-colors"
+								class="text-base sm:text-lg font-bold leading-tight group-hover:text-red-500 transition-colors {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
 							>
 								{res.title}
 							</h3>
-							<p class="text-sm text-zinc-400 line-clamp-3">
+							<p class="text-xs sm:text-sm line-clamp-3 {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}">
 								{res.description}
 							</p>
 						</div>
@@ -659,13 +670,13 @@
 		<!-- CLARITY & INTELLIGENCE (NVIDIA SPLIT STYLE) -->
 		<section
 			data-section="quote"
-			class="w-full py-32 px-[clamp(2rem,6vw,10rem)] transition-colors duration-500
+			class="w-full py-16 sm:py-24 md:py-32 px-4 sm:px-8 md:px-[clamp(2rem,6vw,10rem)] transition-colors duration-500
             {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
 		>
-			<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16">
 				<!-- Left Text Column -->
-				<div class="lg:col-span-4 space-y-12">
-					<h2 class="text-5xl font-black leading-tight tracking-tighter">
+				<div class="lg:col-span-4 space-y-8 sm:space-y-12">
+					<h2 class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tighter">
 						Intelligence <br />That Scales.
 					</h2>
 					<p class="text-xl text-zinc-500 font-medium leading-relaxed">
@@ -791,16 +802,16 @@
 				: 'bg-white'}"
 			style="padding: 2rem 0;"
 		>
-			<div class="px-[clamp(2rem,4vw,5rem)] mb-[clamp(2rem,6vh,6rem)]">
+			<div class="px-4 sm:px-6 md:px-[clamp(2rem,4vw,5rem)] mb-8 sm:mb-12 md:mb-[clamp(2rem,6vh,6rem)]">
 				<span
-					class="block font-bold text-red-600 uppercase tracking-[0.3em] mb-4"
+					class="block font-bold text-red-600 uppercase tracking-[0.15em] sm:tracking-[0.3em] mb-2 sm:mb-4 text-sm sm:text-base"
 					>All Features</span
 				>
 				<h2
 					class="font-black leading-none {$themeStore === 'dark'
 						? 'text-white'
 						: 'text-zinc-900'}"
-					style="font-size: clamp(3rem, 8vw, 8rem);"
+					style="font-size: clamp(2rem, 8vw, 8rem);"
 				>
 					Experience<br />Every Feature.
 				</h2>
@@ -818,11 +829,11 @@
 			</div>
 
 			<div
-				class="flex flex-col lg:flex-row gap-8 w-full min-h-[1000px] px-[clamp(1rem,2vw,3rem)]"
+				class="flex flex-col lg:flex-row gap-6 sm:gap-8 w-full lg:min-h-[800px] px-4 sm:px-6 md:px-[clamp(1rem,2vw,3rem)]"
 			>
 				<!-- Navigation / Detail Panel -->
 				<div
-					class="lg:w-5/12 flex flex-col h-full overflow-y-auto no-scrollbar pr-2 sm:pr-4"
+					class="lg:w-5/12 flex flex-col h-full overflow-y-auto no-scrollbar pr-0 sm:pr-4"
 				>
 					<div class="flex flex-col">
 						{#each showcases as showcase, i}
@@ -837,20 +848,20 @@
 
 								<button
 									onclick={() => selectShowcase(i)}
-									class="w-full text-left py-6 group flex items-start gap-4 transition-all duration-300"
+									class="w-full text-left py-3 sm:py-4 md:py-6 group flex items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300"
 								>
 									<!-- Number/Icon Indicator -->
-									<div class="flex-shrink-0 pt-1">
+									<div class="flex-shrink-0 pt-0.5 sm:pt-1">
 										{#if currentShowcaseIndex === i}
 											<div
-												class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-sm font-bold"
+												class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-xs sm:text-sm font-bold"
 												in:fade
 											>
 												{i + 1}
 											</div>
 										{:else}
 											<div
-												class="text-zinc-500 font-mono text-base group-hover:text-red-500 transition-colors pl-2"
+												class="text-zinc-500 font-mono text-sm sm:text-base group-hover:text-red-500 transition-colors pl-1 sm:pl-2"
 											>
 												{(i + 1).toString().padStart(2, "0")}
 											</div>
@@ -860,53 +871,52 @@
 									<div class="flex-1">
 										<!-- Header (Always Visible) -->
 										<h3
-											class="font-bold uppercase tracking-widest transition-colors duration-300
+											class="font-bold uppercase tracking-wider sm:tracking-widest transition-colors duration-300
                                             {currentShowcaseIndex === i
-												? 'text-red-500 mb-4'
+												? 'text-red-500 mb-2 sm:mb-4'
 												: 'text-zinc-500 group-hover:text-zinc-300'}"
 											style="font-size: {currentShowcaseIndex === i
-												? '1.5rem'
-												: '1.1rem'};"
+												? 'clamp(1rem, 4vw, 1.5rem)'
+												: 'clamp(0.9rem, 3vw, 1.1rem)'};"
 										>
 											{showcase.name}
 										</h3>
 
 										<!-- Expanded Content -->
 										{#if currentShowcaseIndex === i}
-											<div class="space-y-8" in:slide={{ duration: 300 }}>
+											<div class="space-y-4 sm:space-y-6 md:space-y-8" in:slide={{ duration: 300 }}>
 												<!-- Main Title & Subtitle -->
 												<div>
 													<h4
-														class="text-3xl sm:text-4xl font-bold leading-tight mb-3 {$themeStore ===
+														class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-2 sm:mb-3 {$themeStore ===
 														'dark'
 															? 'text-white'
 															: 'text-zinc-900'}"
 													>
 														{showcase.title}
 													</h4>
-													<p class="text-xl sm:text-2xl text-zinc-500">
+													<p class="text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-500">
 														{showcase.subtitle}
 													</p>
 												</div>
 
-												<!-- 3 Points System - INCREASED SIZE -->
+												<!-- 3 Points System -->
 												<div
-													class="space-y-8 pl-6 border-l-2 border-zinc-800/50"
+													class="space-y-4 sm:space-y-6 md:space-y-8 pl-3 sm:pl-4 md:pl-6 border-l-2 border-zinc-800/50"
 												>
 													{#each showcase.features as feature}
 														<div>
-															<div class="flex items-center gap-3 mb-2">
-																<feature.icon class="w-5 h-5 text-red-500" />
+															<div class="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+																<feature.icon class="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0" />
 																<span
-																	class="font-bold text-base uppercase tracking-wide {$themeStore ===
+																	class="font-bold text-xs sm:text-sm md:text-base uppercase tracking-wide {$themeStore ===
 																	'dark'
 																		? 'text-zinc-200'
 																		: 'text-zinc-800'}">{feature.title}</span
 																>
 															</div>
-															<!-- Subtext increased to text-lg/xl for readability -->
 															<p
-																class="text-lg sm:text-xl text-zinc-400 leading-relaxed font-medium"
+																class="text-sm sm:text-base md:text-lg lg:text-xl text-zinc-400 leading-relaxed font-medium"
 															>
 																{feature.description}
 															</p>
@@ -916,10 +926,10 @@
 
 												<a
 													href={showcase.link}
-													class="text-red-500 font-bold uppercase text-sm tracking-widest hover:text-red-400 transition-colors flex items-center gap-2 pt-4"
+													class="text-red-500 font-bold uppercase text-xs sm:text-sm tracking-wider sm:tracking-widest hover:text-red-400 transition-colors flex items-center gap-2 pt-2 sm:pt-4"
 												>
 													Learn more about {showcase.name.toLowerCase()}
-													<ArrowRight class="w-4 h-4" />
+													<ArrowRight class="w-3 h-3 sm:w-4 sm:h-4" />
 												</a>
 											</div>
 										{/if}
@@ -931,9 +941,9 @@
 				</div>
 
 				<!-- Visual (Right Side - Sticky/Fixed) -->
-				<!-- Increased min-height to accommodate Notetaker content -->
+				<!-- Responsive height for different screen sizes -->
 				<div
-					class="lg:w-7/12 h-[1000px] lg:h-auto min-h-[1000px] sticky top-8 rounded-[2rem] overflow-hidden border-4
+					class="lg:w-7/12 h-[400px] sm:h-[500px] md:h-[600px] lg:h-auto lg:min-h-[700px] lg:sticky lg:top-8 rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden border-2 sm:border-4 relative
                     {$themeStore === 'dark'
 						? 'bg-zinc-900 border-zinc-800'
 						: 'bg-white border-zinc-200'}"
@@ -945,7 +955,7 @@
 								in:fade={{ duration: 400 }}
 							>
 								<div
-									class="w-full h-full p-1 sm:p-4 md:p-8 flex items-center justify-center bg-zinc-50/5 dark:bg-zinc-900/50 overflow-hidden"
+									class="w-full h-full p-2 sm:p-4 md:p-6 lg:p-8 flex items-center justify-center bg-zinc-50/5 dark:bg-zinc-900/50 overflow-hidden"
 								>
 									<div
 										class="interactive-scaler w-full h-full flex items-center justify-center"
@@ -982,68 +992,68 @@
 
 		<!-- PROVEN IMPACT & FEATURES (Redesigned Layout) -->
 		<section
-			class="w-full relative py-32 {$themeStore === 'dark'
+			class="w-full relative py-16 sm:py-24 md:py-32 {$themeStore === 'dark'
 				? 'bg-[#030712]'
 				: 'bg-white'}"
 			overflow-hidden
 			id="testimonials"
 		>
 			<!-- Centered Header -->
-			<div class="text-center mb-20 px-4">
+			<div class="text-center mb-12 sm:mb-16 md:mb-20 px-4">
 				<span
-					class="text-red-600 font-bold tracking-[0.2em] text-xs sm:text-sm uppercase mb-6 block"
+					class="text-red-600 font-bold tracking-[0.15em] sm:tracking-[0.2em] text-xs sm:text-sm uppercase mb-4 sm:mb-6 block"
 					>Trusted by Sales Leaders</span
 				>
 				<h2
-					class="text-6xl sm:text-8xl font-black tracking-tight mb-4 {$themeStore ===
+					class="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight mb-2 sm:mb-4 {$themeStore ===
 					'dark'
 						? 'text-white'
 						: 'text-zinc-900'}"
 				>
 					AI That Eliminates
 				</h2>
-				<h2 class="text-6xl sm:text-8xl font-black tracking-tight text-red-600">
+				<h2 class="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight text-red-600">
 					Cognitive Overload
 				</h2>
-				<p class="text-xl sm:text-2xl text-zinc-500 mt-4">
+				<p class="text-base sm:text-xl md:text-2xl text-zinc-500 mt-3 sm:mt-4">
 					CROs, Sales, and Technical Sales Teams can finally think clearly.
 				</p>
 			</div>
 
-			<div class="w-full overflow-hidden pb-12 mb-12 px-[clamp(2rem,6vw,6rem)]">
+			<div class="w-full overflow-hidden pb-8 sm:pb-12 mb-8 sm:mb-12 px-4 sm:px-8 md:px-[clamp(2rem,6vw,6rem)]">
 				<div class="marquee-wrapper">
 					<div class="marquee-track">
 						{#each testimonials as t}
 							<div
-								class="w-[350px] sm:w-[450px] p-8 rounded-2xl border transition-all hover:border-red-500/30 group
+								class="w-[280px] sm:w-[350px] md:w-[450px] p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border transition-all hover:border-red-500/30 group
                              {$themeStore === 'dark'
 									? 'bg-[#050915] border-zinc-800'
 									: 'bg-white border-zinc-200'}"
 							>
-								<div class="flex items-center justify-between mb-8">
-									<div class="flex items-center gap-3">
+								<div class="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+									<div class="flex items-center gap-2 sm:gap-3">
 										<div
-											class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-sm"
+											class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-xs sm:text-sm"
 										>
 											{t.author[0]}
 										</div>
 										<div>
 											<div
-												class="font-bold text-sm text-white pointer-events-none"
+												class="font-bold text-xs sm:text-sm text-white pointer-events-none"
 											>
 												{t.author}
 											</div>
 											<div
-												class="text-xs text-zinc-500 uppercase tracking-wider"
+												class="text-[10px] sm:text-xs text-zinc-500 uppercase tracking-wider"
 											>
 												{t.role}
 											</div>
 										</div>
 									</div>
-									<div class="text-2xl font-black text-red-600">{t.metric}</div>
+									<div class="text-xl sm:text-2xl font-black text-red-600">{t.metric}</div>
 								</div>
 								<p
-									class="text-base sm:text-lg leading-relaxed font-medium
+									class="text-sm sm:text-base md:text-lg leading-relaxed font-medium
                                  {$themeStore === 'dark'
 										? 'text-zinc-300'
 										: 'text-zinc-600'}"
@@ -1051,7 +1061,7 @@
 									"{t.quote}"
 								</p>
 								<div
-									class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right"
+									class="mt-3 sm:mt-4 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right"
 								>
 									{t.metricLabel}
 								</div>
@@ -1062,35 +1072,35 @@
 					<div class="marquee-track">
 						{#each testimonials as t}
 							<div
-								class="w-[350px] sm:w-[450px] p-8 rounded-2xl border transition-all hover:border-red-500/30 group
+								class="w-[280px] sm:w-[350px] md:w-[450px] p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border transition-all hover:border-red-500/30 group
                              {$themeStore === 'dark'
 									? 'bg-[#050915] border-zinc-800'
 									: 'bg-white border-zinc-200'}"
 							>
-								<div class="flex items-center justify-between mb-8">
-									<div class="flex items-center gap-3">
+								<div class="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+									<div class="flex items-center gap-2 sm:gap-3">
 										<div
-											class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-sm"
+											class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-xs sm:text-sm"
 										>
 											{t.author[0]}
 										</div>
 										<div>
 											<div
-												class="font-bold text-sm text-white pointer-events-none"
+												class="font-bold text-xs sm:text-sm text-white pointer-events-none"
 											>
 												{t.author}
 											</div>
 											<div
-												class="text-xs text-zinc-500 uppercase tracking-wider"
+												class="text-[10px] sm:text-xs text-zinc-500 uppercase tracking-wider"
 											>
 												{t.role}
 											</div>
 										</div>
 									</div>
-									<div class="text-2xl font-black text-red-600">{t.metric}</div>
+									<div class="text-xl sm:text-2xl font-black text-red-600">{t.metric}</div>
 								</div>
 								<p
-									class="text-base sm:text-lg leading-relaxed font-medium
+									class="text-sm sm:text-base md:text-lg leading-relaxed font-medium
                                  {$themeStore === 'dark'
 										? 'text-zinc-300'
 										: 'text-zinc-600'}"
@@ -1098,7 +1108,7 @@
 									"{t.quote}"
 								</p>
 								<div
-									class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right"
+									class="mt-3 sm:mt-4 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right"
 								>
 									{t.metricLabel}
 								</div>
@@ -1109,23 +1119,23 @@
 			</div>
 
 			<!-- Built For ... Feature Box (Centered) -->
-			<div class="max-w-[90vw] mx-auto">
+			<div class="max-w-[95vw] sm:max-w-[90vw] mx-auto px-2 sm:px-0">
 				<div
-					class="rounded-[2.5rem] p-8 sm:p-16 border relative overflow-hidden
+					class="rounded-xl sm:rounded-2xl lg:rounded-[2.5rem] p-6 sm:p-10 md:p-16 border relative overflow-hidden
                      {$themeStore === 'dark'
 						? 'bg-[#050915] border-zinc-800'
 						: 'bg-zinc-50 border-zinc-200'}"
 				>
-					<div class="text-center mb-16">
+					<div class="text-center mb-10 sm:mb-12 md:mb-16">
 						<h3
-							class="text-2xl font-bold mb-2 {$themeStore === 'dark'
+							class="text-xl sm:text-2xl font-bold mb-2 {$themeStore === 'dark'
 								? 'text-white'
 								: 'text-zinc-900'}"
 						>
 							Built for Revenue Teams
 						</h3>
 						<p
-							class="text-sm uppercase tracking-widest {$themeStore === 'dark'
+							class="text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest {$themeStore === 'dark'
 								? 'text-zinc-500'
 								: 'text-zinc-500'}"
 						>
@@ -1134,26 +1144,26 @@
 					</div>
 
 					<div
-						class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left"
+						class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 text-center md:text-left"
 					>
 						<!-- 01 -->
-						<div class="relative group">
+						<div class="relative group pt-6 md:pt-0">
 							<span
-								class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
+								class="text-4xl sm:text-5xl md:text-6xl font-black absolute -top-2 md:-top-12 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-0 group-hover:text-red-900/20 transition-colors
                                 {$themeStore === 'dark'
 									? 'text-zinc-800/50'
 									: 'text-zinc-200'}">01</span
 							>
-							<div class="relative z-10">
+							<div class="relative z-10 pt-6 md:pt-0">
 								<h4
-									class="text-xl font-bold mb-4 {$themeStore === 'dark'
+									class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 {$themeStore === 'dark'
 										? 'text-white'
 										: 'text-zinc-900'}"
 								>
 									CROs & Revenue Leaders
 								</h4>
 								<p
-									class="leading-relaxed {$themeStore === 'dark'
+									class="text-sm sm:text-base leading-relaxed {$themeStore === 'dark'
 										? 'text-zinc-400'
 										: 'text-zinc-600'}"
 								>
@@ -1163,23 +1173,23 @@
 							</div>
 						</div>
 						<!-- 02 -->
-						<div class="relative group">
+						<div class="relative group pt-6 md:pt-0">
 							<span
-								class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
+								class="text-4xl sm:text-5xl md:text-6xl font-black absolute -top-2 md:-top-12 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-0 group-hover:text-red-900/20 transition-colors
                                 {$themeStore === 'dark'
 									? 'text-zinc-800/50'
 									: 'text-zinc-200'}">02</span
 							>
-							<div class="relative z-10">
+							<div class="relative z-10 pt-6 md:pt-0">
 								<h4
-									class="text-xl font-bold mb-4 {$themeStore === 'dark'
+									class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 {$themeStore === 'dark'
 										? 'text-white'
 										: 'text-zinc-900'}"
 								>
 									Sales & Account Executives
 								</h4>
 								<p
-									class="leading-relaxed {$themeStore === 'dark'
+									class="text-sm sm:text-base leading-relaxed {$themeStore === 'dark'
 										? 'text-zinc-400'
 										: 'text-zinc-600'}"
 								>
@@ -1189,23 +1199,23 @@
 							</div>
 						</div>
 						<!-- 03 -->
-						<div class="relative group">
+						<div class="relative group pt-6 md:pt-0">
 							<span
-								class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
+								class="text-4xl sm:text-5xl md:text-6xl font-black absolute -top-2 md:-top-12 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-0 group-hover:text-red-900/20 transition-colors
                                 {$themeStore === 'dark'
 									? 'text-zinc-800/50'
 									: 'text-zinc-200'}">03</span
 							>
-							<div class="relative z-10">
+							<div class="relative z-10 pt-6 md:pt-0">
 								<h4
-									class="text-xl font-bold mb-4 {$themeStore === 'dark'
+									class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 {$themeStore === 'dark'
 										? 'text-white'
 										: 'text-zinc-900'}"
 								>
 									Technical Sales Teams
 								</h4>
 								<p
-									class="leading-relaxed {$themeStore === 'dark'
+									class="text-sm sm:text-base leading-relaxed {$themeStore === 'dark'
 										? 'text-zinc-400'
 										: 'text-zinc-600'}"
 								>
@@ -1223,12 +1233,12 @@
 		<section
 			class="w-full relative overflow-hidden flex flex-col justify-center items-center text-center
             {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-zinc-50'}"
-			style="padding: clamp(6rem, 12vh, 12rem) clamp(2rem, 4vw, 4rem);"
+			style="padding: clamp(4rem, 12vh, 12rem) clamp(1rem, 4vw, 4rem);"
 		>
 			<h2
-				class="font-black leading-[0.85] tracking-tighter mb-8 max-w-5xl
+				class="font-black leading-[0.9] sm:leading-[0.85] tracking-tighter mb-6 sm:mb-8 max-w-5xl px-2
                 {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
-				style="font-size: clamp(3.5rem, 8vw, 8rem);"
+				style="font-size: clamp(2rem, 8vw, 8rem);"
 			>
 				Empower Your Revenue Team With<br />
 				<span class="text-red-600 block sm:inline">AI Intelligence</span>
@@ -1283,7 +1293,19 @@
 		display: flex;
 		width: max-content;
 		animation: marquee 40s linear infinite;
-		gap: 2rem;
+		gap: 1rem;
+	}
+
+	@media (min-width: 640px) {
+		.marquee-wrapper {
+			gap: 1.5rem;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.marquee-wrapper {
+			gap: 2rem;
+		}
 	}
 
 	.marquee-wrapper:hover {
@@ -1292,7 +1314,19 @@
 
 	.marquee-track {
 		display: flex;
-		gap: 2rem;
+		gap: 1rem;
+	}
+
+	@media (min-width: 640px) {
+		.marquee-track {
+			gap: 1.5rem;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.marquee-track {
+			gap: 2rem;
+		}
 	}
 
 	@keyframes marquee {
@@ -1309,35 +1343,37 @@
 		transition: transform 0.3s ease;
 		transform-origin: center center;
 		flex-shrink: 0;
+		width: 100%;
+		height: 100%;
 	}
 
 	@media (max-width: 1280px) {
 		.interactive-scaler {
-			transform: scale(0.85);
+			transform: scale(0.9);
 		}
 	}
 
 	@media (max-width: 1024px) {
 		.interactive-scaler {
-			transform: scale(1); /* Reset for mobile stack view */
-			width: 100% !important;
-			height: 100% !important;
+			transform: scale(0.85);
+			width: 100%;
+			height: 100%;
 		}
 	}
 
 	@media (max-width: 768px) {
 		.interactive-scaler {
-			transform: scale(0.6);
-			width: 166% !important; /* Compensate for scale: 1/0.6 = 1.66 */
-			height: 166% !important;
+			transform: scale(0.75);
+			width: 100%;
+			height: 100%;
 		}
 	}
 
 	@media (max-width: 480px) {
 		.interactive-scaler {
-			transform: scale(0.45);
-			width: 222% !important; /* 1/0.45 = 2.22 */
-			height: 222% !important;
+			transform: scale(0.65);
+			width: 100%;
+			height: 100%;
 		}
 	}
 	@keyframes spin-slow {

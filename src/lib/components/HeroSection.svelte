@@ -102,22 +102,16 @@
 					class="hero-subhead px-5 sm:px-6 py-4 sm:py-3 bg-secondary/50 backdrop-blur-xl rounded-2xl border border-border hover:border-primary/40 transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 text-center max-w-3xl"
 				>
 					<span
-						class="leading-relaxed text-muted-foreground font-medium"
-						>Redefining the sales workforce so every seller operates
-						like a founder with reasoning-grade intelligence in
-						every workflow</span
-					>
+						class="leading-relaxed text-muted-foreground font-medium">
+					Real-time conversational, contextual, and computational intelligence.<br />One-shot selling. Unified customer actions. No cognitive drag.</span>
 				</div>
-			</div>
-
-			<div class="mb-10 sm:mb-12 md:mb-14">
 				<h1
 					class="hero-title animate-fade-in-up text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-foreground"
 				>
-					Sell Like a CEO
+					Sell like <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-primary to-rose-500 font-bold">a CEO.</span>
 					<span
-						class="block mt-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-primary to-rose-500 font-bold"
-						>The rise of the singular rep</span
+						class="block mt-4 text-foreground"
+						>The rise of the singular rep starts here.</span
 					>
 				</h1>
 			</div>
@@ -126,9 +120,8 @@
 				class="hero-body animate-fade-in-up mb-10 sm:mb-12 text-center mx-auto text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed"
 				style="animation-delay: 0.2s;"
 			>
-				Revenue AI Agents built for the Fortune 2000 pair reasoning
-				models with real-time call intelligence and automatic
-				follow-through so every rep thinks ahead.
+				Sales doesn't fail from lack of skill. It fails from cognitive overload.<br />
+				SpikedAI is the Executive Cognition System that turns every seller into a Singular Rep.
 			</p>
 
 			<div
@@ -144,7 +137,7 @@
 					<span
 						class="relative z-10 flex items-center justify-center gap-2"
 					>
-						Start Now, Skip Demos
+						Book a Demo
 						<svg
 							class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300"
 							fill="none"

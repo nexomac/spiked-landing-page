@@ -19,6 +19,7 @@
 		Heart,
 		Settings,
 		Activity,
+		ChevronDown,
 	} from "lucide-svelte";
 
 	// Components
@@ -34,6 +35,10 @@
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 	import { innerWidth } from "svelte/reactivity/window";
 
+	// Data
+	import heroEvents from "$lib/data/hero-events.json";
+	import recommendedResources from "$lib/data/recommended.json";
+
 	// State
 	let scrollY = $state(0);
 	let mouseX = $state(0);
@@ -41,9 +46,12 @@
 	let isPaused = $state(false);
 	let isTransitioning = $state(false);
 	let currentShowcaseIndex = $state(0);
+	let currentHeroIndex = $state(0);
+	let heroProgress = $state(0);
 	let activeTab = $state("simulator");
 	let showcaseProgress = $state(0);
-	const SHOWCASE_INTERVAL = 8000; // 8 seconds for slower, more obvious scroll
+	const SHOWCASE_INTERVAL = 8000;
+	const HERO_INTERVAL = 10000; // 10s for hero rotation
 
 	let visibleSections = $state({
 		hero: false,
@@ -53,6 +61,38 @@
 		cta: false,
 		quote: true,
 	});
+
+	function nextHero() {
+		if (isTransitioning) return;
+		isTransitioning = true;
+		heroProgress = 0;
+		setTimeout(() => {
+			currentHeroIndex = (currentHeroIndex + 1) % heroEvents.length;
+			isTransitioning = false;
+		}, 600);
+	}
+
+	function selectHero(index) {
+		if (currentHeroIndex === index || isTransitioning) return;
+		isTransitioning = true;
+		heroProgress = 0;
+		setTimeout(() => {
+			currentHeroIndex = index;
+			isTransitioning = false;
+		}, 600);
+	}
+
+	let recommendedScrollContainer = $state();
+
+	function scrollRecommended(direction) {
+		if (recommendedScrollContainer) {
+			const scrollAmount = recommendedScrollContainer.clientWidth * 0.8;
+			recommendedScrollContainer.scrollBy({
+				left: direction === "left" ? -scrollAmount : scrollAmount,
+				behavior: "smooth",
+			});
+		}
+	}
 
 	const showcases = [
 		{
@@ -380,19 +420,26 @@
 		visibleSections.hero = true;
 
 		let lastTime = Date.now();
-		let showcaseInterval = setInterval(() => {
+		let interval = setInterval(() => {
 			if (!isPaused && !isTransitioning) {
 				const now = Date.now();
 				const delta = now - lastTime;
 				lastTime = now;
 
+				// Update Showcase Progress
 				showcaseProgress += (delta / SHOWCASE_INTERVAL) * 100;
-
 				if (showcaseProgress >= 100) {
 					showcaseProgress = 0;
 					if (innerWidth.current >= 1024) {
 						goToNextShowcase();
 					}
+				}
+
+				// Update Hero Progress
+				heroProgress += (delta / HERO_INTERVAL) * 100;
+				if (heroProgress >= 100) {
+					heroProgress = 0;
+					nextHero();
 				}
 			} else {
 				lastTime = Date.now();
@@ -403,7 +450,7 @@
 			window.removeEventListener("scroll", handleScroll);
 			window.removeEventListener("mousemove", handleMouseMove);
 			observer.disconnect();
-			clearInterval(showcaseInterval);
+			clearInterval(interval);
 		};
 	});
 
@@ -443,229 +490,294 @@
 	<main
 		class="relative z-10 w-full overflow-hidden max-w-[1900px] mx-auto bg-transparent"
 	>
-		<!-- BIG HERO -->
+		<!-- BIG HERO (NVIDIA STYLE) -->
 		<section
 			data-section="hero"
-			class="relative w-full flex flex-col justify-center
-			{$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
-			style="padding: clamp(2.5rem, 6vw, 5rem);"
+			class="relative w-full min-h-[90vh] flex flex-col justify-end overflow-hidden bg-black text-white"
 		>
-			<div class="w-full relative z-10 pt-[clamp(7rem,14vh,11rem)]">
-				<!-- HUGE HEADLINE -->
-				<h1
-					class="font-black tracking-tighter mb-6
-					{$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
-					style="
-						font-size: clamp(3.75rem, 10vw, 11rem);
-						line-height: 0.88;
-						letter-spacing: -0.04em;
-					"
-				>
-					Sell like <span class="text-red-600 block sm:inline">a CEO.</span>
-				</h1>
+			<!-- Background Images Carousel -->
+			<div class="absolute inset-0 z-0">
+				{#each heroEvents as event, i}
+					<div
+						class="absolute inset-0 transition-opacity duration-1000 ease-in-out {currentHeroIndex ===
+						i
+							? 'opacity-50'
+							: 'opacity-0'}"
+					>
+						<img src={event.image} alt="" class="w-full h-full object-cover" />
+					</div>
+				{/each}
+				<div
+					class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"
+				></div>
+			</div>
 
-				<!-- SUBTEXT -->
-				<p
-					class="font-medium max-w-3xl
-					{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
-					style="font-size: clamp(1.2rem, 3.5vw, 1.9rem);"
-				>
-					The rise of the singular rep starts here.
-				</p>
+			<!-- Hero Content -->
+			<div class="relative z-10 w-full px-[clamp(2rem,6vw,10rem)] pb-32">
+				<div class="max-w-6xl space-y-8" in:fade={{ duration: 800 }}>
+					{#key currentHeroIndex}
+						<div
+							in:fly={{ y: 30, duration: 800 }}
+							out:fade={{ duration: 400 }}
+							class="space-y-6"
+						>
+							<span
+								class="text-sm font-black uppercase tracking-[0.3em] text-red-500"
+							>
+								{heroEvents[currentHeroIndex].category}
+							</span>
+							<h1
+								class="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter"
+							>
+								{heroEvents[currentHeroIndex].title}
+							</h1>
+							<p
+								class="text-xl md:text-2xl text-zinc-300 max-w-3xl font-medium leading-relaxed"
+							>
+								{heroEvents[currentHeroIndex].description}
+							</p>
+							<div class="pt-6">
+								<a
+									href={heroEvents[currentHeroIndex].href}
+									class="inline-flex items-center gap-4 px-10 py-5 bg-red-600 text-white font-black text-xl hover:bg-red-700 transition-all rounded-sm shadow-2xl hover:scale-105"
+								>
+									{heroEvents[currentHeroIndex].cta}
+									<ArrowRight class="w-6 h-6" />
+								</a>
+							</div>
+						</div>
+					{/key}
+				</div>
+			</div>
 
-				<!-- Request Demo Button -->
-				<a
-					href="/contact-sales"
-					class="mt-10 mb-16 contextual-cta group relative inline-flex items-center gap-3
-					px-[clamp(1.75rem,4.5vw,3.25rem)]
-					py-[clamp(1.05rem,2.8vw,1.5rem)]
-					rounded-full font-semibold transition-all duration-200"
-				>
-					<span class="relative z-10 text-[clamp(1.05rem,2.2vw,1.35rem)]">
-						Request a Demo
-					</span>
-					<span class="cta-icon relative z-10 grid place-items-center">
-						<ArrowRight
-							class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
-						/>
-					</span>
-				</a>
+			<!-- Bottom Navigation Tabs -->
+			<div
+				class="relative z-10 w-full border-t border-white/10 bg-black/40 backdrop-blur-md"
+			>
+				<div class="grid grid-cols-1 md:grid-cols-3 divide-x divide-white/10">
+					{#each heroEvents as event, i}
+						<button
+							onclick={() => selectHero(i)}
+							class="relative px-8 py-6 text-left group transition-all hover:bg-white/5"
+						>
+							<div class="flex flex-col gap-2">
+								<span
+									class="text-[10px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-red-500 transition-colors"
+								>
+									{event.category}
+								</span>
+								<p
+									class="text-xs font-bold leading-tight line-clamp-2 {currentHeroIndex ===
+									i
+										? 'text-white'
+										: 'text-zinc-400'}"
+								>
+									{event.title}
+								</p>
+							</div>
+
+							<!-- Progress bar indicator -->
+							<div class="absolute bottom-0 left-0 right-0 h-1 bg-white/5">
+								{#if currentHeroIndex === i}
+									<div
+										class="h-full bg-red-600 transition-all duration-100 ease-linear"
+										style="width: {heroProgress}%"
+									></div>
+								{/if}
+							</div>
+						</button>
+					{/each}
+				</div>
 			</div>
 		</section>
 
-		<!-- ANTHROPIC-STYLE VARIED SECTION -->
+		<!-- RECOMMENDED FOR YOU (NVIDIA STYLE) -->
+		<section
+			class="w-full py-24 bg-black text-white px-[clamp(2rem,6vw,10rem)]"
+		>
+			<div class="flex items-center justify-between mb-12">
+				<h2
+					class="text-4xl md:text-5xl font-black tracking-tight flex items-center gap-4"
+				>
+					Recommended For You
+					<Settings class="w-6 h-6 text-zinc-600 animate-spin-slow" />
+				</h2>
+				<div class="flex gap-2">
+					<button
+						onclick={() => scrollRecommended("left")}
+						class="p-3 bg-zinc-800 hover:bg-red-600 transition-colors rounded-sm"
+					>
+						<ArrowRight class="w-5 h-5 rotate-180" />
+					</button>
+					<button
+						onclick={() => scrollRecommended("right")}
+						class="p-3 bg-zinc-800 hover:bg-red-600 transition-colors rounded-sm"
+					>
+						<ArrowRight class="w-5 h-5" />
+					</button>
+				</div>
+			</div>
+
+			<div
+				bind:this={recommendedScrollContainer}
+				class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory"
+			>
+				{#each recommendedResources as res}
+					<a
+						href={res.href}
+						class="flex-shrink-0 w-[clamp(300px,80vw,400px)] flex flex-col group bg-zinc-900 border border-zinc-800 hover:border-red-600/50 transition-all rounded-sm overflow-hidden snap-start"
+					>
+						<div class="aspect-video overflow-hidden">
+							<img
+								src={res.image}
+								alt={res.title}
+								class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+							/>
+						</div>
+						<div class="p-6 space-y-4 flex-1 flex flex-col">
+							<div
+								class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500"
+							>
+								<span>{res.category}</span>
+								<span>|</span>
+								<span class="text-red-500">{res.type}</span>
+							</div>
+							<h3
+								class="text-lg font-bold leading-tight group-hover:text-red-500 transition-colors"
+							>
+								{res.title}
+							</h3>
+							<p class="text-sm text-zinc-400 line-clamp-3">
+								{res.description}
+							</p>
+						</div>
+					</a>
+				{/each}
+			</div>
+		</section>
+
+		<!-- CLARITY & INTELLIGENCE (NVIDIA SPLIT STYLE) -->
 		<section
 			data-section="quote"
-			class="w-full py-32 px-[clamp(1rem,4vw,4rem)] transition-colors duration-500
+			class="w-full py-32 px-[clamp(2rem,6vw,10rem)] transition-colors duration-500
             {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
 		>
-			<div class="max-w-[1700px] mx-auto space-y-16">
-				<!-- 1. The Asymmetrical Problem Box -->
-				<div
-					class="rounded-[3rem] p-12 sm:p-20 flex flex-col lg:flex-row items-center gap-16 transition-all duration-300
-                    {$themeStore === 'dark'
-						? 'bg-[#121214] border border-zinc-800'
-						: 'bg-[#F9F9FB] shadow-sm'}"
-				>
-					<div class="lg:w-2/3 space-y-10">
-						<h2
-							class="font-black leading-[1.0] tracking-tight {$themeStore ===
-							'dark'
-								? 'text-white'
-								: 'text-zinc-900'}"
-							style="font-size: clamp(3rem, 6vw, 6rem);"
-						>
-							Companies leave millions <br class="hidden xl:block" />on the
-							table every year.
-						</h2>
-						<p
-							class="font-medium leading-relaxed max-w-2xl
-                            {$themeStore === 'dark'
-								? 'text-zinc-400'
-								: 'text-zinc-600'}"
-							style="font-size: clamp(1.4rem, 1.8vw, 2rem);"
-						>
-							Sales has outgrown human working memory, and teams are drowning in
-							cognitive overload.
-						</p>
-					</div>
-					<div class="lg:w-1/3 flex lg:justify-end w-full">
-						<div
-							class="text-6xl lg:text-8xl font-black text-red-600 leading-[0.9] tracking-tighter"
-						>
-							SpikedAI <br />solves <br />this.
-						</div>
-					</div>
-				</div>
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+				<!-- Left Text Column -->
+				<div class="lg:col-span-4 space-y-12">
+					<h2 class="text-5xl font-black leading-tight tracking-tighter">
+						Intelligence <br />That Scales.
+					</h2>
+					<p class="text-xl text-zinc-500 font-medium leading-relaxed">
+						SpikedAI accelerated intelligence, libraries and AI models enable
+						revenue teams to develop products for large-scale, physically
+						accurate simulations and interactive digital twins so teams can
+						efficiently build, train, and test advanced systems before
+						deployment, bringing products to market faster.
+					</p>
 
-				<!-- 2. Split Visual & Quote (Variated) -->
-				<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
-					<!-- Visual Side -->
-					<div
-						class="lg:col-span-8 relative group overflow-hidden rounded-[3rem] bg-zinc-900 aspect-[4/5] sm:aspect-video lg:aspect-auto"
-					>
-						<img
-							src="/clarity_visual.png"
-							alt="Clarity from Chaos"
-							class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
-						/>
-						<div
-							class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 sm:p-12 flex flex-col justify-end"
+					<div class="pt-4 flex flex-col gap-4">
+						<button
+							class="flex items-center justify-between group border-b border-zinc-500/20 pb-4 text-left"
 						>
-							<div class="max-w-2xl">
-								<div
-									class="mb-6 w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center"
-								>
-									<Sparkles class="w-6 h-6 text-white" />
-								</div>
-								<p
-									class="text-white font-bold leading-tight"
-									style="font-size: clamp(1.8rem, 2.5vw, 3rem);"
-								>
-									We bring clarity into the chaos, supporting every kind of
-									seller to perform at their highest potential.
-								</p>
-							</div>
-						</div>
-					</div>
-
-					<!-- Quote Side (Non-boxed style) -->
-					<div
-						class="lg:col-span-4 flex flex-col justify-center space-y-10 p-4"
-					>
-						<div class="space-y-6">
 							<span
-								class="text-4xl lg:text-6xl font-serif text-red-600 italic opacity-50 block inline"
-								>“</span
+								class="font-bold text-lg group-hover:text-red-500 transition-colors"
+								>Quick Links</span
 							>
-							<h3
-								class="font-bold leading-tight {$themeStore === 'dark'
-									? 'text-zinc-100'
-									: 'text-zinc-900'} relative z-10"
-								style="font-size: clamp(1.6rem, 2.2vw, 2.4rem);"
-							>
-								AI that respects judgment, because revenue decisions are human
-								decisions.
-							</h3>
-							<p
-								class="font-medium leading-relaxed {$themeStore === 'dark'
-									? 'text-zinc-400'
-									: 'text-zinc-500'}"
-								style="font-size: 1.25rem;"
-							>
-								Built for leaders who make decisions in live customer moments,
-								turning conversations into conversions.
-							</p>
-						</div>
-
-						<div
-							class="flex items-center gap-5 pt-6 border-t border-zinc-500/20"
-						>
-							<div
-								class="w-16 h-16 rounded-2xl overflow-hidden border border-red-500/30"
-							>
-								<img
-									src="/Photos/Avi Sahi.jpeg"
-									alt="Avi Sahi"
-									class="w-full h-full object-cover"
-								/>
-							</div>
-							<div>
-								<div
-									class="font-black text-lg {$themeStore === 'dark'
-										? 'text-white'
-										: 'text-zinc-900'}"
+							<ArrowRight
+								class="w-5 h-5 rotate-90 transition-transform group-hover:translate-y-1"
+							/>
+						</button>
+						<div class="flex flex-col gap-4 pl-4 pt-4">
+							{#each ["Enterprise Overview", "Solution Architecture", "Integrations Guide"] as link}
+								<a
+									href="/resources"
+									class="flex items-center gap-3 font-bold group"
 								>
-									Avi Sahi
-								</div>
-								<div
-									class="text-red-500 font-bold tracking-widest text-[10px] uppercase"
-								>
-									Co-Founder & CEO, SpikedAI
-								</div>
-							</div>
+									<ChevronDown class="w-4 h-4 text-red-500 -rotate-90" />
+									<span class="group-hover:text-red-500 transition-colors"
+										>{link}</span
+									>
+								</a>
+							{/each}
 						</div>
 					</div>
 				</div>
 
-				<!-- 3. Horizontal Divider Line -->
-				<div
-					class="w-full h-px bg-gradient-to-r from-transparent via-zinc-500/20 to-transparent my-12"
-				></div>
-
-				<!-- 4. Impact Grid (3 Column) -->
-				<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-					{#each impactItems as item}
+				<!-- Right Grid Column -->
+				<div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+					{#each impactItems as item, i}
 						<div
-							class="rounded-[2.5rem] p-10 transition-all duration-300
-								{$themeStore === 'dark'
-								? `border ${item.darkBg} ${item.darkBorder}`
-								: item.lightBg}"
+							class="group flex flex-col p-8 rounded-sm transition-all duration-300 hover:shadow-2xl hover:-translate-y-2
+							{$themeStore === 'dark'
+								? 'bg-zinc-900 border border-zinc-800 hover:border-red-600/30'
+								: 'bg-zinc-50 border border-zinc-200 hover:border-red-500/30'}"
 						>
-							<div class="text-4xl font-black text-red-600 mb-6">{item.id}</div>
-							<h4
-								class="text-2xl font-black mb-4 {$themeStore === 'dark'
-									? 'text-white'
-									: 'text-zinc-900'}"
+							<div class="mb-4 flex items-center justify-between">
+								<span
+									class="text-xs font-black uppercase tracking-widest text-zinc-500"
+									>Feature 0{i + 1}</span
+								>
+								<div
+									class="w-10 h-10 rounded-full bg-red-600/10 flex items-center justify-center"
+								>
+									<Sparkles class="w-5 h-5 text-red-600" />
+								</div>
+							</div>
+							<h3
+								class="text-2xl font-black mb-4 group-hover:text-red-500 transition-colors"
 							>
 								{item.title}
-							</h4>
-							<p
-								class="font-medium {$themeStore === 'dark'
-									? 'text-zinc-400'
-									: 'text-zinc-600'}"
-							>
+							</h3>
+							<p class="text-zinc-500 font-medium leading-relaxed">
 								{item.description}
 							</p>
+							<div class="mt-auto pt-8">
+								<a
+									href="/features"
+									class="inline-flex items-center gap-2 font-black text-xs uppercase tracking-widest text-red-600 group-hover:gap-4 transition-all"
+								>
+									Learn More
+									<ArrowRight class="w-4 h-4" />
+								</a>
+							</div>
 						</div>
 					{/each}
 				</div>
+			</div>
 
-				<div class="pt-8 text-center">
-					<div
-						class="inline-block px-8 py-4 rounded-full border border-red-500/30 text-red-600 font-black uppercase tracking-widest text-sm"
+			<!-- Divider Quote -->
+			<div
+				class="mt-32 pt-32 border-t border-zinc-500/10 flex flex-col lg:flex-row gap-16 items-center"
+			>
+				<div class="lg:w-1/2">
+					<span
+						class="text-8xl font-serif text-red-600 italic opacity-20 leading-none"
+						>“</span
 					>
-						And SpikedAI delivers.
+					<blockquote
+						class="text-3xl lg:text-4xl font-black leading-tight -mt-8"
+					>
+						AI that respects judgment, because revenue decisions are human
+						decisions. Built for leaders who make decisions in live customer
+						moments.
+					</blockquote>
+				</div>
+				<div class="lg:w-1/2 flex items-center gap-6">
+					<div class="w-20 h-20 rounded-2xl overflow-hidden shadow-2xl">
+						<img
+							src="/Photos/Avi Sahi.jpeg"
+							alt="Avi Sahi"
+							class="w-full h-full object-cover"
+						/>
+					</div>
+					<div>
+						<div class="text-2xl font-black italic">Avi Sahi</div>
+						<div
+							class="text-xs font-black uppercase tracking-widest text-red-600"
+						>
+							Co-Founder & CEO, SpikedAI
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1191,27 +1303,7 @@
 			transform: translateX(-50%);
 		}
 	}
-	/* CTA Button */
-	.contextual-cta {
-		background: #ef4444;
-		color: var(--foreground);
-		border: 2px solid #ef4444;
-		transition: all 0.2s ease;
-	}
-
-	.contextual-cta:hover {
-		background: #dc2626;
-		border-color: #dc2626;
-	}
-
-	.cta-icon {
-		width: 2rem;
-		height: 2rem;
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 9999px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		transition: all 0.2s ease;
-	}
+	/* CTA Button - Removed old styles as they are replaced by NVIDIA style button */
 
 	.interactive-scaler {
 		transition: transform 0.3s ease;
@@ -1247,5 +1339,16 @@
 			width: 222% !important; /* 1/0.45 = 2.22 */
 			height: 222% !important;
 		}
+	}
+	@keyframes spin-slow {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	:global(.animate-spin-slow) {
+		animation: spin-slow 8s linear infinite;
 	}
 </style>

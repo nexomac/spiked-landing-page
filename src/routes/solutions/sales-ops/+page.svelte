@@ -56,7 +56,7 @@
 
 			<ThemeHeadline variant="h1" class="text-5xl md:text-7xl">
 				The End of <span
-					class="bg-gradient-to-r from-green-500 to-emerald-800 bg-clip-text text-transparent italic"
+					class="bg-gradient-to-r from-green-500 to-emerald-800 bg-clip-text text-transparent"
 					>Bad CRM Data</span
 				>
 			</ThemeHeadline>

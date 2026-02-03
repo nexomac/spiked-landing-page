@@ -67,7 +67,7 @@
 
 			<ThemeHeadline variant="h1" class="text-6xl md:text-8xl leading-tight">
 				True <span
-					class="bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent italic"
+					class="bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent p-2"
 					>Pipeline Clarity</span
 				><br />
 				From Word One.

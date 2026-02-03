@@ -909,7 +909,7 @@
 						</p>
 						<div class="flex gap-4">
 							<a
-								href="https://www.linkedin.com/company/spiked-ai"
+								href="https://www.linkedin.com/company/spiked-ai/?viewAsMember=true"
 								target="_blank"
 								rel="noopener noreferrer"
 								class="p-2 bg-zinc-900 hover:bg-red-950 border border-zinc-800 hover:border-red-900/50 rounded transition-all duration-300 group hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/30"

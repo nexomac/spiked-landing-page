@@ -22,22 +22,17 @@
 	} from "lucide-svelte";
 
 	// Components
-	import AIAssistanceShowcase from "$lib/components/AIAssistanceShowcase.svelte";
-	import NotetakerShowcase from "$lib/components/NotetakerShowcase.svelte";
-	import FollowupShowcase from "$lib/components/FollowupShowcase.svelte";
-	import SimulatorShowcase from "$lib/components/SimulatorShowcase.svelte";
-	import DevToolsShowcase from "$lib/components/DevToolsShowcase.svelte";
-	import CRMShowcase from "$lib/components/CRMShowcase.svelte";
-	import SentimentShowcase from "$lib/components/SentimentShowcase.svelte";
-	import CustomGoalsShowcase from "$lib/components/CustomGoalsShowcase.svelte";
+	import AIAssistanceShowcase from "$lib/components/features/AIAssistanceShowcase.svelte";
+	import NotetakerShowcase from "$lib/components/features/NotetakerShowcase.svelte";
+	import FollowupShowcase from "$lib/components/features/FollowupShowcase.svelte";
+	import SimulatorShowcase from "$lib/components/features/SimulatorShowcase.svelte";
+	import DevToolsShowcase from "$lib/components/features/DevToolsShowcase.svelte";
+	import CRMShowcase from "$lib/components/features/CRMShowcase.svelte";
+	import SentimentShowcase from "$lib/components/features/SentimentShowcase.svelte";
+	import CustomGoalsShowcase from "$lib/components/features/CustomGoalsShowcase.svelte";
 	import Footer from "$lib/components/Footer.svelte";
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 	import { innerWidth } from "svelte/reactivity/window";
-
-	// Theme Components
-	import ThemeCard from "$lib/components/ui/ThemeCard.svelte";
-	import ThemeSection from "$lib/components/ui/ThemeSection.svelte";
-	import ThemeHeadline from "$lib/components/ui/ThemeHeadline.svelte";
 
 	// State
 	let scrollY = $state(0);
@@ -321,6 +316,42 @@
 		},
 	];
 
+	const impactItems = [
+		{
+			id: "01",
+			title: "Replaces cognitive overload with amplified cognitive ability",
+			description: "For every rep, before, during, and after the conversation.",
+			darkBg: "bg-[#0A1A12]",
+			darkBorder: "border-green-900/20",
+			lightBg: "bg-[#F2FBF6]",
+		},
+		{
+			id: "02",
+			title: "Rise of the Singular Rep",
+			description:
+				"Fewer teams required, sharper execution, tighter accountability.",
+			darkBg: "bg-[#1A1A0A]",
+			darkBorder: "border-yellow-900/20",
+			lightBg: "bg-[#FEFBF2]",
+		},
+		{
+			id: "03",
+			title: "One-shot selling",
+			description: "Confidence and clarity at the level of a CEO.",
+			darkBg: "bg-[#1A0A0A]",
+			darkBorder: "border-red-900/20",
+			lightBg: "bg-[#FFF2F2]",
+		},
+		{
+			id: "04",
+			title: "Unified customer actions",
+			description: "Every motion aligned, every outcome intentional.",
+			darkBg: "bg-[#0A0F1A]",
+			darkBorder: "border-blue-900/20",
+			lightBg: "bg-[#F2F6FF]",
+		},
+	];
+
 	onMount(() => {
 		themeStore.init();
 		const handleScroll = () => (scrollY = window.scrollY);
@@ -413,335 +444,265 @@
 		class="relative z-10 w-full overflow-hidden max-w-[1900px] mx-auto bg-transparent"
 	>
 		<!-- BIG HERO -->
-		<ThemeSection
-			id="hero"
-			background="default"
-			class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-visible"
+		<section
+			data-section="hero"
+			class="relative w-full flex flex-col justify-center
+			{$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
+			style="padding: clamp(2.5rem, 6vw, 5rem);"
 		>
-			<div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-				<!-- Left Column: Content -->
-				<div class="text-left space-y-8 relative z-10">
-					<!-- Badges -->
-					<div class="flex flex-wrap gap-3" in:fly={{ y: 20, duration: 500 }}>
-						<div
-							class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider"
-						>
-							<Sparkles class="w-3 h-3" />
-							<span>Introducing SpikedAI</span>
-						</div>
-						<!-- <div
-							class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-muted-foreground text-xs font-bold uppercase tracking-wider"
-						>
-							<span>AI Super Agents</span>
-							<ArrowRight class="w-3 h-3" />
-						</div> -->
-					</div>
+			<div class="w-full relative z-10 pt-[clamp(7rem,14vh,11rem)]">
+				<!-- HUGE HEADLINE -->
+				<h1
+					class="font-black tracking-tighter mb-6
+					{$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
+					style="
+						font-size: clamp(3.75rem, 10vw, 11rem);
+						line-height: 0.88;
+						letter-spacing: -0.04em;
+					"
+				>
+					Sell like <span class="text-red-600 block sm:inline">a CEO.</span>
+				</h1>
 
-					<!-- Headline -->
-					<ThemeHeadline
-						variant="h1"
-						class="text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tighter"
-					>
-						Sell like <span class="text-primary">a CEO.</span>
-					</ThemeHeadline>
+				<!-- SUBTEXT -->
+				<p
+					class="font-medium max-w-3xl
+					{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
+					style="font-size: clamp(1.2rem, 3.5vw, 1.9rem);"
+				>
+					The rise of the singular rep starts here.
+				</p>
 
-					<p class="text-xl sm:text-2xl font-medium text-foreground mt-2">
-						The rise of the singular rep starts here.
-					</p>
-
-					<!-- Value Props -->
-					<div class="space-y-4 text-lg text-muted-foreground pt-4">
-						<div class="flex items-start gap-3">
-							<div
-								class="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0"
-							></div>
-							<p>
-								Sales doesn’t fail from lack of skill. It fails from <span
-									class="text-foreground font-semibold"
-									>cognitive overload.</span
-								>
-							</p>
-						</div>
-						<div class="flex items-start gap-3">
-							<div
-								class="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0"
-							></div>
-							<p>
-								SpikedAI is the <span class="text-foreground font-semibold"
-									>Executive Cognition System</span
-								> that turns every seller into a Singular Rep.
-							</p>
-						</div>
-					</div>
-
-					<!-- Draw/CTA Area -->
-					<div
-						class="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-6"
-					>
-						<a
-							href="/contact-sales"
-							class="group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 bg-primary text-primary-foreground hover:brightness-110 shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
-						>
-							<span>Book a Demo</span>
-							<ArrowRight
-								class="w-5 h-5 transition-transform group-hover:translate-x-1"
-							/>
-						</a>
-					</div>
-
-					<!-- Subtext / Pills area -->
-					<div class="pt-8 space-y-4">
-						<div
-							class="text-xs font-bold text-muted-foreground uppercase tracking-widest leading-relaxed"
-						>
-							REAL-TIME CONVERSATIONAL, CONTEXTUAL, AND COMPUTATIONAL
-							INTELLIGENCE
-						</div>
-						<div class="flex flex-wrap gap-2">
-							<div
-								class="px-3 py-1.5 rounded-lg border border-border/50 bg-background text-sm font-medium text-muted-foreground"
-							>
-								One-shot selling
-							</div>
-							<div
-								class="px-3 py-1.5 rounded-lg border border-border/50 bg-background text-sm font-medium text-muted-foreground"
-							>
-								Unified customer actions
-							</div>
-							<div
-								class="px-3 py-1.5 rounded-lg border border-border/50 bg-background text-sm font-medium text-muted-foreground"
-							>
-								No cognitive drag
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Right Column: Visual Showcase -->
-				<div class="relative h-[600px] w-full hidden lg:block">
-					<!-- Rotator -->
-					{#each showcases as showcase, i}
-						<div
-							class="absolute inset-0 transition-all duration-700 ease-in-out transform"
-							class:opacity-100={currentShowcaseIndex === i}
-							class:opacity-0={currentShowcaseIndex !== i}
-							class:translate-x-0={currentShowcaseIndex === i}
-							class:translate-x-8={currentShowcaseIndex !== i}
-							class:pointer-events-none={currentShowcaseIndex !== i}
-						>
-							<div
-								class="w-full h-full rounded-2xl overflow-hidden border border-border bg-card/50 shadow-2xl backdrop-blur-sm"
-							>
-								<!-- App Chrome / Header -->
-								<div
-									class="h-10 border-b border-border bg-muted/30 px-4 flex items-center gap-2"
-								>
-									<div class="flex gap-1.5">
-										<div class="w-3 h-3 rounded-full bg-red-500/50"></div>
-										<div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-										<div class="w-3 h-3 rounded-full bg-green-500/50"></div>
-									</div>
-									<div
-										class="ml-4 px-3 py-1 bg-background rounded-md text-[10px] font-mono text-muted-foreground flex items-center gap-2"
-									>
-										<showcase.icon class="w-3 h-3" />
-										spiked.ai/{showcase.id}
-									</div>
-								</div>
-
-								<!-- Showcase Content -->
-								<div
-									class="relative w-full h-[calc(100%-40px)] bg-background/50"
-								>
-									{#if showcase.id === "ai-assistance"}
-										<AIAssistanceShowcase showAppChrome={false} height="100%" />
-									{:else if showcase.id === "notetaker"}
-										<NotetakerShowcase showAppChrome={false} height="100%" />
-									{:else if showcase.id === "followup"}
-										<FollowupShowcase showAppChrome={false} height="100%" />
-									{:else if showcase.id === "simulator"}
-										<SimulatorShowcase showAppChrome={false} height="100%" />
-									{:else if showcase.id === "dev-tools"}
-										<DevToolsShowcase showAppChrome={false} height="100%" />
-									{:else if showcase.id === "crm"}
-										<CRMShowcase showAppChrome={false} height="100%" />
-									{:else if showcase.id === "sentiment"}
-										<SentimentShowcase showAppChrome={false} height="100%" />
-									{:else if showcase.id === "custom-goals"}
-										<CustomGoalsShowcase showAppChrome={false} height="100%" />
-									{/if}
-
-									<!-- Overlay Gradient for cleaner look -->
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none opacity-20"
-									></div>
-								</div>
-							</div>
-						</div>
-					{/each}
-
-					<!-- Floating Elements (Decoration) -->
-					<div
-						class="absolute -right-12 top-1/4 p-4 bg-card rounded-xl border border-border shadow-xl animate-bounce duration-[3000ms]"
-					>
-						<div class="flex items-center gap-3">
-							<div
-								class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center"
-							>
-								<CheckCircle2 class="w-5 h-5 text-green-500" />
-							</div>
-							<div>
-								<div class="text-xs font-bold">All Tasks Done</div>
-								<div class="text-[10px] text-muted-foreground">Just now</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<!-- Request Demo Button -->
+				<a
+					href="/contact-sales"
+					class="mt-10 mb-16 contextual-cta group relative inline-flex items-center gap-3
+					px-[clamp(1.75rem,4.5vw,3.25rem)]
+					py-[clamp(1.05rem,2.8vw,1.5rem)]
+					rounded-full font-semibold transition-all duration-200"
+				>
+					<span class="relative z-10 text-[clamp(1.05rem,2.2vw,1.35rem)]">
+						Request a Demo
+					</span>
+					<span class="cta-icon relative z-10 grid place-items-center">
+						<ArrowRight
+							class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+						/>
+					</span>
+				</a>
 			</div>
-		</ThemeSection>
+		</section>
 
 		<!-- ANTHROPIC-STYLE VARIED SECTION -->
-		<ThemeSection id="quote" background="default">
-			<div class="space-y-16">
+		<section
+			data-section="quote"
+			class="w-full py-32 px-[clamp(1rem,4vw,4rem)] transition-colors duration-500
+            {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
+		>
+			<div class="max-w-[1700px] mx-auto space-y-16">
 				<!-- 1. The Asymmetrical Problem Box -->
-				<ThemeCard
-					class="flex flex-col lg:flex-col items-center gap-16 transition-all duration-300 p-12 sm:p-20 bg-card border-none"
+				<div
+					class="rounded-[3rem] p-12 sm:p-20 flex flex-col lg:flex-row items-center gap-16 transition-all duration-300
+                    {$themeStore === 'dark'
+						? 'bg-[#121214] border border-zinc-800'
+						: 'bg-[#F9F9FB] shadow-sm'}"
 				>
 					<div class="lg:w-2/3 space-y-10">
-						<ThemeHeadline variant="h2" class="text-[clamp(2.5rem,5vw,5rem)]">
+						<h2
+							class="font-black leading-[1.0] tracking-tight {$themeStore ===
+							'dark'
+								? 'text-white'
+								: 'text-zinc-900'}"
+							style="font-size: clamp(3rem, 6vw, 6rem);"
+						>
 							Companies leave millions <br class="hidden xl:block" />on the
 							table every year.
-						</ThemeHeadline>
-						<ThemeHeadline variant="sub" class="max-w-2xl">
+						</h2>
+						<p
+							class="font-medium leading-relaxed max-w-2xl
+                            {$themeStore === 'dark'
+								? 'text-zinc-400'
+								: 'text-zinc-600'}"
+							style="font-size: clamp(1.4rem, 1.8vw, 2rem);"
+						>
 							Sales has outgrown human working memory, and teams are drowning in
 							cognitive overload.
-						</ThemeHeadline>
+						</p>
 					</div>
-					<div class="lg:w-1/3 w-full">
+					<div class="lg:w-1/3 flex lg:justify-end w-full">
 						<div
-							class="text-6xl lg:text-8xl font-black text-primary leading-[0.9] tracking-tighter"
+							class="text-6xl lg:text-8xl font-black text-red-600 leading-[0.9] tracking-tighter"
 						>
 							SpikedAI <br />solves <br />this.
 						</div>
 					</div>
-				</ThemeCard>
+				</div>
 
 				<!-- 2. Split Visual & Quote (Variated) -->
-				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-					<!-- Visual Side - Using ThemeCard split variant logic manually for custom inner content here, or just a ThemeCard -->
-					<div class="lg:col-span-8">
-						<ThemeCard
-							class="h-full relative overflow-hidden bg-zinc-900 border-none aspect-[4/5] sm:aspect-video lg:aspect-auto p-0 rounded-3xl"
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+					<!-- Visual Side -->
+					<div
+						class="lg:col-span-8 relative group overflow-hidden rounded-[3rem] bg-zinc-900 aspect-[4/5] sm:aspect-video lg:aspect-auto"
+					>
+						<img
+							src="/clarity_visual.png"
+							alt="Clarity from Chaos"
+							class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
+						/>
+						<div
+							class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 sm:p-12 flex flex-col justify-end"
 						>
-							<img
-								src="/clarity_visual.png"
-								alt="Clarity from Chaos"
-								class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
-							/>
-							<div
-								class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-8 sm:p-12 flex flex-col justify-end"
-							>
-								<div class="max-w-2xl relative z-10">
-									<div
-										class="mb-6 w-12 h-12 rounded-xl bg-primary flex items-center justify-center"
-									>
-										<Sparkles class="w-6 h-6 text-white" />
-									</div>
-									<p
-										class="text-white font-bold leading-tight"
-										style="font-size: clamp(1.8rem, 2.5vw, 3rem);"
-									>
-										We bring clarity into the chaos, supporting every kind of
-										seller to perform at their highest potential.
-									</p>
+							<div class="max-w-2xl">
+								<div
+									class="mb-6 w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center"
+								>
+									<Sparkles class="w-6 h-6 text-white" />
 								</div>
-							</div>
-						</ThemeCard>
-					</div>
-
-					<!-- Quote Side -->
-					<div class="lg:col-span-4 flex flex-col">
-						<ThemeCard
-							class="h-full flex flex-col justify-center space-y-10 p-10 bg-card/50"
-						>
-							<div class="space-y-6">
-								<span
-									class="text-6xl font-serif text-primary italic opacity-50 block"
-									>“</span
-								>
-								<h3 class="font-bold leading-tight text-3xl relative z-10">
-									AI that respects judgment, because revenue decisions are human
-									decisions.
-								</h3>
 								<p
-									class="font-medium leading-relaxed text-muted-foreground text-lg"
+									class="text-white font-bold leading-tight"
+									style="font-size: clamp(1.8rem, 2.5vw, 3rem);"
 								>
-									Built for leaders who make decisions in live customer moments,
-									turning conversations into conversions.
+									We bring clarity into the chaos, supporting every kind of
+									seller to perform at their highest potential.
 								</p>
 							</div>
+						</div>
+					</div>
 
-							<div
-								class="flex items-center gap-5 pt-6 border-t border-border/50"
+					<!-- Quote Side (Non-boxed style) -->
+					<div
+						class="lg:col-span-4 flex flex-col justify-center space-y-10 p-4"
+					>
+						<div class="space-y-6">
+							<span
+								class="text-4xl lg:text-6xl font-serif text-red-600 italic opacity-50 block inline"
+								>“</span
 							>
+							<h3
+								class="font-bold leading-tight {$themeStore === 'dark'
+									? 'text-zinc-100'
+									: 'text-zinc-900'} relative z-10"
+								style="font-size: clamp(1.6rem, 2.2vw, 2.4rem);"
+							>
+								AI that respects judgment, because revenue decisions are human
+								decisions.
+							</h3>
+							<p
+								class="font-medium leading-relaxed {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-500'}"
+								style="font-size: 1.25rem;"
+							>
+								Built for leaders who make decisions in live customer moments,
+								turning conversations into conversions.
+							</p>
+						</div>
+
+						<div
+							class="flex items-center gap-5 pt-6 border-t border-zinc-500/20"
+						>
+							<div
+								class="w-16 h-16 rounded-2xl overflow-hidden border border-red-500/30"
+							>
+								<img
+									src="/Photos/Avi Sahi.jpeg"
+									alt="Avi Sahi"
+									class="w-full h-full object-cover"
+								/>
+							</div>
+							<div>
 								<div
-									class="w-16 h-16 rounded-2xl overflow-hidden border border-primary/20 bg-secondary"
+									class="font-black text-lg {$themeStore === 'dark'
+										? 'text-white'
+										: 'text-zinc-900'}"
 								>
-									<img
-										src="/Photos/Avi Sahi.jpeg"
-										alt="Avi Sahi"
-										class="w-full h-full object-cover"
-									/>
+									Avi Sahi
 								</div>
-								<div>
-									<div class="font-black text-lg">Avi Sahi</div>
-									<div
-										class="text-primary font-bold tracking-widest text-[10px] uppercase"
-									>
-										Co-Founder & CEO, SpikedAI
-									</div>
+								<div
+									class="text-red-500 font-bold tracking-widest text-[10px] uppercase"
+								>
+									Co-Founder & CEO, SpikedAI
 								</div>
 							</div>
-						</ThemeCard>
+						</div>
 					</div>
 				</div>
 
 				<!-- 3. Horizontal Divider Line -->
 				<div
-					class="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent my-12"
+					class="w-full h-px bg-gradient-to-r from-transparent via-zinc-500/20 to-transparent my-12"
 				></div>
 
 				<!-- 4. Impact Grid (3 Column) -->
-				<!-- 4. Impact Grid REMOVED (Moved to Hero) -->
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+					{#each impactItems as item}
+						<div
+							class="rounded-[2.5rem] p-10 transition-all duration-300
+								{$themeStore === 'dark'
+								? `border ${item.darkBg} ${item.darkBorder}`
+								: item.lightBg}"
+						>
+							<div class="text-4xl font-black text-red-600 mb-6">{item.id}</div>
+							<h4
+								class="text-2xl font-black mb-4 {$themeStore === 'dark'
+									? 'text-white'
+									: 'text-zinc-900'}"
+							>
+								{item.title}
+							</h4>
+							<p
+								class="font-medium {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'}"
+							>
+								{item.description}
+							</p>
+						</div>
+					{/each}
+				</div>
 
 				<div class="pt-8 text-center">
 					<div
-						class="inline-block px-8 py-4 rounded-full border border-primary/30 text-primary font-black uppercase tracking-widest text-sm"
+						class="inline-block px-8 py-4 rounded-full border border-red-500/30 text-red-600 font-black uppercase tracking-widest text-sm"
 					>
 						And SpikedAI delivers.
 					</div>
 				</div>
 			</div>
-		</ThemeSection>
+		</section>
 
 		<!-- EXPANDED SHOWCASE (Reduced Padding, Bigger Text, Progress Bar) -->
-		<ThemeSection id="showcase" background="default">
-			<div class="mb-[clamp(2rem,6vh,6rem)]">
+		<section
+			data-section="showcase"
+			class="w-full relative {$themeStore === 'dark'
+				? 'bg-[#030712]'
+				: 'bg-white'}"
+			style="padding: 2rem 0;"
+		>
+			<div class="px-[clamp(2rem,4vw,5rem)] mb-[clamp(2rem,6vh,6rem)]">
 				<span
-					class="block font-bold text-primary uppercase tracking-[0.3em] mb-4"
+					class="block font-bold text-red-600 uppercase tracking-[0.3em] mb-4"
 					>All Features</span
 				>
-				<ThemeHeadline
-					variant="h2"
-					class="leading-none text-[clamp(3rem,8vw,8rem)]"
+				<h2
+					class="font-black leading-none {$themeStore === 'dark'
+						? 'text-white'
+						: 'text-zinc-900'}"
+					style="font-size: clamp(3rem, 8vw, 8rem);"
 				>
 					Experience<br />Every Feature.
-				</ThemeHeadline>
+				</h2>
 				<!-- sub text big visible -->
-				<ThemeHeadline variant="sub" class="pt-10 max-w-4xl">
+				<p
+					class="font-medium leading-relaxed max-w-4xl pt-10
+                    {$themeStore === 'dark'
+						? 'text-zinc-400'
+						: 'text-zinc-500'}"
+					style="font-size: clamp(1.1rem, 1.5vw, 2rem);"
+				>
 					Explore our complete suite of AI-powered features with interactive
 					demos.
-				</ThemeHeadline>
+				</p>
 			</div>
 
 			<div
@@ -905,7 +866,7 @@
 					{/each}
 				</div>
 			</div>
-		</ThemeSection>
+		</section>
 
 		<!-- PROVEN IMPACT & FEATURES (Redesigned Layout) -->
 		<section
@@ -1230,7 +1191,27 @@
 			transform: translateX(-50%);
 		}
 	}
-	/* CTA styles removed - using Tailwind classes now */
+	/* CTA Button */
+	.contextual-cta {
+		background: #ef4444;
+		color: var(--foreground);
+		border: 2px solid #ef4444;
+		transition: all 0.2s ease;
+	}
+
+	.contextual-cta:hover {
+		background: #dc2626;
+		border-color: #dc2626;
+	}
+
+	.cta-icon {
+		width: 2rem;
+		height: 2rem;
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 9999px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		transition: all 0.2s ease;
+	}
 
 	.interactive-scaler {
 		transition: transform 0.3s ease;

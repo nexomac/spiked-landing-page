@@ -1142,7 +1142,8 @@
 
 
 	<Footer />
-
+	</main>
+</div>
 
 <style>
 	/* Hero: theme-aware backgrounds and graphics */

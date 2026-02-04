@@ -1185,7 +1185,8 @@
 
 
 	<Footer />
-
+	</main>
+</div>
 
 <style>
 	/* Utility for hiding scrollbar but allowing scroll */

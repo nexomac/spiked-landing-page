@@ -7,6 +7,11 @@
   Using Tailwind CSS v4 CSS-first configuration
 */
 
+:global(.nav-locked body) {
+  overflow: hidden;
+  touch-action: none;
+}
+
 @theme {
 	/* Map semantic colors to CSS variables */
 	--color-background: var(--background);

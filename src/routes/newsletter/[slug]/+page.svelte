@@ -1,141 +1,313 @@
 <script>
-    import { fade } from 'svelte/transition';
-    import { themeStore } from '$lib/stores/theme.js';
-    import Footer from '$lib/components/Footer.svelte';
-    let { data } = $props();
+	import { fade } from "svelte/transition";
+	import { themeStore } from "$lib/stores/theme.js";
+	import { ChevronLeft } from "lucide-svelte";
 
-    function extractTextFromTiptap(node) {
-        if (!node) return '';
-        if (node.type === 'text') return node.text;
-        if (node.content) {
-            return node.content.map(child => extractTextFromTiptap(child)).join(' ');
-        }
-        return '';
-    }
+	let { data } = $props();
 
-    function getSummary(postData) {
-        const summaryField = postData.summary || postData.Summary || postData['trend-category'] || postData['Trend Category'];
-        
-        if (summaryField && typeof summaryField === 'object' && summaryField.type === 'doc') {
-            return extractTextFromTiptap(summaryField).slice(0, 200) + '...';
-        }
-        
-        if (typeof summaryField === 'string') return summaryField.slice(0, 200) + '...';
+	const defaultSummary =
+		"Brief in progress. Expect a concise readout and clear takeaways shortly.";
+	const defaultPoints = [
+		"Key context and why it matters.",
+		"The takeaway for revenue teams.",
+		"What to watch next.",
+	];
 
-        // Fallback extraction from any large text field
-        for (const val of Object.values(postData)) {
-            if (val && typeof val === 'object' && val.type === 'doc') {
-                const text = extractTextFromTiptap(val);
-                if (text.length > 50) return text.slice(0, 200) + '...';
-            }
-            if (typeof val === 'string' && val.length > 50 && !val.startsWith('data:image')) {
-                 return val.slice(0, 200) + '...';
-            }
-        }
-        return '';
-    }
+	function getNewsletterImage(nl) {
+		return (
+			nl.image ||
+			nl.coverImage ||
+			nl.heroImage ||
+			nl.thumbnail ||
+			nl.imageUrl ||
+			nl["image-url"] ||
+			"/landing/cognitiveedge.jpeg"
+		);
+	}
 </script>
 
-<div class="min-h-screen transition-colors duration-500 font-serif pt-24 pb-20 px-4 flex justify-center selection:bg-red-500/30 
-    {$themeStore === 'dark' ? 'bg-[#0f0f0f] text-white/90' : 'bg-[#f4f1ea] text-black'}">
-    
-     <div class="w-full max-w-5xl">
-        <!-- Newsletter Header -->
-        <header class="text-center mb-16 border-b-4 pb-8 transition-colors max-w-3xl mx-auto
-            {$themeStore === 'dark' ? 'border-red-900/30' : 'border-black'}">
-            
-            <nav class="flex items-center justify-start mb-8">
-                <a href="/blog" class="text-xs font-sans font-bold uppercase tracking-widest transition-colors flex items-center gap-1 group
-                    {$themeStore === 'dark' ? 'text-red-600/60 hover:text-red-500' : 'text-gray-500 hover:text-black'}">
-                    <span class="group-hover:-translate-x-1 transition-transform">←</span>
-                    Research and News
-                </a>
-            </nav>
-            
-            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight transition-colors uppercase">
-                The <span class="text-red-600">Spiked</span>AI {data.newsletter.title}
-            </h1>
-            <p class="text-xl italic font-serif transition-colors
-                {$themeStore === 'dark' ? 'text-gray-400' : 'text-gray-700'}">
-                {data.newsletter.description}
-            </p>
-        </header>
+<svelte:head>
+	<title>Spiked AI | Newsletter</title>
+</svelte:head>
 
-        {#if data.posts.length === 0}
-            <div class="text-center py-12 text-gray-500 italic border-2 border-dashed
-                {$themeStore === 'dark' ? 'border-red-900/20' : 'border-black/10'}">
-                No editions published yet in this section.
-            </div>
-        {:else}
-            <div class="space-y-12">
-                {#each data.posts as post}
-                    <article class="transition-all p-6 relative overflow-hidden group
-                        {$themeStore === 'dark' 
-                            ? 'bg-[#1a1a1a] border-2 border-red-900/20 shadow-[8px_8px_0px_0px_rgba(153,27,27,0.2)]' 
-                            : 'bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(220,38,38,0.1)]'}
-                        hover:translate-x-1 hover:translate-y-1 hover:shadow-none hover:border-red-600 transition-all duration-300">
-                        
-                        <!-- Subtle Red Glow on hover -->
-                        <div class="absolute inset-0 bg-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<div
+	class="min-h-screen transition-colors duration-500 font-sans pt-24 pb-24
+	{$themeStore === 'dark' ? 'bg-black text-white' : 'bg-white text-zinc-900'}"
+>
+	<div class="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
+		<header class="mb-14 lg:mb-20">
+			<nav class="mb-8">
+				<a
+					href="/blog"
+					class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] font-semibold transition-colors {$themeStore ===
+					'dark'
+						? 'text-zinc-400 hover:text-red-400'
+						: 'text-zinc-500 hover:text-red-600'}"
+				>
+					<ChevronLeft /> Back to Blogs
+				</a>
+			</nav>
+			<p
+				class="text-[11px] uppercase tracking-[0.3em] font-semibold text-red-500"
+			>
+				Intelligence Feed
+			</p>
+			<h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold mt-3">
+				{data.newsletter?.title}
+			</h1>
+			<p
+				class="mt-4 max-w-3xl text-base sm:text-lg leading-relaxed {$themeStore ===
+				'dark'
+					? 'text-zinc-400'
+					: 'text-zinc-600'}"
+			>
+				{data.newsletter?.description}
+			</p>
+			<div class="mt-10 grid lg:grid-cols-12 gap-10 items-center">
+				<div class="lg:col-span-7">
+					<p
+						class="text-sm leading-relaxed {$themeStore === 'dark'
+						? 'text-zinc-400'
+						: 'text-zinc-600'}"
+					>
+						This briefing tracks the strongest revenue signals, market shifts,
+						and AI strategy worth acting on this week.
+					</p>
+					<div
+						class="mt-6 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.3em] {$themeStore ===
+						'dark'
+							? 'text-zinc-500'
+							: 'text-zinc-400'}"
+					>
+						<span>Weekly release</span>
+						<span class="hidden sm:inline">|</span>
+						<span>Actionable takeaways</span>
+						<span class="hidden sm:inline">|</span>
+						<span>Signal over noise</span>
+					</div>
+				</div>
+				<div class="lg:col-span-5">
+					<div
+						class="aspect-[4/3] rounded-3xl overflow-hidden border {$themeStore ===
+						'dark'
+							? 'border-zinc-800 bg-zinc-950'
+							: 'border-zinc-200 bg-zinc-100'}"
+					>
+						<img
+							src={getNewsletterImage(data.newsletter || {})}
+							alt={data.newsletter?.title}
+							class="w-full h-full object-cover"
+						/>
+					</div>
+				</div>
+			</div>
+		</header>
 
-                        <div class="flex flex-col md:flex-row gap-6 relative z-10">
-                            {#if post.coverImage}
-                                <div class="w-full md:w-1/3 shrink-0">
-                                    <div class="border-2 p-1 transition-colors
-                                        {$themeStore === 'dark' ? 'bg-[#0f0f0f] border-red-900/30' : 'bg-gray-100 border-black'}">
-                                        <img 
-                                            src={post.coverImage} 
-                                            alt={post.title} 
-                                            class="w-full h-48 object-cover grayscale contrast-125 transition-all group-hover:grayscale-0 duration-700" 
-                                        />
-                                    </div>
-                                </div>
-                            {/if}
-                            <div class="flex-1">
-                                <h2 class="text-2xl font-bold mb-2 leading-tight">
-                                    <a href="/blog/{post.slug || post.data?.slug || post._id}" class="hover:text-red-600 transition-colors">
-                                        {post.title || post.data?.title || post.data?.Title || 'Untitled'}
-                                    </a>
-                                </h2>
-                                <time class="text-xs font-sans font-bold uppercase tracking-wider mb-3 block text-red-600/60">
-                                    {new Date(post.publishedDate || post.data?.publishedDate || post.data?.['date-of-analysis'] || post.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
-                                </time>
-                                <p class="leading-relaxed font-serif transition-colors
-                                    {$themeStore === 'dark' ? 'text-gray-400' : 'text-gray-800'}">
-                                    {post.excerpt || getSummary(post.data || {})}
-                                </p>
-                                <div class="mt-6">
-                                     <a href="/blog/{post.slug || post.data?.slug || post._id}" 
-                                        class="text-sm font-sans font-black uppercase tracking-widest px-6 py-2 transition-all inline-block border-2
-                                        {$themeStore === 'dark' 
-                                            ? 'bg-red-600 text-white border-red-600 hover:bg-white hover:text-black' 
-                                            : 'bg-black text-white border-black hover:bg-red-600 hover:border-red-600'}">
-                                        Read Analysis →
-                                     </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                {/each}
-            </div>
-        {/if}
-        
-        <div class="flex justify-center mt-20 opacity-30">
-            <span class="w-24 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent"></span>
-        </div>
-     </div>
+		<section class="space-y-16">
+			{#if data.posts.length === 0}
+				<div class="text-center py-24 text-zinc-500">
+					No editions published yet.
+				</div>
+			{:else}
+				{#each data.posts as post}
+					<article
+						class="grid lg:grid-cols-12 gap-10 pb-16 {$themeStore === 'dark'
+						? 'border-b border-zinc-800'
+						: 'border-b border-zinc-200'}"
+					>
+						<div class="lg:col-span-8">
+							<a href="/blog/{post.slug}" class="group block">
+								<div class="grid lg:grid-cols-12 gap-8 items-center">
+									<div class="lg:col-span-7">
+										<p
+											class="text-[10px] uppercase tracking-[0.3em] text-red-500 font-semibold"
+										>
+											Edition
+										</p>
+										<h2
+											class="text-3xl sm:text-4xl lg:text-5xl font-semibold mt-4 leading-tight group-hover:text-red-500 transition-colors"
+										>
+											{post.title}
+										</h2>
+										<p
+											class="mt-4 text-base sm:text-lg leading-relaxed {$themeStore ===
+											'dark'
+												? 'text-zinc-400'
+												: 'text-zinc-600'}"
+										>
+											{post.summary || post.excerpt || defaultSummary}
+										</p>
+										<ul class="mt-6 space-y-3">
+											{#each (post.points && post.points.length
+												? post.points
+												: defaultPoints
+											).slice(0, 3) as point}
+												<li class="flex items-start gap-3">
+													<span class="mt-2 h-1.5 w-1.5 rounded-full bg-red-500"></span>
+													<span
+														class="text-sm leading-relaxed {$themeStore ===
+														'dark'
+															? 'text-zinc-300'
+															: 'text-zinc-600'}"
+													>
+														{point}
+													</span>
+												</li>
+											{/each}
+										</ul>
+										<div
+											class="mt-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] {$themeStore ===
+											'dark'
+												? 'text-zinc-500'
+												: 'text-zinc-400'}"
+										>
+											<span>{post.author}</span>
+											<span>|</span>
+											<span
+												>{new Date(post.publishedDate).toLocaleDateString()}</span
+											>
+										</div>
+									</div>
+									<div class="lg:col-span-5">
+										<div
+											class="aspect-[4/3] rounded-2xl overflow-hidden border {$themeStore ===
+											'dark'
+												? 'border-zinc-800 bg-zinc-950'
+												: 'border-zinc-200 bg-zinc-100'}"
+										>
+											{#if post.coverImage}
+												<img
+													src={post.coverImage}
+													alt={post.title}
+													class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+												/>
+											{:else}
+												<div
+													class="w-full h-full flex items-center justify-center text-xs uppercase tracking-[0.3em] {$themeStore ===
+													'dark'
+														? 'text-zinc-600'
+														: 'text-zinc-500'}"
+												>
+													No image
+												</div>
+											{/if}
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="lg:col-span-4 space-y-4">
+							<div
+								class="border rounded-2xl p-6 {$themeStore === 'dark'
+								? 'border-zinc-800 bg-zinc-950'
+								: 'border-zinc-200 bg-zinc-50'}"
+							>
+								<h3 class="text-lg font-semibold">Why this matters</h3>
+								<p
+									class="mt-3 text-sm leading-relaxed {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'}"
+								>
+									This briefing highlights the levers that move pipeline right now.
+								</p>
+							</div>
+							<div
+								class="border rounded-2xl p-6 {$themeStore === 'dark'
+								? 'border-zinc-800 bg-zinc-950'
+								: 'border-zinc-200 bg-zinc-50'}"
+							>
+								<h3 class="text-lg font-semibold">Suggested next move</h3>
+								<p
+									class="mt-3 text-sm leading-relaxed {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'}"
+								>
+									Share with your team, align on the takeaway, and act fast.
+								</p>
+							</div>
+						</div>
+					</article>
+				{/each}
+			{/if}
+		</section>
+
+		<section class="mt-20">
+			<div
+				class="border-t pt-10 {$themeStore === 'dark'
+				? 'border-zinc-800'
+				: 'border-zinc-200'}"
+			>
+				<h2 class="text-xl sm:text-2xl font-semibold">Explore More</h2>
+				<div class="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+					<a
+						href="/features"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Features
+					</a>
+					<a
+						href="/customers"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Customers
+					</a>
+					<a
+						href="/resources"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Resources
+					</a>
+					<a
+						href="/pricing"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Pricing
+					</a>
+					<a
+						href="/about-us"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						About
+					</a>
+					<a
+						href="/contact-sales"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Contact
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
 </div>
 
 <style>
-    :global(body) {
-        transition: background-color 0.5s ease;
-    }
+	:global(body) {
+		transition: background-color 0.5s ease;
+	}
 
-    /* Override the body background to prevent flashes */
-    :global(html.dark body) {
-        background-color: #0f0f0f !important;
-    }
-    :global(html:not(.dark) body) {
-        background-color: #f8f8f0 !important;
-    }
+	:global(html.dark body) {
+		background-color: #000000 !important;
+	}
+	:global(html:not(.dark) body) {
+		background-color: #ffffff !important;
+	}
 </style>

@@ -50,7 +50,7 @@
 				"Signal consolidation into a single focused result. For every rep, before, during, and after the conversation.",
 			cta: "Learn More",
 			ctaLink: "/features/ai-assistance",
-			image: "/landing/cognitiveedge.webp",
+			image: "/landing/cognitiveedge.jpeg",
 			dark: true,
 		},
 		{
@@ -430,6 +430,45 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Cognition Overload Hero -->
+	<section class="relative bg-black">
+		<div class="relative min-h-[70vh] lg:min-h-[85vh] overflow-hidden">
+			<video
+				class="absolute inset-0 w-full h-full object-cover"
+				autoplay
+				muted
+				loop
+				playsinline
+				poster="/landing/cognitiveedge.jpeg"
+			>
+				<source src="/landing/cognition-overload.mp4" type="video/mp4" />
+			</video>
+			<div
+				class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90"
+			></div>
+			<div
+				class="relative z-10 max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 py-16 lg:py-24 h-full flex items-center"
+			>
+				<div class="max-w-3xl">
+					<span
+						class="text-[11px] font-bold uppercase tracking-[0.2em] mb-5 block text-zinc-400"
+					>
+						AMPLIFIED COGNITION ABILITY
+					</span>
+					<h1
+						class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-[1.08] mb-6 tracking-tight text-white"
+					>
+						Every signal. <br /><span class="text-red-600">One decision.</span>
+					</h1>
+					<p class="text-base lg:text-lg xl:text-xl mb-10 leading-[1.6] max-w-xl text-zinc-300">
+						Spiked compresses overload into a single, decisive signal before the
+						call, during the moment, and after the outcome.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<!-- Strategic Hero Section -->
 	<section class="relative bg-black">

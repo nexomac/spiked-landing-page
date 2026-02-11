@@ -2,7 +2,6 @@
 	import { fade, slide } from "svelte/transition";
 	import { enhance } from "$app/forms";
 	import { themeStore } from "$lib/stores/theme.js";
-	import Footer from "$lib/components/Footer.svelte";
 	let { data } = $props();
 
 	let showAll = $state(false);
@@ -54,7 +53,7 @@
 		? 'bg-[#0f0f0f] text-white/90'
 		: 'bg-[#f8f8f0] text-black'}"
 >
-	<div class="max-w-6xl mx-auto">
+	<div class="max-w-[1400px] mx-auto">
 		<!-- Newspaper Header -->
 		<header
 			class="border-b-4 mb-12 pb-4 text-center relative {$themeStore === 'dark'
@@ -105,64 +104,122 @@
 				></span>
 			</div>
 
-			<div class="space-y-6">
-				{#each data.newsletters as nl}
-					<a href="/newsletter/{nl.slug}" class="block group">
-						<div
-							class="border-2 p-8 md:p-12 transition-all flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden
-                            {$themeStore === 'dark'
-								? 'bg-[#1a1a1a] border-red-900/20 shadow-[8px_8px_0px_0px_rgba(153,27,27,0.2)]'
-								: 'bg-white border-black shadow-[8px_8px_0px_0px_rgba(220,38,38,0.1)]'}
-                            hover:shadow-none hover:translate-x-1 hover:translate-y-1 hover:border-red-600/50"
-						>
-							<!-- Subtle Red Glow on hover -->
-							<div
-								class="absolute inset-0 bg-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-							></div>
+			<div class="grid grid-cols-1 gap-8">
+				{#each data.newsletters.filter((nl) => nl.posts && nl.posts.length > 0) as nl}
+					<div
+						class="border-2 p-6 md:p-10 transition-all relative overflow-hidden
+                        {$themeStore === 'dark'
+							? 'bg-[#1a1a1a] border-red-900/20 shadow-[8px_8px_0px_0px_rgba(153,27,27,0.2)]'
+							: 'bg-white border-black shadow-[8px_8px_0px_0px_rgba(220,38,38,0.1)]'}"
+					>
+						<div class="flex flex-col lg:flex-row gap-10">
+							<!-- Newsletter Info -->
+							<div class="lg:w-1/3 flex flex-col justify-between">
+								<div>
+									<div class="flex items-center gap-2 mb-2">
+										<span class="w-2 h-2 bg-red-600"></span>
+										<span
+											class="text-xs font-black uppercase tracking-[0.2em] text-red-600/80"
+											>Weekly Intelligence</span
+										>
+									</div>
+									<h3
+										class="text-3xl md:text-4xl font-black uppercase tracking-tighter {$themeStore ===
+										'dark'
+											? 'text-white'
+											: 'text-black'}"
+									>
+										{nl.title}
+									</h3>
+									<p
+										class="text-lg font-serif italic mt-3 {$themeStore ===
+										'dark'
+											? 'text-gray-400'
+											: 'text-gray-700'}"
+									>
+										{nl.description}
+									</p>
+								</div>
 
-							<div class="flex-1 relative z-10">
-								<div class="flex items-center gap-2 mb-2">
-									<span class="w-2 h-2 bg-red-600"></span>
+								<div class="mt-8 flex flex-col gap-3">
+									<a
+										href="/newsletter/{nl.slug}"
+										class="inline-block bg-red-600 px-6 py-2 uppercase tracking-widest text-sm hover:bg-black transition-colors border-2 border-red-600 text-center text-white"
+									>
+										Full Archive
+									</a>
 									<span
-										class="text-xs font-black uppercase tracking-[0.2em] text-red-600/80"
-										>Weekly Intelligence</span
+										class="text-[10px] font-sans font-bold text-gray-500 uppercase tracking-tighter text-center"
+										>Updated Weekly</span
 									>
 								</div>
-								<h3
-									class="text-3xl md:text-5xl font-black uppercase tracking-tighter group-hover:text-red-600 transition-colors {$themeStore ===
-									'dark'
-										? 'text-white'
-										: 'text-black'}"
-								>
-									{nl.title}
-								</h3>
-								<p
-									class="text-xl font-serif italic mt-2 max-w-2xl {$themeStore ===
-									'dark'
-										? 'text-gray-400'
-										: 'text-gray-700'}"
-								>
-									{nl.description}
-								</p>
 							</div>
-							<div
-								class="flex flex-col items-center md:items-end gap-2 shrink-0 relative z-10"
-							>
-								<span
-									class="bg-red-600 px-6 py-2 uppercase tracking-widest text-sm hover:bg-black transition-colors border-2 border-red-600 {$themeStore ===
-									'dark'
-										? 'text-white'
-										: 'text-black'}"
-								>
-									Read Archive
-								</span>
-								<span
-									class="text-[10px] font-sans font-bold text-gray-500 uppercase tracking-tighter"
-									>Updated Weekly</span
-								>
+
+							<!-- Compact Posts Grid -->
+							<div class="lg:w-2/3">
+								<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+									{#each nl.posts.slice(0, 4) as post}
+										<a
+											href="/blog/{post.slug}"
+											class="group border p-4 hover:border-red-600/50 transition-all
+                                            {$themeStore === 'dark'
+												? 'bg-black/20 border-red-900/10'
+												: 'bg-gray-50 border-gray-100'}"
+										>
+											<div class="flex gap-4">
+												{#if post.coverImage}
+													<div
+														class="w-20 h-20 shrink-0 grayscale group-hover:grayscale-0 transition-all overflow-hidden border {$themeStore ===
+														'dark'
+															? 'border-red-900/20'
+															: 'border-black/5'}"
+													>
+														<img
+															src={post.coverImage}
+															alt={post.title}
+															class="w-full h-full object-cover"
+														/>
+													</div>
+												{/if}
+												<div class="flex-1 min-w-0">
+													<h4
+														class="font-bold text-sm uppercase leading-tight line-clamp-2 group-hover:text-red-600 transition-colors"
+													>
+														{post.title}
+													</h4>
+													<p
+														class="text-[10px] font-serif italic mt-1 opacity-60"
+													>
+														{new Date(post.publishedDate).toLocaleDateString(
+															undefined,
+															{
+																month: "short",
+																day: "numeric",
+																year: "numeric",
+															},
+														)}
+													</p>
+												</div>
+											</div>
+										</a>
+									{/each}
+									{#if nl.posts.length > 4}
+										<a
+											href="/newsletter/{nl.slug}"
+											class="flex items-center justify-center border-2 border-dashed p-4 hover:bg-red-600 hover:text-white transition-all group
+                                            {$themeStore === 'dark'
+												? 'border-red-900/30 text-gray-400'
+												: 'border-red-600/30 text-red-600'}"
+										>
+											<span class="text-xs font-black uppercase tracking-widest"
+												>+{nl.posts.length - 4} More Stories</span
+											>
+										</a>
+									{/if}
+								</div>
 							</div>
 						</div>
-					</a>
+					</div>
 				{:else}
 					<div
 						class="text-center py-12 border-2 border-dashed opacity-30 {$themeStore ===
@@ -171,7 +228,7 @@
 							: 'border-red-600/30'}"
 					>
 						<p class="font-serif italic text-red-600/50">
-							No editions published yet.
+							No intelligence feeds currently broadcasting.
 						</p>
 					</div>
 				{/each}
@@ -197,7 +254,6 @@
 					? 'border-red-900/20'
 					: 'border-black'}"
 			>
-				<!-- Main Feature -->
 				<!-- Main Feature -->
 				{#if sortedPosts[0]}
 					<article
@@ -241,25 +297,25 @@
 										).toLocaleDateString()}
 									</div>
 								</div>
-								{#if sortedPosts[0].coverImage}
-									<div
-										class="aspect-[4/3] grayscale contrast-125 group-hover:grayscale-0 transition duration-500 p-1"
-									>
-										<div
-											class="w-full h-full relative border overflow-hidden {$themeStore ===
-											'dark'
-												? 'border-red-900/20'
-												: 'border-black'}"
-										>
-											<img
-												src={sortedPosts[0].coverImage}
-												alt={sortedPosts[0].title}
-												class="w-full h-full object-cover"
-											/>
-										</div>
-									</div>
-								{/if}
 							</div>
+							{#if sortedPosts[0].coverImage}
+								<div
+									class="aspect-[4/3] grayscale contrast-125 group-hover:grayscale-0 transition duration-500 p-3"
+								>
+									<div
+										class="w-full h-full relative border overflow-hidden {$themeStore ===
+										'dark'
+											? 'border-red-900/20'
+											: 'border-black'}"
+									>
+										<img
+											src={sortedPosts[0].coverImage}
+											alt={sortedPosts[0].title}
+											class="w-full h-full object-cover"
+										/>
+									</div>
+								</div>
+							{/if}
 						</a>
 					</article>
 				{/if}
@@ -512,7 +568,7 @@
 									id="edition-select"
 									class="grid grid-cols-1 sm:grid-cols-2 gap-3"
 								>
-									{#each data.newsletters as nl}
+									{#each data.newsletters.filter((nl) => nl.posts && nl.posts.length > 0) as nl}
 										<label
 											class="flex items-center gap-3 border-2 p-3 cursor-pointer group/label transition-colors has-[:checked]:bg-red-600 has-[:checked]:text-white
                                             {$themeStore === 'dark'
@@ -595,7 +651,6 @@
 		</section>
 	</div>
 </div>
-<Footer />
 
 <style>
 	:global(body) {

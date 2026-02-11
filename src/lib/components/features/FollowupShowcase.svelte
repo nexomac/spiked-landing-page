@@ -43,9 +43,7 @@
 		customUpcomingMeetings || upcomingMeetings,
 	);
 	let displayBriefingItems = $derived(customBriefingItems || briefingItems);
-	let displayContextHistory = $derived(
-		customContextHistory || contextHistory,
-	);
+	let displayContextHistory = $derived(customContextHistory || contextHistory);
 	let displayActionItems = $derived(customActionItems || actionItems);
 	let displaySessions = $derived(customSessions || sessions);
 
@@ -123,23 +121,18 @@
 						class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors"
 					>
 						<img
-							src="/Spiked.ai-white-logo-icon-only.png"
+							src="/icon white.png"
 							alt="SpikedAI Logo"
 							class="w-4 h-4 rounded-sm object-contain"
 						/>
-						<span
-							class="text-sm font-black tracking-tight text-foreground"
-						>
+						<span class="text-sm font-black tracking-tight text-foreground">
 							SPIKED<span class="text-red-500">AI</span>
 						</span>
 					</div>
 				</div>
 				<div class="flex items-center gap-2">
-					<span
-						class="relative flex h-2 w-2 text-green-500 pulse-ring"
-					>
-						<span
-							class="relative inline-flex rounded-full h-2 w-2 bg-green-500"
+					<span class="relative flex h-2 w-2 text-green-500 pulse-ring">
+						<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"
 						></span>
 					</span>
 					<span class="text-xs text-muted-foreground">Synced</span>
@@ -161,19 +154,15 @@
 				style="min-height: {height};"
 			>
 				<!-- Left Sidebar -->
-				<div
-					class="border-r border-border/50 p-4 space-y-6 backdrop-blur-sm"
-				>
+				<div class="border-r border-border/50 p-4 space-y-6 backdrop-blur-sm">
 					<!-- Logo & New Session -->
 					<div class="flex items-center justify-between">
-						<div
-							class="flex items-center gap-2 group cursor-pointer"
-						>
+						<div class="flex items-center gap-2 group cursor-pointer">
 							<div
 								class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center glow-red group-hover:scale-110 transition-transform"
 							>
 								<img
-									src="/Spiked.ai-white-logo-icon-only.png"
+									src="/icon white.png"
 									alt="SpikedAI Logo"
 									class="w-4 h-4 rounded-sm object-contain"
 								/>
@@ -181,8 +170,7 @@
 							<span
 								class="text-sm font-black tracking-tight text-foreground group-hover:text-red-400 transition-colors"
 							>
-								SPIKED<span
-									class="text-red-500 group-hover:text-red-400"
+								SPIKED<span class="text-red-500 group-hover:text-red-400"
 									>AI</span
 								>
 							</span>
@@ -217,9 +205,7 @@
 						<button
 							class="w-full flex items-center gap-3 px-3 py-2 rounded-lg glass text-white transition-all duration-300 text-sm shadow-lg"
 						>
-							<Calendar
-								class="w-4 h-4 text-red-500 animate-pulse"
-							/>
+							<Calendar class="w-4 h-4 text-red-500 animate-pulse" />
 							<span>Meeting Prep</span>
 						</button>
 					</div>
@@ -280,25 +266,18 @@
 						<div in:fade={{ duration: 400 }} class="relative z-10">
 							<div class="flex items-center justify-between mb-5">
 								<div>
-									<h3
-										class="text-lg font-bold text-foreground"
-									>
+									<h3 class="text-lg font-bold text-foreground">
 										Meeting Prep Hub
 									</h3>
 									<p class="text-xs text-muted-foreground">
-										Auto-generated briefings for your
-										meetings
+										Auto-generated briefings for your meetings
 									</p>
 								</div>
 								<div
 									class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red animate-pulse"
 								>
-									<div
-										class="w-1.5 h-1.5 bg-green-500 rounded-full"
-									></div>
-									<span
-										class="text-xs font-medium text-green-400"
-										>3 Ready</span
+									<div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+									<span class="text-xs font-medium text-green-400">3 Ready</span
 									>
 								</div>
 							</div>
@@ -318,9 +297,7 @@
 											class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/10 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
 										></div>
 
-										<div
-											class="flex items-start gap-3 relative z-10"
-										>
+										<div class="flex items-start gap-3 relative z-10">
 											<div
 												class="w-10 h-10 rounded-xl bg-gradient-to-br {meeting.priority ===
 												'high'
@@ -333,9 +310,7 @@
 												{meeting.avatar}
 											</div>
 											<div class="flex-1 min-w-0">
-												<div
-													class="flex items-center gap-2 mb-1"
-												>
+												<div class="flex items-center gap-2 mb-1">
 													<h4
 														class="font-semibold text-foreground text-sm truncate group-hover:text-red-400 transition-colors"
 													>
@@ -345,17 +320,14 @@
 														class="px-2 py-0.5 rounded text-[10px] font-medium {meeting.type ===
 														'Follow-up'
 															? 'bg-amber-500/20 text-amber-400'
-															: meeting.type ===
-																  'Discovery'
+															: meeting.type === 'Discovery'
 																? 'bg-blue-500/20 text-blue-400'
 																: 'bg-green-500/20 text-green-400'}"
 													>
 														{meeting.type}
 													</span>
 												</div>
-												<p
-													class="text-xs text-muted-foreground"
-												>
+												<p class="text-xs text-muted-foreground">
 													{meeting.contact}
 												</p>
 												<div
@@ -380,20 +352,15 @@
 													class="text-center group/item hover:scale-110 transition-transform cursor-pointer"
 												>
 													<Icon
-														class="w-4 h-4 mx-auto mb-1 {item.color ===
-														'green'
+														class="w-4 h-4 mx-auto mb-1 {item.color === 'green'
 															? 'text-green-500'
-															: item.color ===
-																  'blue'
+															: item.color === 'blue'
 																? 'text-blue-500'
-																: item.color ===
-																	  'amber'
+																: item.color === 'amber'
 																	? 'text-amber-500'
 																	: 'text-red-500'} group-hover/item:animate-pulse"
 													/>
-													<p
-														class="text-[10px] text-muted-foreground truncate"
-													>
+													<p class="text-[10px] text-muted-foreground truncate">
 														{item.status}
 													</p>
 												</div>
@@ -408,9 +375,7 @@
 						<div in:fade={{ duration: 400 }} class="relative z-10">
 							<div class="flex items-center justify-between mb-5">
 								<div>
-									<h3
-										class="text-lg font-bold text-foreground"
-									>
+									<h3 class="text-lg font-bold text-foreground">
 										Relationship Timeline
 									</h3>
 									<p class="text-xs text-muted-foreground">
@@ -420,11 +385,8 @@
 								<div
 									class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red"
 								>
-									<Brain
-										class="w-3.5 h-3.5 text-blue-400 animate-pulse"
-									/>
-									<span
-										class="text-xs font-medium text-blue-400"
+									<Brain class="w-3.5 h-3.5 text-blue-400 animate-pulse" />
+									<span class="text-xs font-medium text-blue-400"
 										>Full Context</span
 									>
 								</div>
@@ -454,24 +416,18 @@
 										<div
 											class="glass rounded-lg p-3 hover:bg-secondary/50 transition-all duration-300 cursor-pointer group-hover:scale-[1.02]"
 										>
-											<div
-												class="flex items-center justify-between mb-2"
-											>
+											<div class="flex items-center justify-between mb-2">
 												<span
 													class="text-xs font-semibold text-foreground group-hover:text-red-400 transition-colors"
 													>{event.event}</span
 												>
-												<span
-													class="text-[10px] text-muted-foreground"
+												<span class="text-[10px] text-muted-foreground"
 													>{event.date}</span
 												>
 											</div>
-											<div
-												class="flex items-center gap-3 text-xs"
-											>
+											<div class="flex items-center gap-3 text-xs">
 												{#if event.duration !== "—"}
-													<span
-														class="text-muted-foreground"
+													<span class="text-muted-foreground"
 														>{event.duration}</span
 													>
 												{/if}
@@ -487,9 +443,7 @@
 														/>
 														Positive
 													{:else}
-														<Activity
-															class="w-3 h-3"
-														/>
+														<Activity class="w-3 h-3" />
 														Neutral
 													{/if}
 												</span>
@@ -510,29 +464,22 @@
 								<h4
 									class="text-sm font-semibold text-white mb-3 flex items-center gap-2 relative z-10"
 								>
-									<Sparkles
-										class="w-4 h-4 text-red-500 animate-pulse"
-									/>
+									<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
 									AI-Generated Insights
 								</h4>
 								<div class="space-y-2 text-xs relative z-10">
-									<div
-										class="flex items-start gap-2 group cursor-pointer"
-									>
+									<div class="flex items-start gap-2 group cursor-pointer">
 										<div
 											class="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"
 										></div>
 										<span
 											class="text-zinc-400 group-hover:text-muted-foreground transition-colors"
 											>Budget approved at <span
-												class="text-foreground font-medium"
-												>$250K</span
+												class="text-foreground font-medium">$250K</span
 											> during last call</span
 										>
 									</div>
-									<div
-										class="flex items-start gap-2 group cursor-pointer"
-									>
+									<div class="flex items-start gap-2 group cursor-pointer">
 										<div
 											class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"
 										></div>
@@ -544,9 +491,7 @@
 											></span
 										>
 									</div>
-									<div
-										class="flex items-start gap-2 group cursor-pointer"
-									>
+									<div class="flex items-start gap-2 group cursor-pointer">
 										<div
 											class="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform"
 										></div>
@@ -566,22 +511,18 @@
 						<div in:fade={{ duration: 400 }} class="relative z-10">
 							<div class="flex items-center justify-between mb-5">
 								<div>
-									<h3
-										class="text-lg font-bold text-foreground"
-									>
+									<h3 class="text-lg font-bold text-foreground">
 										Action Items
 									</h3>
 									<p class="text-xs text-muted-foreground">
-										Commitments you've made across all
-										meetings
+										Commitments you've made across all meetings
 									</p>
 								</div>
 								<div
 									class="flex items-center gap-2 px-3 py-1.5 glass rounded-full glow-red animate-pulse"
 								>
 									<Clock class="w-3.5 h-3.5 text-amber-400" />
-									<span
-										class="text-xs font-medium text-amber-400"
+									<span class="text-xs font-medium text-amber-400"
 										>2 Due Soon</span
 									>
 								</div>
@@ -616,16 +557,13 @@
 													class="w-5 h-5 rounded-full border-2 {item.priority ===
 													'critical'
 														? 'border-red-500'
-														: item.priority ===
-															  'high'
+														: item.priority === 'high'
 															? 'border-amber-500'
 															: 'border-zinc-600'} group-hover:bg-secondary/50 transition-colors"
 												></div>
 											{/if}
 										</button>
-										<div
-											class="flex-1 min-w-0 relative z-10"
-										>
+										<div class="flex-1 min-w-0 relative z-10">
 											<p
 												class="text-sm {item.completed
 													? 'text-muted-foreground line-through'
@@ -633,18 +571,14 @@
 											>
 												{item.text}
 											</p>
-											<div
-												class="flex items-center gap-2 mt-1.5"
-											>
+											<div class="flex items-center gap-2 mt-1.5">
 												<span
 													class="px-1.5 py-0.5 rounded text-[10px] font-medium {item.priority ===
 													'critical'
 														? 'bg-red-500/20 text-red-400'
-														: item.priority ===
-															  'high'
+														: item.priority === 'high'
 															? 'bg-amber-500/20 text-amber-400'
-															: item.priority ===
-																  'medium'
+															: item.priority === 'medium'
 																? 'bg-blue-500/20 text-blue-400'
 																: 'bg-zinc-700 text-zinc-400'}"
 												>
@@ -675,11 +609,7 @@
 									>
 										12
 									</p>
-									<p
-										class="text-[10px] text-muted-foreground"
-									>
-										Total Items
-									</p>
+									<p class="text-[10px] text-muted-foreground">Total Items</p>
 								</div>
 								<div
 									class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group"
@@ -689,25 +619,15 @@
 									>
 										8
 									</p>
-									<p
-										class="text-[10px] text-muted-foreground"
-									>
-										Completed
-									</p>
+									<p class="text-[10px] text-muted-foreground">Completed</p>
 								</div>
 								<div
 									class="glass rounded-lg p-3 text-center hover-lift cursor-pointer group"
 								>
-									<p
-										class="text-2xl font-bold text-amber-400 animate-pulse"
-									>
+									<p class="text-2xl font-bold text-amber-400 animate-pulse">
 										2
 									</p>
-									<p
-										class="text-[10px] text-muted-foreground"
-									>
-										Due Today
-									</p>
+									<p class="text-[10px] text-muted-foreground">Due Today</p>
 								</div>
 							</div>
 						</div>

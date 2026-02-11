@@ -47,7 +47,7 @@
 	<FeatureNav currentFeature="dev-tools" />
 
 	<!-- Hero Section - Writer.com Style -->
-	<section class="relative min-h-screen pt-32 pb-24">
+	<section class="relative min-h-screen pt-10 pb-24">
 		<div
 			class="absolute inset-0 bg-gradient-to-b from-background via-background to-background"
 		></div>

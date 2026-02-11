@@ -1,10 +1,6 @@
 <script>
-	/** @type {import('./$types').PageProps} */
-	let { data } = $props();
-	import Footer from "$lib/components/Footer.svelte";
-	import ThemeCard from "$lib/components/ui/ThemeCard.svelte";
-	import ThemeSection from "$lib/components/ui/ThemeSection.svelte";
-	import ThemeHeadline from "$lib/components/ui/ThemeHeadline.svelte";
+	import { ArrowRight, Play } from "lucide-svelte";
+	import { fade, fly } from "svelte/transition";
 
 	const events = [
 		{
@@ -28,221 +24,270 @@
 			tag: "Talks",
 			date: "July 2026",
 		},
-		{
-			title: "Tech Week",
-			link: "https://www.tech-week.com/",
-			description: "A week long celebration of technology and innovation.",
-			tag: "Festival",
-			date: "Aug 2026",
-		},
 	];
 
 	const videos = [
 		{
 			id: "BQcw_UIRSKU",
-			title:
-				"Anushka Salinas, Nanit | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Anushka Salinas, Nanit | Mixture of Experts",
 		},
 		{
 			id: "6J9AgLJ8CiY",
-			title:
-				"Ginniee Singh, SpikedAI | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Ginniee Singh, SpikedAI | Mixture of Experts",
 		},
 		{
 			id: "0PUsnvhTxi4",
-			title:
-				"Tim Piemonte, Tribeca Softech & Ankur Patel, Multimodal | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Tim Piemonte, Tribeca Softech & Ankur Patel",
 		},
 		{
 			id: "ZVidW_wUCwA",
-			title:
-				"Umesh Sachdev, Uniphore | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Umesh Sachdev, Uniphore | Mixture of Experts",
 		},
 		{
 			id: "2Q8XZfkYv9I",
-			title: "Sid Sheth, d-Matrix | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Sid Sheth, d-Matrix | Mixture of Experts",
 		},
 		{
 			id: "2pQhRDomSTw",
-			title:
-				"Aaron Katz, ClickHouse | theCUBE + NYSE Wired: Mixture of Experts",
-		},
-		{
-			id: "DWVtGMYcXfg",
-			title:
-				"Muddu Sudhakar, Salesforce | theCUBE + NYSE Wired: Mixture of Experts",
-		},
-		{
-			id: "3y_W7J214kQ",
-			title:
-				"Jim McNiel, TAE Technologies | theCUBE + NYSE Wired: Mixture of Experts",
-		},
-		{
-			id: "CmyrvW2m7Z8",
-			title: "Alex Rinke, Celonis | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Aaron Katz, ClickHouse | Mixture of Experts",
 		},
 	];
 
-	const featuredEvent = events[0];
-	const secondaryEvents = events.slice(1);
+	const topEvent = events[0];
 </script>
 
 <svelte:head>
-	<title>SpikedAI | Resources</title>
-	<meta
-		name="description"
-		content="Watch expert interviews and insights from industry leaders"
-	/>
+	<title>Resources | SpikedAI</title>
 </svelte:head>
 
 <div
-	class="min-h-screen bg-background text-foreground transition-colors duration-300"
+	class="min-h-screen bg-black text-white font-sans selection:bg-[#ef4444]/30"
 >
-	<ThemeSection id="intro" background="default" class="text-center pt-20">
-		<ThemeHeadline variant="h1" class="mb-4">
-			SpikedAI <span class="text-primary block sm:inline">Resources</span>
-		</ThemeHeadline>
-		<ThemeHeadline variant="sub" class="max-w-4xl mx-auto">
-			Watch expert interviews and insights from industry leaders.
-		</ThemeHeadline>
-	</ThemeSection>
-
-	<!-- Featured / Events Section -->
-	<ThemeSection id="events" background="default">
-		<ThemeHeadline variant="h2" class="mb-12 border-l-4 border-primary pl-6">
-			Featured Events
-		</ThemeHeadline>
-
-		<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-			<!-- Hero Event Card -->
-			<a
-				href={featuredEvent.link}
-				target="_blank"
-				rel="noopener noreferrer"
-				class="lg:col-span-2 block group text-inherit no-underline"
-			>
-				<ThemeCard
-					class="h-full flex flex-col justify-between p-12 bg-gradient-to-br from-card to-card/50 relative overflow-hidden group-hover:border-primary/50 transition-colors"
+	<!-- Hero -->
+	<section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div class="max-w-6xl">
+				<span
+					class="inline-block text-[#ef4444] text-xs font-bold uppercase tracking-[0.4em] mb-6"
+					>Learning Hub</span
 				>
-					<!-- Decorative bg -->
-					<div
-						class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-					></div>
+				<h1
+					class="text-[clamp(4rem,12vw,12rem)] font-black tracking-tighter leading-[0.82] mb-12"
+				>
+					SPIKEDAI<br />
+					<span class="text-[#ef4444]">RESOURCES</span>
+				</h1>
+				<p class="text-zinc-500 text-xl lg:text-2xl max-w-2xl leading-relaxed">
+					Watch expert interviews, register for upcoming summits, and master the
+					cognitive edge.
+				</p>
+			</div>
+		</div>
+	</section>
 
-					<div class="relative z-10">
-						<div
-							class="inline-block bg-primary text-white font-bold px-4 py-2 rounded-lg mb-8 uppercase tracking-wider text-sm"
-						>
-							{featuredEvent.tag}
-						</div>
-						<ThemeHeadline
-							variant="h2"
-							class="mb-6 leading-tight group-hover:text-primary transition-colors"
-						>
-							{featuredEvent.title}
-						</ThemeHeadline>
-						<p class="text-xl text-muted-foreground font-medium max-w-2xl">
-							{featuredEvent.description}
-						</p>
-					</div>
+	<!-- Featured Event (Large Card) -->
+	<section class="py-12">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<a
+				href={topEvent.link}
+				class="group block relative rounded-[3rem] overflow-hidden bg-zinc-900 border border-zinc-800 transition-all hover:border-[#ef4444]/50 shadow-2xl"
+			>
+				<div
+					class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10"
+				></div>
+				<!-- Mock BG Image -->
+				<img
+					src="https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?w=1600&q=80"
+					alt=""
+					class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+				/>
 
-					<div
-						class="relative z-10 mt-12 inline-flex items-center gap-2 font-bold text-lg group-hover:translate-x-2 transition-transform"
+				<div
+					class="relative z-20 p-10 lg:p-20 flex flex-col items-start max-w-4xl"
+				>
+					<span
+						class="px-4 py-1.5 rounded-full bg-[#ef4444] text-white text-[10px] font-black uppercase tracking-widest mb-8"
+						>{topEvent.tag}</span
 					>
-						<span>Register Now</span>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg
-						>
+					<h2
+						class="text-4xl lg:text-7xl font-black mb-6 tracking-tighter leading-none"
+					>
+						{topEvent.title}
+					</h2>
+					<p class="text-zinc-300 text-lg lg:text-xl mb-10 leading-relaxed">
+						{topEvent.description}
+					</p>
+					<div
+						class="flex items-center gap-2 text-white font-black uppercase tracking-widest group-hover:gap-4 transition-all"
+					>
+						Register for the event <ArrowRight class="w-5 h-5" />
 					</div>
-				</ThemeCard>
+				</div>
 			</a>
+		</div>
+	</section>
 
-			<!-- Secondary Events List -->
-			<div class="space-y-6">
-				{#each secondaryEvents as event}
+	<!-- Events Feed -->
+	<section class="py-24">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div
+				class="flex items-baseline justify-between mb-16 border-b border-zinc-900 pb-8"
+			>
+				<h3 class="text-3xl font-black tracking-tight">Upcoming Summits</h3>
+				<span class="text-zinc-500 font-bold uppercase text-xs tracking-widest"
+					>2026 Calendar</span
+				>
+			</div>
+			<div class="grid lg:grid-cols-2 gap-8">
+				{#each events.slice(1) as event}
 					<a
 						href={event.link}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="block h-full group text-inherit no-underline"
+						class="p-10 rounded-[2.5rem] bg-zinc-950/50 border border-zinc-900 flex justify-between items-center group hover:bg-zinc-900 transition-all"
 					>
-						<ThemeCard
-							class="p-8 h-full flex flex-col justify-center hover:border-primary/50 transition-colors"
+						<div>
+							<span
+								class="text-[#ef4444] text-[10px] font-black uppercase tracking-widest block mb-4"
+								>{event.date}</span
+							>
+							<h4 class="text-2xl font-black mb-2">{event.title}</h4>
+							<p class="text-zinc-500 text-sm font-medium">
+								{event.tag} — {event.description}
+							</p>
+						</div>
+						<div
+							class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all"
 						>
-							<ThemeHeadline
-								variant="h4"
-								class="mb-4 group-hover:text-primary transition-colors"
-							>
-								{event.title}
-							</ThemeHeadline>
-							<div
-								class="flex justify-between items-center mt-auto pt-4 border-t border-border/50"
-							>
-								<span
-									class="bg-secondary text-secondary-foreground text-xs font-bold px-3 py-1 rounded-full px-2"
-								>
-									{event.tag}
-								</span>
-								<span
-									class="text-sm font-semibold text-muted-foreground group-hover:text-foreground"
-									>Learn more</span
-								>
-							</div>
-						</ThemeCard>
+							<ArrowRight class="w-5 h-5" />
+						</div>
 					</a>
 				{/each}
 			</div>
 		</div>
-	</ThemeSection>
+	</section>
 
-	<!-- Videos Section -->
-	<ThemeSection id="videos" background="alternate">
-		<ThemeHeadline variant="h2" class="mb-12 border-l-4 border-primary pl-6">
-			Latest resource and videos
-		</ThemeHeadline>
-
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-			{#each videos as video}
-				<div class="group">
-					<div
-						class="aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-lg mb-6 relative group-hover:-translate-y-2 transition-transform duration-300"
+	<!-- Videos Grid -->
+	<section
+		class="py-24 lg:py-40 bg-zinc-50 text-zinc-900 rounded-t-[4rem] lg:rounded-t-[6rem]"
+		id="videos"
+	>
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div
+				class="flex flex-col lg:flex-row justify-between items-end gap-8 mb-20 lg:mb-32"
+			>
+				<div class="max-w-2xl">
+					<span
+						class="text-[#ef4444] text-xs font-bold uppercase tracking-[0.3em] mb-4 block"
+						>Video Insights</span
 					>
-						<iframe
-							src={`https://www.youtube.com/embed/${video.id}`}
-							title={video.title}
-							class="absolute inset-0 w-full h-full"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							referrerpolicy="strict-origin-when-cross-origin"
-							allowfullscreen
-							loading="lazy"
-						></iframe>
-					</div>
-					<div class="px-2">
-						<span
-							class="inline-block text-xs font-bold text-white bg-blue-600 px-3 py-1 rounded-full mb-3"
+					<h2
+						class="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9] mb-8"
+					>
+						MIXTURE OF EXPERTS.
+					</h2>
+					<p class="text-zinc-500 text-lg lg:text-xl leading-relaxed">
+						Industry leaders at the intersection of AI and Revenue share their
+						blueprints for the modern enterprise.
+					</p>
+				</div>
+				<div
+					class="flex items-center gap-4 text-zinc-400 font-bold uppercase text-xs tracking-widest"
+				>
+					<div class="w-4 h-4 rounded-full bg-[#ef4444] animate-pulse"></div>
+					Latest Interviews
+				</div>
+			</div>
+
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+				{#each videos as video}
+					<div class="group">
+						<div
+							class="relative aspect-video rounded-3xl overflow-hidden mb-8 shadow-2xl bg-black"
 						>
-							Video
-						</span>
-						<h3
-							class="text-xl font-bold leading-snug group-hover:text-primary transition-colors"
+							<iframe
+								src={`https://www.youtube.com/embed/${video.id}`}
+								title={video.title}
+								class="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity"
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen
+							></iframe>
+							<div
+								class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
+							>
+								<span
+									class="text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2"
+								>
+									<Play class="w-3 h-3 fill-current" /> Watch now
+								</span>
+							</div>
+						</div>
+						<h4
+							class="text-2xl font-black mb-4 group-hover:text-[#ef4444] transition-colors line-clamp-2"
 						>
 							{video.title}
-						</h3>
+						</h4>
+						<div
+							class="flex items-center gap-4 text-zinc-400 text-xs font-bold uppercase tracking-widest"
+						>
+							<span>theCUBE</span>
+							<div class="w-1 h-1 rounded-full bg-zinc-300"></div>
+							<span>Video Resource</span>
+						</div>
 					</div>
-				</div>
-			{/each}
+				{/each}
+			</div>
 		</div>
-	</ThemeSection>
+	</section>
 
-	<Footer />
+	<!-- CTA -->
+	<section class="py-24 bg-zinc-50 border-t border-zinc-100 text-zinc-900">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div
+				class="bg-black text-white rounded-[3rem] p-12 lg:p-24 flex flex-col lg:flex-row items-center justify-between gap-12 relative overflow-hidden"
+			>
+				<div class="relative z-10 max-w-2xl text-center lg:text-left">
+					<h2
+						class="text-4xl lg:text-6xl font-black tracking-tighter leading-tight mb-8"
+					>
+						NEVER MISS AN<br />INSIGHT.
+					</h2>
+					<p class="text-zinc-400 text-lg lg:text-xl leading-relaxed">
+						Join 20k+ sales leaders who receive our weekly mixture of experts
+						direct to their inbox.
+					</p>
+				</div>
+				<div class="relative z-10 w-full lg:w-auto">
+					<form class="flex flex-col sm:flex-row gap-4">
+						<input
+							type="email"
+							placeholder="Email Address"
+							class="px-10 py-5 rounded-full bg-zinc-900 border border-zinc-800 focus:border-[#ef4444] text-white outline-none min-w-[300px] font-bold"
+						/>
+						<button
+							class="px-10 py-5 bg-[#ef4444] rounded-full font-black text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+							>Subscribe</button
+						>
+					</form>
+				</div>
+				<!-- Atmosphere -->
+				<div
+					class="absolute top-0 right-0 w-96 h-96 bg-[#ef4444]/10 rounded-full blur-[100px] -z-0 translate-x-1/2 -translate-y-1/2"
+				></div>
+			</div>
+		</div>
+	</section>
 </div>
+
+<style>
+	:global(body) {
+		background: black;
+	}
+
+	.line-clamp-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style>

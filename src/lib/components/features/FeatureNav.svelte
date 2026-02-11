@@ -80,7 +80,7 @@
 </script>
 
 <div
-	class="bg-secondary/50 border-y border-border sticky top-[85px] z-40 backdrop-blur-xl"
+	class="bg-secondary/50 border-y border-border sticky top-[60px] z-40 backdrop-blur-xl"
 >
 	<div class="max-w-7xl mx-auto px-6 py-4">
 		<div class="flex items-center justify-between gap-4">

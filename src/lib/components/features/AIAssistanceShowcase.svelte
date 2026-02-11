@@ -43,12 +43,9 @@
 		if (isAutoPlaying) {
 			intervalId = setInterval(() => {
 				if (isAutoPlaying) {
-					const currentIndex =
-						questionTypes.indexOf(selectedQuestion);
+					const currentIndex = questionTypes.indexOf(selectedQuestion);
 					selectedQuestion =
-						questionTypes[
-							(currentIndex + 1) % questionTypes.length
-						];
+						questionTypes[(currentIndex + 1) % questionTypes.length];
 				}
 			}, 5000);
 		} else {
@@ -108,13 +105,11 @@
 						class="flex items-center gap-2 px-3 py-1 glass rounded-lg hover:bg-zinc-800/70 transition-colors"
 					>
 						<img
-							src="/Spiked.ai-white-logo-icon-only.png"
+							src="/icon white.png"
 							alt="SpikedAI Logo"
 							class="w-4 h-4 rounded-sm object-contain"
 						/>
-						<span
-							class="text-sm font-black tracking-tight text-foreground"
-						>
+						<span class="text-sm font-black tracking-tight text-foreground">
 							SPIKED<span class="text-red-500">AI</span>
 						</span>
 					</div>
@@ -126,9 +121,7 @@
 						<div
 							class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"
 						></div>
-						<span class="text-xs font-medium text-amber-400"
-							>LISTENING</span
-						>
+						<span class="text-xs font-medium text-amber-400">LISTENING</span>
 					</div>
 				</div>
 			</div>
@@ -148,9 +141,7 @@
 				style="height: {height};"
 			>
 				<!-- Left Panel: Live Transcription -->
-				<div
-					class="border-r border-border/50 flex flex-col bg-secondary/50"
-				>
+				<div class="border-r border-border/50 flex flex-col bg-secondary/50">
 					<div
 						class="px-3 py-2 border-b border-border flex items-center justify-between bg-secondary/50"
 					>
@@ -160,20 +151,15 @@
 								>Live Transcription</span
 							>
 						</div>
-						<span class="text-xs text-muted-foreground"
-							>Real-time</span
-						>
+						<span class="text-xs text-muted-foreground">Real-time</span>
 					</div>
 
-					<div
-						class="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin"
-					>
+					<div class="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin">
 						<!-- Show only the last few relevant dialogues -->
 						{#each displayDialogues.slice(-visibleCount) as dialogue, i}
 							<button
 								onclick={() =>
-									dialogue.isQuestion &&
-									selectQuestion(dialogue.questionType)}
+									dialogue.isQuestion && selectQuestion(dialogue.questionType)}
 								class="flex gap-2 group p-2 rounded-lg transition-all w-full text-left relative {dialogue.isQuestion
 									? 'bg-blue-950/20 border border-blue-900/50 hover:bg-blue-950/40 hover:border-blue-800/70 cursor-pointer hover:scale-[1.02]'
 									: 'bg-secondary/20 hover:bg-secondary/30 cursor-default'} {selectedQuestion ===
@@ -191,12 +177,10 @@
 								</div>
 								<div class="flex-1 min-w-0">
 									<div class="flex items-center gap-2 mb-0.5">
-										<span
-											class="text-xs font-semibold text-foreground"
+										<span class="text-xs font-semibold text-foreground"
 											>{dialogue.speaker}</span
 										>
-										<span
-											class="text-[10px] text-muted-foreground"
+										<span class="text-[10px] text-muted-foreground"
 											>{dialogue.time}</span
 										>
 										{#if dialogue.isQuestion}
@@ -218,9 +202,7 @@
 									<div
 										class="absolute -right-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
 									>
-										<Sparkles
-											class="w-4 h-4 text-red-500 animate-pulse"
-										/>
+										<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
 									</div>
 								{/if}
 							</button>
@@ -234,16 +216,12 @@
 						class="px-3 py-2 border-b border-border flex items-center justify-between bg-secondary/80"
 					>
 						<div class="flex items-center gap-2">
-							<Sparkles
-								class="w-4 h-4 text-red-500 animate-pulse"
-							/>
+							<Sparkles class="w-4 h-4 text-red-500 animate-pulse" />
 							<span class="text-xs font-semibold text-foreground"
 								>AI Copilot</span
 							>
 						</div>
-						<div
-							class="flex items-center gap-1.5 px-2 py-1 glass rounded-full"
-						>
+						<div class="flex items-center gap-1.5 px-2 py-1 glass rounded-full">
 							<Brain class="w-3 h-3 text-red-400" />
 							<span class="text-[10px] font-medium text-red-400"
 								>Auto-Answer: ON</span
@@ -251,9 +229,7 @@
 						</div>
 					</div>
 
-					<div
-						class="flex-1 overflow-y-auto p-3 space-y-2.5 scrollbar-thin"
-					>
+					<div class="flex-1 overflow-y-auto p-3 space-y-2.5 scrollbar-thin">
 						<!-- Question Selector Tabs -->
 						<div class="flex gap-1.5 flex-wrap mb-3">
 							{#each questionTypes as questionType}
@@ -274,8 +250,7 @@
 
 						<!-- AI Response Card -->
 						{#if displayAiResponses[selectedQuestion]}
-							{@const response =
-								displayAiResponses[selectedQuestion]}
+							{@const response = displayAiResponses[selectedQuestion]}
 							<div
 								class="glass rounded-xl p-3 hover-lift relative overflow-hidden"
 								in:fade={{ duration: 300 }}
@@ -289,27 +264,19 @@
 									<div
 										class="flex items-start gap-2 mb-3 pb-2 border-b border-border/50"
 									>
-										<Target
-											class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5"
-										/>
+										<Target class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
 										<div class="flex-1">
-											<p
-												class="text-xs font-semibold text-white mb-1"
-											>
+											<p class="text-xs font-semibold text-white mb-1">
 												{response.question}
 											</p>
-											<p
-												class="text-[10px] text-muted-foreground"
-											>
+											<p class="text-[10px] text-muted-foreground">
 												AI-generated from knowledge base
 											</p>
 										</div>
 									</div>
 
 									<!-- Response Title -->
-									<h4
-										class="text-xs font-bold text-red-400 mb-2"
-									>
+									<h4 class="text-xs font-bold text-red-400 mb-2">
 										{response.title}
 									</h4>
 									<p class="text-[10px] text-zinc-400 mb-3">
@@ -327,9 +294,7 @@
 													duration: 300,
 												}}
 											>
-												<div
-													class="flex items-start justify-between gap-2"
-												>
+												<div class="flex items-start justify-between gap-2">
 													<span
 														class="text-[10px] text-muted-foreground group-hover:text-zinc-400 transition-colors"
 														>{point.label}</span
@@ -347,15 +312,11 @@
 									<div
 										class="flex items-center gap-2 mt-3 pt-2 border-t border-border/50"
 									>
-										<FileText
-											class="w-3 h-3 text-muted-foreground"
-										/>
-										<span
-											class="text-[9px] text-muted-foreground"
+										<FileText class="w-3 h-3 text-muted-foreground" />
+										<span class="text-[9px] text-muted-foreground"
 											>{response.source}</span
 										>
-										<span
-											class="ml-auto text-[9px] text-zinc-700"
+										<span class="ml-auto text-[9px] text-zinc-700"
 											>{response.timestamp}</span
 										>
 									</div>

@@ -10,11 +10,7 @@
 		Heart,
 		TrendingUp,
 	} from "lucide-svelte";
-	import Footer from "$lib/components/Footer.svelte";
 	import { themeStore } from "$lib/stores/theme.js";
-	import ThemeCard from "$lib/components/ui/ThemeCard.svelte";
-	import ThemeSection from "$lib/components/ui/ThemeSection.svelte";
-	import ThemeHeadline from "$lib/components/ui/ThemeHeadline.svelte";
 
 	const photo = (file) => `/Photos/${encodeURIComponent(file)}`;
 
@@ -155,115 +151,205 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<ThemeSection id="hero" background="default" class="text-center pt-32 pb-20">
-	<div class="max-w-3xl mx-auto">
-		<div
-			class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6"
-		>
-			<Briefcase class="w-4 h-4 text-primary" />
-			<span class="text-sm font-medium text-primary">We're Hiring</span>
-		</div>
+<section
+	class="relative pt-32 pb-20 px-6 overflow-hidden transition-colors duration-500 {$themeStore ===
+	'dark'
+		? 'bg-[black]'
+		: 'bg-[#f8f8f0]'}"
+>
+	<div
+		class="absolute inset-0 {$themeStore === 'dark'
+			? 'bg-gradient-to-b from-red-500/10 via-red-500/5 to-transparent'
+			: 'bg-gradient-to-b from-red-100/30 via-red-50/10 to-transparent'} pointer-events-none"
+	></div>
+	<div
+		class="absolute inset-0"
+		style="background-image: linear-gradient({$themeStore === 'dark'
+			? 'rgba(239, 68, 68, 0.03)'
+			: 'rgba(239, 68, 68, 0.05)'} 1px, transparent 1px), linear-gradient(90deg, {$themeStore ===
+		'dark'
+			? 'rgba(239, 68, 68, 0.03)'
+			: 'rgba(239, 68, 68, 0.05)'} 1px, transparent 1px); background-size: 50px 50px;"
+	></div>
 
-		<ThemeHeadline
-			variant="h1"
-			class="mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent"
-		>
-			Build the Future of Sales Intelligence
-		</ThemeHeadline>
-
-		<ThemeHeadline variant="sub" class="mb-8">
-			Join a team of builders, designers, and innovators creating AI-powered
-			tools that help sales teams close more deals. We're looking for talented
-			people who want to make an impact.
-		</ThemeHeadline>
-
-		<div
-			class="flex items-center justify-center gap-4 text-sm text-muted-foreground"
-		>
-			<div class="flex items-center gap-2">
-				<Users class="w-4 h-4" />
-				<span>Remote-first</span>
+	<div class="max-w-7xl mx-auto relative z-10">
+		<div class="text-center max-w-3xl mx-auto">
+			<div
+				class="inline-flex items-center gap-2 px-4 py-2 {$themeStore === 'dark'
+					? 'bg-red-500/10 border-red-500/30'
+					: 'bg-red-50 border-red-200'} rounded-full mb-6 shadow-lg shadow-red-500/10"
+			>
+				<Briefcase class="w-4 h-4 text-red-600" />
+				<span
+					class="text-sm font-medium {$themeStore === 'dark'
+						? 'text-red-300'
+						: 'text-red-600'}">We're Hiring</span
+				>
 			</div>
-			<div class="w-1 h-1 bg-muted-foreground rounded-full"></div>
-			<div class="flex items-center gap-2">
-				<Heart class="w-4 h-4" />
-				<span>Great benefits</span>
-			</div>
-			<div class="w-1 h-1 bg-muted-foreground rounded-full"></div>
-			<div class="flex items-center gap-2">
-				<TrendingUp class="w-4 h-4" />
-				<span>Equity for all</span>
+
+			<h1
+				class="text-5xl md:text-6xl lg:text-7xl font-black mb-6 {$themeStore ===
+				'dark'
+					? 'bg-gradient-to-r from-white via-red-100 to-gray-200 bg-clip-text text-transparent'
+					: 'text-zinc-900'} tracking-tight"
+			>
+				Build the Future of Sales Intelligence
+			</h1>
+
+			<p
+				class="text-xl {$themeStore === 'dark'
+					? 'text-gray-400'
+					: 'text-gray-600'} mb-8 leading-relaxed"
+			>
+				Join a team of builders, designers, and innovators creating AI-powered
+				tools that help sales teams close more deals. We're looking for talented
+				people who want to make an impact.
+			</p>
+
+			<div class="flex items-center justify-center gap-4 text-sm text-gray-500">
+				<div class="flex items-center gap-2">
+					<Users class="w-4 h-4" />
+					<span>Remote-first</span>
+				</div>
+				<div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+				<div class="flex items-center gap-2">
+					<Heart class="w-4 h-4" />
+					<span>Great benefits</span>
+				</div>
+				<div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+				<div class="flex items-center gap-2">
+					<TrendingUp class="w-4 h-4" />
+					<span>Equity for all</span>
+				</div>
 			</div>
 		</div>
 	</div>
-</ThemeSection>
+</section>
 
 <!-- Benefits Section -->
-<ThemeSection id="benefits" background="default">
-	<div class="text-center mb-12">
-		<ThemeHeadline variant="h2" class="mb-4">Why Join Spiked?</ThemeHeadline>
-		<ThemeHeadline variant="sub">
-			We believe in taking care of our team. Here are some of the benefits
-			you'll enjoy.
-		</ThemeHeadline>
-	</div>
-
-	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-		{#each benefits as benefit}
-			{@const Icon = benefit.icon}
-			<ThemeCard
-				class="group p-6 hover:border-primary/50 transition-colors h-full"
+<section
+	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
+		? 'bg-[black]'
+		: 'bg-[#f8f8f0]'}"
+>
+	<div class="max-w-7xl mx-auto">
+		<div class="text-center mb-12">
+			<h2
+				class="text-3xl font-bold mb-4 {$themeStore === 'dark'
+					? 'text-white'
+					: 'text-zinc-900'}"
 			>
+				Why Join Spiked?
+			</h2>
+			<p
+				class="{$themeStore === 'dark'
+					? 'text-gray-400'
+					: 'text-gray-600'} max-w-2xl mx-auto"
+			>
+				We believe in taking care of our team. Here are some of the benefits
+				you'll enjoy.
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+			{#each benefits as benefit}
+				{@const Icon = benefit.icon}
 				<div
-					class="relative w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all duration-300"
+					class="group p-6 {$themeStore === 'dark'
+						? 'bg-zinc-950/50 border-zinc-800'
+						: 'bg-white border-zinc-200 shadow-sm'} backdrop-blur-sm border rounded-xl hover:border-red-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
 				>
-					<Icon class="w-6 h-6 text-primary" />
+					<div
+						class="relative w-12 h-12 {$themeStore === 'dark'
+							? 'bg-red-500/10'
+							: 'bg-red-50'} rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-500/20 transition-all duration-300 group-hover:scale-110"
+					>
+						<Icon class="w-6 h-6 text-red-600" />
+						<div
+							class="absolute inset-0 bg-red-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+						></div>
+					</div>
+					<h3
+						class="text-lg font-semibold mb-2 {$themeStore === 'dark'
+							? 'text-white'
+							: 'text-zinc-900'}"
+					>
+						{benefit.title}
+					</h3>
+					<p
+						class="text-sm {$themeStore === 'dark'
+							? 'text-gray-400'
+							: 'text-gray-600'}"
+					>
+						{benefit.description}
+					</p>
 				</div>
-				<h3 class="text-lg font-semibold mb-2 text-foreground">
-					{benefit.title}
-				</h3>
-				<p class="text-sm text-muted-foreground">
-					{benefit.description}
-				</p>
-			</ThemeCard>
-		{/each}
+			{/each}
+		</div>
 	</div>
-</ThemeSection>
+</section>
 
 <!-- Open Positions Section -->
-<ThemeSection id="positions" background="alternate">
-	<div class="text-center mb-12">
-		<ThemeHeadline variant="h2" class="mb-4">Open Positions</ThemeHeadline>
-		<ThemeHeadline variant="sub">
-			Explore our current openings and find your next opportunity.
-		</ThemeHeadline>
-	</div>
+<section
+	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
+		? 'bg-[black]'
+		: 'bg-[#f8f8f0]'}"
+>
+	<div class="max-w-7xl mx-auto">
+		<div class="text-center mb-12">
+			<h2
+				class="text-3xl font-bold mb-4 {$themeStore === 'dark'
+					? 'text-white'
+					: 'text-zinc-900'}"
+			>
+				Open Positions
+			</h2>
+			<p
+				class="{$themeStore === 'dark'
+					? 'text-gray-400'
+					: 'text-gray-600'} max-w-2xl mx-auto"
+			>
+				Explore our current openings and find your next opportunity.
+			</p>
+		</div>
 
-	<div class="grid gap-6">
-		{#each openRoles as role}
-			<button onclick={() => openRole(role)} class="block w-full text-left">
-				<ThemeCard class="group p-8 hover:border-primary/50 transition-all">
+		<div class="grid gap-6">
+			{#each openRoles as role}
+				<button
+					onclick={() => openRole(role)}
+					class="text-left p-8 {$themeStore === 'dark'
+						? 'bg-zinc-950/50 border-zinc-800'
+						: 'bg-white border-zinc-200 shadow-sm'} backdrop-blur-sm border rounded-xl hover:border-red-500/50 transition-all duration-300 group hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
+				>
 					<div class="flex items-start justify-between gap-4">
 						<div class="flex-1">
 							<div class="flex items-center gap-3 mb-3">
 								<h3
-									class="text-2xl font-bold text-foreground group-hover:text-primary transition-colors"
+									class="text-2xl font-bold {$themeStore === 'dark'
+										? 'text-white'
+										: 'text-zinc-900'} group-hover:text-red-500 transition-colors"
 								>
 									{role.title}
 								</h3>
 								<span
-									class="px-3 py-1 bg-primary/10 border border-primary/20 text-primary rounded-full text-sm font-semibold"
+									class="px-3 py-1 {$themeStore === 'dark'
+										? 'bg-red-500/10 border-red-500/30 text-red-300'
+										: 'bg-red-50 border-red-200 text-red-600'} rounded-full text-sm font-semibold"
 								>
 									{role.department}
 								</span>
 							</div>
 
-							<p class="text-muted-foreground mb-4 leading-relaxed">
+							<p
+								class="{$themeStore === 'dark'
+									? 'text-gray-400'
+									: 'text-gray-600'} mb-4 leading-relaxed"
+							>
 								{role.description}
 							</p>
 
 							<div
-								class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground"
+								class="flex flex-wrap items-center gap-4 text-sm text-gray-500"
 							>
 								<div class="flex items-center gap-2">
 									<MapPin class="w-4 h-4" />
@@ -278,119 +364,275 @@
 
 						<div class="flex-shrink-0">
 							<div
-								class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-all"
+								class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center group-hover:bg-red-500/20 transition-all duration-300 group-hover:scale-110"
 							>
 								<ArrowRight
-									class="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform"
+									class="w-5 h-5 text-red-400 group-hover:translate-x-1 transition-transform"
 								/>
 							</div>
 						</div>
 					</div>
-				</ThemeCard>
-			</button>
-		{/each}
+				</button>
+			{/each}
+		</div>
 	</div>
-</ThemeSection>
+</section>
 
 <!-- Culture Section -->
-<ThemeSection id="culture" background="default">
-	<div class="grid lg:grid-cols-2 gap-12 items-center">
-		<div>
-			<ThemeHeadline variant="h2" class="mb-6">Our Culture</ThemeHeadline>
-			<ThemeHeadline variant="sub" class="mb-6 text-lg">
-				We're building a company where great people can do their best work. Our
-				culture is built on transparency, ownership, and continuous learning.
-			</ThemeHeadline>
-			<ul class="space-y-4">
-				<li class="flex items-start gap-3 group">
-					<div
-						class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors"
-					>
-						<Code class="w-3 h-3 text-primary" />
-					</div>
-					<div>
-						<div class="font-semibold mb-1 text-foreground">
-							Ship Fast, Learn Faster
+<section
+	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
+		? 'bg-[black]'
+		: 'bg-[#f8f8f0]'} relative overflow-hidden"
+>
+	<div
+		class="absolute inset-0 {$themeStore === 'dark'
+			? 'bg-gradient-to-b from-red-500/5 to-transparent'
+			: 'bg-gradient-to-b from-red-100/10 to-transparent'}"
+	></div>
+	<div
+		class="absolute inset-0"
+		style="background-image: linear-gradient({$themeStore === 'dark'
+			? 'rgba(239, 68, 68, 0.02)'
+			: 'rgba(239, 68, 68, 0.04)'} 1px, transparent 1px), linear-gradient(90deg, {$themeStore ===
+		'dark'
+			? 'rgba(239, 68, 68, 0.02)'
+			: 'rgba(239, 68, 68, 0.04)'} 1px, transparent 1px); background-size: 50px 50px;"
+	></div>
+	<div class="max-w-7xl mx-auto relative z-10">
+		<div class="grid lg:grid-cols-2 gap-12 items-center">
+			<div>
+				<h2
+					class="text-4xl font-black mb-6 tracking-tight {$themeStore === 'dark'
+						? 'text-white'
+						: 'text-zinc-900'}"
+				>
+					Our Culture
+				</h2>
+				<p
+					class="{$themeStore === 'dark'
+						? 'text-gray-400'
+						: 'text-gray-600'} mb-6 leading-relaxed text-lg"
+				>
+					We're building a company where great people can do their best work.
+					Our culture is built on transparency, ownership, and continuous
+					learning.
+				</p>
+				<ul class="space-y-4">
+					<li class="flex items-start gap-3 group">
+						<div
+							class="w-6 h-6 {$themeStore === 'dark'
+								? 'bg-red-500/10'
+								: 'bg-red-100'} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-red-500/20 transition-colors duration-300"
+						>
+							<Code class="w-3 h-3 text-red-600" />
 						</div>
-						<div class="text-sm text-muted-foreground">
-							We believe in rapid iteration and learning from real users.
+						<div>
+							<div
+								class="font-semibold mb-1 {$themeStore === 'dark'
+									? 'text-white'
+									: 'text-zinc-900'}"
+							>
+								Ship Fast, Learn Faster
+							</div>
+							<div
+								class="text-sm {$themeStore === 'dark'
+									? 'text-gray-400'
+									: 'text-gray-600'}"
+							>
+								We believe in rapid iteration and learning from real users.
+							</div>
 						</div>
-					</div>
-				</li>
-				<li class="flex items-start gap-3 group">
-					<div
-						class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors"
-					>
-						<Users class="w-3 h-3 text-primary" />
-					</div>
-					<div>
-						<div class="font-semibold mb-1 text-foreground">
-							Collaborate Openly
+					</li>
+					<li class="flex items-start gap-3 group">
+						<div
+							class="w-6 h-6 {$themeStore === 'dark'
+								? 'bg-red-500/10'
+								: 'bg-red-100'} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-red-500/20 transition-colors duration-300"
+						>
+							<Users class="w-3 h-3 text-red-600" />
 						</div>
-						<div class="text-sm text-muted-foreground">
-							Best ideas win, regardless of where they come from.
+						<div>
+							<div
+								class="font-semibold mb-1 {$themeStore === 'dark'
+									? 'text-white'
+									: 'text-zinc-900'}"
+							>
+								Collaborate Openly
+							</div>
+							<div
+								class="text-sm {$themeStore === 'dark'
+									? 'text-gray-400'
+									: 'text-gray-600'}"
+							>
+								Best ideas win, regardless of where they come from.
+							</div>
 						</div>
-					</div>
-				</li>
-				<li class="flex items-start gap-3 group">
-					<div
-						class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors"
-					>
-						<TrendingUp class="w-3 h-3 text-primary" />
-					</div>
-					<div>
-						<div class="font-semibold mb-1 text-foreground">Grow Together</div>
-						<div class="text-sm text-muted-foreground">
-							We invest in your development and celebrate your wins.
+					</li>
+					<li class="flex items-start gap-3 group">
+						<div
+							class="w-6 h-6 {$themeStore === 'dark'
+								? 'bg-red-500/10'
+								: 'bg-red-100'} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-red-500/20 transition-colors duration-300"
+						>
+							<TrendingUp class="w-3 h-3 text-red-600" />
 						</div>
-					</div>
-				</li>
-			</ul>
-		</div>
-
-		<ThemeCard class="aspect-square bg-card/50 p-8 border border-border/50">
-			<div class="grid grid-cols-2 gap-4 h-full">
-				{#each [{ val: "50+", label: "Team Members" }, { val: "12", label: "Countries" }, { val: "4.9★", label: "Glassdoor Rating" }, { val: "95%", label: "Retention Rate" }] as stat}
-					<div
-						class="bg-card rounded-xl p-6 border border-border flex flex-col justify-center hover:border-primary/50 transition-all hover:-translate-y-1"
-					>
-						<div class="text-4xl font-black text-primary mb-2">
-							{stat.val}
+						<div>
+							<div
+								class="font-semibold mb-1 {$themeStore === 'dark'
+									? 'text-white'
+									: 'text-zinc-900'}"
+							>
+								Grow Together
+							</div>
+							<div
+								class="text-sm {$themeStore === 'dark'
+									? 'text-gray-400'
+									: 'text-gray-600'}"
+							>
+								We invest in your development and celebrate your wins.
+							</div>
 						</div>
-						<div class="text-sm text-muted-foreground font-semibold">
-							{stat.label}
-						</div>
-					</div>
-				{/each}
+					</li>
+				</ul>
 			</div>
-		</ThemeCard>
+
+			<div class="relative">
+				<div
+					class="aspect-square {$themeStore === 'dark'
+						? 'bg-gradient-to-br from-red-500/10 via-red-500/5 to-transparent border-red-900/10'
+						: 'bg-white border-zinc-200 shadow-xl'} rounded-2xl border p-8 backdrop-blur-sm"
+				>
+					<div class="grid grid-cols-2 gap-4 h-full">
+						<div
+							class="group {$themeStore === 'dark'
+								? 'bg-zinc-950/80 border-zinc-800'
+								: 'bg-zinc-50 border-zinc-200'} rounded-xl p-6 border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
+						>
+							<div
+								class="text-4xl font-black text-red-600 mb-2 group-hover:scale-110 transition-transform duration-300"
+							>
+								50+
+							</div>
+							<div
+								class="text-sm {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'} font-semibold"
+							>
+								Team Members
+							</div>
+						</div>
+						<div
+							class="group {$themeStore === 'dark'
+								? 'bg-zinc-950/80 border-zinc-800'
+								: 'bg-zinc-50 border-zinc-200'} rounded-xl p-6 border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
+						>
+							<div
+								class="text-4xl font-black text-red-600 mb-2 group-hover:scale-110 transition-transform duration-300"
+							>
+								12
+							</div>
+							<div
+								class="text-sm {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'} font-semibold"
+							>
+								Countries
+							</div>
+						</div>
+						<div
+							class="group {$themeStore === 'dark'
+								? 'bg-zinc-950/80 border-zinc-800'
+								: 'bg-zinc-50 border-zinc-200'} rounded-xl p-6 border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
+						>
+							<div
+								class="text-4xl font-black text-red-600 mb-2 group-hover:scale-110 transition-transform duration-300"
+							>
+								4.9★
+							</div>
+							<div
+								class="text-sm {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'} font-semibold"
+							>
+								Glassdoor Rating
+							</div>
+						</div>
+						<div
+							class="group {$themeStore === 'dark'
+								? 'bg-zinc-950/80 border-zinc-800'
+								: 'bg-zinc-50 border-zinc-200'} rounded-xl p-6 border hover:border-red-500/50 flex flex-col justify-center transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
+						>
+							<div
+								class="text-4xl font-black text-red-600 mb-2 group-hover:scale-110 transition-transform duration-300"
+							>
+								95%
+							</div>
+							<div
+								class="text-sm {$themeStore === 'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'}"
+							>
+								Retention Rate
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</ThemeSection>
+</section>
 
 <!-- CTA Section -->
-<ThemeSection id="cta" background="alternate" class="text-center">
-	<div class="max-w-4xl mx-auto">
-		<ThemeHeadline variant="h2" class="mb-4"
-			>Don't See a Perfect Fit?</ThemeHeadline
+<section
+	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
+		? 'bg-[black]'
+		: 'bg-[#f8f8f0]'} relative overflow-hidden"
+>
+	<div class="absolute inset-0">
+		<div
+			class="absolute inset-0"
+			style="background-image: linear-gradient({$themeStore === 'dark'
+				? 'rgba(239, 68, 68, 0.05)'
+				: 'rgba(239, 68, 68, 0.08)'} 1px, transparent 1px), linear-gradient(90deg, {$themeStore ===
+			'dark'
+				? 'rgba(239, 68, 68, 0.05)'
+				: 'rgba(239, 68, 68, 0.08)'} 1px, transparent 1px); background-size: 50px 50px;"
+		></div>
+		<div
+			class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-600/10 rounded-full blur-3xl"
+		></div>
+	</div>
+	<div class="max-w-4xl mx-auto text-center relative z-10">
+		<h2
+			class="text-3xl md:text-4xl font-black mb-4 tracking-tight {$themeStore ===
+			'dark'
+				? 'text-white'
+				: 'text-zinc-900'}"
 		>
-		<ThemeHeadline variant="sub" class="mb-8 font-medium">
+			Don't See a Perfect Fit?
+		</h2>
+		<p
+			class="{$themeStore === 'dark'
+				? 'text-gray-400'
+				: 'text-gray-600'} mb-8 text-lg"
+		>
 			We're always looking for talented people. Send us your resume and tell us
 			what you're passionate about.
-		</ThemeHeadline>
-
+		</p>
 		<a
 			href="mailto:careers@spiked.com"
-			class="group inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-bold transition-all duration-300 hover:brightness-110 hover:scale-105 hover:-translate-y-1 relative overflow-hidden shadow-lg shadow-primary/20"
+			class="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl font-bold transition-all duration-300 shadow-xl shadow-red-500/25 hover:shadow-red-500/50 hover:scale-105 hover:-translate-y-1 relative overflow-hidden text-white"
 		>
 			<span class="relative z-10"> Get in Touch </span>
 			<ArrowRight
 				class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform"
 			/>
+			<div
+				class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+			></div>
 		</a>
 	</div>
-</ThemeSection>
-
-<Footer />
+</section>
 
 <!-- Role Details Modal -->
 {#if selectedRole}
@@ -404,7 +646,7 @@
 	>
 		<div
 			class="{$themeStore === 'dark'
-				? 'bg-[#030712] border-zinc-800'
+				? 'bg-[black] border-zinc-800'
 				: 'bg-white border-zinc-200'} border rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
 			onclick={(e) => e.stopPropagation()}
 			onkeydown={(e) => e.stopPropagation()}
@@ -535,3 +777,15 @@
 		</div>
 	</div>
 {/if}
+
+<style>
+	/* Ensure careers page uses consistent theme */
+	:global(body) {
+		background: var(--background);
+	}
+
+	/* Smooth scrolling */
+	section {
+		scroll-margin-top: 80px;
+	}
+</style>

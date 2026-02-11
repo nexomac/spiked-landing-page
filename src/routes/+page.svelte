@@ -440,7 +440,6 @@
 				muted
 				loop
 				playsinline
-				poster="/landing/cognitiveedge.jpeg"
 			>
 				<source src="/landing/cognition-overload.mp4" type="video/mp4" />
 			</video>
@@ -610,12 +609,11 @@
 					<h2
 						class="text-2xl lg:text-3xl xl:text-4xl font-bold text-zinc-900 mb-4 leading-tight"
 					>
-						Transform Every Sales Conversation with AI
+						Multiplying the Human Brain for Revenue Teams
 					</h2>
 					<p class="text-base lg:text-lg text-zinc-600 leading-relaxed mb-6">
-						Spiked AI brings real-time intelligence, automated workflows, and
-						performance insights to your entire revenue team. Close more deals,
-						faster.
+						Transforming the societal infrastructure of the 150M+ sales workforce by enabling low and mid performer to the close the gap.
+						<br />Every rep performs like a top 1% closer.
 					</p>
 					<div
 						class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
@@ -637,37 +635,29 @@
 					</div>
 				</div>
 				<div class="flex-shrink-0">
-					<div class="grid grid-cols-2 gap-6">
-						<div class="text-center">
+					<div class="flex flex-col gap-6">
+						<div class="text-left">
 							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
-								15hrs
+								+10-30%
 							</div>
-							<div class="text-sm font-semibold text-zinc-600">
-								Saved Weekly Per Rep
+							<div class="text-sm font-semibold text-zinc-900">
+								Quota Attainment lift
+							</div>
+							<div class="text-sm font-semibold text-zinc-500">
+								Across the entire sales organization,<br />
+								democratizing excellence at scale.
 							</div>
 						</div>
-						<div class="text-center">
-							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
-								40%
+						<div>
+							<div class="text-[10px] font-white bg-black p-2 w-max mb-5">
+								The Constrarian Bet
 							</div>
-							<div class="text-sm font-semibold text-zinc-600">
-								Increase in Win Rate
+							<div class="text-sm font-semibold text-zinc-900">
+								Cognition > Data
 							</div>
-						</div>
-						<div class="text-center">
-							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
-								10M+
-							</div>
-							<div class="text-sm font-semibold text-zinc-600">
-								Calls Analyzed
-							</div>
-						</div>
-						<div class="text-center">
-							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
-								500+
-							</div>
-							<div class="text-sm font-semibold text-zinc-600">
-								Teams Powered
+							<div class="text-sm font-semibold text-zinc-500">
+								Betting against the CRM status quo. We don't just<br />
+								manage data; Spiked amplifies human cognition.
 							</div>
 						</div>
 					</div>

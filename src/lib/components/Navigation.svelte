@@ -335,7 +335,7 @@
 		}
 
 		if (!mobileMenuOpen) {
-			openSection = navigation[0].title;
+			openSection = null;
 		}
 	}
 </script>
@@ -567,16 +567,40 @@
 								</div>
 							{/each}
 						</div>
-				{:else}
-					<!-- Simple link item -->
-					<a
-						href={section.href}
-						class="block bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg px-5 py-4 text-zinc-900 text-base font-bold hover:bg-[#ef4444]/5 transition-colors"
-					>
-						{section.title}
-					</a>
-				{/if}
+					{/if}
 			</div>
+			{/each}
+
+			<!-- Primary Links -->
+			<div class="bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg divide-y">
+				<a
+					href="/pricing"
+					class="flex items-center justify-between px-5 py-4 text-zinc-900 font-semibold hover:bg-zinc-50 active:scale-[0.99] transition-all"
+				>
+					Pricing
+					<span class="text-zinc-400">→</span>
+				</a>
+
+				<a
+					href="/about-us"
+					class="flex items-center justify-between px-5 py-4 text-zinc-900 font-semibold hover:bg-zinc-50 active:scale-[0.99] transition-all"
+				>
+					About Us
+					<span class="text-zinc-400">→</span>
+				</a>
+
+				<a
+					href="https://app.spiked.ai/login"
+					class="flex items-center justify-between px-5 py-4 text-zinc-900 font-semibold hover:bg-zinc-50 active:scale-[0.99] transition-all"
+				>
+					<div class="flex items-center gap-2">
+						<User class="w-4 h-4 text-zinc-500" />
+						Account
+					</div>
+					<span class="text-zinc-400">→</span>
+				</a>
+			</div>
+
 
 			<!-- Action Buttons -->
 			<div class="pt-4 space-y-3">
@@ -588,7 +612,7 @@
 				</a>
 				<button
 					onclick={() => {
-						onboardingStore.startOnboarding();
+						onboardingStore.start();
 						toggleMobileMenu(false);
 					}}
 					class="block w-full bg-white hover:bg-zinc-50 text-zinc-900 font-bold py-4 px-6 rounded-2xl text-center transition-all border-2 border-zinc-200 hover:border-[#ef4444] active:scale-95"
@@ -599,7 +623,6 @@
 
 			<!-- Bottom Spacing -->
 			<div class="h-8"></div>
-			{/each}
 		</div>
 	</div>
 {/if}

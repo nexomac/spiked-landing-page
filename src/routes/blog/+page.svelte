@@ -1,10 +1,9 @@
 <script>
-	import { fade, slide } from "svelte/transition";
+	import { fade } from "svelte/transition";
 	import { enhance } from "$app/forms";
 	import { themeStore } from "$lib/stores/theme.js";
-	let { data } = $props();
 
-	let showAll = $state(false);
+	let { data } = $props();
 
 	const sortedPosts = $derived(
 		[...data.posts].sort(
@@ -14,11 +13,38 @@
 		),
 	);
 
-	const initialPosts = $derived(sortedPosts.slice(0, 3));
-	const remainingPosts = $derived(sortedPosts.slice(3));
+	const postGroups = $derived(
+		sortedPosts.reduce((groups, post, index) => {
+			if (index % 3 === 0) groups.push([]);
+			groups[groups.length - 1].push(post);
+			return groups;
+		}, []),
+	);
+	const firstGroup = $derived(postGroups[0] || []);
+	const remainingGroups = $derived(postGroups.slice(1));
 
 	let isSubscribing = $state(false);
 	let isSubscribed = $state(false);
+
+	const defaultSummary =
+		"Brief in progress. Expect a concise readout and clear takeaways shortly.";
+	const defaultPoints = [
+		"Key context and why it matters.",
+		"The takeaway for revenue teams.",
+		"What to watch next.",
+	];
+
+	function getNewsletterImage(nl) {
+		return (
+			nl.image ||
+			nl.coverImage ||
+			nl.heroImage ||
+			nl.thumbnail ||
+			nl.imageUrl ||
+			nl["image-url"] ||
+			"/landing/cognitiveedge.jpeg"
+		);
+	}
 
 	function handleSubscribe({ formData, cancel }) {
 		const newsletters = formData.getAll("newsletterId");
@@ -35,11 +61,10 @@
 				result.type === "success" ||
 				(result.status >= 200 && result.status < 410)
 			) {
-				// Artificial delay to make the transition feel premium
 				setTimeout(() => {
 					isSubscribed = true;
 					isSubscribing = false;
-				}, 1000);
+				}, 700);
 			} else {
 				isSubscribing = false;
 			}
@@ -47,608 +72,734 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Spiked AI | Blog</title>
+</svelte:head>
+
 <div
-	class="min-h-screen transition-colors duration-500 font-serif pt-24 px-4 sm:px-6 lg:px-8 selection:bg-red-500/30
-    {$themeStore === 'dark'
-		? 'bg-[#0f0f0f] text-white/90'
-		: 'bg-[#f8f8f0] text-black'}"
+	class="min-h-screen transition-colors duration-500 font-sans pt-24 pb-24
+	{$themeStore === 'dark' ? 'bg-black text-white' : 'bg-white text-zinc-900'}"
 >
-	<div class="max-w-[1400px] mx-auto">
-		<!-- Newspaper Header -->
-		<header
-			class="border-b-4 mb-12 pb-4 text-center relative {$themeStore === 'dark'
-				? 'border-red-900/30'
-				: 'border-black'}"
-		>
-			<h1
-				class="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-2 {$themeStore ===
-				'dark'
-					? 'text-white'
-					: 'text-black'}"
+	<div class="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
+		<header class="mb-14 lg:mb-20">
+			<p
+				class="text-[11px] uppercase tracking-[0.3em] font-semibold text-red-500"
 			>
-				The <span class="text-red-600">Spiked</span>AI Times
+				Spiked Journal
+			</p>
+			<h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold mt-3">
+				Latest Insights
 			</h1>
-			<div
-				class="flex justify-between border-t border-b py-2 mt-4 text-sm font-bold uppercase tracking-widest {$themeStore ===
+			<p
+				class="mt-4 max-w-2xl text-base sm:text-lg leading-relaxed {$themeStore ===
 				'dark'
-					? 'border-red-900/20 text-gray-400'
-					: 'border-black text-black'}"
+					? 'text-zinc-400'
+					: 'text-zinc-600'}"
 			>
-				<span>Vol. {new Date().getFullYear()}</span>
-				<span class="text-red-600">Technology & AI Alpha</span>
-				<span
-					>{new Date().toLocaleDateString("en-US", {
-						weekday: "long",
-						month: "long",
-						day: "numeric",
-					})}</span
-				>
+				Revenue intelligence, market motion, and product strategy. Designed to
+				read fast, decide faster.
+			</p>
+			<div
+				class="mt-8 flex flex-wrap items-center gap-6 text-xs uppercase tracking-[0.3em] {$themeStore ===
+				'dark'
+					? 'text-zinc-500'
+					: 'text-zinc-400'}"
+			>
+				<span>New drop every week</span>
+				<span class="hidden sm:inline">|</span>
+				<span>Signals, not noise</span>
+				<span class="hidden sm:inline">|</span>
+				<span>Built for revenue teams</span>
 			</div>
 		</header>
 
-		<!-- Newsletter Sections (First) - Showcase existing newsletters -->
-		<section class="mb-20">
-			<div class="flex items-center gap-4 mb-8">
-				<span
-					class="h-px flex-1 bg-gradient-to-r from-transparent via-red-600/50 to-transparent"
-				></span>
-				<h2
-					class="text-2xl font-black uppercase tracking-widest italic flex items-center gap-3"
-				>
-					<span class="w-2 h-2 bg-red-600 rotate-45"></span>
-					Featured Editions
-					<span class="w-2 h-2 bg-red-600 rotate-45"></span>
-				</h2>
-				<span
-					class="h-px flex-1 bg-gradient-to-r from-transparent via-red-600/50 to-transparent"
-				></span>
-			</div>
-
-			<div class="grid grid-cols-1 gap-8">
-				{#each data.newsletters.filter((nl) => nl.posts && nl.posts.length > 0) as nl}
+		<section class="space-y-16">
+			{#if sortedPosts.length === 0}
+				<div class="text-center py-24 text-zinc-500">
+					No posts yet. Check back soon.
+				</div>
+			{:else}
+				{#if firstGroup.length > 0}
 					<div
-						class="border-2 p-6 md:p-10 transition-all relative overflow-hidden
-                        {$themeStore === 'dark'
-							? 'bg-[#1a1a1a] border-red-900/20 shadow-[8px_8px_0px_0px_rgba(153,27,27,0.2)]'
-							: 'bg-white border-black shadow-[8px_8px_0px_0px_rgba(220,38,38,0.1)]'}"
+						class="grid lg:grid-cols-12 gap-10 pb-16 {$themeStore === 'dark'
+						? 'border-b border-zinc-800'
+						: 'border-b border-zinc-200'}"
 					>
-						<div class="flex flex-col lg:flex-row gap-10">
-							<!-- Newsletter Info -->
-							<div class="lg:w-1/3 flex flex-col justify-between">
-								<div>
-									<div class="flex items-center gap-2 mb-2">
-										<span class="w-2 h-2 bg-red-600"></span>
-										<span
-											class="text-xs font-black uppercase tracking-[0.2em] text-red-600/80"
-											>Weekly Intelligence</span
-										>
-									</div>
-									<h3
-										class="text-3xl md:text-4xl font-black uppercase tracking-tighter {$themeStore ===
-										'dark'
-											? 'text-white'
-											: 'text-black'}"
-									>
-										{nl.title}
-									</h3>
-									<p
-										class="text-lg font-serif italic mt-3 {$themeStore ===
-										'dark'
-											? 'text-gray-400'
-											: 'text-gray-700'}"
-									>
-										{nl.description}
-									</p>
-								</div>
-
-								<div class="mt-8 flex flex-col gap-3">
-									<a
-										href="/newsletter/{nl.slug}"
-										class="inline-block bg-red-600 px-6 py-2 uppercase tracking-widest text-sm hover:bg-black transition-colors border-2 border-red-600 text-center text-white"
-									>
-										Full Archive
-									</a>
-									<span
-										class="text-[10px] font-sans font-bold text-gray-500 uppercase tracking-tighter text-center"
-										>Updated Weekly</span
-									>
-								</div>
-							</div>
-
-							<!-- Compact Posts Grid -->
-							<div class="lg:w-2/3">
-								<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-									{#each nl.posts.slice(0, 4) as post}
-										<a
-											href="/blog/{post.slug}"
-											class="group border p-4 hover:border-red-600/50 transition-all
-                                            {$themeStore === 'dark'
-												? 'bg-black/20 border-red-900/10'
-												: 'bg-gray-50 border-gray-100'}"
-										>
-											<div class="flex gap-4">
-												{#if post.coverImage}
+						{#if firstGroup[0]}
+							<article class="lg:col-span-8">
+								<a href="/blog/{firstGroup[0].slug}" class="group block">
+									<div class="grid lg:grid-cols-12 gap-8 items-center">
+										<div class="lg:col-span-7">
+											<p
+												class="text-[10px] uppercase tracking-[0.3em] text-red-500 font-semibold"
+											>
+												Spotlight
+											</p>
+											<h2
+												class="text-3xl sm:text-4xl lg:text-5xl font-semibold mt-4 leading-tight group-hover:text-red-500 transition-colors"
+											>
+												{firstGroup[0].title}
+											</h2>
+											<p
+												class="mt-4 text-base sm:text-lg leading-relaxed {$themeStore ===
+												'dark'
+													? 'text-zinc-400'
+													: 'text-zinc-600'}"
+											>
+												{firstGroup[0].summary || defaultSummary}
+											</p>
+											<ul class="mt-6 space-y-3">
+												{#each (firstGroup[0].points && firstGroup[0].points.length
+													? firstGroup[0].points
+													: defaultPoints
+												).slice(0, 3) as point}
+													<li class="flex items-start gap-3">
+														<span
+															class="mt-2 h-1.5 w-1.5 rounded-full bg-red-500"
+														></span>
+														<span
+															class="text-sm leading-relaxed {$themeStore ===
+															'dark'
+																? 'text-zinc-300'
+																: 'text-zinc-600'}"
+														>
+															{point}
+														</span>
+													</li>
+												{/each}
+											</ul>
+											<div
+												class="mt-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] {$themeStore ===
+												'dark'
+													? 'text-zinc-500'
+													: 'text-zinc-400'}"
+											>
+												<span>{firstGroup[0].author}</span>
+												<span>|</span>
+												<span
+													>{new Date(firstGroup[0].publishedDate).toLocaleDateString()}</span
+												>
+											</div>
+										</div>
+										<div class="lg:col-span-5">
+											<div
+												class="aspect-[4/3] rounded-2xl overflow-hidden border {$themeStore ===
+												'dark'
+													? 'border-zinc-800 bg-zinc-950'
+													: 'border-zinc-200 bg-zinc-100'}"
+											>
+												{#if firstGroup[0].coverImage}
+													<img
+														src={firstGroup[0].coverImage}
+														alt={firstGroup[0].title}
+														class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+													/>
+												{:else}
 													<div
-														class="w-20 h-20 shrink-0 grayscale group-hover:grayscale-0 transition-all overflow-hidden border {$themeStore ===
+														class="w-full h-full flex items-center justify-center text-xs uppercase tracking-[0.3em] {$themeStore ===
 														'dark'
-															? 'border-red-900/20'
-															: 'border-black/5'}"
+															? 'text-zinc-600'
+															: 'text-zinc-500'}"
 													>
+														No image
+													</div>
+												{/if}
+											</div>
+										</div>
+									</div>
+								</a>
+							</article>
+						{/if}
+
+						<div class="lg:col-span-4 space-y-10">
+							{#each firstGroup.slice(1, 3) as post}
+								<article
+									class="border-b pb-8 {$themeStore === 'dark'
+									? 'border-zinc-800'
+									: 'border-zinc-200'} last:border-b-0 last:pb-0"
+								>
+									<a href="/blog/{post.slug}" class="group block">
+										<div class="grid grid-cols-12 gap-6 items-center">
+											<div class="col-span-7">
+												<h3
+													class="text-xl font-semibold leading-snug group-hover:text-red-500 transition-colors"
+												>
+													{post.title}
+												</h3>
+												<p
+													class="mt-3 text-sm leading-relaxed {$themeStore ===
+													'dark'
+														? 'text-zinc-400'
+														: 'text-zinc-600'}"
+												>
+													{post.summary || defaultSummary}
+												</p>
+												<ul class="mt-4 space-y-2">
+													{#each (post.points && post.points.length
+														? post.points
+														: defaultPoints
+													).slice(0, 2) as point}
+														<li class="flex items-start gap-2">
+															<span
+																class="mt-2 h-1.5 w-1.5 rounded-full bg-red-500"
+															></span>
+															<span
+																class="text-[12px] leading-relaxed {$themeStore ===
+																'dark'
+																	? 'text-zinc-300'
+																	: 'text-zinc-500'}"
+															>
+																{point}
+															</span>
+														</li>
+													{/each}
+												</ul>
+												<div
+													class="mt-4 text-[10px] uppercase tracking-[0.25em] {$themeStore ===
+													'dark'
+														? 'text-zinc-500'
+														: 'text-zinc-400'}"
+												>
+													{new Date(post.publishedDate).toLocaleDateString()}
+												</div>
+											</div>
+											<div class="col-span-5">
+												<div
+													class="aspect-[4/3] rounded-2xl overflow-hidden border {$themeStore ===
+													'dark'
+														? 'border-zinc-800 bg-zinc-900'
+														: 'border-zinc-200 bg-zinc-100'}"
+												>
+													{#if post.coverImage}
 														<img
 															src={post.coverImage}
 															alt={post.title}
-															class="w-full h-full object-cover"
+															class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
 														/>
-													</div>
-												{/if}
-												<div class="flex-1 min-w-0">
-													<h4
-														class="font-bold text-sm uppercase leading-tight line-clamp-2 group-hover:text-red-600 transition-colors"
-													>
-														{post.title}
-													</h4>
-													<p
-														class="text-[10px] font-serif italic mt-1 opacity-60"
-													>
-														{new Date(post.publishedDate).toLocaleDateString(
-															undefined,
-															{
-																month: "short",
-																day: "numeric",
-																year: "numeric",
-															},
-														)}
-													</p>
+													{:else}
+														<div
+															class="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-[0.3em] {$themeStore ===
+															'dark'
+																? 'text-zinc-600'
+																: 'text-zinc-500'}"
+														>
+															Image
+														</div>
+													{/if}
 												</div>
 											</div>
-										</a>
-									{/each}
-									{#if nl.posts.length > 4}
-										<a
-											href="/newsletter/{nl.slug}"
-											class="flex items-center justify-center border-2 border-dashed p-4 hover:bg-red-600 hover:text-white transition-all group
-                                            {$themeStore === 'dark'
-												? 'border-red-900/30 text-gray-400'
-												: 'border-red-600/30 text-red-600'}"
-										>
-											<span class="text-xs font-black uppercase tracking-widest"
-												>+{nl.posts.length - 4} More Stories</span
-											>
-										</a>
-									{/if}
-								</div>
+										</div>
+									</a>
+								</article>
+							{/each}
+						</div>
+					</div>
+				{/if}
+
+				<section class="my-16">
+					<div class="grid lg:grid-cols-12 gap-10 items-center">
+						<div class="lg:col-span-7">
+							<p
+								class="text-[11px] uppercase tracking-[0.3em] text-red-500 font-semibold"
+							>
+								Newsletter
+							</p>
+							<h2 class="text-3xl lg:text-5xl font-semibold mt-4">
+								Weekly Revenue Intelligence
+							</h2>
+							<p
+								class="mt-4 text-base lg:text-lg leading-relaxed {$themeStore ===
+								'dark'
+									? 'text-zinc-400'
+									: 'text-zinc-600'}"
+							>
+								Get the weekly digest of AI strategies, revenue signals, and
+								market updates delivered to your inbox.
+							</p>
+							<p
+								class="mt-3 text-sm leading-relaxed {$themeStore === 'dark'
+								? 'text-zinc-500'
+								: 'text-zinc-500'}"
+							>
+								Expect a concise report, a short signal list, and the one move
+								worth making next.
+							</p>
+						</div>
+						<div class="lg:col-span-5">
+							<div
+								class="aspect-[4/3] rounded-3xl overflow-hidden border {$themeStore ===
+								'dark'
+									? 'border-zinc-800 bg-zinc-950'
+									: 'border-zinc-200 bg-zinc-100'}"
+							>
+								<img
+									src={getNewsletterImage(data.newsletters?.[0] || {})}
+									alt="Newsletter preview"
+									class="w-full h-full object-cover"
+								/>
 							</div>
 						</div>
 					</div>
-				{:else}
+
 					<div
-						class="text-center py-12 border-2 border-dashed opacity-30 {$themeStore ===
+						class="mt-10 grid lg:grid-cols-12 gap-10 items-start border-t pt-10 {$themeStore ===
 						'dark'
-							? 'border-red-900/30'
-							: 'border-red-600/30'}"
+							? 'border-zinc-800'
+							: 'border-zinc-200'}"
 					>
-						<p class="font-serif italic text-red-600/50">
-							No intelligence feeds currently broadcasting.
-						</p>
-					</div>
-				{/each}
-			</div>
-		</section>
-
-		<div class="flex items-center gap-4 mb-12">
-			<h2 class="text-2xl font-black uppercase tracking-widest">
-				Latest Research and News
-			</h2>
-			<span class="h-1 flex-1 bg-red-600/10"></span>
-		</div>
-
-		{#if data.posts.length === 0}
-			<div class="text-center py-20">
-				<p class="text-gray-500 italic">No news today. Check back later.</p>
-			</div>
-		{:else}
-			<!-- Featured Section -->
-			<div
-				class="grid grid-cols-1 md:grid-cols-12 gap-8 border-b-2 pb-12 {$themeStore ===
-				'dark'
-					? 'border-red-900/20'
-					: 'border-black'}"
-			>
-				<!-- Main Feature -->
-				{#if sortedPosts[0]}
-					<article
-						class="md:col-span-8 border-b md:border-b-0 md:border-r md:pr-8 pb-8 md:pb-0 {$themeStore ===
-						'dark'
-							? 'border-red-900/20'
-							: 'border-black'}"
-					>
-						<a href="/blog/{sortedPosts[0].slug}" class="group block">
-							<span
-								class="inline-block bg-red-600 text-white text-xs font-bold px-2 py-1 mb-3 uppercase tracking-wider border border-red-600"
-								>Breaking Alpha</span
+						<div class="lg:col-span-5">
+							<h3 class="text-2xl lg:text-3xl font-semibold">
+								Stay ahead of the signal
+							</h3>
+							<p
+								class="mt-3 text-sm leading-relaxed {$themeStore === 'dark'
+								? 'text-zinc-400'
+								: 'text-zinc-600'}"
 							>
-							<h2
-								class="text-4xl md:text-6xl font-bold leading-tight mb-4 group-hover:text-red-600 transition-colors decoration-4 underline-offset-4 {$themeStore ===
-								'dark'
-									? 'text-white'
-									: 'text-black'}"
-							>
-								{sortedPosts[0].title}
-							</h2>
-							<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-								<div>
+								Choose the intelligence feeds you want. We send the most
+								relevant briefings only.
+							</p>
+						</div>
+
+						<div class="lg:col-span-7">
+							{#if isSubscribed}
+								<div in:fade class="py-6">
+									<h3 class="text-2xl font-semibold text-red-500">
+										Subscription Confirmed
+									</h3>
 									<p
-										class="text-lg leading-relaxed font-sans mb-4 {$themeStore ===
-										'dark'
-											? 'text-gray-400'
-											: 'text-gray-800'}"
+										class="mt-3 text-sm {$themeStore === 'dark'
+										? 'text-zinc-400'
+										: 'text-zinc-500'}"
 									>
-										{sortedPosts[0].excerpt ||
-											"Click to read the full story..."}
+										Your weekly signal is on the way.
 									</p>
-									<div
-										class="text-sm font-bold uppercase tracking-wide text-red-600/70"
-									>
-										By {sortedPosts[0].author}
-									</div>
-									<div class="mt-4 text-xs text-gray-500 font-bold uppercase">
-										{new Date(
-											sortedPosts[0].publishedDate,
-										).toLocaleDateString()}
-									</div>
 								</div>
-							</div>
-							{#if sortedPosts[0].coverImage}
-								<div
-									class="aspect-[4/3] grayscale contrast-125 group-hover:grayscale-0 transition duration-500 p-3"
+							{:else}
+								<form
+									method="POST"
+									action="/api/subscribe"
+									use:enhance={handleSubscribe}
+									class="space-y-4"
 								>
-									<div
-										class="w-full h-full relative border overflow-hidden {$themeStore ===
-										'dark'
-											? 'border-red-900/20'
-											: 'border-black'}"
-									>
-										<img
-											src={sortedPosts[0].coverImage}
-											alt={sortedPosts[0].title}
-											class="w-full h-full object-cover"
+									<div class="space-y-2">
+										<label
+											for="email"
+											class="block text-[10px] uppercase tracking-[0.3em] text-red-500 font-semibold"
+											>Email</label
+										>
+										<input
+											id="email"
+											name="email"
+											type="email"
+											required
+											placeholder="you@company.com"
+											class="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/40 transition-all {$themeStore ===
+											'dark'
+												? 'bg-black border-zinc-700 text-white'
+												: 'bg-white border-zinc-300 text-zinc-900'}"
 										/>
 									</div>
-								</div>
-							{/if}
-						</a>
-					</article>
-				{/if}
 
-				<!-- Side Column -->
-				<div class="md:col-span-4 space-y-8">
-					{#each sortedPosts.slice(1, 3) as post}
-						<article
-							class="border-b border-dashed pb-6 last:border-0 {$themeStore ===
-							'dark'
-								? 'border-red-900/20'
-								: 'border-red-600/20'}"
-						>
-							<a href="/blog/{post.slug}" class="group block">
-								{#if post.coverImage}
-									<div
-										class="aspect-video grayscale contrast-110 group-hover:grayscale-0 transition duration-500 mb-4 p-1"
-									>
+									<div class="space-y-3">
+										<label
+											for="edition-select"
+											class="block text-[10px] uppercase tracking-[0.3em] text-red-500 font-semibold"
+											>Intelligence Feeds</label
+										>
 										<div
-											class="w-full h-full relative border overflow-hidden {$themeStore ===
+											id="edition-select"
+											class="grid grid-cols-1 sm:grid-cols-2 gap-2"
+										>
+											{#each data.newsletters.filter((nl) => nl.posts && nl.posts.length > 0) as nl}
+												<label
+													class="flex items-center gap-3 border rounded-lg px-3 py-2 cursor-pointer transition-colors {$themeStore ===
+													'dark'
+														? 'border-zinc-800 bg-zinc-950 hover:border-red-500/40'
+														: 'border-zinc-200 bg-white hover:border-red-500/40'}"
+												>
+													<input
+														type="checkbox"
+														name="newsletterId"
+														value={nl._id}
+														class="h-4 w-4 accent-red-500"
+													/>
+													<span class="text-xs font-medium">{nl.title}</span>
+												</label>
+											{:else}
+												<p class="text-xs text-zinc-400 italic">
+													No active editions available.
+												</p>
+											{/each}
+										</div>
+									</div>
+
+									<button
+										type="submit"
+										disabled={isSubscribing}
+										class="w-full rounded-full px-6 py-3 text-xs uppercase tracking-[0.3em] font-semibold transition-colors {$themeStore ===
+										'dark'
+											? 'bg-white text-black hover:bg-red-500 hover:text-white'
+											: 'bg-black text-white hover:bg-red-500'} disabled:opacity-60"
+									>
+										{isSubscribing ? "Submitting..." : "Subscribe"}
+									</button>
+								</form>
+							{/if}
+						</div>
+					</div>
+
+					<div class="mt-14 pb-10">
+						<div class="flex items-center justify-between pb-8 border-b border-zinc-800">
+							<h2 class="text-xl sm:text-2xl font-semibold">
+								Newsletter Briefings
+							</h2>
+							<span
+								class="text-xs uppercase tracking-[0.2em] {$themeStore === 'dark'
+									? 'text-zinc-500'
+									: 'text-zinc-400'}"
+								>Updated Weekly</span
+							>
+						</div>
+
+						<div class="space-y-12">
+							{#each data.newsletters.filter((nl) => nl.posts && nl.posts.length > 0) as nl}
+								<div
+									class="grid lg:grid-cols-12 gap-10 items-center py-8 {$themeStore ===
+									'dark'
+										? 'border-t border-zinc-800'
+										: 'border-t border-zinc-200'} first:border-t-0"
+								>
+									<div class="lg:col-span-7">
+										<p
+											class="text-[10px] uppercase tracking-[0.3em] text-red-500 font-semibold"
+										>
+											Intelligence Feed
+										</p>
+										<h3 class="text-3xl sm:text-4xl font-semibold mt-4">
+											{nl.title}
+										</h3>
+										<p
+											class="mt-4 text-base leading-relaxed {$themeStore ===
 											'dark'
-												? 'border-red-900/20'
-												: 'border-black'}"
+												? 'text-zinc-400'
+												: 'text-zinc-600'}"
+										>
+											{nl.description}
+										</p>
+										<div class="mt-6 flex flex-wrap gap-3">
+											<a
+												href="/newsletter/{nl.slug}"
+												class="inline-flex items-center justify-center px-6 py-3 text-xs uppercase tracking-[0.25em] font-semibold border rounded-full transition-colors {$themeStore ===
+												'dark'
+													? 'border-zinc-700 text-white hover:border-red-500 hover:text-red-400'
+													: 'border-zinc-300 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+											>
+												View Archive
+											</a>
+										</div>
+										<div class="mt-6 space-y-2">
+											{#each nl.posts.slice(0, 3) as post}
+												<a
+													href="/blog/{post.slug}"
+													class="flex items-center justify-between gap-4 text-sm {$themeStore ===
+													'dark'
+														? 'text-zinc-300 hover:text-white'
+														: 'text-zinc-700 hover:text-black'}"
+												>
+													<span class="line-clamp-1">{post.title}</span>
+													<span
+														class="text-[10px] uppercase tracking-[0.2em] {$themeStore ===
+														'dark'
+															? 'text-zinc-500'
+															: 'text-zinc-400'}"
+														>{new Date(post.publishedDate).toLocaleDateString()}</span
+													>
+												</a>
+											{/each}
+										</div>
+									</div>
+									<div class="lg:col-span-5">
+										<div
+											class="aspect-[4/3] rounded-3xl overflow-hidden border {$themeStore ===
+											'dark'
+												? 'border-zinc-800 bg-zinc-950'
+												: 'border-zinc-200 bg-zinc-100'}"
 										>
 											<img
-												src={post.coverImage}
-												alt={post.title}
+												src={getNewsletterImage(nl)}
+												alt={nl.title}
 												class="w-full h-full object-cover"
 											/>
 										</div>
 									</div>
-								{/if}
-								<h3
-									class="text-xl md:text-2xl font-bold leading-tight mb-2 group-hover:text-red-600 transition-colors {$themeStore ===
-									'dark'
-										? 'text-white'
-										: 'text-black'}"
-								>
-									{post.title}
-								</h3>
-								<div class="flex flex-col items-left gap-2 pt-2">
-									<span class="text-xs font-bold uppercase text-red-600/60">
-										By {post.author}
-									</span>
-									<span class="text-xs font-bold uppercase text-gray-600/60">
-										{new Date(post.publishedDate).toLocaleDateString()}
-									</span>
 								</div>
-							</a>
-						</article>
-					{/each}
-				</div>
-			</div>
-
-			<!-- "See More" Transition Area -->
-			{#if !showAll && sortedPosts.length > 3}
-				<div class="flex justify-center -mt-6 relative z-10">
-					<button
-						onclick={() => (showAll = true)}
-						class="border-4 px-8 py-3 font-bold uppercase tracking-widest transition-all transform hover:scale-105 active:scale-95
-                        {$themeStore === 'dark'
-							? 'bg-[#0f0f0f] border-red-600 text-white hover:bg-red-600 shadow-[4px_4px_0px_0px_rgba(220,38,38,0.3)]'
-							: 'bg-red-600 border-black text-white hover:bg-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'}"
-					>
-						Access Archives
-					</button>
-				</div>
-			{/if}
-
-			{#if showAll}
-				<div
-					in:fade={{ duration: 600 }}
-					class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 border-b-2 pb-20 {$themeStore ===
-					'dark'
-						? 'border-red-900/20'
-						: 'border-black'}"
-				>
-					{#each remainingPosts as post}
-						<article class="group">
-							<a href="/blog/{post.slug}" class="block">
-								{#if post.coverImage}
-									<div
-										class="aspect-video grayscale border-2 p-1 mb-4 group-hover:grayscale-0 transition-all group-hover:border-red-600
-                                        {$themeStore === 'dark'
-											? 'bg-[#1a1a1a] border-red-900/20'
-											: 'bg-gray-200 border-red-600/10'}"
-									>
-										<img
-											src={post.coverImage}
-											alt={post.title}
-											class="w-full h-full object-cover border {$themeStore ===
-											'dark'
-												? 'border-red-900/10'
-												: 'border-black'}"
-										/>
-									</div>
-								{/if}
-								<h3
-									class="text-2xl font-bold mb-2 group-hover:text-red-600 transition-colors leading-tight {$themeStore ===
-									'dark'
-										? 'text-white'
-										: 'text-black'}"
-								>
-									{post.title}
-								</h3>
-								<p
-									class="text-sm font-sans line-clamp-3 mb-4 {$themeStore ===
-									'dark'
-										? 'text-gray-500'
-										: 'text-gray-600'}"
-								>
-									{post.excerpt}
-								</p>
+							{:else}
 								<div
-									class="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-gray-400"
+									class="border rounded-2xl p-8 text-center {$themeStore ===
+									'dark'
+										? 'border-zinc-800 text-zinc-500'
+										: 'border-zinc-200 text-zinc-400'}"
 								>
-									<span
-										>{new Date(post.publishedDate).toLocaleDateString()}</span
-									>
-									<span
-										class="{$themeStore === 'dark'
-											? 'text-red-900'
-											: 'text-red-600'} group-hover:translate-x-1 transition-transform font-black"
-										>Read More →</span
-									>
+									No editions live yet.
 								</div>
-							</a>
-						</article>
-					{/each}
-				</div>
-			{/if}
-		{/if}
-
-		<!-- Final Subscribe Section -->
-		<section
-			class="mt-24 mb-32 border-4 p-8 md:p-12 relative overflow-hidden {$themeStore ===
-			'dark'
-				? 'bg-[#1a1a1a] border-red-600/30 shadow-[0_0_50px_rgba(220,38,38,0.1)]'
-				: 'bg-white border-red-600'}"
-		>
-			<div
-				class="absolute top-0 right-0 w-32 h-32 bg-red-600 text-white flex items-center justify-center rotate-45 translate-x-12 -translate-y-12 font-black text-xl uppercase tracking-tighter shadow-xl"
-			>
-				Free
-			</div>
-
-			<div class="grid md:grid-cols-2 gap-12 items-center relative z-10">
-				<div>
-					<h2
-						class="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4 leading-none {$themeStore ===
-						'dark'
-							? 'text-white'
-							: 'text-black'}"
-					>
-						Join the <span class="bg-red-600 text-white px-2 italic"
-							>Revenue AI Circle</span
-						>
-					</h2>
-					<p
-						class="text-xl font-serif italic mb-6 {$themeStore === 'dark'
-							? 'text-gray-400'
-							: 'text-gray-700'}"
-					>
-						Get the weekly digest of AI strategies, revenue hacks, and
-						technology trends delivered straight to your desk.
-					</p>
-					<ul
-						class="space-y-3 font-sans font-bold uppercase text-xs tracking-widest text-gray-500"
-					>
-						<li class="flex items-center gap-2">
-							<span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> Exclusive
-							Case Studies
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> Early Access
-							to Tools
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> Zero Fluff,
-							Max Alpha
-						</li>
-					</ul>
-				</div>
-
-				<div
-					class="border-4 p-6 md:p-8
-                    {$themeStore === 'dark'
-						? 'bg-[#0f0f0f] border-red-600 shadow-[8px_8px_0px_0px_rgba(220,38,38,0.2)]'
-						: 'bg-[#f8f8f0] border-black shadow-[8px_8px_0px_0px_rgba(220,38,38,0.5)]'}"
-				>
-					{#if isSubscribed}
-						<div
-							in:fade
-							class="text-center py-12 px-4 shadow-[inset_0_0_20px_rgba(220,38,38,0.05)] border-2 border-dashed {$themeStore ===
-							'dark'
-								? 'border-red-900/30'
-								: 'border-red-600/30'}"
-						>
-							<div class="text-6xl mb-6 animate-bounce">📡</div>
-							<h3
-								class="text-3xl font-black uppercase mb-3 text-red-600 tracking-tighter"
-							>
-								Alpha Intel Locked
-							</h3>
-							<p
-								class="font-serif italic text-gray-500 text-xl leading-relaxed max-w-md mx-auto"
-							>
-								Secure synchronization active. Your desk will be updated as the
-								signal becomes available.
-							</p>
-							<div class="mt-8 flex justify-center gap-2">
-								{#each Array(3) as _}
-									<div class="w-2 h-2 bg-red-600 rotate-45 animate-pulse"></div>
-								{/each}
-							</div>
+							{/each}
 						</div>
-					{:else}
-						<form
-							method="POST"
-							action="/api/subscribe"
-							use:enhance={handleSubscribe}
-							class="space-y-4"
-						>
-							<div class="space-y-2">
-								<label
-									for="email"
-									class="block text-xs font-black uppercase tracking-widest text-red-600"
-									>Secure Line: Email</label
-								>
-								<input
-									id="email"
-									name="email"
-									type="email"
-									required
-									placeholder="COLONEL@SPIKED.AI"
-									class="w-full border-2 p-4 font-sans font-bold focus:outline-none focus:ring-4 focus:ring-red-600/40 transition-all text-lg
-                                    {$themeStore === 'dark'
-										? 'bg-[#1a1a1a] border-red-900/50 text-white'
-										: 'bg-white border-red-600 text-black'}"
-								/>
-							</div>
+					</div>
+				</section>
 
-							<div class="space-y-3">
-								<label
-									for="edition-select"
-									class="block text-xs font-black uppercase tracking-widest text-red-600"
-									>Select Intelligence Feeds</label
-								>
-								<div
-									id="edition-select"
-									class="grid grid-cols-1 sm:grid-cols-2 gap-3"
-								>
-									{#each data.newsletters.filter((nl) => nl.posts && nl.posts.length > 0) as nl}
-										<label
-											class="flex items-center gap-3 border-2 p-3 cursor-pointer group/label transition-colors has-[:checked]:bg-red-600 has-[:checked]:text-white
-                                            {$themeStore === 'dark'
-												? 'bg-[#1a1a1a] border-red-900/30 hover:bg-red-900/10'
-												: 'bg-white border-red-600/20 hover:bg-red-600/5'}"
-										>
-											<input
-												type="checkbox"
-												name="newsletterId"
-												value={nl._id}
-												class="peer hidden"
-											/>
-											<div
-												class="w-5 h-5 border-2 flex items-center justify-center transition-all
-                                                {$themeStore === 'dark'
-													? 'bg-[#0f0f0f] border-red-900/50 peer-checked:bg-white peer-checked:border-white'
-													: 'bg-white border-red-600 peer-checked:bg-white peer-checked:border-white'}"
+				{#each remainingGroups as group}
+					<div
+						class="grid lg:grid-cols-12 gap-10 pb-16 {$themeStore === 'dark'
+						? 'border-b border-zinc-800'
+						: 'border-b border-zinc-200'}"
+					>
+						{#if group[0]}
+							<article class="lg:col-span-8">
+								<a href="/blog/{group[0].slug}" class="group block">
+									<div class="grid lg:grid-cols-12 gap-8 items-center">
+										<div class="lg:col-span-7">
+											<p
+												class="text-[10px] uppercase tracking-[0.3em] text-red-500 font-semibold"
 											>
-												<div
-													class="w-2 h-2 scale-0 peer-checked:scale-100 transition-transform {$themeStore ===
-													'dark'
-														? 'bg-red-600'
-														: 'bg-red-600'}"
-												></div>
+												Spotlight
+											</p>
+											<h2
+												class="text-3xl sm:text-4xl lg:text-5xl font-semibold mt-4 leading-tight group-hover:text-red-500 transition-colors"
+											>
+												{group[0].title}
+											</h2>
+											<p
+												class="mt-4 text-base sm:text-lg leading-relaxed {$themeStore ===
+												'dark'
+													? 'text-zinc-400'
+													: 'text-zinc-600'}"
+											>
+												{group[0].summary || defaultSummary}
+											</p>
+											<ul class="mt-6 space-y-3">
+												{#each (group[0].points && group[0].points.length
+													? group[0].points
+													: defaultPoints
+												).slice(0, 3) as point}
+													<li class="flex items-start gap-3">
+														<span
+															class="mt-2 h-1.5 w-1.5 rounded-full bg-red-500"
+														></span>
+														<span
+															class="text-sm leading-relaxed {$themeStore ===
+															'dark'
+																? 'text-zinc-300'
+																: 'text-zinc-600'}"
+														>
+															{point}
+														</span>
+													</li>
+												{/each}
+											</ul>
+											<div
+												class="mt-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] {$themeStore ===
+												'dark'
+													? 'text-zinc-500'
+													: 'text-zinc-400'}"
+											>
+												<span>{group[0].author}</span>
+												<span>|</span>
+												<span
+													>{new Date(group[0].publishedDate).toLocaleDateString()}</span
+												>
 											</div>
-											<span
-												class="text-xs font-black uppercase tracking-tight sm:line-clamp-1"
-												>{nl.title}</span
+										</div>
+										<div class="lg:col-span-5">
+											<div
+												class="aspect-[4/3] rounded-2xl overflow-hidden border {$themeStore ===
+												'dark'
+													? 'border-zinc-800 bg-zinc-950'
+													: 'border-zinc-200 bg-zinc-100'}"
 											>
-										</label>
-									{:else}
-										<p class="text-xs text-gray-400 italic">
-											No active editions available.
-										</p>
-									{/each}
-								</div>
-							</div>
-
-							<button
-								type="submit"
-								disabled={isSubscribing}
-								class="w-full text-white py-5 font-black uppercase tracking-[0.3em] text-lg bg-red-600 hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-none border-2 border-red-600 relative overflow-hidden group/btn disabled:opacity-50"
-							>
-								<span class={isSubscribing ? "opacity-0" : "opacity-100"}>
-									Dispatch Intel
-								</span>
-								{#if isSubscribing}
-									<div
-										class="absolute inset-0 flex items-center justify-center bg-black/20"
-									>
-										<div class="flex gap-1">
-											<div
-												class="w-2 h-2 bg-white animate-bounce [animation-delay:-0.3s]"
-											></div>
-											<div
-												class="w-2 h-2 bg-white animate-bounce [animation-delay:-0.15s]"
-											></div>
-											<div class="w-2 h-2 bg-white animate-bounce"></div>
+												{#if group[0].coverImage}
+													<img
+														src={group[0].coverImage}
+														alt={group[0].title}
+														class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+													/>
+												{:else}
+													<div
+														class="w-full h-full flex items-center justify-center text-xs uppercase tracking-[0.3em] {$themeStore ===
+														'dark'
+															? 'text-zinc-600'
+															: 'text-zinc-500'}"
+													>
+														No image
+													</div>
+												{/if}
+											</div>
 										</div>
 									</div>
-								{/if}
-							</button>
+								</a>
+							</article>
+						{/if}
 
-							<p
-								class="text-[10px] text-red-600/50 text-center uppercase font-bold tracking-tighter mt-4"
-							>
-								NO SPAM. JUST SIGNAL. ALPHA GUARANTEED.
-							</p>
-						</form>
-					{/if}
+						<div class="lg:col-span-4 space-y-10">
+							{#each group.slice(1, 3) as post}
+								<article
+									class="border-b pb-8 {$themeStore === 'dark'
+									? 'border-zinc-800'
+									: 'border-zinc-200'} last:border-b-0 last:pb-0"
+								>
+									<a href="/blog/{post.slug}" class="group block">
+										<div class="grid grid-cols-12 gap-6 items-center">
+											<div class="col-span-7">
+												<h3
+													class="text-lg font-semibold leading-snug group-hover:text-red-500 transition-colors"
+												>
+													{post.title}
+												</h3>
+												<p
+													class="mt-2 text-sm leading-relaxed {$themeStore ===
+													'dark'
+														? 'text-zinc-400'
+														: 'text-zinc-600'}"
+												>
+													{post.summary || defaultSummary}
+												</p>
+												<ul class="mt-4 space-y-2">
+													{#each (post.points && post.points.length
+														? post.points
+														: defaultPoints
+													).slice(0, 2) as point}
+														<li class="flex items-start gap-2">
+															<span
+																class="mt-2 h-1.5 w-1.5 rounded-full bg-red-500"
+															></span>
+															<span
+																class="text-[12px] leading-relaxed {$themeStore ===
+																'dark'
+																	? 'text-zinc-300'
+																	: 'text-zinc-500'}"
+															>
+																{point}
+															</span>
+														</li>
+													{/each}
+												</ul>
+												<div
+													class="mt-4 text-[10px] uppercase tracking-[0.25em] {$themeStore ===
+													'dark'
+														? 'text-zinc-500'
+														: 'text-zinc-400'}"
+												>
+													{new Date(post.publishedDate).toLocaleDateString()}
+												</div>
+											</div>
+											<div class="col-span-5">
+												<div
+													class="aspect-[4/3] rounded-2xl overflow-hidden border {$themeStore ===
+													'dark'
+														? 'border-zinc-800 bg-zinc-900'
+														: 'border-zinc-200 bg-zinc-100'}"
+												>
+													{#if post.coverImage}
+														<img
+															src={post.coverImage}
+															alt={post.title}
+															class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+														/>
+													{:else}
+														<div
+															class="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-[0.3em] {$themeStore ===
+															'dark'
+																? 'text-zinc-600'
+																: 'text-zinc-500'}"
+														>
+															Image
+														</div>
+													{/if}
+												</div>
+											</div>
+										</div>
+									</a>
+								</article>
+							{/each}
+						</div>
+					</div>
+				{/each}
+			{/if}
+		</section>
+
+		<section class="mt-20">
+			<div
+				class="border-t pt-10 {$themeStore === 'dark'
+				? 'border-zinc-800'
+				: 'border-zinc-200'}"
+			>
+				<h2 class="text-xl sm:text-2xl font-semibold">Explore More</h2>
+				<p
+					class="mt-3 text-sm {$themeStore === 'dark'
+					? 'text-zinc-400'
+					: 'text-zinc-600'}"
+				>
+					Dive deeper into Spiked AI — product, features, and proof.
+				</p>
+				<div class="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+					<a
+						href="/features"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Features
+					</a>
+					<a
+						href="/customers"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Customers
+					</a>
+					<a
+						href="/resources"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Resources
+					</a>
+					<a
+						href="/pricing"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Pricing
+					</a>
+					<a
+						href="/about-us"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						About
+					</a>
+					<a
+						href="/contact-sales"
+						class="text-xs uppercase tracking-[0.25em] font-semibold py-3 border rounded-full text-center transition-colors {$themeStore ===
+						'dark'
+							? 'border-zinc-800 text-zinc-200 hover:border-red-500 hover:text-red-400'
+							: 'border-zinc-200 text-zinc-700 hover:border-red-500 hover:text-red-600'}"
+					>
+						Contact
+					</a>
 				</div>
 			</div>
-
-			<!-- Newspaper-style decorative dots -->
-			<div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-				{#each Array(5) as _}
-					<div class="w-1.5 h-1.5 rounded-full bg-red-600/30"></div>
-				{/each}
-			</div>
 		</section>
+
 	</div>
 </div>
 
@@ -658,19 +809,19 @@
 		transition: background-color 0.5s ease;
 	}
 
-	/* Override the body background to prevent flashes */
 	:global(html.dark body) {
-		background-color: #0f0f0f !important;
+		background-color: #000000 !important;
 	}
 	:global(html:not(.dark) body) {
-		background-color: #f8f8f0 !important;
+		background-color: #ffffff !important;
 	}
 
-	.line-clamp-3 {
+	.line-clamp-1 {
 		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		line-clamp: 3;
+		-webkit-line-clamp: 1;
+		line-clamp: 1;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
+
 </style>

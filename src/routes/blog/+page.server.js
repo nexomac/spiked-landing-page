@@ -28,6 +28,84 @@ function getBestExcerpt(data) {
     return 'Click to read the full story...';
 }
 
+function extractSummary(data) {
+    if (!data) return null;
+    const summaryField =
+        data.summary ||
+        data.Summary ||
+        data['trend-category'] ||
+        data['Trend Category'] ||
+        data['summary-text'] ||
+        data['Summary Text'];
+
+    if (summaryField && typeof summaryField === 'object' && summaryField.type === 'doc') {
+        const text = extractTextFromTiptap(summaryField).trim();
+        if (text) return text.slice(0, 240) + '...';
+    }
+
+    if (typeof summaryField === 'string' && summaryField.trim().length > 0) {
+        const cleaned = summaryField.trim();
+        return cleaned.length > 240 ? cleaned.slice(0, 240) + '...' : cleaned;
+    }
+
+    return null;
+}
+
+function extractPoints(data) {
+    if (!data) return null;
+
+    const candidateFields = [
+        'points',
+        'Points',
+        'points-of-interest',
+        'Points of Interest',
+        'pointsOfInterest',
+        'keyPoints',
+        'key-points',
+        'Key Points',
+        'bullets',
+        'bulletPoints',
+        'Bullet Points',
+        'highlights',
+        'Highlights',
+        'takeaways',
+        'Takeaways'
+    ];
+
+    for (const field of candidateFields) {
+        const val = data[field];
+        if (!val) continue;
+
+        if (Array.isArray(val)) {
+            const cleaned = val
+                .map(item => (typeof item === 'string' ? item.trim() : ''))
+                .filter(Boolean);
+            if (cleaned.length) return cleaned;
+        }
+
+        if (typeof val === 'string') {
+            const items = val
+                .split(/\r?\n|•|- /)
+                .map(item => item.trim())
+                .filter(Boolean);
+            if (items.length) return items;
+        }
+
+        if (val && typeof val === 'object' && val.type === 'doc') {
+            const text = extractTextFromTiptap(val).trim();
+            if (text.length > 20) {
+                const sentences = text
+                    .split(/(?<=[.!?])\s+/)
+                    .map(sentence => sentence.replace(/\s*\.+$/, '').trim())
+                    .filter(sentence => sentence.length > 12);
+                if (sentences.length) return sentences;
+            }
+        }
+    }
+
+    return null;
+}
+
 function getBestImage(data) {
     const fields = [
         'coverImage', 'Cover Image', 'featured-image', 'FeaturedImage', 'Featured Image',
@@ -71,6 +149,13 @@ export async function load() {
             }
         }
 
+        const summary =
+            extractSummary(p.data || {}) ||
+            (typeof p.summary === 'string' ? p.summary : null);
+        const points =
+            extractPoints(p.data || {}) ||
+            (Array.isArray(p.points) ? p.points : null);
+
         return {
             ...p,
             _id: p._id.toString(),
@@ -78,6 +163,8 @@ export async function load() {
             slug: p.slug || p.data?.slug || p.data?.Slug,
             coverImage,
             excerpt: excerpt || 'Read this article...',
+            summary,
+            points,
             author: p.author || p.data?.author || p.data?.Author || 'Editorial Staff',
             publishedDate: p.publishedDate || p.data?.publishedDate || p.data?.['Published Date'] || p.createdAt,
             newsletterId: p.newsletterId,

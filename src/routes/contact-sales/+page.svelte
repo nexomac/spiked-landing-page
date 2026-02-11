@@ -1,7 +1,4 @@
 <script>
-	import { onboardingStore } from "$lib/stores/onboarding.js";
-	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
-	import Footer from "$lib/components/Footer.svelte";
 	import { themeStore } from "$lib/stores/theme.js";
 	import { enhance } from "$app/forms";
 	import { fade, fly } from "svelte/transition";
@@ -532,8 +529,6 @@
 		</div>
 	</div>
 </section>
-
-<Footer />
 
 <style>
 	@keyframes float {

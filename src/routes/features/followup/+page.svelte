@@ -1,7 +1,7 @@
 <script>
-	import FeatureNav from '$lib/components/FeatureNav.svelte';
-	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import FollowupShowcase from '$lib/components/FollowupShowcase.svelte';
+	import FeatureNav from '$lib/components/features/FeatureNav.svelte';
+	import FeatureFooter from '$lib/components/features/FeatureFooter.svelte';
+	import FollowupShowcase from '$lib/components/features/FollowupShowcase.svelte';
 	import { Calendar, CheckCircle2, Clock, TrendingUp, FileText, Users, Star, ArrowRight, Video, Mic, Brain, Sparkles, MessageSquare, Target, Zap, Activity, Radio, Waves, Cpu, Network, Database, Shield, Lock, Eye, Scan, Play, ChevronRight, BarChart3, Globe, Layers, RefreshCw } from 'lucide-svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { fly, fade, scale, slide, blur } from 'svelte/transition';
@@ -272,10 +272,10 @@
 	<title>Follow-Up Meeting Preparation - SpikedAI</title>
 	<meta name="description" content="Never miss important follow-up details. Automated preparation for your next meetings with context-aware briefings." />
 </svelte:head>
+	<FeatureNav currentFeature="followup" />
 
 <div class="min-h-screen bg-black text-white overflow-hidden">
 	<!-- Feature Navigation -->
-	<FeatureNav currentFeature="followup" />
 	
 	<!-- Animated Background Layer -->
 	<div class="particle-bg fixed inset-0">
@@ -301,7 +301,7 @@
 	</div>
 	
 	<!-- Hero Section - Writer.com Style Split Layout -->
-	<section class="relative min-h-screen pt-32 pb-24 top-10">
+	<section class="relative min-h-screen pt-10 pb-24">
 		<!-- Background gradient -->
 		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
 		

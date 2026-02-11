@@ -1,7 +1,7 @@
 <script>
-	import FeatureNav from '$lib/components/FeatureNav.svelte';
-	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import AIAssistanceShowcase from '$lib/components/AIAssistanceShowcase.svelte';
+	import FeatureNav from '$lib/components/features/FeatureNav.svelte';
+	import FeatureFooter from '$lib/components/features/FeatureFooter.svelte';
+	import AIAssistanceShowcase from '$lib/components/features/AIAssistanceShowcase.svelte';
 	import { Sparkles, MessageSquare, Brain, FileText, Users, Calendar, ArrowRight } from 'lucide-svelte';
 	import { onboardingStore } from '$lib/stores/onboarding.js';
 	import { fly } from 'svelte/transition';
@@ -123,10 +123,9 @@
 	}
 </style>
 
+<FeatureNav currentFeature="ai-assistance" />
+
 <div class="min-h-screen bg-black text-white overflow-hidden">
-	<!-- Feature Navigation -->
-	<FeatureNav currentFeature="ai-assistance" />
-	
 	<!-- Animated Background Layer -->
 	<div class="particle-bg fixed inset-0">
 		<!-- Dynamic gradient orbs -->
@@ -151,7 +150,7 @@
 	</div>
 	
 	<!-- Hero Section - Writer.com Style Split Layout -->
-	<section class="relative min-h-screen pt-32 pb-24 top-10">
+	<section class="relative min-h-screen pt-10 pb-24">
 		<!-- Background gradient -->
 		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-black"></div>
 		

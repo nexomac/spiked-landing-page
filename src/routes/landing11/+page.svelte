@@ -22,14 +22,14 @@
 	} from "lucide-svelte";
 
 	// Components
-	import AIAssistanceShowcase from "$lib/components/AIAssistanceShowcase.svelte";
-	import NotetakerShowcase from "$lib/components/NotetakerShowcase.svelte";
-	import FollowupShowcase from "$lib/components/FollowupShowcase.svelte";
-	import SimulatorShowcase from "$lib/components/SimulatorShowcase.svelte";
-	import DevToolsShowcase from "$lib/components/DevToolsShowcase.svelte";
-	import CRMShowcase from "$lib/components/CRMShowcase.svelte";
-	import SentimentShowcase from "$lib/components/SentimentShowcase.svelte";
-	import CustomGoalsShowcase from "$lib/components/CustomGoalsShowcase.svelte";
+	import AIAssistanceShowcase from "$lib/components/features/AIAssistanceShowcase.svelte";
+	import NotetakerShowcase from "$lib/components/features/NotetakerShowcase.svelte";
+	import FollowupShowcase from "$lib/components/features/FollowupShowcase.svelte";
+	import SimulatorShowcase from "$lib/components/features/SimulatorShowcase.svelte";
+	import DevToolsShowcase from "$lib/components/features/DevToolsShowcase.svelte";
+	import CRMShowcase from "$lib/components/features/CRMShowcase.svelte";
+	import SentimentShowcase from "$lib/components/features/SentimentShowcase.svelte";
+	import CustomGoalsShowcase from "$lib/components/features/CustomGoalsShowcase.svelte";
 	import Footer from "$lib/components/Footer.svelte";
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 	import { innerWidth } from "svelte/reactivity/window";
@@ -1140,7 +1140,7 @@
 			</div>
 		</section>
 
-
+		<OnboardingFlow />
 	<Footer />
 	</main>
 </div>
@@ -1214,27 +1214,6 @@
 		to {
 			transform: translateX(-50%);
 		}
-	}
-	/* CTA Button */
-	.contextual-cta {
-		background: #ef4444;
-		color: var(--foreground);
-		border: 2px solid #ef4444;
-		transition: all 0.2s ease;
-	}
-
-	.contextual-cta:hover {
-		background: #dc2626;
-		border-color: #dc2626;
-	}
-
-	.cta-icon {
-		width: 2rem;
-		height: 2rem;
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 9999px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		transition: all 0.2s ease;
 	}
 
 	.interactive-scaler {

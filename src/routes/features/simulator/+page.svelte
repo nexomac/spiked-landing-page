@@ -1,7 +1,7 @@
 <script>
-	import FeatureNav from '$lib/components/FeatureNav.svelte';
-	import FeatureFooter from '$lib/components/FeatureFooter.svelte';
-	import SimulatorShowcase from '$lib/components/SimulatorShowcase.svelte';
+	import FeatureNav from '$lib/components/features/FeatureNav.svelte';
+	import FeatureFooter from '$lib/components/features/FeatureFooter.svelte';
+	import SimulatorShowcase from '$lib/components/features/SimulatorShowcase.svelte';
 	import { 
 		Users, TrendingUp, Target, Brain, Play, BarChart3, Shield, 
 		FileText, Activity, Bot, ArrowRight, Calendar, Trophy
@@ -124,7 +124,7 @@
 	<FeatureNav currentFeature="simulator" />
 	
 	<!-- Hero Section -->
-	<section class="relative pt-32 pb-20 overflow-hidden">
+	<section class="relative pt-10 pb-20 overflow-hidden">
 		<!-- Animated background orbs -->
 		<div class="absolute inset-0 overflow-hidden pointer-events-none">
 			<div class="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/20 rounded-full blur-3xl float"></div>

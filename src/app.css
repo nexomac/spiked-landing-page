@@ -181,8 +181,6 @@ body,
 
 	/* High-quality image rendering */
 	img {
-		image-rendering: -webkit-optimize-contrast;
-		image-rendering: crisp-edges;
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
 	}

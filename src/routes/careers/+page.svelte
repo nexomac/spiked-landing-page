@@ -10,7 +10,6 @@
 		Heart,
 		TrendingUp,
 	} from "lucide-svelte";
-	import Footer from "$lib/components/Footer.svelte";
 	import { themeStore } from "$lib/stores/theme.js";
 
 	const photo = (file) => `/Photos/${encodeURIComponent(file)}`;
@@ -155,7 +154,7 @@
 <section
 	class="relative pt-32 pb-20 px-6 overflow-hidden transition-colors duration-500 {$themeStore ===
 	'dark'
-		? 'bg-[#030712]'
+		? 'bg-[black]'
 		: 'bg-[#f8f8f0]'}"
 >
 	<div
@@ -230,7 +229,7 @@
 <!-- Benefits Section -->
 <section
 	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
-		? 'bg-[#030712]'
+		? 'bg-[black]'
 		: 'bg-[#f8f8f0]'}"
 >
 	<div class="max-w-7xl mx-auto">
@@ -293,7 +292,7 @@
 <!-- Open Positions Section -->
 <section
 	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
-		? 'bg-[#030712]'
+		? 'bg-[black]'
 		: 'bg-[#f8f8f0]'}"
 >
 	<div class="max-w-7xl mx-auto">
@@ -382,7 +381,7 @@
 <!-- Culture Section -->
 <section
 	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
-		? 'bg-[#030712]'
+		? 'bg-[black]'
 		: 'bg-[#f8f8f0]'} relative overflow-hidden"
 >
 	<div
@@ -586,7 +585,7 @@
 <!-- CTA Section -->
 <section
 	class="py-20 px-6 transition-colors duration-500 {$themeStore === 'dark'
-		? 'bg-[#030712]'
+		? 'bg-[black]'
 		: 'bg-[#f8f8f0]'} relative overflow-hidden"
 >
 	<div class="absolute inset-0">
@@ -635,8 +634,6 @@
 	</div>
 </section>
 
-<Footer />
-
 <!-- Role Details Modal -->
 {#if selectedRole}
 	<div
@@ -649,7 +646,7 @@
 	>
 		<div
 			class="{$themeStore === 'dark'
-				? 'bg-[#030712] border-zinc-800'
+				? 'bg-[black] border-zinc-800'
 				: 'bg-white border-zinc-200'} border rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
 			onclick={(e) => e.stopPropagation()}
 			onkeydown={(e) => e.stopPropagation()}

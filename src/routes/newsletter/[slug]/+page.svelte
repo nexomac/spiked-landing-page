@@ -52,7 +52,7 @@
                 </a>
             </nav>
             
-            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight transition-colors">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight transition-colors uppercase">
                 The <span class="text-red-600">Spiked</span>AI {data.newsletter.title}
             </h1>
             <p class="text-xl italic font-serif transition-colors
@@ -125,7 +125,6 @@
         </div>
      </div>
 </div>
-<Footer />
 
 <style>
     :global(body) {

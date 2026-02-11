@@ -1,7 +1,7 @@
 <script>
-	import FeatureNav from "$lib/components/FeatureNav.svelte";
-	import FeatureFooter from "$lib/components/FeatureFooter.svelte";
-	import CRMShowcase from "$lib/components/CRMShowcase.svelte";
+	import FeatureNav from "$lib/components/features/FeatureNav.svelte";
+	import FeatureFooter from "$lib/components/features/FeatureFooter.svelte";
+	import CRMShowcase from "$lib/components/features/CRMShowcase.svelte";
 	import {
 		BarChart3,
 		Activity,
@@ -35,7 +35,7 @@
 	<!-- Feature Navigation -->
 	<FeatureNav currentFeature="crm" />
 
-	<section class="relative min-h-screen pt-32 pb-24 overflow-hidden">
+	<section class="relative min-h-screen pt-10 pb-24 overflow-hidden">
 		<!-- Background -->
 		<div
 			class="absolute inset-0 bg-gradient-to-b from-background via-background to-background"

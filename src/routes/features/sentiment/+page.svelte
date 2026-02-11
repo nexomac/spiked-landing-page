@@ -1,7 +1,7 @@
 <script>
-	import FeatureNav from "$lib/components/FeatureNav.svelte";
-	import FeatureFooter from "$lib/components/FeatureFooter.svelte";
-	import SentimentShowcase from "$lib/components/SentimentShowcase.svelte";
+	import FeatureNav from "$lib/components/features/FeatureNav.svelte";
+	import FeatureFooter from "$lib/components/features/FeatureFooter.svelte";
+	import SentimentShowcase from "$lib/components/features/SentimentShowcase.svelte";
 	import {
 		Heart,
 		TrendingUp,
@@ -50,7 +50,7 @@
 	<FeatureNav currentFeature="sentiment" />
 
 	<!-- Hero Section - Writer.com Style -->
-	<section class="relative min-h-screen pt-32 pb-24 overflow-hidden">
+	<section class="relative min-h-screen pt-10 pb-24 overflow-hidden">
 		<div
 			class="absolute inset-0 bg-gradient-to-b from-background via-background to-background"
 		></div>

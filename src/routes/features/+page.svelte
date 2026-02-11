@@ -1,5 +1,5 @@
 <script>
-	import FeaturesShowcase from "$lib/components/FeaturesShowcase.svelte";
+	import FeaturesShowcase from "$lib/components/features/FeaturesShowcase.svelte";
 	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
 	import { onboardingStore } from "$lib/stores/onboarding.js";
 	import Footer from "$lib/components/Footer.svelte";

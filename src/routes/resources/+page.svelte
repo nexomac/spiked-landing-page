@@ -1,7 +1,6 @@
 <script>
-	/** @type {import('./$types').PageProps} */
-	let { data } = $props();
-	import Footer from "$lib/components/Footer.svelte";
+	import { ArrowRight, Play } from "lucide-svelte";
+	import { fade, fly } from "svelte/transition";
 
 	const events = [
 		{
@@ -25,462 +24,270 @@
 			tag: "Talks",
 			date: "July 2026",
 		},
-		{
-			title: "Tech Week",
-			link: "https://www.tech-week.com/",
-			description: "A week long celebration of technology and innovation.",
-			tag: "Festival",
-			date: "Aug 2026",
-		},
 	];
 
 	const videos = [
 		{
 			id: "BQcw_UIRSKU",
-			title:
-				"Anushka Salinas, Nanit | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Anushka Salinas, Nanit | Mixture of Experts",
 		},
 		{
 			id: "6J9AgLJ8CiY",
-			title:
-				"Ginniee Singh, SpikedAI | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Ginniee Singh, SpikedAI | Mixture of Experts",
 		},
 		{
 			id: "0PUsnvhTxi4",
-			title:
-				"Tim Piemonte, Tribeca Softech & Ankur Patel, Multimodal | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Tim Piemonte, Tribeca Softech & Ankur Patel",
 		},
 		{
 			id: "ZVidW_wUCwA",
-			title:
-				"Umesh Sachdev, Uniphore | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Umesh Sachdev, Uniphore | Mixture of Experts",
 		},
 		{
 			id: "2Q8XZfkYv9I",
-			title: "Sid Sheth, d-Matrix | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Sid Sheth, d-Matrix | Mixture of Experts",
 		},
 		{
 			id: "2pQhRDomSTw",
-			title:
-				"Aaron Katz, ClickHouse | theCUBE + NYSE Wired: Mixture of Experts",
-		},
-		{
-			id: "DWVtGMYcXfg",
-			title:
-				"Muddu Sudhakar, Salesforce | theCUBE + NYSE Wired: Mixture of Experts",
-		},
-		{
-			id: "3y_W7J214kQ",
-			title:
-				"Jim McNiel, TAE Technologies | theCUBE + NYSE Wired: Mixture of Experts",
-		},
-		{
-			id: "CmyrvW2m7Z8",
-			title: "Alex Rinke, Celonis | theCUBE + NYSE Wired: Mixture of Experts",
+			title: "Aaron Katz, ClickHouse | Mixture of Experts",
 		},
 	];
 
-	const featuredEvent = events[0];
-	const secondaryEvents = events.slice(1);
+	const topEvent = events[0];
 </script>
 
 <svelte:head>
-	<title>SpikedAI | Resources</title>
-	<meta
-		name="description"
-		content="Watch expert interviews and insights from industry leaders"
-	/>
+	<title>Resources | SpikedAI</title>
 </svelte:head>
 
-<div class="min-h-screen bg-[black] text-white resource-container pt-20">
-	<div class="resources-page">
-		<div class="container">
-			<div class="section-intro mb-12">
-				<h1 class="font-black tracking-tighter pb-20 text-white" style="font-size: clamp(6rem, 10vw, 11rem); line-height: 0.88; letter-spacing: -0.04em;">
-					SpikedAI <span class="text-red-600 block sm:inline">Resources</span>
+<div
+	class="min-h-screen bg-black text-white font-sans selection:bg-[#ef4444]/30"
+>
+	<!-- Hero -->
+	<section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div class="max-w-6xl">
+				<span
+					class="inline-block text-[#ef4444] text-xs font-bold uppercase tracking-[0.4em] mb-6"
+					>Learning Hub</span
+				>
+				<h1
+					class="text-[clamp(4rem,12vw,12rem)] font-black tracking-tighter leading-[0.82] mb-12"
+				>
+					SPIKEDAI<br />
+					<span class="text-[#ef4444]">RESOURCES</span>
 				</h1>
-				<p class="main-subtitle">
-
+				<p class="text-zinc-500 text-xl lg:text-2xl max-w-2xl leading-relaxed">
+					Watch expert interviews, register for upcoming summits, and master the
+					cognitive edge.
 				</p>
 			</div>
+		</div>
+	</section>
 
-			<!-- Featured / Events Section -->
-			<div class="section-block" id="events">
-				<h2 class="section-heading" style="font-size: clamp(3.75rem, 5vw, 5rem);">Featured Events</h2>
+	<!-- Featured Event (Large Card) -->
+	<section class="py-12">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<a
+				href={topEvent.link}
+				class="group block relative rounded-[3rem] overflow-hidden bg-zinc-900 border border-zinc-800 transition-all hover:border-[#ef4444]/50 shadow-2xl"
+			>
+				<div
+					class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10"
+				></div>
+				<!-- Mock BG Image -->
+				<img
+					src="https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?w=1600&q=80"
+					alt=""
+					class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+				/>
 
-				<div class="featured-grid">
-					<!-- Hero Event Card -->
-					<a
-						href={featuredEvent.link}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="hero-card"
+				<div
+					class="relative z-20 p-10 lg:p-20 flex flex-col items-start max-w-4xl"
+				>
+					<span
+						class="px-4 py-1.5 rounded-full bg-[#ef4444] text-white text-[10px] font-black uppercase tracking-widest mb-8"
+						>{topEvent.tag}</span
 					>
-						<div class="hero-content">
-							<div class="tag-badge">{featuredEvent.tag}</div>
-							<h3 class="hero-title">{featuredEvent.title}</h3>
-							<p class="hero-desc">{featuredEvent.description}</p>
-							<div class="hero-cta">
-								<span>Register Now</span>
-								<!-- Changed text to be more event-appropriate -->
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg
-								>
-							</div>
-						</div>
-						<div class="hero-bg-overlay"></div>
-					</a>
-
-					<!-- Secondary Events List -->
-					<div class="secondary-list">
-						{#each secondaryEvents as event}
-							<a
-								href={event.link}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="secondary-card"
-							>
-								<div class="secondary-content">
-									<h4 class="secondary-title">{event.title}</h4>
-									<div class="secondary-meta">
-										<span class="mini-tag">{event.tag}</span>
-										<span class="secondary-link-text">Learn more</span>
-									</div>
-								</div>
-							</a>
-						{/each}
+					<h2
+						class="text-4xl lg:text-7xl font-black mb-6 tracking-tighter leading-none"
+					>
+						{topEvent.title}
+					</h2>
+					<p class="text-zinc-300 text-lg lg:text-xl mb-10 leading-relaxed">
+						{topEvent.description}
+					</p>
+					<div
+						class="flex items-center gap-2 text-white font-black uppercase tracking-widest group-hover:gap-4 transition-all"
+					>
+						Register for the event <ArrowRight class="w-5 h-5" />
 					</div>
 				</div>
+			</a>
+		</div>
+	</section>
+
+	<!-- Events Feed -->
+	<section class="py-24">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div
+				class="flex items-baseline justify-between mb-16 border-b border-zinc-900 pb-8"
+			>
+				<h3 class="text-3xl font-black tracking-tight">Upcoming Summits</h3>
+				<span class="text-zinc-500 font-bold uppercase text-xs tracking-widest"
+					>2026 Calendar</span
+				>
 			</div>
-
-			<!-- Videos Section -->
-			<div class="section-block" id="videos">
-				<div class="section-divider"></div>
-				<h2 class="section-heading" style="font-size: clamp(3.75rem, 5vw, 5rem);">Latest resource and videos</h2>
-
-				<div class="videos-grid">
-					{#each videos as video}
-						<div class="video-card">
-							<div class="video-frame">
-								<iframe
-									src={`https://www.youtube.com/embed/${video.id}`}
-									title={video.title}
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									referrerpolicy="strict-origin-when-cross-origin"
-									allowfullscreen
-									loading="lazy"
-								></iframe>
-							</div>
-							<div class="video-info">
-								<span class="video-tag">Video</span>
-								<h3>{video.title}</h3>
-							</div>
+			<div class="grid lg:grid-cols-2 gap-8">
+				{#each events.slice(1) as event}
+					<a
+						href={event.link}
+						class="p-10 rounded-[2.5rem] bg-zinc-950/50 border border-zinc-900 flex justify-between items-center group hover:bg-zinc-900 transition-all"
+					>
+						<div>
+							<span
+								class="text-[#ef4444] text-[10px] font-black uppercase tracking-widest block mb-4"
+								>{event.date}</span
+							>
+							<h4 class="text-2xl font-black mb-2">{event.title}</h4>
+							<p class="text-zinc-500 text-sm font-medium">
+								{event.tag} — {event.description}
+							</p>
 						</div>
-					{/each}
-				</div>
+						<div
+							class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all"
+						>
+							<ArrowRight class="w-5 h-5" />
+						</div>
+					</a>
+				{/each}
 			</div>
 		</div>
-	</div>
-	<Footer />
+	</section>
+
+	<!-- Videos Grid -->
+	<section
+		class="py-24 lg:py-40 bg-zinc-50 text-zinc-900 rounded-t-[4rem] lg:rounded-t-[6rem]"
+		id="videos"
+	>
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div
+				class="flex flex-col lg:flex-row justify-between items-end gap-8 mb-20 lg:mb-32"
+			>
+				<div class="max-w-2xl">
+					<span
+						class="text-[#ef4444] text-xs font-bold uppercase tracking-[0.3em] mb-4 block"
+						>Video Insights</span
+					>
+					<h2
+						class="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9] mb-8"
+					>
+						MIXTURE OF EXPERTS.
+					</h2>
+					<p class="text-zinc-500 text-lg lg:text-xl leading-relaxed">
+						Industry leaders at the intersection of AI and Revenue share their
+						blueprints for the modern enterprise.
+					</p>
+				</div>
+				<div
+					class="flex items-center gap-4 text-zinc-400 font-bold uppercase text-xs tracking-widest"
+				>
+					<div class="w-4 h-4 rounded-full bg-[#ef4444] animate-pulse"></div>
+					Latest Interviews
+				</div>
+			</div>
+
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+				{#each videos as video}
+					<div class="group">
+						<div
+							class="relative aspect-video rounded-3xl overflow-hidden mb-8 shadow-2xl bg-black"
+						>
+							<iframe
+								src={`https://www.youtube.com/embed/${video.id}`}
+								title={video.title}
+								class="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity"
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen
+							></iframe>
+							<div
+								class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
+							>
+								<span
+									class="text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2"
+								>
+									<Play class="w-3 h-3 fill-current" /> Watch now
+								</span>
+							</div>
+						</div>
+						<h4
+							class="text-2xl font-black mb-4 group-hover:text-[#ef4444] transition-colors line-clamp-2"
+						>
+							{video.title}
+						</h4>
+						<div
+							class="flex items-center gap-4 text-zinc-400 text-xs font-bold uppercase tracking-widest"
+						>
+							<span>theCUBE</span>
+							<div class="w-1 h-1 rounded-full bg-zinc-300"></div>
+							<span>Video Resource</span>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="py-24 bg-zinc-50 border-t border-zinc-100 text-zinc-900">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<div
+				class="bg-black text-white rounded-[3rem] p-12 lg:p-24 flex flex-col lg:flex-row items-center justify-between gap-12 relative overflow-hidden"
+			>
+				<div class="relative z-10 max-w-2xl text-center lg:text-left">
+					<h2
+						class="text-4xl lg:text-6xl font-black tracking-tighter leading-tight mb-8"
+					>
+						NEVER MISS AN<br />INSIGHT.
+					</h2>
+					<p class="text-zinc-400 text-lg lg:text-xl leading-relaxed">
+						Join 20k+ sales leaders who receive our weekly mixture of experts
+						direct to their inbox.
+					</p>
+				</div>
+				<div class="relative z-10 w-full lg:w-auto">
+					<form class="flex flex-col sm:flex-row gap-4">
+						<input
+							type="email"
+							placeholder="Email Address"
+							class="px-10 py-5 rounded-full bg-zinc-900 border border-zinc-800 focus:border-[#ef4444] text-white outline-none min-w-[300px] font-bold"
+						/>
+						<button
+							class="px-10 py-5 bg-[#ef4444] rounded-full font-black text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+							>Subscribe</button
+						>
+					</form>
+				</div>
+				<!-- Atmosphere -->
+				<div
+					class="absolute top-0 right-0 w-96 h-96 bg-[#ef4444]/10 rounded-full blur-[100px] -z-0 translate-x-1/2 -translate-y-1/2"
+				></div>
+			</div>
+		</div>
+	</section>
 </div>
 
-
 <style>
-	.resource-container {
-		min-height: 100vh;
-		background: #000;
-		font-family: "Inter", sans-serif;
+	:global(body) {
+		background: black;
 	}
 
-	.resources-page {
-		padding: 5rem 0 10rem;
-	}
-
-	.container {
-		max-width: 100%;
-		margin: 0 auto;
-		padding: 0 4rem; /* Wide padding for full-width feel */
-	}
-
-	/* Intro Section */
-	.section-intro {
-		text-align: center;
-		margin-bottom: 8rem;
-	}
-
-	.main-subtitle {
-		font-size: 2rem;
-		color: #888;
-		max-width: 1200px;
-		margin: 0 auto 4rem;
-		line-height: 1.4;
-	}
-
-	/* Section Headers */
-	.section-block {
-		margin-bottom: 10rem;
-	}
-
-	.section-heading {
-		font-size: 3rem;
-		font-weight: 400;
-		color: #ddd;
-		margin-bottom: 4rem;
-		padding-left: 1.5rem;
-		border-left: 6px solid #00cba0;
-		line-height: 1.1;
-	}
-
-	.section-divider {
-		height: 1px;
-		background: #222;
-		margin-bottom: 5rem;
-	}
-
-	/* Featured Layout */
-	.featured-grid {
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		gap: 3rem; /* Larger gap */
-	}
-
-	.hero-card {
-		position: relative;
-		background: linear-gradient(135deg, #1a2a24 0%, #0d1210 100%);
-		border-radius: 16px;
-		padding: 6rem; /* Huge padding */
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		min-height: 700px; /* Taller hero */
-		text-decoration: none;
+	.line-clamp-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		-webkit-box-orient: vertical;
 		overflow: hidden;
-		border: 1px solid #222;
-		transition:
-			transform 0.3s ease,
-			border-color 0.3s ease;
-	}
-
-	.hero-card:hover {
-		transform: translateY(-4px);
-		border-color: #333;
-	}
-
-	.hero-bg-overlay {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		background: radial-gradient(
-			circle at top right,
-			rgba(0, 203, 160, 0.1),
-			transparent 60%
-		);
-		pointer-events: none;
-	}
-
-	.hero-content {
-		position: relative;
-		z-index: 10;
-		max-width: 90%;
-	}
-
-	.tag-badge {
-		display: inline-block;
-		background: #fff;
-		color: #000;
-		font-size: 1.25rem;
-		font-weight: 700;
-		padding: 0.5rem 1rem;
-		border-radius: 6px;
-		margin-bottom: 2rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.hero-title {
-		font-size: 5rem; /* Massive title */
-		font-weight: 700;
-		color: #fff;
-		margin-bottom: 2rem;
-		line-height: 1.05;
-	}
-
-	.hero-desc {
-		font-size: 1.75rem;
-		color: #aaa;
-		margin-bottom: 3rem;
-		line-height: 1.5;
-		max-width: 800px;
-	}
-
-	.hero-cta {
-		display: inline-flex;
-		align-items: center;
-		gap: 1rem;
-		background: #334;
-		color: #fff;
-		padding: 1rem 2rem; /* Larger button */
-		border-radius: 8px;
-		font-size: 1.25rem;
-		font-weight: 600;
-	}
-
-	.hero-cta svg {
-		width: 24px;
-		height: 24px;
-	}
-
-	/* Secondary List */
-	.secondary-list {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
-
-	.secondary-card {
-		background: #111;
-		border: 1px solid #222;
-		padding: 3rem; /* Larger padding */
-		border-radius: 16px;
-		text-decoration: none;
-		flex: 1;
-		display: flex;
-		align-items: center;
-		transition: background 0.2s ease;
-	}
-
-	.secondary-card:hover {
-		background: #161616;
-	}
-
-	.secondary-content {
-		width: 100%;
-	}
-
-	.secondary-title {
-		font-size: 2rem; /* larger secondary titles */
-		font-weight: 600;
-		color: #fff;
-		margin-bottom: 1rem;
-		line-height: 1.2;
-	}
-
-	.secondary-meta {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 1rem;
-	}
-
-	.mini-tag {
-		background: rgba(255, 255, 255, 0.1);
-		color: #ccc;
-		font-size: 1rem;
-		padding: 0.25rem 0.75rem;
-		border-radius: 4px;
-	}
-
-	.secondary-link-text {
-		color: #666;
-		font-size: 1.125rem;
-	}
-
-	/* Videos Grid (Resource Layout) */
-	.videos-grid {
-		display: grid;
-		grid-template-columns: repeat(
-			auto-fill,
-			minmax(500px, 1fr)
-		); /* Wider columns */
-		gap: 3rem;
-	}
-
-	.video-card {
-		background: transparent;
-	}
-
-	.video-frame {
-		position: relative;
-		width: 100%;
-		padding-top: 56.25%;
-		overflow: hidden;
-		border-radius: 12px;
-		background: #111;
-		margin-bottom: 1.5rem;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-	}
-
-	.video-card iframe {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-	}
-
-	.video-info {
-		padding-right: 1rem;
-	}
-
-	.video-tag {
-		display: inline-block;
-		font-size: 0.9rem;
-		color: #fff;
-		background: #3b82f6;
-		padding: 0.3rem 0.8rem;
-		border-radius: 4px;
-		margin-bottom: 0.75rem;
-		font-weight: 600;
-	}
-
-	.video-card h3 {
-		font-size: 1.5rem;
-		font-weight: 600;
-		color: #eee;
-		line-height: 1.3;
-	}
-
-	@media (max-width: 1200px) {
-		.featured-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.hero-card {
-			min-height: auto;
-			padding: 4rem;
-		}
-
-		.videos-grid {
-			grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-		}
-	}
-
-	@media (max-width: 768px) {
-		.container {
-			padding: 0 1.5rem;
-		}
-
-		.hero-title {
-			font-size: 3rem;
-		}
-
-		.section-heading {
-			font-size: 2rem;
-		}
-
-		.videos-grid {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

@@ -20,7 +20,7 @@
 
 {#if $navigating}
 	<!-- Top Progress Bar with Glow -->
-	<div class="fixed top-0 left-0 w-full h-1 z-[9999] pointer-events-none">
+	<div class="sticky top-0 left-0 w-full h-1 z-[9999] pointer-events-none">
 		<div
 			class="h-full bg-primary shadow-[0_0_10px_#ef1820,0_0_20px_#ef1820] animate-progress transition-all duration-300"
 		></div>

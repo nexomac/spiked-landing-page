@@ -150,7 +150,7 @@
 </script>
 
 <footer
-	class={`py-24 border-t relative overflow-hidden rounded-t-[4rem] sm:rounded-t-[6rem] transition-colors duration-500 ${isLight ? "bg-zinc-50 border-zinc-200 text-zinc-900" : "bg-[#030912] border-zinc-900 text-zinc-100"}`}
+	class={`py-24 border-t relative overflow-hidden transition-colors duration-500 ${isLight ? "bg-zinc-50 border-zinc-200 text-zinc-900" : "bg-[#030912] border-zinc-900 text-zinc-100"}`}
 >
 	<div class="max-w-[1900px] mx-auto px-6 sm:px-12 relative z-10">
 		<div class="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
@@ -165,7 +165,7 @@
 							class={`relative p-3 rounded-2xl border transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-2xl ${isLight ? "bg-white border-zinc-200 group-hover:border-red-600" : "bg-zinc-900 border-zinc-800 group-hover:border-red-600"}`}
 						>
 							<img
-								src="/Spiked.ai-white-logo-icon-only.png"
+								src="/icon white.png"
 								alt="SpikedAI Logo"
 								class="h-8 w-8 object-contain"
 							/>

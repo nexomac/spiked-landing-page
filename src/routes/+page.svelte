@@ -1,1281 +1,1758 @@
 <script>
 	import { onMount } from "svelte";
 	import { fade, fly, slide } from "svelte/transition";
-	import { themeStore } from "$lib/stores/theme.js";
 	import {
-		Users,
-		ArrowRight,
-		Sparkles,
-		MessageSquare,
-		CheckCircle2,
-		Brain,
-		Target,
-		FileText,
-		TrendingUp,
-		Zap,
-		Calendar,
-		GitBranch,
-		BarChart3,
-		Heart,
-		Settings,
-		Activity,
+		ChevronRight,
+		Search,
+		Globe,
+		User,
+		Menu,
+		X,
+		ChevronDown,
+		Play,
 	} from "lucide-svelte";
 
-	// Components
-	import AIAssistanceShowcase from "$lib/components/AIAssistanceShowcase.svelte";
-	import NotetakerShowcase from "$lib/components/NotetakerShowcase.svelte";
-	import FollowupShowcase from "$lib/components/FollowupShowcase.svelte";
-	import SimulatorShowcase from "$lib/components/SimulatorShowcase.svelte";
-	import DevToolsShowcase from "$lib/components/DevToolsShowcase.svelte";
-	import CRMShowcase from "$lib/components/CRMShowcase.svelte";
-	import SentimentShowcase from "$lib/components/SentimentShowcase.svelte";
-	import CustomGoalsShowcase from "$lib/components/CustomGoalsShowcase.svelte";
-	import Footer from "$lib/components/Footer.svelte";
-	import OnboardingFlow from "$lib/components/OnboardingFlow.svelte";
-	import { innerWidth } from "svelte/reactivity/window";
-
 	// State
-	let scrollY = $state(0);
-	let mouseX = $state(0);
-	let mouseY = $state(0);
-	let isPaused = $state(false);
-	let isTransitioning = $state(false);
-	let currentShowcaseIndex = $state(0);
-	let activeTab = $state("simulator");
-	let showcaseProgress = $state(0);
-	const SHOWCASE_INTERVAL = 8000; // 8 seconds for slower, more obvious scroll
-
-	let visibleSections = $state({
-		hero: false,
-		products: false,
-		showcase: false,
-		testimonials: false,
-		cta: false,
-		quote: true,
-	});
-
-	const showcases = [
+	let scrolled = $state(false);
+	let currentSloganIndex = $state(0);
+	const slogans = [
 		{
-			id: "ai-assistance",
-			name: "AI Assistance",
-			label: "Contextual Intelligence",
-			title: "Real-time AI answers",
-			subtitle: "from your knowledge base",
-			icon: Sparkles,
-			link: "/features/ai-assistance",
-			features: [
+			type: "slogan",
+			text: "Sell Like a CEO",
+			sponsors: [
 				{
-					icon: Brain,
-					title: "Instant answers during calls",
-					description:
-						"Get contextual responses from your sales docs in real-time",
+					label: "Member of",
+					src: "/landing/nvidiainception.png",
+					alt: "NVIDIA",
 				},
 				{
-					icon: MessageSquare,
-					title: "Powered by your knowledge base",
-					description:
-						"AI trained on your specific sales and solutions documentation",
-					highlight: true,
-				},
-				{
-					icon: FileText,
-					title: "Never miss a detail",
-					description:
-						"Handle objections and technical questions with confidence",
+					label: "Powered by",
+					src: "/landing/googlecloud.png",
+					alt: "Partner 2",
 				},
 			],
 		},
 		{
-			id: "notetaker",
-			name: "Smart Notetaker",
-			label: "Conversation Capture",
-			title: "Capture every detail",
-			subtitle: "transcribe and summarize",
-			icon: MessageSquare,
-			link: "/features/notetaker",
-			features: [
-				{
-					icon: FileText,
-					title: "Smart transcription",
-					description: "AI-powered transcription with speaker identification",
-				},
-				{
-					icon: Brain,
-					title: "Intelligent summaries",
-					description: "Auto-generate meeting summaries and action items",
-					highlight: true,
-				},
-				{
-					icon: Zap,
-					title: "Take automatic actions",
-					description: "Send follow-ups, sync to CRM, track stakeholders",
-				},
-			],
-		},
-		{
-			id: "followup",
-			name: "Follow-Up Planner",
-			label: "Strategic Preparation",
-			title: "Never walk in cold",
-			subtitle: "Auto-compile preparation docs",
-			icon: Calendar,
-			link: "/features/followup",
-			features: [
-				{
-					icon: FileText,
-					title: "Smart Preparation",
-					description:
-						"Automatically compile everything you need before every meeting",
-				},
-				{
-					icon: Brain,
-					title: "Context Recall",
-					description:
-						"Instantly recall every past conversation, commitment, and detail",
-					highlight: true,
-				},
-				{
-					icon: CheckCircle2,
-					title: "Action Tracking",
-					description:
-						"Track commitments automatically and get reminded before follow-ups",
-				},
-			],
-		},
-		{
-			id: "simulator",
-			name: "Call Simulator",
-			label: "Performance Coaching",
-			title: "Master the pitch",
-			subtitle: "Practice with AI prospects",
-			icon: Users,
-			link: "/features/simulator",
-			features: [
-				{
-					icon: Users,
-					title: "Realistic scenarios",
-					description:
-						"Practice with AI-powered prospects in various situations",
-				},
-				{
-					icon: Target,
-					title: "Practice Every Scenario",
-					description: "Master discovery, demos, objections, and closing",
-					highlight: true,
-				},
-				{
-					icon: TrendingUp,
-					title: "Live coaching feedback",
-					description: "Get real-time insights and improvement suggestions",
-				},
-			],
-		},
-		{
-			id: "dev-tools",
-			name: "Dev Tools",
-			label: "Developer Tools",
-			title: "Seamlessly connect sales",
-			subtitle: "with development workflow",
-			icon: GitBranch,
-			link: "/features/dev-tools",
-			features: [
-				{
-					icon: GitBranch,
-					title: "Jira & Asana Integration",
-					description: "Sync sales conversations with development tickets",
-				},
-				{
-					icon: Activity,
-					title: "Automated workflows",
-					description: "Create tickets and track progress automatically",
-					highlight: true,
-				},
-				{
-					icon: Settings,
-					title: "Custom integrations",
-					description: "Connect with your existing dev tools and workflows",
-				},
-			],
-		},
-		{
-			id: "crm",
-			name: "CRM Integration",
-			label: "CRM Integration",
-			title: "Keep your CRM updated",
-			subtitle: "automatically in real-time",
-			icon: BarChart3,
-			link: "/features/crm",
-			features: [
-				{
-					icon: BarChart3,
-					title: "Salesforce & HubSpot",
-					description: "Seamless integration with major CRM platforms",
-				},
-				{
-					icon: Zap,
-					title: "Auto-sync everything",
-					description: "Contacts, deals, and activities updated automatically",
-					highlight: true,
-				},
-				{
-					icon: TrendingUp,
-					title: "Real-time updates",
-					description: "Never miss a beat with instant CRM synchronization",
-				},
-			],
-		},
-		{
-			id: "sentiment",
-			name: "Sentiment Analysis",
-			label: "Sentiment Analysis",
-			title: "Understand customer emotions",
-			subtitle: "in real-time during calls",
-			icon: Heart,
-			link: "/features/sentiment",
-			features: [
-				{
-					icon: Heart,
-					title: "Real-time sentiment",
-					description: "Track emotional tone and engagement throughout calls",
-				},
-				{
-					icon: TrendingUp,
-					title: "Buying signals",
-					description:
-						"Identify positive signals and buying intent automatically",
-					highlight: true,
-				},
-				{
-					icon: Activity,
-					title: "Sentiment timeline",
-					description: "Visualize sentiment changes over the conversation",
-				},
-			],
-		},
-		{
-			id: "custom-goals",
-			name: "Custom Goals",
-			label: "Custom Goals",
-			title: "Track what matters",
-			subtitle: "to your business",
-			icon: Target,
-			link: "/features/custom-goals",
-			features: [
-				{
-					icon: Target,
-					title: "Custom metrics",
-					description: "Define and track goals specific to your sales process",
-				},
-				{
-					icon: Settings,
-					title: "Flexible configuration",
-					description: "Set up goals that align with your business objectives",
-					highlight: true,
-				},
-				{
-					icon: TrendingUp,
-					title: "Progress tracking",
-					description: "Monitor progress toward your custom goals in real-time",
-				},
-			],
+			type: "quote",
+			text: "AI that respects judgment, because revenue decisions are human decisions.",
+			author: "Avi Sahi",
+			role: "Co-Founder & CEO",
 		},
 	];
 
-	const testimonials = [
+	const strategicTabs = [
 		{
-			quote:
-				"The real-time knowledge agent gives me instant answers during calls. No more fumbling.",
-			author: "Alex Rivera",
-			role: "Senior Sales Engineer",
-			metric: "5x",
-			metricLabel: "Faster Responses",
-		},
-		{
-			quote:
-				"Call simulator helped our team practice objection handling. We're closing more deals.",
-			author: "Sarah Thompson",
-			role: "Sales Director",
-			metric: "40%",
-			metricLabel: "More Deals",
-		},
-		{
-			quote:
-				"Automatic FOLLOW-UP & PLANNING saves hours every week. CRM integration means zero manual work.",
-			author: "Michael Chen",
-			role: "Account Executive",
-			metric: "15hrs",
-			metricLabel: "Saved Weekly",
-		},
-		{
-			quote:
-				"The insight engine identified budget issues early. We stopped wasting time on dead deals.",
-			author: "Jessica Lee",
-			role: "VP of Sales",
-			metric: "25%",
-			metricLabel: "Efficiency",
-		},
-	];
-
-	const impactItems = [
-		{
-			id: "01",
+			id: "message-01",
+			label: "Cognitive Edge",
+			category: "Cognitive Edge",
 			title: "Replaces cognitive overload with amplified cognitive ability",
-			description: "For every rep, before, during, and after the conversation.",
-			image: "/visualizations/1.png",
-			imageAlt: "Signal consolidation into a single focused result",
-			darkBg: "bg-[#0A1A12]",
-			darkBorder: "border-green-900/20",
-			lightBg: "bg-[#F2FBF6]",
+			description:
+				"Signal consolidation into a single focused result. For every rep, before, during, and after the conversation.",
+			cta: "Learn More",
+			ctaLink: "/features/ai-assistance",
+			image: "/landing/cognitiveedge.webp",
+			dark: true,
 		},
 		{
-			id: "02",
+			id: "message-02",
+			label: "Singular Rep",
+			category: "Singular Rep",
 			title: "Rise of the Singular Rep",
 			description:
-				"Fewer teams required, sharper execution, tighter accountability.",
-			image: "/visualizations/2.png",
-			imageAlt: "From crowded effort to one augmented rep",
-			darkBg: "bg-[#1A1A0A]",
-			darkBorder: "border-yellow-900/20",
-			lightBg: "bg-[#FEFBF2]",
+				"From crowded effort to one augmented rep. Fewer teams required, sharper execution, tighter accountability.",
+			cta: "Learn More",
+			ctaLink: "/features/ai-assistance",
+			image: "/landing/singularrep.jpeg",
+			dark: true,
 		},
 		{
-			id: "03",
+			id: "message-03",
+			label: "One-Shot Selling",
+			category: "One-Shot Selling",
 			title: "One-shot selling",
-			description: "Confidence and clarity at the level of a CEO.",
-			image: "/visualizations/3.png",
-			imageAlt: "Checklist condensed into one clean result",
-			darkBg: "bg-[#1A0A0A]",
-			darkBorder: "border-red-900/20",
-			lightBg: "bg-[#FFF2F2]",
+			description:
+				"Checklist condensed into one clean result. Confidence and clarity at the level of a CEO.",
+			cta: "Learn More",
+			ctaLink: "/features/simulator",
+			image: "/landing/oneshotselling.png",
+			dark: true,
 		},
 		{
-			id: "04",
+			id: "message-04",
+			label: "Unified Actions",
+			category: "Unified Actions",
 			title: "Unified customer actions",
-			description: "Every motion aligned, every outcome intentional.",
-			image: "/visualizations/4.png",
-			imageAlt: "Multiple systems merged into one unified stream",
-			darkBg: "bg-[#0A0F1A]",
-			darkBorder: "border-blue-900/20",
-			lightBg: "bg-[#F2F6FF]",
+			description:
+				"Multiple systems merged into one unified stream. Every motion aligned, every outcome intentional.",
+			cta: "Learn More",
+			ctaLink: "/features/crm",
+			image: "/landing/unifiedactions.png",
+			dark: true,
+		},
+		{
+			id: "enterprise",
+			label: "Enterprise",
+			category: "Scale & Security",
+			title: "Enterprise-Grade Sales Intelligence",
+			description:
+				"Built for scale with enterprise security, compliance, and dedicated support. Deploy across your entire revenue organization.",
+			cta: "Contact Sales",
+			ctaLink: "/contact-sales",
+			image: "/landing/enterpriseselling.png",
+			dark: true,
 		},
 	];
 
+	const productTabs = [
+		{
+			id: "ai-platform",
+			label: "AI Platform",
+			category: "Cognitive Intelligence",
+			title: "AI to Supercharge Sales Productivity and Close More Deals",
+			description:
+				"Real-time conversational intelligence powered by advanced AI. Transform every sales conversation with instant insights and guidance.",
+			cta: "Learn More",
+			ctaLink: "/features/ai-assistance",
+			image: "/landing/aiassistance.png",
+			dark: true,
+		},
+		{
+			id: "knowledge-agent",
+			label: "Knowledge Agent",
+			category: "Real-Time Intelligence",
+			title: "Instant Answers from Your Knowledge Base",
+			description:
+				"Get AI-powered responses from your sales docs in real-time during customer calls. Never fumble for information again.",
+			cta: "Explore Knowledge Agent",
+			ctaLink: "/features/ai-assistance",
+			image: "/landing/knowledgeagent.png",
+			dark: true,
+		},
+		{
+			id: "call-simulator",
+			label: "Call Simulator",
+			category: "Training & Practice",
+			title: "Master Your Pitch with AI-Powered Practice",
+			description:
+				"Practice with realistic AI prospects. Build confidence in discovery, demos, objection handling, and closing techniques.",
+			cta: "Try Simulator",
+			ctaLink: "/features/simulator",
+			image: "/landing/callsimulator.png",
+			dark: true,
+		},
+		{
+			id: "analytics",
+			label: "Analytics",
+			category: "Performance Insights",
+			title: "Advanced Revenue Analytics and Deal Intelligence",
+			description:
+				"AI-powered analytics to predict deal outcomes, track sentiment, and gain complete visibility into your pipeline health.",
+			cta: "Discover Analytics",
+			ctaLink: "/features/sentiment",
+			image: "/landing/analytics.png",
+			dark: true,
+		},
+		{
+			id: "integrations",
+			label: "Integrations",
+			category: "Seamless Workflow",
+			title: "Native CRM and Tool Integrations",
+			description:
+				"Connect with Salesforce, HubSpot, and your entire tech stack. Automatic sync means zero manual data entry.",
+			cta: "View Integrations",
+			ctaLink: "/features/crm",
+			image: "/landing/integrations.png",
+			dark: true,
+		},
+	];
+
+	let activeHeroTab = $state("message-01");
+	let activeProductTab = $state("ai-platform");
+	let openDropdown = $state(null);
+	let mobileMenuOpen = $state(false);
+
+	const aiFeatures = [
+		{
+			tag: "Agentic AI | Platform",
+			title: "Real-Time Knowledge Agent",
+			description:
+				"AI-powered document intelligence helps sales teams access the right information at the right moment.",
+			image:
+				"https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&q=80",
+			link: "/features/ai-assistance",
+		},
+		{
+			tag: "Agentic AI | Feature",
+			title: "Intelligent Call Coaching",
+			description:
+				"Get real-time guidance during live customer conversations with contextual suggestions.",
+			image:
+				"https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
+			link: "/features/simulator",
+		},
+		{
+			tag: "Analytics | Dashboard",
+			title: "Sentiment Analysis Pipeline",
+			description:
+				"Understand customer emotions and buying signals in real-time with AI-powered analysis.",
+			image:
+				"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+			link: "/features/sentiment",
+		},
+	];
+
+	const simulationFeatures = [
+		{
+			tag: "Simulation | Product",
+			title: "AI Call Simulator Pro",
+			description:
+				"Practice with realistic AI prospects. Master discovery, demos, objections, and closing.",
+			image:
+				"https://images.unsplash.com/photo-1573164713988-8665fc963095?w=1200&q=80",
+			link: "/features/simulator",
+		},
+		{
+			tag: "Simulation | Training",
+			title: "Custom Scenario Builder",
+			description:
+				"Create training scenarios based on your real deals and customer personas.",
+			image:
+				"https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80",
+			link: "/features/simulator",
+		},
+	];
+
+	const gamingFeatures = [
+		{
+			tag: "CRM | Integration",
+			title: "Salesforce & HubSpot Native Sync",
+			description:
+				"Bi-directional sync with automatic field mapping. Zero manual data entry required.",
+			image:
+				"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+			link: "/features/crm",
+		},
+		{
+			tag: "Automation | Feature",
+			title: "Smart Follow-Up Engine",
+			description:
+				"Never miss a follow-up. AI automatically schedules and drafts personalized outreach.",
+			image:
+				"https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80",
+			link: "/features/followup",
+		},
+	];
+
+	let currentSlide = $state({ ai: 0, sim: 0, gaming: 0 });
+
+	function nextSlide(section) {
+		const max =
+			section === "ai"
+				? aiFeatures.length - 1
+				: section === "sim"
+					? simulationFeatures.length - 1
+					: gamingFeatures.length - 1;
+		currentSlide[section] =
+			currentSlide[section] >= max ? 0 : currentSlide[section] + 1;
+	}
+
+	function prevSlide(section) {
+		const max =
+			section === "ai"
+				? aiFeatures.length - 1
+				: section === "sim"
+					? simulationFeatures.length - 1
+					: gamingFeatures.length - 1;
+		currentSlide[section] =
+			currentSlide[section] <= 0 ? max : currentSlide[section] - 1;
+	}
+
+	let dropdownTimeout = null;
+
 	onMount(() => {
-		themeStore.init();
-		const handleScroll = () => (scrollY = window.scrollY);
-		const handleMouseMove = (e) => {
-			mouseX = e.clientX;
-			mouseY = e.clientY;
+		const handleScroll = () => {
+			scrolled = window.scrollY > 10;
 		};
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						visibleSections[entry.target.dataset.section] = true;
-					}
-				});
-			},
-			{ threshold: 0.1 },
-		);
-
-		document
-			.querySelectorAll("[data-section]")
-			.forEach((el) => observer.observe(el));
 		window.addEventListener("scroll", handleScroll);
-		window.addEventListener("mousemove", handleMouseMove);
-
-		visibleSections.hero = true;
-
-		let lastTime = Date.now();
-		let showcaseInterval = setInterval(() => {
-			if (!isPaused && !isTransitioning) {
-				const now = Date.now();
-				const delta = now - lastTime;
-				lastTime = now;
-
-				showcaseProgress += (delta / SHOWCASE_INTERVAL) * 100;
-
-				if (showcaseProgress >= 100) {
-					showcaseProgress = 0;
-					if (innerWidth.current >= 1024) {
-						goToNextShowcase();
-					}
-				}
-			} else {
-				lastTime = Date.now();
-			}
-		}, 50);
 
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
-			window.removeEventListener("mousemove", handleMouseMove);
-			observer.disconnect();
-			clearInterval(showcaseInterval);
+			if (dropdownTimeout) clearTimeout(dropdownTimeout);
 		};
 	});
 
-	function goToNextShowcase() {
-		if (isTransitioning) return;
-		isTransitioning = true;
-		showcaseProgress = 0; // Reset progress on manual click
-		// Reduced delay to feel snappier
-		setTimeout(() => {
-			currentShowcaseIndex = (currentShowcaseIndex + 1) % showcases.length;
-			isTransitioning = false;
+	function handleMouseEnter(name) {
+		if (dropdownTimeout) clearTimeout(dropdownTimeout);
+		openDropdown = name;
+	}
+
+	function handleMouseLeave() {
+		dropdownTimeout = setTimeout(() => {
+			openDropdown = null;
 		}, 150);
 	}
 
-	function selectShowcase(index) {
-		if (currentShowcaseIndex === index || isTransitioning) return;
-		isTransitioning = true;
-		isPaused = true;
-		showcaseProgress = 0;
-		setTimeout(() => {
-			currentShowcaseIndex = index;
-			isTransitioning = false;
-		}, 150);
-	}
+	$effect(() => {
+		const interval = setInterval(() => {
+			currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
+		}, 6000);
+
+		// Auto-rotate hero tabs
+		const heroInterval = setInterval(() => {
+			const currentIndex = strategicTabs.findIndex(
+				(t) => t.id === activeHeroTab,
+			);
+			const nextIndex = (currentIndex + 1) % strategicTabs.length;
+			activeHeroTab = strategicTabs[nextIndex].id;
+		}, 8000);
+
+		// Auto-rotate product tabs
+		const productInterval = setInterval(() => {
+			const currentIndex = productTabs.findIndex(
+				(t) => t.id === activeProductTab,
+			);
+			const nextIndex = (currentIndex + 1) % productTabs.length;
+			activeProductTab = productTabs[nextIndex].id;
+		}, 8000);
+
+		return () => {
+			clearInterval(interval);
+			clearInterval(heroInterval);
+			clearInterval(productInterval);
+		};
+	});
 </script>
 
 <svelte:head>
-	<title>SpikedAI | Next-Gen Revenue Intelligence</title>
+	<title>Spiked AI | AI-Powered Sales Intelligence Platform</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link
+		rel="preconnect"
+		href="https://fonts.gstatic.com"
+		crossorigin="anonymous"
+	/>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+		rel="stylesheet"
+	/>
 </svelte:head>
 
-<div class="page-shell min-h-screen transition-colors duration-500 font-sans selection:bg-red-500/30 overflow-x-hidden {$themeStore === 'dark' ? 'bg-[#030712] text-zinc-100' : 'bg-white text-zinc-900'}">
-	<main class="relative z-10 w-full overflow-hidden max-w-[1900px] mx-auto bg-transparent">
-		<!-- BIG HERO -->
-		<section
-			data-section="hero"
-			class="relative w-full flex flex-col justify-center
-			{$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-white'}"
-			style="padding: clamp(2.5rem, 6vw, 5rem);"
-		>
-			<div class="w-full relative z-10 pt-[clamp(7rem,14vh,11rem)]">
-			<!-- Body Text Above Headline -->
-			<p
-				class="font-medium mb-8 max-w-3xl
-				{$themeStore === 'dark' ? 'text-zinc-300' : 'text-zinc-700'}"
-				style="font-size: clamp(1.1rem, 2.5vw, 1.5rem); line-height: 1.5;"
+<div class="nvidia-page font-sans antialiased bg-white">
+	<div class="bg-black py-6">
+		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+			<!-- Full-width Slogan Bar with Pulsing Gold Background -->
+			<div
+				class="relative h-[120px] lg:h-[100px] w-full bg-[#1a1410]/80 backdrop-blur-xl border border-amber-900/40 rounded-[2.5rem] shadow-2xl overflow-hidden flex items-center"
 			>
-				Sales doesn't fail from lack of skill. It fails from cognitive overload.<br />
-				SpikedAI is the Executive Cognition System that turns every seller into a Singular Rep.
-			</p>
-
-			<!-- HUGE HEADLINE -->
-			<h1
-				class="font-black tracking-tighter mb-6
-				{$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
-				style="
-					font-size: clamp(3.75rem, 10vw, 11rem);
-					line-height: 0.88;
-					letter-spacing: -0.04em;
-				"
-			>
-				Sell like <span class="text-red-600 block sm:inline">a CEO.</span>
-			</h1>
-
-			<!-- SUBTEXT -->
-			<p
-				class="font-medium max-w-3xl
-				{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-500'}"
-				style="font-size: clamp(1.2rem, 3.5vw, 1.9rem);"
-			>
-				The rise of the singular rep starts here.
-			</p>
-
-			<!-- Additional Subtext -->
-			<p
-				class="font-medium mt-6 max-w-3xl
-				{$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}"
-				style="font-size: clamp(1rem, 2.2vw, 1.3rem); line-height: 1.6;"
-			>
-				Real-time conversational, contextual, and computational intelligence.<br />
-				One-shot selling. Unified customer actions. No cognitive drag.
-		</p>
-
-		<!-- Book Demo Button -->
-		<a
-			href="/contact-sales"
-			class="mt-10 mb-16 contextual-cta group relative inline-flex items-center gap-3
-			px-[clamp(1.75rem,4.5vw,3.25rem)]
-			py-[clamp(1.05rem,2.8vw,1.5rem)]
-			rounded-full font-semibold transition-all duration-200"
-		>
-			<span class="relative z-10 text-[clamp(1.05rem,2.2vw,1.35rem)]">
-				Book a Demo
-			</span>
-			<span class="cta-icon relative z-10 grid place-items-center">
-				<ArrowRight
-					class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
-				/>
-			</span>
-		</a>
-	</div>
-</section>
-				<!-- 1. The Asymmetrical Problem Box -->
+				<!-- Pulsing Glow Effect -->
 				<div
-					class="rounded-[3rem] p-12 sm:p-20 flex flex-col lg:flex-row items-center gap-16 transition-all duration-300
-                    {$themeStore === 'dark'
-						? 'bg-[#121214] border border-zinc-800'
-						: 'bg-[#F9F9FB] shadow-sm'}"
-				>
-					<div class="lg:w-2/3 space-y-10">
-						<h2
-							class="font-black leading-[1.0] tracking-tight {$themeStore ===
-							'dark'
-								? 'text-white'
-								: 'text-zinc-900'}"
-							style="font-size: clamp(3rem, 6vw, 6rem);"
-						>
-							Companies leave millions <br class="hidden xl:block" />on the
-							table every year.
-						</h2>
-						<p
-							class="font-medium leading-relaxed max-w-2xl
-                            {$themeStore === 'dark'
-								? 'text-zinc-400'
-								: 'text-zinc-600'}"
-							style="font-size: clamp(1.4rem, 1.8vw, 2rem);"
-						>
-							Sales has outgrown human working memory, and teams are drowning in
-							cognitive overload.
-						</p>
-					</div>
-					<div class="lg:w-1/3 flex lg:justify-end w-full">
-						<div
-							class="text-6xl lg:text-8xl font-black text-red-600 leading-[0.9] tracking-tighter"
-						>
-							SpikedAI <br />solves <br />this.
-						</div>
-					</div>
-				</div>
-
-				<!-- 2. Split Visual & Quote (Variated) -->
-				<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
-					<!-- Visual Side -->
-					<div
-						class="lg:col-span-8 relative group overflow-hidden rounded-[3rem] bg-zinc-900 aspect-[4/5] sm:aspect-video lg:aspect-auto"
-					>
-						<img
-							src="/clarity_visual.png"
-							alt="Clarity from Chaos"
-							class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
-						/>
-						<div
-							class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 sm:p-12 flex flex-col justify-end"
-						>
-							<div class="max-w-2xl">
-								<div
-									class="mb-6 w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center"
-								>
-									<Sparkles class="w-6 h-6 text-white" />
-								</div>
-								<p
-									class="text-white font-bold leading-tight"
-									style="font-size: clamp(1.8rem, 2.5vw, 3rem);"
-								>
-									We bring clarity into the chaos, supporting every kind of
-									seller to perform at their highest potential.
-								</p>
-							</div>
-						</div>
-					</div>
-
-					<!-- Quote Side (Non-boxed style) -->
-					<div
-						class="lg:col-span-4 flex flex-col justify-center space-y-10 p-4"
-					>
-						<div class="space-y-6">
-							<span
-								class="text-4xl lg:text-6xl font-serif text-red-600 italic opacity-50 inline"
-								>“</span
-							>
-							<h3
-								class="font-bold leading-tight {$themeStore === 'dark'
-									? 'text-zinc-100'
-									: 'text-zinc-900'} relative z-10"
-								style="font-size: clamp(1.6rem, 2.2vw, 2.4rem);"
-							>
-								AI that respects judgment, because revenue decisions are human
-								decisions.
-							</h3>
-							<p
-								class="font-medium leading-relaxed {$themeStore === 'dark'
-									? 'text-zinc-400'
-									: 'text-zinc-500'}"
-								style="font-size: 1.25rem;"
-							>
-								Built for leaders who make decisions in live customer moments,
-								turning conversations into conversions.
-							</p>
-						</div>
-
-						<div
-							class="flex items-center gap-5 pt-6 border-t border-zinc-500/20"
-						>
-							<div
-								class="w-16 h-16 rounded-2xl overflow-hidden border border-red-500/30"
-							>
-								<img
-									src="/Photos/Avi Sahi.jpeg"
-									alt="Avi Sahi"
-									class="w-full h-full object-cover"
-								/>
-							</div>
-							<div>
-								<div
-									class="font-black text-lg {$themeStore === 'dark'
-										? 'text-white'
-										: 'text-zinc-900'}"
-								>
-									Avi Sahi
-								</div>
-								<div
-									class="text-red-500 font-bold tracking-widest text-[10px] uppercase"
-								>
-									Co-Founder & CEO, SpikedAI
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- 3. Horizontal Divider Line -->
-				<div
-					class="w-full h-px bg-gradient-to-r from-transparent via-zinc-500/20 to-transparent my-12"
+					class="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-amber-500/20 to-amber-500/5 animate-pulse"
 				></div>
 
-				<!-- 4. Impact Grid (3 Column) -->
-				<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-					{#each impactItems as item}
+				{#each slogans as slogan, i}
+					{#if currentSloganIndex === i}
 						<div
-							class="rounded-[2.5rem] p-10 transition-all duration-300 flex flex-col h-full
-								{$themeStore === 'dark'
-								? `border ${item.darkBg} ${item.darkBorder}`
-								: item.lightBg}"
+							class="absolute inset-0 flex items-center justify-between px-8 lg:px-16"
+							in:fly={{ y: 20, duration: 800, delay: 100 }}
+							out:fly={{ y: -20, duration: 800 }}
 						>
-							<div class="min-h-[120px] sm:min-h-[140px] lg:min-h-[160px]">
-								<div class="text-4xl font-black text-red-600 mb-6">
-									{item.id}
-								</div>
-								<h4
-									class="text-2xl font-black mb-4 {$themeStore === 'dark'
-										? 'text-white'
-										: 'text-zinc-900'}"
+							{#if slogan.type === "slogan"}
+								<div
+									class="flex flex-col lg:flex-row items-center justify-between w-full gap-6"
 								>
-									{item.title}
-								</h4>
-							</div>
-							<div
-								class="rounded-2xl p-4 mb-6 {$themeStore === 'dark'
-									? 'bg-black/30 border border-white/5'
-									: 'bg-white border border-zinc-200 shadow-sm'}"
-							>
-								<img
-									src={item.image}
-									alt={item.imageAlt}
-									class="w-full aspect-[16/9] object-cover rounded-xl"
-									loading="lazy"
-								/>
-							</div>
-							<p
-								class="font-medium {$themeStore === 'dark'
-									? 'text-zinc-400'
-									: 'text-zinc-600'}"
-							>
-								{item.description}
-							</p>
-						</div>
-					{/each}
-				</div>
-
-				<div class="pt-8 text-center">
-					<div
-						class="inline-block px-8 py-4 rounded-full border border-red-500/30 text-red-600 font-black uppercase tracking-widest text-sm"
-					>
-						And SpikedAI delivers.
-					</div>
-				</div>
-			</div>
-
-
-		<!-- EXPANDED SHOWCASE (Reduced Padding, Bigger Text, Progress Bar) -->
-		<section
-			data-section="showcase"
-			class="w-full relative {$themeStore === 'dark'
-				? 'bg-[#030712]'
-				: 'bg-white'}"
-			style="padding: 2rem 0;"
-		>
-			<div class="px-[clamp(2rem,4vw,5rem)] mb-[clamp(2rem,6vh,6rem)]">
-				<span
-					class="block font-bold text-red-600 uppercase tracking-[0.3em] mb-4"
-					>All Features</span
-				>
-				<h2
-					class="font-black leading-none {$themeStore === 'dark'
-						? 'text-white'
-						: 'text-zinc-900'}"
-					style="font-size: clamp(3rem, 8vw, 8rem);"
-				>
-					Experience<br />Every Feature.
-				</h2>
-				<!-- sub text big visible -->
-				<p
-					class="font-medium leading-relaxed max-w-4xl pt-10
-                    {$themeStore === 'dark'
-						? 'text-zinc-400'
-						: 'text-zinc-500'}"
-					style="font-size: clamp(1.1rem, 1.5vw, 2rem);"
-				>
-					Explore our complete suite of AI-powered features with interactive
-					demos.
-				</p>
-			</div>
-
-			<div
-				class="flex flex-col lg:flex-row gap-8 w-full min-h-[1000px] px-[clamp(1rem,2vw,3rem)]"
-			>
-				<!-- Navigation / Detail Panel -->
-				<div
-					class="lg:w-5/12 flex flex-col h-full overflow-y-auto no-scrollbar pr-2 sm:pr-4"
-				>
-					<div class="flex flex-col">
-						{#each showcases as showcase, i}
-							<div class="border-b border-zinc-800/20 last:border-0 relative">
-								<!-- Progress Bar if active -->
-								{#if currentShowcaseIndex === i && !isPaused}
+									<p
+										class="text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-none text-center lg:text-left"
+									>
+										Sell Like <span class="text-[#ef4444]">a CEO</span>
+									</p>
+									<div class="flex items-center gap-6 lg:gap-12 opacity-90">
+										{#each slogan.sponsors as sponsor}
+											<div
+												class="flex flex-col items-center lg:items-start group"
+											>
+												<span
+													class="text-[9px] font-bold text-amber-500/80 uppercase tracking-widest mb-1"
+													>{sponsor.label}</span
+												>
+												<div
+													class="h-10 w-auto min-w-[80px] flex items-center bg-white/0 scale-150 px-3 py-1 rounded-md overflow-hidden"
+												>
+													{#if sponsor.src}
+														<img
+															src={sponsor.src}
+															alt={sponsor.alt}
+															class="h-full w-auto object-contain"
+														/>
+													{:else}
+														<span
+															class="text-[9px] font-bold text-zinc-400 italic uppercase"
+															>Attach Image</span
+														>
+													{/if}
+												</div>
+											</div>
+										{/each}
+									</div>
+								</div>
+							{:else}
+								<div class="flex items-center gap-8 w-full max-w-6xl mx-auto">
 									<div
-										class="absolute bottom-0 left-0 h-[2px] bg-red-500 transition-all duration-100 ease-linear z-10"
-										style="width: {showcaseProgress}%"
+										class="hidden sm:block w-14 h-14 rounded-2xl overflow-hidden border-2 border-amber-500/30 flex-shrink-0 shadow-lg"
+									>
+										<img
+											src="/Photos/Avi_Sahi-removebg-preview.png"
+											alt="Avi Sahi"
+											class="w-full h-full object-cover bg-black/40"
+										/>
+									</div>
+									<div class="flex-1">
+										<p
+											class="text-white text-lg lg:text-2xl font-medium leading-tight italic text-[#d4ad85]"
+										>
+											"{slogan.text}"
+										</p>
+										<div class="flex items-center gap-3 mt-2">
+											<span
+												class="text-amber-500 font-bold text-xs lg:text-sm uppercase tracking-widest"
+												>{slogan.author}</span
+											>
+											<span
+												class="text-white/40 text-[10px] lg:text-xs uppercase tracking-tighter"
+												>— {slogan.role}</span
+											>
+										</div>
+									</div>
+								</div>
+							{/if}
+						</div>
+					{/if}
+				{/each}
+			</div>
+		</div>
+	</div>
+
+	<!-- Strategic Hero Section -->
+	<section class="relative bg-black">
+		{#each strategicTabs as tab}
+			{#if activeHeroTab === tab.id}
+				<div
+					class="relative transition-colors duration-500"
+					class:bg-zinc-50={!tab.dark}
+					class:bg-black={tab.dark}
+					in:fade={{ duration: 400 }}
+				>
+					<div
+						class="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 py-16 lg:py-24"
+					>
+						<div
+							class="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center min-h-[500px] lg:min-h-[580px]"
+						>
+							<!-- Content -->
+							<div class="max-w-2xl relative">
+								<span
+									class="text-[11px] font-bold uppercase tracking-[0.2em] mb-5 block {!tab.dark
+										? 'text-zinc-600'
+										: 'text-zinc-400'}"
+								>
+									{tab.category}
+								</span>
+								<h1
+									class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-[1.08] mb-6 tracking-tight text-white"
+								>
+									{#if tab.id === "message-01"}
+										Replaces cognitive overload <span class="text-red-600"
+											>with amplified cognitive ability</span
+										>
+									{:else if tab.id === "message-02"}
+										Rise of the <span class="text-red-600">Singular Rep</span>
+									{:else if tab.id === "message-03"}
+										One-shot <span class="text-red-600">selling</span>
+									{:else if tab.id === "message-04"}
+										Unified customer <span class="text-red-600">actions</span>
+									{:else}
+										{tab.title}
+									{/if}
+								</h1>
+								<p
+									class="text-base lg:text-lg xl:text-xl mb-10 leading-[1.6] max-w-xl {!tab.dark
+										? 'text-zinc-700'
+										: 'text-zinc-300'}"
+								>
+									{tab.description}
+								</p>
+								<a
+									href={tab.ctaLink}
+									class="inline-flex items-center gap-2 bg-[#ef4444] text-white font-bold px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#dc2626] transition-all duration-200 hover:gap-3 rounded-sm shadow-lg shadow-red-900/20 hover:shadow-red-900/30"
+								>
+									{tab.cta}
+									<ChevronRight class="w-4 h-4" />
+								</a>
+							</div>
+
+							<!-- Image -->
+							<div class="relative lg:pl-8 group">
+								{#if !tab.dark}
+									<div
+										class="absolute -inset-4 bg-gradient-to-r from-[#ef4444]/20 to-orange-500/20 rounded-full blur-3xl -z-10 opacity-0 group-hover:opacity-70 transition-opacity duration-700"
+									></div>
+								{:else}
+									<div
+										class="absolute -inset-4 bg-gradient-to-r from-[#ef4444]/10 to-blue-500/10 rounded-full blur-3xl -z-10 opacity-0 group-hover:opacity-50 transition-opacity duration-700"
 									></div>
 								{/if}
 
-								<button
-									onclick={() => selectShowcase(i)}
-									class="w-full text-left py-6 group flex items-start gap-4 transition-all duration-300"
-								>
-									<!-- Number/Icon Indicator -->
-									<div class="flex-shrink-0 pt-1">
-										{#if currentShowcaseIndex === i}
-											<div
-												class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-sm font-bold"
-												in:fade
-											>
-												{i + 1}
-											</div>
-										{:else}
-											<div
-												class="text-zinc-500 font-mono text-base group-hover:text-red-500 transition-colors pl-2"
-											>
-												{(i + 1).toString().padStart(2, "0")}
-											</div>
-										{/if}
-									</div>
-
-									<div class="flex-1">
-										<!-- Header (Always Visible) -->
-										<h3
-											class="font-bold uppercase tracking-widest transition-colors duration-300
-                                            {currentShowcaseIndex === i
-												? 'text-red-500 mb-4'
-												: 'text-zinc-500 group-hover:text-zinc-300'}"
-											style="font-size: {currentShowcaseIndex === i
-												? '1.5rem'
-												: '1.1rem'};"
-										>
-											{showcase.name}
-										</h3>
-
-										<!-- Expanded Content -->
-										{#if currentShowcaseIndex === i}
-											<div class="space-y-8" in:slide={{ duration: 300 }}>
-												<!-- Main Title & Subtitle -->
-												<div>
-													<h4
-														class="text-3xl sm:text-4xl font-bold leading-tight mb-3 {$themeStore ===
-														'dark'
-															? 'text-white'
-															: 'text-zinc-900'}"
-													>
-														{showcase.title}
-													</h4>
-													<p class="text-xl sm:text-2xl text-zinc-500">
-														{showcase.subtitle}
-													</p>
-												</div>
-
-												<!-- 3 Points System - INCREASED SIZE -->
-												<div
-													class="space-y-8 pl-6 border-l-2 border-zinc-800/50"
-												>
-													{#each showcase.features as feature}
-														<div>
-															<div class="flex items-center gap-3 mb-2">
-																<feature.icon class="w-5 h-5 text-red-500" />
-																<span
-																	class="font-bold text-base uppercase tracking-wide {$themeStore ===
-																	'dark'
-																		? 'text-zinc-200'
-																		: 'text-zinc-800'}">{feature.title}</span
-																>
-															</div>
-															<!-- Subtext increased to text-lg/xl for readability -->
-															<p
-																class="text-lg sm:text-xl text-zinc-400 leading-relaxed font-medium"
-															>
-																{feature.description}
-															</p>
-														</div>
-													{/each}
-												</div>
-
-												<a
-													href={showcase.link}
-													class="text-red-500 font-bold uppercase text-sm tracking-widest hover:text-red-400 transition-colors flex items-center gap-2 pt-4"
-												>
-													Learn more about {showcase.name.toLowerCase()}
-													<ArrowRight class="w-4 h-4" />
-												</a>
-											</div>
-										{/if}
-									</div>
-								</button>
-							</div>
-						{/each}
-					</div>
-				</div>
-
-				<!-- Visual (Right Side - Sticky/Fixed) -->
-				<!-- Increased min-height to accommodate Notetaker content -->
-				<div
-					class="lg:w-7/12 h-[1000px] lg:h-auto min-h-[1000px] sticky top-8 rounded-[2rem] overflow-hidden border-4
-                    {$themeStore === 'dark'
-						? 'bg-zinc-900 border-zinc-800'
-						: 'bg-white border-zinc-200'}"
-				>
-					{#each showcases as showcase, i}
-						{#if currentShowcaseIndex === i}
-							<div
-								class="absolute inset-0 w-full h-full"
-								in:fade={{ duration: 400 }}
-							>
 								<div
-									class="w-full h-full p-1 sm:p-4 md:p-8 flex items-center justify-center bg-zinc-50/5 dark:bg-zinc-900/50 overflow-hidden"
+									class="aspect-video lg:aspect-[4/3] overflow-hidden rounded-2xl"
+									style="mask-image: linear-gradient(to bottom, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);"
 								>
+									<img
+										src={tab.image}
+										alt=""
+										class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+									/>
+									<!-- Overlay for better text diffusion if needed, or just atmosphere -->
 									<div
-										class="interactive-scaler w-full h-full flex items-center justify-center"
-									>
-										<!-- Enforce 100% height boundaries on children -->
-										{#if showcase.id === "ai-assistance"}
-											<AIAssistanceShowcase
-												showAppChrome={true}
-												height="100%"
-											/>
-										{:else if showcase.id === "notetaker"}
-											<NotetakerShowcase showAppChrome={true} height="100%" />
-										{:else if showcase.id === "followup"}
-											<FollowupShowcase showAppChrome={true} height="100%" />
-										{:else if showcase.id === "simulator"}
-											<SimulatorShowcase showAppChrome={true} height="100%" />
-										{:else if showcase.id === "dev-tools"}
-											<DevToolsShowcase showAppChrome={true} height="100%" />
-										{:else if showcase.id === "crm"}
-											<CRMShowcase showAppChrome={true} height="100%" />
-										{:else if showcase.id === "sentiment"}
-											<SentimentShowcase showAppChrome={true} height="100%" />
-										{:else if showcase.id === "custom-goals"}
-											<CustomGoalsShowcase showAppChrome={true} height="100%" />
-										{/if}
-									</div>
+										class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 to-transparent opacity-50"
+									></div>
 								</div>
 							</div>
-						{/if}
-					{/each}
+						</div>
+					</div>
+
+					<!-- Tab Navigation -->
+					<div
+						class="border-t {!tab.dark
+							? 'border-zinc-200 bg-zinc-50/80'
+							: 'border-zinc-800 bg-zinc-950/50'}"
+					>
+						<div class="max-w-[1920px] mx-auto">
+							<div
+								class="flex flex-wrap lg:flex-nowrap w-full justify-between items-center"
+							>
+								{#each strategicTabs as navTab}
+									<button
+										onclick={() => (activeHeroTab = navTab.id)}
+										class="flex-1 min-w-[50%] sm:min-w-[33.33%] md:min-w-[20%] lg:min-w-0 px-1 lg:px-1.5 xl:px-4 py-4 text-[9px] sm:text-[10px] lg:text-[10px] xl:text-[12px] font-bold uppercase tracking-tighter lg:tracking-tight xl:tracking-wider transition-all duration-200 relative whitespace-nowrap border-b-2 text-center {activeHeroTab ===
+										navTab.id
+											? 'border-[#ef4444]'
+											: 'border-transparent'}"
+										class:text-zinc-900={!tab.dark &&
+											activeHeroTab === navTab.id}
+										class:text-zinc-500={!tab.dark &&
+											activeHeroTab !== navTab.id}
+										class:hover:text-zinc-700={!tab.dark &&
+											activeHeroTab !== navTab.id}
+										class:text-white={tab.dark && activeHeroTab === navTab.id}
+										class:text-zinc-400={tab.dark &&
+											activeHeroTab !== navTab.id}
+										class:hover:text-zinc-200={tab.dark &&
+											activeHeroTab !== navTab.id}
+									>
+										{navTab.label}
+									</button>
+								{/each}
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
+		{/each}
+	</section>
+
+	<!-- Value Proposition Banner -->
+	<section
+		class="bg-gradient-to-r from-zinc-50 to-white py-12 lg:py-16 border-y border-zinc-100"
+	>
+		<div class="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12">
+			<div
+				class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
+			>
+				<div class="flex-1 text-center lg:text-left">
+					<h2
+						class="text-2xl lg:text-3xl xl:text-4xl font-bold text-zinc-900 mb-4 leading-tight"
+					>
+						Transform Every Sales Conversation with AI
+					</h2>
+					<p class="text-base lg:text-lg text-zinc-600 leading-relaxed mb-6">
+						Spiked AI brings real-time intelligence, automated workflows, and
+						performance insights to your entire revenue team. Close more deals,
+						faster.
+					</p>
+					<div
+						class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+					>
+						<a
+							href="/contact-sales"
+							class="inline-flex items-center justify-center gap-2 bg-[#ef4444] text-black font-bold px-8 py-3.5 text-sm uppercase tracking-wide hover:bg-[#dc2626] transition-all"
+						>
+							Get Started Free
+							<ChevronRight class="w-4 h-4" />
+						</a>
+						<a
+							href="/pricing"
+							class="inline-flex items-center justify-center gap-2 bg-white text-zinc-900 font-bold px-8 py-3.5 text-sm uppercase tracking-wide border-2 border-zinc-300 hover:border-[#ef4444] transition-all"
+						>
+							View Pricing
+							<ChevronRight class="w-4 h-4" />
+						</a>
+					</div>
+				</div>
+				<div class="flex-shrink-0">
+					<div class="grid grid-cols-2 gap-6">
+						<div class="text-center">
+							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
+								15hrs
+							</div>
+							<div class="text-sm font-semibold text-zinc-600">
+								Saved Weekly Per Rep
+							</div>
+						</div>
+						<div class="text-center">
+							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
+								40%
+							</div>
+							<div class="text-sm font-semibold text-zinc-600">
+								Increase in Win Rate
+							</div>
+						</div>
+						<div class="text-center">
+							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
+								10M+
+							</div>
+							<div class="text-sm font-semibold text-zinc-600">
+								Calls Analyzed
+							</div>
+						</div>
+						<div class="text-center">
+							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
+								500+
+							</div>
+							<div class="text-sm font-semibold text-zinc-600">
+								Teams Powered
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
-		<!-- PROVEN IMPACT & FEATURES (Redesigned Layout) -->
-		<section
-			class="w-full relative py-32 {$themeStore === 'dark'
-				? 'bg-[#030712]'
-				: 'bg-white'}"
-			overflow-hidden
-			id="testimonials"
-		>
-			<!-- Centered Header -->
-			<div class="text-center mb-20 px-4">
-				<span
-					class="text-red-600 font-bold tracking-[0.2em] text-xs sm:text-sm uppercase mb-6 block"
-					>Trusted by Sales Leaders</span
+	<!-- Platform in Action - Dashboard Showcase -->
+	<section
+		class="relative bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 py-20 lg:py-32 overflow-hidden"
+	>
+		<div class="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+			<!-- Header -->
+			<div class="text-center mb-16">
+				<p
+					class="text-[#ef4444] text-xs font-bold uppercase tracking-[0.3em] mb-4"
 				>
+					Platform Overview
+				</p>
 				<h2
-					class="text-6xl sm:text-8xl font-black tracking-tight mb-4 {$themeStore ===
-					'dark'
-						? 'text-white'
-						: 'text-zinc-900'}"
+					class="text-4xl lg:text-6xl font-black text-white mb-6 tracking-tight"
 				>
-					AI That Eliminates
+					Intelligence You Can See
 				</h2>
-				<h2 class="text-6xl sm:text-8xl font-black tracking-tight text-red-600">
-					Cognitive Overload
-				</h2>
-				<p class="text-xl sm:text-2xl text-zinc-500 mt-4">
-					CROs, Sales, and Technical Sales Teams can finally think clearly.
+				<p class="text-zinc-400 text-lg max-w-3xl mx-auto">
+					Real-time insights, actionable intelligence, and complete visibility
+					into every deal. This is what winning looks like.
 				</p>
 			</div>
 
-			<div class="w-full overflow-hidden pb-12 mb-12 px-[clamp(2rem,6vw,6rem)]">
-				<div class="marquee-wrapper">
-					<div class="marquee-track">
-						{#each testimonials as t}
-							<div
-								class="w-[350px] sm:w-[450px] p-8 rounded-2xl border transition-all hover:border-red-500/30 group
-                             {$themeStore === 'dark'
-									? 'bg-[#050915] border-zinc-800'
-									: 'bg-white border-zinc-200'}"
-							>
-								<div class="flex items-center justify-between mb-8">
-									<div class="flex items-center gap-3">
-										<div
-											class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-sm"
-										>
-											{t.author[0]}
-										</div>
-										<div>
-											<div
-												class="font-bold text-sm text-white pointer-events-none"
-											>
-												{t.author}
-											</div>
-											<div
-												class="text-xs text-zinc-500 uppercase tracking-wider"
-											>
-												{t.role}
-											</div>
-										</div>
-									</div>
-									<div class="text-2xl font-black text-red-600">{t.metric}</div>
-								</div>
-								<p
-									class="text-base sm:text-lg leading-relaxed font-medium
-                                 {$themeStore === 'dark'
-										? 'text-zinc-300'
-										: 'text-zinc-600'}"
-								>
-									"{t.quote}"
-								</p>
-								<div
-									class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right"
-								>
-									{t.metricLabel}
-								</div>
-							</div>
-						{/each}
-					</div>
-
-					<div class="marquee-track">
-						{#each testimonials as t}
-							<div
-								class="w-[350px] sm:w-[450px] p-8 rounded-2xl border transition-all hover:border-red-500/30 group
-                             {$themeStore === 'dark'
-									? 'bg-[#050915] border-zinc-800'
-									: 'bg-white border-zinc-200'}"
-							>
-								<div class="flex items-center justify-between mb-8">
-									<div class="flex items-center gap-3">
-										<div
-											class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-sm"
-										>
-											{t.author[0]}
-										</div>
-										<div>
-											<div
-												class="font-bold text-sm text-white pointer-events-none"
-											>
-												{t.author}
-											</div>
-											<div
-												class="text-xs text-zinc-500 uppercase tracking-wider"
-											>
-												{t.role}
-											</div>
-										</div>
-									</div>
-									<div class="text-2xl font-black text-red-600">{t.metric}</div>
-								</div>
-								<p
-									class="text-base sm:text-lg leading-relaxed font-medium
-                                 {$themeStore === 'dark'
-										? 'text-zinc-300'
-										: 'text-zinc-600'}"
-								>
-									"{t.quote}"
-								</p>
-								<div
-									class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500 text-right"
-								>
-									{t.metricLabel}
-								</div>
-							</div>
-						{/each}
-					</div>
-				</div>
-			</div>
-
-			<!-- Built For ... Feature Box (Centered) -->
-			<div class="max-w-[90vw] mx-auto">
-				<div
-					class="rounded-[2.5rem] p-8 sm:p-16 border relative overflow-hidden
-                     {$themeStore === 'dark'
-						? 'bg-[#050915] border-zinc-800'
-						: 'bg-zinc-50 border-zinc-200'}"
-				>
-					<div class="text-center mb-16">
-						<h3
-							class="text-2xl font-bold mb-2 {$themeStore === 'dark'
-								? 'text-white'
-								: 'text-zinc-900'}"
-						>
-							Built for Revenue Teams
-						</h3>
-						<p
-							class="text-sm uppercase tracking-widest {$themeStore === 'dark'
-								? 'text-zinc-500'
-								: 'text-zinc-500'}"
-						>
-							Empowering every role to perform with unparalleled clarity
-						</p>
-					</div>
-
+			<!-- Dashboard Screenshots Grid -->
+			<div class="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-7xl mx-auto">
+				<!-- Dashboard 1 -->
+				<div class="group relative">
 					<div
-						class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left"
+						class="relative bg-zinc-900/50 backdrop-blur-sm rounded-xl border border-zinc-800/50 overflow-hidden hover:border-[#ef4444]/50 transition-all duration-300"
 					>
-						<!-- 01 -->
-						<div class="relative group">
-							<span
-								class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
-                                {$themeStore === 'dark'
-									? 'text-zinc-800/50'
-									: 'text-zinc-200'}">01</span
-							>
-							<div class="relative z-10">
-								<h4
-									class="text-xl font-bold mb-4 {$themeStore === 'dark'
-										? 'text-white'
-										: 'text-zinc-900'}"
-								>
-									CROs & Revenue Leaders
-								</h4>
-								<p
-									class="leading-relaxed {$themeStore === 'dark'
-										? 'text-zinc-400'
-										: 'text-zinc-600'}"
-								>
-									Gain ultimate visibility into pipeline health and performance
-									with AI-driven analytics and forecasting.
-								</p>
-							</div>
+						<div class="aspect-[4/3] relative">
+							<img
+								src="/landing/analytics.png"
+								alt="MEDDIC Qualification and Live Sentiment Dashboard"
+								class="w-full h-full object-cover"
+							/>
+							<div
+								class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+							></div>
 						</div>
-						<!-- 02 -->
-						<div class="relative group">
-							<span
-								class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
-                                {$themeStore === 'dark'
-									? 'text-zinc-800/50'
-									: 'text-zinc-200'}">02</span
-							>
-							<div class="relative z-10">
-								<h4
-									class="text-xl font-bold mb-4 {$themeStore === 'dark'
-										? 'text-white'
-										: 'text-zinc-900'}"
-								>
-									Sales & Account Executives
-								</h4>
-								<p
-									class="leading-relaxed {$themeStore === 'dark'
-										? 'text-zinc-400'
-										: 'text-zinc-600'}"
-								>
-									Focus on closing while AI handles the grunt work—real-time
-									coaching, instant follow-ups, and CRM automation.
-								</p>
-							</div>
+						<div class="p-6 bg-zinc-900/80 backdrop-blur-sm">
+							<h3 class="text-2xl font-bold text-white mb-3">
+								Deal Intelligence Hub
+							</h3>
+							<p class="text-zinc-400">
+								Track MEDDIC qualification, live sentiment, meeting summaries,
+								and file insights—all in one unified dashboard.
+							</p>
 						</div>
-						<!-- 03 -->
-						<div class="relative group">
-							<span
-								class="text-6xl font-black absolute -top-12 -left-2 z-0 group-hover:text-red-900/20 transition-colors
-                                {$themeStore === 'dark'
-									? 'text-zinc-800/50'
-									: 'text-zinc-200'}">03</span
-							>
-							<div class="relative z-10">
-								<h4
-									class="text-xl font-bold mb-4 {$themeStore === 'dark'
-										? 'text-white'
-										: 'text-zinc-900'}"
-								>
-									Technical Sales Teams
-								</h4>
-								<p
-									class="leading-relaxed {$themeStore === 'dark'
-										? 'text-zinc-400'
-										: 'text-zinc-600'}"
-								>
-									Dominate complex deals with instant access to technical specs
-									and automated tracking of solution commitments.
-								</p>
-							</div>
+					</div>
+				</div>
+
+				<!-- Dashboard 2 -->
+				<div class="group relative">
+					<div
+						class="relative bg-zinc-900/50 backdrop-blur-sm rounded-xl border border-zinc-800/50 overflow-hidden hover:border-[#ef4444]/50 transition-all duration-300"
+					>
+						<div class="aspect-[4/3] relative">
+							<img
+								src="/landing/knowledgeagent.png"
+								alt="Strategic Risk Analysis and Pipeline Coverage"
+								class="w-full h-full object-cover"
+							/>
+							<div
+								class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+							></div>
+						</div>
+						<div class="p-6 bg-zinc-900/80 backdrop-blur-sm">
+							<h3 class="text-2xl font-bold text-white mb-3">
+								AI-Powered Insights
+							</h3>
+							<p class="text-zinc-400">
+								Strategic risk analysis, AI insights summary, next steps
+								recommendations, and advanced pipeline coverage analytics.
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
 
-		<!-- CTA - UPDATED TEXT -->
-		<section
-			class="w-full relative overflow-hidden flex flex-col justify-center items-center text-center
-            {$themeStore === 'dark' ? 'bg-[#030712]' : 'bg-zinc-50'}"
-			style="padding: clamp(6rem, 12vh, 12rem) clamp(2rem, 4vw, 4rem);"
-		>
-			<h2
-				class="font-black leading-[0.85] tracking-tighter mb-8 max-w-5xl
-                {$themeStore === 'dark' ? 'text-white' : 'text-zinc-900'}"
-				style="font-size: clamp(3.5rem, 8vw, 8rem);"
+			<!-- Feature Highlights -->
+			<div
+				class="mt-16 grid md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto"
 			>
-				Empower Your Revenue Team With<br />
-				<span class="text-red-600 block sm:inline">AI Intelligence</span>
+				<div class="text-center">
+					<div
+						class="w-12 h-12 mx-auto mb-3 bg-[#ef4444]/10 rounded-lg flex items-center justify-center"
+					>
+						<svg
+							class="w-6 h-6 text-[#ef4444]"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+							/>
+						</svg>
+					</div>
+					<h4 class="text-sm font-semibold text-white mb-1">MEDDIC Tracking</h4>
+					<p class="text-xs text-zinc-500">Real-time qualification</p>
+				</div>
+
+				<div class="text-center">
+					<div
+						class="w-12 h-12 mx-auto mb-3 bg-[#ef4444]/10 rounded-lg flex items-center justify-center"
+					>
+						<svg
+							class="w-6 h-6 text-[#ef4444]"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+					</div>
+					<h4 class="text-sm font-semibold text-white mb-1">Live Sentiment</h4>
+					<p class="text-xs text-zinc-500">Emotion analysis</p>
+				</div>
+
+				<div class="text-center">
+					<div
+						class="w-12 h-12 mx-auto mb-3 bg-[#ef4444]/10 rounded-lg flex items-center justify-center"
+					>
+						<svg
+							class="w-6 h-6 text-[#ef4444]"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+							/>
+						</svg>
+					</div>
+					<h4 class="text-sm font-semibold text-white mb-1">Meeting Notes</h4>
+					<p class="text-xs text-zinc-500">Auto-summarized</p>
+				</div>
+
+				<div class="text-center">
+					<div
+						class="w-12 h-12 mx-auto mb-3 bg-[#ef4444]/10 rounded-lg flex items-center justify-center"
+					>
+						<svg
+							class="w-6 h-6 text-[#ef4444]"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+							/>
+						</svg>
+					</div>
+					<h4 class="text-sm font-semibold text-white mb-1">Risk Analysis</h4>
+					<p class="text-xs text-zinc-500">AI-powered alerts</p>
+				</div>
+
+				<div class="text-center">
+					<div
+						class="w-12 h-12 mx-auto mb-3 bg-[#ef4444]/10 rounded-lg flex items-center justify-center"
+					>
+						<svg
+							class="w-6 h-6 text-[#ef4444]"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+							/>
+						</svg>
+					</div>
+					<h4 class="text-sm font-semibold text-white mb-1">Pipeline View</h4>
+					<p class="text-xs text-zinc-500">Coverage metrics</p>
+				</div>
+
+				<div class="text-center">
+					<div
+						class="w-12 h-12 mx-auto mb-3 bg-[#ef4444]/10 rounded-lg flex items-center justify-center"
+					>
+						<svg
+							class="w-6 h-6 text-[#ef4444]"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 10V3L4 14h7v7l9-11h-7z"
+							/>
+						</svg>
+					</div>
+					<h4 class="text-sm font-semibold text-white mb-1">Smart Tasks</h4>
+					<p class="text-xs text-zinc-500">Auto-prioritized</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Product Hero Section -->
+	<section class="relative border-t border-zinc-800">
+		{#each productTabs as tab}
+			{#if activeProductTab === tab.id}
+				<div
+					class="relative transition-colors duration-500"
+					class:bg-zinc-50={!tab.dark}
+					class:bg-black={tab.dark}
+					in:fade={{ duration: 400 }}
+				>
+					<div
+						class="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 py-16 lg:py-24"
+					>
+						<div
+							class="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center min-h-[500px] lg:min-h-[580px]"
+						>
+							<!-- Content -->
+							<div class="max-w-2xl relative">
+								<span
+									class="text-[11px] font-bold uppercase tracking-[0.2em] mb-5 block {!tab.dark
+										? 'text-zinc-600'
+										: 'text-zinc-400'}"
+								>
+									{tab.category}
+								</span>
+								<h1
+									class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-[1.08] mb-6 tracking-tight text-white"
+								>
+									{tab.title}
+								</h1>
+								<p
+									class="text-base lg:text-lg xl:text-xl mb-10 leading-[1.6] max-w-xl {!tab.dark
+										? 'text-zinc-700'
+										: 'text-zinc-300'}"
+								>
+									{tab.description}
+								</p>
+								<a
+									href={tab.ctaLink}
+									class="inline-flex items-center gap-2 bg-[#ef4444] text-white font-bold px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#dc2626] transition-all duration-200 hover:gap-3 rounded-sm shadow-lg shadow-red-900/20 hover:shadow-red-900/30"
+								>
+									{tab.cta}
+									<ChevronRight class="w-4 h-4" />
+								</a>
+							</div>
+
+							<!-- Image -->
+							<div class="relative lg:pl-8 group">
+								{#if !tab.dark}
+									<div
+										class="absolute -inset-4 bg-gradient-to-r from-[#ef4444]/20 to-orange-500/20 rounded-full blur-3xl -z-10 opacity-0 group-hover:opacity-70 transition-opacity duration-700"
+									></div>
+								{:else}
+									<div
+										class="absolute -inset-4 bg-gradient-to-r from-[#ef4444]/10 to-blue-500/10 rounded-full blur-3xl -z-10 opacity-0 group-hover:opacity-50 transition-opacity duration-700"
+									></div>
+								{/if}
+
+								<div
+									class="aspect-video lg:aspect-[4/3] overflow-hidden rounded-2xl"
+									style="mask-image: linear-gradient(to bottom, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);"
+								>
+									<img
+										src={tab.image}
+										alt=""
+										class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+									/>
+									<div
+										class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 to-transparent opacity-50"
+									></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Tab Navigation -->
+					<div
+						class="border-t {!tab.dark
+							? 'border-zinc-200 bg-zinc-50/80'
+							: 'border-zinc-800 bg-zinc-950/50'}"
+					>
+						<div class="max-w-[1920px] mx-auto">
+							<div
+								class="flex flex-wrap lg:flex-nowrap w-full justify-between items-center"
+							>
+								{#each productTabs as navTab}
+									<button
+										onclick={() => (activeProductTab = navTab.id)}
+										class="flex-1 min-w-[50%] sm:min-w-[33.33%] md:min-w-[20%] lg:min-w-0 px-1 lg:px-1.5 xl:px-4 py-4 text-[9px] sm:text-[10px] lg:text-[10px] xl:text-[12px] font-bold uppercase tracking-tighter lg:tracking-tight xl:tracking-wider transition-all duration-200 relative whitespace-nowrap border-b-2 text-center {activeProductTab ===
+										navTab.id
+											? 'border-[#ef4444]'
+											: 'border-transparent'}"
+										class:text-zinc-900={!tab.dark &&
+											activeProductTab === navTab.id}
+										class:text-zinc-500={!tab.dark &&
+											activeProductTab !== navTab.id}
+										class:hover:text-zinc-700={!tab.dark &&
+											activeProductTab !== navTab.id}
+										class:text-white={tab.dark &&
+											activeProductTab === navTab.id}
+										class:text-zinc-400={tab.dark &&
+											activeProductTab !== navTab.id}
+										class:hover:text-zinc-200={tab.dark &&
+											activeProductTab !== navTab.id}
+									>
+										{navTab.label}
+									</button>
+								{/each}
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
+		{/each}
+	</section>
+
+	<!-- AI Section (Light) -->
+	<section class="bg-zinc-50 py-16 lg:py-24">
+		<div class="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-16">
+			<div class="flex flex-col lg:flex-row gap-12">
+				<!-- Left Content -->
+				<div class="lg:w-1/3">
+					<h2 class="text-3xl lg:text-4xl font-bold text-zinc-900 mb-6">
+						AI-Powered Sales Intelligence
+					</h2>
+					<p class="text-zinc-600 leading-relaxed mb-8">
+						Transform every customer interaction with AI that provides real-time
+						answers, automated follow-ups, and intelligent insights. Spiked AI
+						empowers your revenue teams to sell with confidence and close more
+						deals faster.
+					</p>
+					<button
+						class="flex items-center gap-2 text-zinc-900 font-semibold hover:text-[#ef4444] transition-colors"
+					>
+						<ChevronDown class="w-4 h-4" />
+						Quick Links
+					</button>
+				</div>
+
+				<!-- Cards Carousel -->
+				<div class="lg:w-2/3">
+					<div class="flex items-center justify-end gap-2 mb-6">
+						<button
+							onclick={() => prevSlide("ai")}
+							class="w-10 h-10 rounded border border-zinc-300 flex items-center justify-center hover:bg-zinc-100 transition-colors"
+						>
+							<ChevronRight class="w-5 h-5 rotate-180 text-zinc-900" />
+						</button>
+						<button
+							onclick={() => nextSlide("ai")}
+							class="w-10 h-10 rounded border border-zinc-300 flex items-center justify-center hover:bg-zinc-100 transition-colors"
+						>
+							<ChevronRight class="w-5 h-5 text-zinc-900" />
+						</button>
+					</div>
+
+					<div class="grid md:grid-cols-2 gap-6">
+						{#each aiFeatures.slice(currentSlide.ai, currentSlide.ai + 2) as feature}
+							<a
+								href={feature.link}
+								class="group block bg-white border border-zinc-200 rounded-lg overflow-hidden hover:shadow-xl transition-shadow"
+							>
+								<div class="aspect-video overflow-hidden">
+									<img
+										src={feature.image}
+										alt={feature.title}
+										class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+									/>
+								</div>
+								<div class="p-6">
+									<span class="text-xs text-zinc-500 mb-2 block"
+										>{feature.tag}</span
+									>
+									<h3
+										class="text-lg font-bold text-zinc-900 mb-2 group-hover:text-[#ef4444] transition-colors"
+									>
+										{feature.title}
+									</h3>
+									<p class="text-sm text-zinc-600">{feature.description}</p>
+								</div>
+							</a>
+						{/each}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Simulation Section (Dark) -->
+	<section class="bg-black py-16 lg:py-24">
+		<div class="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-16">
+			<div class="flex flex-col lg:flex-row gap-12">
+				<!-- Left Content -->
+				<div class="lg:w-1/3">
+					<h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
+						Practice & Training
+					</h2>
+					<p class="text-zinc-400 leading-relaxed mb-8">
+						Master your sales skills with AI-powered call simulation. Practice
+						objection handling, discovery questions, and closing techniques in a
+						risk-free environment with realistic AI prospects that adapt to your
+						approach.
+					</p>
+					<button
+						class="flex items-center gap-2 text-white font-semibold hover:text-[#ef4444] transition-colors"
+					>
+						<ChevronDown class="w-4 h-4" />
+						Quick Links
+					</button>
+				</div>
+
+				<!-- Cards Carousel -->
+				<div class="lg:w-2/3">
+					<div class="flex items-center justify-end gap-2 mb-6">
+						<button
+							onclick={() => prevSlide("sim")}
+							class="w-10 h-10 rounded border border-zinc-700 flex items-center justify-center hover:bg-zinc-800 transition-colors text-white"
+						>
+							<ChevronRight class="w-5 h-5 rotate-180" />
+						</button>
+						<button
+							onclick={() => nextSlide("sim")}
+							class="w-10 h-10 rounded border border-zinc-700 flex items-center justify-center hover:bg-zinc-800 transition-colors text-white"
+						>
+							<ChevronRight class="w-5 h-5" />
+						</button>
+					</div>
+
+					<div class="grid md:grid-cols-2 gap-6">
+						{#each simulationFeatures as feature}
+							<a
+								href={feature.link}
+								class="group block bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden hover:border-zinc-700 transition-colors"
+							>
+								<div class="aspect-video overflow-hidden">
+									<img
+										src={feature.image}
+										alt={feature.title}
+										class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+									/>
+								</div>
+								<div class="p-6">
+									<span class="text-xs text-zinc-500 mb-2 block"
+										>{feature.tag}</span
+									>
+									<h3
+										class="text-lg font-bold text-white mb-2 group-hover:text-[#ef4444] transition-colors"
+									>
+										{feature.title}
+									</h3>
+									<p class="text-sm text-zinc-400">{feature.description}</p>
+								</div>
+							</a>
+						{/each}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CRM Section (Light) -->
+	<section class="bg-zinc-50 py-16 lg:py-24">
+		<div class="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-16">
+			<div class="flex flex-col lg:flex-row gap-12">
+				<!-- Left Content -->
+				<div class="lg:w-1/3">
+					<h2 class="text-3xl lg:text-4xl font-bold text-zinc-900 mb-6">
+						Seamless Integrations
+					</h2>
+					<p class="text-zinc-600 leading-relaxed mb-8">
+						Connect Spiked AI with your entire tech stack. Native bi-directional
+						sync with Salesforce, HubSpot, and leading CRM platforms means zero
+						manual data entry and automatic workflow automation.
+					</p>
+					<button
+						class="flex items-center gap-2 text-zinc-900 font-semibold hover:text-[#ef4444] transition-colors"
+					>
+						<ChevronDown class="w-4 h-4" />
+						Quick Links
+					</button>
+				</div>
+
+				<!-- Cards Carousel -->
+				<div class="lg:w-2/3">
+					<div class="flex items-center justify-end gap-2 mb-6">
+						<button
+							onclick={() => prevSlide("gaming")}
+							class="w-10 h-10 rounded border border-zinc-300 flex items-center justify-center hover:bg-zinc-100 transition-colors"
+						>
+							<ChevronRight class="w-5 h-5 rotate-180 text-zinc-900" />
+						</button>
+						<button
+							onclick={() => nextSlide("gaming")}
+							class="w-10 h-10 rounded border border-zinc-300 flex items-center justify-center hover:bg-zinc-100 transition-colors"
+						>
+							<ChevronRight class="w-5 h-5 text-zinc-900" />
+						</button>
+					</div>
+
+					<div class="grid md:grid-cols-2 gap-6">
+						{#each gamingFeatures as feature}
+							<a
+								href={feature.link}
+								class="group block bg-white border border-zinc-200 rounded-lg overflow-hidden hover:shadow-xl transition-shadow"
+							>
+								<div class="aspect-video overflow-hidden">
+									<img
+										src={feature.image}
+										alt={feature.title}
+										class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+									/>
+								</div>
+								<div class="p-6">
+									<span class="text-xs text-zinc-500 mb-2 block"
+										>{feature.tag}</span
+									>
+									<h3
+										class="text-lg font-bold text-zinc-900 mb-2 group-hover:text-[#ef4444] transition-colors"
+									>
+										{feature.title}
+									</h3>
+									<p class="text-sm text-zinc-600">{feature.description}</p>
+								</div>
+							</a>
+						{/each}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Featured Products Grid (Dark) -->
+	<section class="bg-zinc-900 py-16 lg:py-24">
+		<div class="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-16">
+			<h2 class="text-3xl lg:text-4xl font-bold text-white mb-12">
+				Featured Products
 			</h2>
 
-			<p
-				class="text-xl sm:text-2xl font-medium mb-12 max-w-3xl leading-relaxed
-                {$themeStore === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}"
-			>
-				Join revenue teams accelerating performance with conversational AI.
-				Real-time insights, automated follow-ups, and seamless integrations.
-			</p>
-
-			<div
-				class="flex flex-col items-center gap-6 w-full max-w-3xl justify-center z-10"
-			>
-				<a
-					href="/contact-sales"
-					class="bg-red-600 text-white font-bold rounded-full hover:bg-red-700 hover:scale-105 transition-all flex items-center justify-center gap-4 shadow-xl"
-					style="height: clamp(3.5rem, 5vw, 5rem); padding: 0 clamp(3rem, 6vw, 6rem); font-size: clamp(1rem, 1.3vw, 1.5rem);"
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<!-- Product Card 1 -->
+				<div
+					class="group relative bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-[#ef4444]/50 transition-colors"
 				>
-					Contact Sales
-					<ArrowRight class="w-5 h-5" />
-				</a>
-				<div class="text-sm sm:text-base font-medium text-zinc-500">
-					Free forever plan • No credit card required • Quick setup
+					<div class="p-8">
+						<div
+							class="w-12 h-12 bg-[#ef4444] rounded-lg flex items-center justify-center mb-6"
+						>
+							<span class="text-black font-black text-lg">AI</span>
+						</div>
+						<h3 class="text-xl font-bold text-white mb-3">Spiked AI Core</h3>
+						<p class="text-zinc-400 mb-6">
+							Complete sales intelligence platform with real-time AI assistance,
+							call analysis, and automated workflows.
+						</p>
+						<a
+							href="/features"
+							class="inline-flex items-center gap-2 text-[#ef4444] font-semibold hover:gap-3 transition-all"
+						>
+							Learn More <ChevronRight class="w-4 h-4" />
+						</a>
+					</div>
+					<div
+						class="absolute bottom-0 right-0 w-32 h-32 bg-[#ef4444]/10 rounded-tl-full"
+					></div>
+				</div>
+
+				<!-- Product Card 2 -->
+				<div
+					class="group relative bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-[#ef4444]/50 transition-colors"
+				>
+					<div class="p-8">
+						<div
+							class="w-12 h-12 bg-[#ef4444] rounded-lg flex items-center justify-center mb-6"
+						>
+							<Play class="w-6 h-6 text-black" />
+						</div>
+						<h3 class="text-xl font-bold text-white mb-3">Call Simulator</h3>
+						<p class="text-zinc-400 mb-6">
+							AI-powered practice environment. Train on realistic scenarios, get
+							instant feedback, and build confidence.
+						</p>
+						<a
+							href="/features/simulator"
+							class="inline-flex items-center gap-2 text-[#ef4444] font-semibold hover:gap-3 transition-all"
+						>
+							Try Simulator <ChevronRight class="w-4 h-4" />
+						</a>
+					</div>
+					<div
+						class="absolute bottom-0 right-0 w-32 h-32 bg-[#ef4444]/10 rounded-tl-full"
+					></div>
+				</div>
+
+				<!-- Product Card 3 -->
+				<div
+					class="group relative bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-[#ef4444]/50 transition-colors"
+				>
+					<div class="p-8">
+						<div
+							class="w-12 h-12 bg-[#ef4444] rounded-lg flex items-center justify-center mb-6"
+						>
+							<span class="text-black font-black text-lg">K</span>
+						</div>
+						<h3 class="text-xl font-bold text-white mb-3">Knowledge Agent</h3>
+						<p class="text-zinc-400 mb-6">
+							Real-time answers from your sales docs during live calls. Never
+							fumble for information again.
+						</p>
+						<a
+							href="/features/ai-assistance"
+							class="inline-flex items-center gap-2 text-[#ef4444] font-semibold hover:gap-3 transition-all"
+						>
+							Explore Agent <ChevronRight class="w-4 h-4" />
+						</a>
+					</div>
+					<div
+						class="absolute bottom-0 right-0 w-32 h-32 bg-[#ef4444]/10 rounded-tl-full"
+					></div>
 				</div>
 			</div>
+		</div>
+	</section>
 
-			<!-- Background Decoration -->
-			<div class="absolute inset-0 opacity-20 pointer-events-none">
-				<div
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle,rgba(128,128,128,0.2)_0%,transparent_60%)]"
-				></div>
+	<!-- Resources Section (Light) -->
+	<section class="bg-zinc-50 py-16 lg:py-24">
+		<div class="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-16">
+			<div class="flex items-center justify-between mb-12">
+				<h2 class="text-3xl lg:text-4xl font-bold text-zinc-900">Resources</h2>
+				<a
+					href="/resources"
+					class="text-zinc-900 font-semibold hover:text-[#ef4444] transition-colors flex items-center gap-2"
+				>
+					View All <ChevronRight class="w-4 h-4" />
+				</a>
 			</div>
-		</section>
 
+			<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+				<a
+					href="/blog"
+					class="group block bg-zinc-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
+				>
+					<div
+						class="aspect-video bg-gradient-to-br from-[#ef4444] to-[#5a9000] flex items-center justify-center"
+					>
+						<span class="text-4xl font-black text-white">Blog</span>
+					</div>
+					<div class="p-6">
+						<h3
+							class="font-bold text-zinc-900 group-hover:text-[#ef4444] transition-colors"
+						>
+							Spiked AI Blog
+						</h3>
+						<p class="text-sm text-zinc-500 mt-1">
+							Latest insights on sales intelligence and AI
+						</p>
+					</div>
+				</a>
 
-	<Footer />
-	</main>
+				<a
+					href="/resources"
+					class="group block bg-zinc-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
+				>
+					<div
+						class="aspect-video bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center"
+					>
+						<span class="text-4xl font-black text-white">Docs</span>
+					</div>
+					<div class="p-6">
+						<h3
+							class="font-bold text-zinc-900 group-hover:text-[#ef4444] transition-colors"
+						>
+							Documentation
+						</h3>
+						<p class="text-sm text-zinc-500 mt-1">
+							Technical guides and API reference
+						</p>
+					</div>
+				</a>
+
+				<a
+					href="/customers"
+					class="group block bg-zinc-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
+				>
+					<div
+						class="aspect-video bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center"
+					>
+						<span class="text-4xl font-black text-white">Case</span>
+					</div>
+					<div class="p-6">
+						<h3
+							class="font-bold text-zinc-900 group-hover:text-[#ef4444] transition-colors"
+						>
+							Case Studies
+						</h3>
+						<p class="text-sm text-zinc-500 mt-1">
+							See how teams succeed with Spiked AI
+						</p>
+					</div>
+				</a>
+
+				<a
+					href="/contact-sales"
+					class="group block bg-zinc-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
+				>
+					<div
+						class="aspect-video bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center"
+					>
+						<span class="text-4xl font-black text-white">Demo</span>
+					</div>
+					<div class="p-6">
+						<h3
+							class="font-bold text-zinc-900 group-hover:text-[#ef4444] transition-colors"
+						>
+							Request Demo
+						</h3>
+						<p class="text-sm text-zinc-500 mt-1">See Spiked AI in action</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Pricing Section -->
+	<section
+		class="relative bg-gradient-to-br from-zinc-950 via-black to-zinc-950 py-20 lg:py-32 overflow-hidden"
+	>
+		<!-- Background effects -->
+		<div class="absolute inset-0">
+			<div
+				class="absolute top-0 left-1/4 w-96 h-96 bg-[#ef4444]/5 rounded-full blur-3xl"
+			></div>
+			<div
+				class="absolute bottom-0 right-1/4 w-96 h-96 bg-[#ef4444]/5 rounded-full blur-3xl"
+			></div>
+		</div>
+
+		<div class="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+			<!-- Header -->
+			<div class="text-center mb-16">
+				<p
+					class="text-[#ef4444] text-xs font-bold uppercase tracking-[0.3em] mb-4"
+				>
+					Accelerate Everything
+				</p>
+				<h2
+					class="text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-4 tracking-tight"
+				>
+					FUEL YOUR<br />
+					<span class="text-[#ef4444]">REVENUE GROWTH</span>
+				</h2>
+				<p class="text-zinc-400 text-lg mt-6">
+					Intelligence for those who close.
+				</p>
+			</div>
+
+			<!-- Pricing Cards -->
+			<div class="grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+				<!-- Starter Plan -->
+				<div
+					class="relative bg-zinc-950/50 rounded-xl border border-zinc-800/50 backdrop-blur-sm overflow-hidden group hover:border-zinc-700/50 transition-all duration-300"
+				>
+					<div class="p-8">
+						<!-- Icon -->
+						<div class="flex items-center gap-3 mb-8">
+							<div
+								class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center"
+							>
+								<User class="w-5 h-5 text-zinc-400" />
+							</div>
+							<span
+								class="text-xs font-bold uppercase tracking-wider text-zinc-500"
+								>Starter</span
+							>
+						</div>
+
+						<!-- Price -->
+						<div class="mb-2">
+							<span class="text-5xl font-black text-white">$0</span>
+							<span class="text-zinc-500 text-lg">/month</span>
+						</div>
+						<p
+							class="text-[#ef4444] text-xs font-bold uppercase tracking-wide mb-8"
+						>
+							Individuals For Free
+						</p>
+
+						<!-- Description -->
+						<p class="text-zinc-400 text-sm leading-relaxed mb-8">
+							For individuals just starting to sell with authority and improve
+							revenue with the first conversation.
+						</p>
+
+						<!-- Capabilities -->
+						<div class="mb-10">
+							<h4
+								class="text-[10px] font-bold uppercase tracking-wider text-zinc-600 mb-4"
+							>
+								Capabilities Included:
+							</h4>
+							<ul class="space-y-3">
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>Includes 600 minutes</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>3x minute live product setup</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>Access to all core features</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>Cognitive & Conversation capabilities</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>48 hour response time support</span>
+								</li>
+							</ul>
+						</div>
+
+						<!-- CTA Button -->
+						<a href="/contact-sales" class="block w-full">
+							<button
+								class="w-full flex items-center justify-between px-6 py-4 bg-zinc-900 border border-zinc-800 rounded-lg text-white font-bold text-sm uppercase tracking-wide hover:bg-zinc-800 hover:border-zinc-700 transition-all group"
+							>
+								<span>Get Started</span>
+								<ChevronRight
+									class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+								/>
+							</button>
+						</a>
+						<p
+							class="text-[10px] text-zinc-600 text-center mt-4 uppercase tracking-wide"
+						>
+							Individuals + Curious About Selling With Confidence
+						</p>
+					</div>
+				</div>
+
+				<!-- Core Plan -->
+				<div
+					class="relative bg-zinc-950/50 rounded-xl border border-zinc-800/50 backdrop-blur-sm overflow-hidden group hover:border-zinc-700/50 transition-all duration-300"
+				>
+					<div class="p-8">
+						<!-- Icon -->
+						<div class="flex items-center gap-3 mb-8">
+							<div
+								class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center"
+							>
+								<div class="w-5 h-5 border-2 border-zinc-400 rounded"></div>
+							</div>
+							<span
+								class="text-xs font-bold uppercase tracking-wider text-zinc-500"
+								>Core</span
+							>
+						</div>
+
+						<!-- Price -->
+						<div class="mb-2">
+							<span class="text-5xl font-black text-white">$65</span>
+							<span class="text-zinc-500 text-lg">/month</span>
+						</div>
+						<p
+							class="text-[#ef4444] text-xs font-bold uppercase tracking-wide mb-8"
+						>
+							Unlock Your Process
+						</p>
+
+						<!-- Description -->
+						<p class="text-zinc-400 text-sm leading-relaxed mb-8">
+							Best for sales professionals managing multiple accounts. Designed
+							for scaling pipeline revenue and team systems performance.
+						</p>
+
+						<!-- Capabilities -->
+						<div class="mb-10">
+							<h4
+								class="text-[10px] font-bold uppercase tracking-wider text-zinc-600 mb-4"
+							>
+								Capabilities Included:
+							</h4>
+							<ul class="space-y-3">
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>Includes 1,200 minutes</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>Two custom value sessions</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>5 pre-selections of insights</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>Up to 10 users</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-[#ef4444] mt-2 flex-shrink-0"
+									></div>
+									<span>6-24 hour response time support</span>
+								</li>
+							</ul>
+						</div>
+
+						<!-- CTA Button -->
+						<a href="/contact-sales" class="block w-full">
+							<button
+								class="w-full flex items-center justify-between px-6 py-4 bg-zinc-900 border border-zinc-800 rounded-lg text-white font-bold text-sm uppercase tracking-wide hover:bg-zinc-800 hover:border-zinc-700 transition-all group"
+							>
+								<span>Start Scaling</span>
+								<ChevronRight
+									class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+								/>
+							</button>
+						</a>
+						<p
+							class="text-[10px] text-zinc-600 text-center mt-4 uppercase tracking-wide"
+						>
+							Sales Professionals and Small Teams
+						</p>
+					</div>
+				</div>
+
+				<!-- Enterprise Plan -->
+				<div
+					class="relative bg-gradient-to-br from-zinc-950/80 to-zinc-950/60 rounded-xl border-2 border-amber-500/30 backdrop-blur-sm overflow-hidden group hover:border-amber-500/50 transition-all duration-300"
+				>
+					<!-- Badge -->
+					<div class="absolute top-6 right-6">
+						<span
+							class="inline-block px-3 py-1 bg-amber-500 text-black text-[9px] font-black uppercase tracking-wider rounded-sm"
+						>
+							Most Advanced
+						</span>
+					</div>
+
+					<div class="p-8">
+						<!-- Icon -->
+						<div class="flex items-center gap-3 mb-8">
+							<div
+								class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 flex items-center justify-center"
+							>
+								<div class="w-5 h-5 border-2 border-amber-500 rounded"></div>
+							</div>
+							<span
+								class="text-xs font-bold uppercase tracking-wider text-amber-500"
+								>Enterprise</span
+							>
+						</div>
+
+						<!-- Price -->
+						<div class="mb-2">
+							<span class="text-4xl font-black text-white">Contact Sales</span>
+						</div>
+						<p
+							class="text-amber-500 text-xs font-bold uppercase tracking-wide mb-8"
+						>
+							Tailored For Scale
+						</p>
+
+						<!-- Description -->
+						<p class="text-zinc-400 text-sm leading-relaxed mb-8">
+							Built for large teams and portfolios scaling retention of scale.
+							Designed to reduce revenue cycles, improve pipeline accuracy, and
+							lower cognitive overhead across teams.
+						</p>
+
+						<!-- Capabilities -->
+						<div class="mb-10">
+							<h4
+								class="text-[10px] font-bold uppercase tracking-wider text-zinc-600 mb-4"
+							>
+								Capabilities Included:
+							</h4>
+							<ul class="space-y-3">
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 flex-shrink-0"
+									></div>
+									<span>Tailored deployment & onboarding</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 flex-shrink-0"
+									></div>
+									<span>Org-wise strategized focus</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 flex-shrink-0"
+									></div>
+									<span>Consistent high-quality conversations</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 flex-shrink-0"
+									></div>
+									<span>Scalable cognitive augmentation</span>
+								</li>
+								<li class="flex items-start gap-3 text-sm text-zinc-300">
+									<div
+										class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 flex-shrink-0"
+									></div>
+									<span>Priority 2-6 hour support</span>
+								</li>
+							</ul>
+						</div>
+
+						<!-- CTA Button -->
+						<a href="/contact-sales" class="block w-full">
+							<button
+								class="w-full flex items-center justify-between px-6 py-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg text-black font-black text-sm uppercase tracking-wide hover:from-amber-600 hover:to-amber-700 transition-all group shadow-lg shadow-amber-500/20"
+							>
+								<span>Get In Touch</span>
+								<ChevronRight
+									class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+								/>
+							</button>
+						</a>
+						<p
+							class="text-[10px] text-zinc-600 text-center mt-4 uppercase tracking-wide"
+						>
+							Large Sales Organizations and Leaders
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Section (Dark) -->
+	<section class="bg-black py-16 lg:py-24">
+		<div class="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-16 text-center">
+			<h2 class="text-3xl lg:text-5xl font-bold text-white mb-6">
+				Ready to Transform Your Sales?
+			</h2>
+			<p class="text-zinc-400 text-lg mb-10 max-w-2xl mx-auto">
+				Join hundreds of revenue teams using Spiked AI to close more deals,
+				faster.
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<a
+					href="/contact-sales"
+					class="inline-flex items-center justify-center gap-2 bg-[#ef4444] text-black font-bold px-8 py-4 text-sm hover:bg-[#dc2626] transition-colors"
+				>
+					Contact Sales
+					<ChevronRight class="w-4 h-4" />
+				</a>
+				<a
+					href="/features"
+					class="inline-flex items-center justify-center gap-2 border border-white text-white font-bold px-8 py-4 text-sm hover:bg-white hover:text-black transition-colors"
+				>
+					Explore Features
+					<ChevronRight class="w-4 h-4" />
+				</a>
+			</div>
+		</div>
+	</section>
 </div>
 
 <style>
-	/* Utility for hiding scrollbar but allowing scroll */
-	.no-scrollbar::-webkit-scrollbar {
-		display: none;
-	}
-	.no-scrollbar {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
-	.marquee-wrapper {
-		display: flex;
-		width: max-content;
-		animation: marquee 40s linear infinite;
-		gap: 2rem;
+	.nvidia-page {
+		font-family:
+			"Inter",
+			-apple-system,
+			BlinkMacSystemFont,
+			"Segoe UI",
+			Roboto,
+			sans-serif;
 	}
 
-	.marquee-wrapper:hover {
-		animation-play-state: paused;
-	}
-
-	.marquee-track {
-		display: flex;
-		gap: 2rem;
-	}
-
-	@keyframes marquee {
-		from {
-			transform: translateX(0);
-		}
-		to {
-			transform: translateX(-50%);
-		}
-	}
-	/* CTA Button */
-	.contextual-cta {
-		background: #ef4444;
-		color: var(--foreground);
-		border: 2px solid #ef4444;
-		transition: all 0.2s ease;
-	}
-
-	.contextual-cta:hover {
-		background: #dc2626;
-		border-color: #dc2626;
-	}
-
-	.cta-icon {
-		width: 2rem;
-		height: 2rem;
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 9999px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		transition: all 0.2s ease;
-	}
-
-	.interactive-scaler {
-		transition: transform 0.3s ease;
-		transform-origin: center center;
-		flex-shrink: 0;
-	}
-
-	@media (max-width: 1280px) {
-		.interactive-scaler {
-			transform: scale(0.85);
-		}
-	}
-
-	@media (max-width: 1024px) {
-		.interactive-scaler {
-			transform: scale(1); /* Reset for mobile stack view */
-			width: 100% !important;
-			height: 100% !important;
-		}
-	}
-
-	@media (max-width: 768px) {
-		.interactive-scaler {
-			transform: scale(0.6);
-			width: 166% !important; /* Compensate for scale: 1/0.6 = 1.66 */
-			height: 166% !important;
-		}
-	}
-
-	@media (max-width: 480px) {
-		.interactive-scaler {
-			transform: scale(0.45);
-			width: 222% !important; /* 1/0.45 = 2.22 */
-			height: 222% !important;
-		}
+	/* Smooth transitions for hero */
+	:global(.nvidia-page) {
+		scroll-behavior: smooth;
 	}
 </style>

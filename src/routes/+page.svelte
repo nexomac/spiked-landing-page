@@ -598,23 +598,62 @@
 	</section>
 
 	<!-- Value Proposition Banner -->
-	<section
-		class="bg-gradient-to-r from-zinc-50 to-white py-12 lg:py-16 border-y border-zinc-100"
-	>
+	<section class="bg-zinc-900 py-16 lg:py-24">
 		<div class="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12">
-			<div
-				class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
-			>
-				<div class="flex-1 text-center lg:text-left">
+			<div class="grid lg:grid-cols-[1.2fr,0.8fr] gap-10 lg:gap-16 items-center">
+				<div class="text-center lg:text-left">
+					<p
+						class="text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-4"
+					>
+						Executive Value
+					</p>
 					<h2
-						class="text-2xl lg:text-3xl xl:text-4xl font-bold text-zinc-900 mb-4 leading-tight"
+						class="text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 leading-tight"
 					>
 						Multiplying the Human Brain for Revenue Teams
 					</h2>
-					<p class="text-base lg:text-lg text-zinc-600 leading-relaxed mb-6">
-						Transforming the societal infrastructure of the 150M+ sales workforce by enabling low and mid performer to the close the gap.
-						<br />Every rep performs like a top 1% closer.
+					<p class="text-base lg:text-lg text-zinc-300 leading-relaxed mb-8">
+						Transforming the societal infrastructure of the 150M+ sales workforce by enabling 
+						low and mid performer to the close the gap. Every rep performs like a top 1% closer.
 					</p>
+					<div class="grid sm:grid-cols-3 gap-3 mb-8">
+						<div
+							class="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4 text-left"
+						>
+							<div
+								class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500"
+							>
+								Board Narrative
+							</div>
+							<div class="text-sm font-semibold text-white mt-2">
+								One story, one signal.
+							</div>
+						</div>
+						<div
+							class="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4 text-left"
+						>
+							<div
+								class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500"
+							>
+								Pipeline
+							</div>
+							<div class="text-sm font-semibold text-white mt-2">
+								Predictable, forecastable.
+							</div>
+						</div>
+						<div
+							class="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4 text-left"
+						>
+							<div
+								class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500"
+							>
+								Decision Speed
+							</div>
+							<div class="text-sm font-semibold text-white mt-2">
+								Faster calls, fewer meetings.
+							</div>
+						</div>
+					</div>
 					<div
 						class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
 					>
@@ -622,43 +661,57 @@
 							href="/contact-sales"
 							class="inline-flex items-center justify-center gap-2 bg-[#ef4444] text-black font-bold px-8 py-3.5 text-sm uppercase tracking-wide hover:bg-[#dc2626] transition-all"
 						>
-							Get Started Free
+							Book Executive Demo
 							<ChevronRight class="w-4 h-4" />
 						</a>
 						<a
 							href="/pricing"
-							class="inline-flex items-center justify-center gap-2 bg-white text-zinc-900 font-bold px-8 py-3.5 text-sm uppercase tracking-wide border-2 border-zinc-300 hover:border-[#ef4444] transition-all"
+							class="inline-flex items-center justify-center gap-2 border border-white text-white font-bold px-8 py-3.5 text-sm uppercase tracking-wide hover:bg-white hover:text-black transition-colors"
 						>
 							View Pricing
 							<ChevronRight class="w-4 h-4" />
 						</a>
 					</div>
 				</div>
-				<div class="flex-shrink-0">
-					<div class="flex flex-col gap-6">
-						<div class="text-left">
-							<div class="text-4xl lg:text-5xl font-black text-[#ef4444] mb-2">
-								+10-30%
+				<div class="flex-shrink-0 w-full">
+					<div class="grid gap-6">
+						<div
+							class="group relative bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-[#ef4444]/50 transition-colors"
+						>
+							<div class="p-6">
+								<div class="text-4xl lg:text-5xl font-black text-white">
+									+10–30%
+								</div>
+								<div class="text-sm font-semibold text-white mt-2">
+									Quota Attainment Lift
+								</div>
+								<div class="text-sm text-zinc-400">
+									Enterprise-wide, without rep sprawl.
+								</div>
 							</div>
-							<div class="text-sm font-semibold text-zinc-900">
-								Quota Attainment lift
-							</div>
-							<div class="text-sm font-semibold text-zinc-500">
-								Across the entire sales organization,<br />
-								democratizing excellence at scale.
-							</div>
+							<div
+								class="absolute bottom-0 right-0 w-24 h-24 bg-[#ef4444]/10 rounded-tl-full"
+							></div>
 						</div>
-						<div>
-							<div class="text-[10px] font-white bg-black p-2 w-max mb-5">
-								The Constrarian Bet
+						<div
+							class="group relative bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-[#ef4444]/50 transition-colors"
+						>
+							<div class="p-6">
+								<div
+									class="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500"
+								>
+									The Contrarian Bet
+								</div>
+								<div class="text-sm font-semibold text-white mt-2">
+									Cognition over data
+								</div>
+								<div class="text-sm text-zinc-400">
+									One executive signal, not another dashboard.
+								</div>
 							</div>
-							<div class="text-sm font-semibold text-zinc-900">
-								Cognition > Data
-							</div>
-							<div class="text-sm font-semibold text-zinc-500">
-								Betting against the CRM status quo. We don't just<br />
-								manage data; Spiked amplifies human cognition.
-							</div>
+							<div
+								class="absolute bottom-0 right-0 w-24 h-24 bg-[#ef4444]/10 rounded-tl-full"
+							></div>
 						</div>
 					</div>
 				</div>

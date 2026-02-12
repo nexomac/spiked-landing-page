@@ -505,7 +505,7 @@
 <!-- Mobile Menu -->
 {#if mobileMenuOpen}
 	<div
-		class="bg-gradient-to-b from-zinc-900 to-black fixed left-0 right-0 top-[60px] bottom-0 overflow-y-auto overscroll-contain z-[400]"
+		class="bg-gradient-to-b from-zinc-900 to-black fixed left-0 right-0 top-[60px] bottom-0 overflow-y-auto overscroll-contain z-[400] sticky"
 		in:fly={{ y: -12, duration: 160 }}
 	>
 		<div class="px-4 py-6 space-y-4 min-h-full">

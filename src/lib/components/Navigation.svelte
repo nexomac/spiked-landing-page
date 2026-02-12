@@ -505,7 +505,9 @@
 <!-- Mobile Menu -->
 {#if mobileMenuOpen}
 	<div
-		class="bg-gradient-to-b from-zinc-900 to-black fixed left-0 right-0 top-[60px] bottom-0 overflow-y-auto overscroll-contain z-[400] sticky"
+		class="sticky inset-x-0 top-[60px] h-[calc(100dvh-60px)] 
+		       bg-gradient-to-b from-zinc-900 to-black
+		       overflow-y-auto z-[400]"
 		in:fly={{ y: -12, duration: 160 }}
 	>
 		<div class="px-4 py-6 space-y-4 min-h-full">
@@ -647,29 +649,4 @@
 			transform: translateX(100%);
 		}
 	}
-
-	:global(.nav-locked) {
-		overflow: hidden;
-	}
-	/* 
-	.animate-slide-down-fade {
-		animation: slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-	}
-
-	.animate-shimmer {
-		animation: shimmer 2s infinite;
-	}
-
-	.no-scrollbar::-webkit-scrollbar {
-		display: none;
-	}
-
-	.no-scrollbar {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
-
-	.overscroll-contain {
-		overscroll-behavior-y: contain;
-	} */
 </style>

@@ -3,7 +3,7 @@
 	import { fade, fly, slide } from "svelte/transition";
 	import {
 		ChevronRight,
-		Search,
+		Brain,
 		Globe,
 		User,
 		Menu,
@@ -598,127 +598,74 @@
 	</section>
 
 	<!-- Value Proposition Banner -->
-	<section class="bg-zinc-900 py-16 lg:py-24">
-		<div class="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12">
-			<div class="grid lg:grid-cols-[1.2fr,0.8fr] gap-10 lg:gap-16 items-center">
-				<div class="text-center lg:text-left">
-					<p
-						class="text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-4"
-					>
-						Executive Value
-					</p>
-					<h2
-						class="text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 leading-tight"
-					>
-						Multiplying the Human Brain for Revenue Teams
+	<section class="bg-[#111] py-16 lg:py-24 relative overflow-hidden">
+		<!-- Diagonal accent -->
+		<div class="absolute top-0 right-0 w-2/3 h-full lg:bg-[#ef4433] transform skew-x-12 translate-x-1/3 opacity-90"></div>
+		
+		<div class="relative max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12">
+			<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+				
+				<!-- Left -->
+				<div class="flex-1 text-center lg:text-left z-10">
+					<h2 class="text-4xl lg:text-6xl font-black text-white mb-6 leading-none uppercase tracking-tight">
+						I didn't wing it<br/>
+						<span class="text-[#ef4433]"> — I won it</span>
 					</h2>
-					<p class="text-base lg:text-lg text-zinc-300 leading-relaxed mb-8">
-						Transforming the societal infrastructure of the 150M+ sales workforce by enabling 
-						low and mid performer to the close the gap. Every rep performs like a top 1% closer.
+					<p class="text-lg text-zinc-300 mb-8 max-w-lg">
+						The Know Your Customer feature surfaced insights no other AI could, 
+						without forcing me to read or prepare. SpikedAI's Cognitive Cockpit 
+						reasoned with me in real time, elevating my judgment live with the 
+						client.
 					</p>
-					<div class="grid sm:grid-cols-3 gap-3 mb-8">
-						<div
-							class="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4 text-left"
-						>
-							<div
-								class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500"
-							>
-								Board Narrative
-							</div>
-							<div class="text-sm font-semibold text-white mt-2">
-								One story, one signal.
-							</div>
-						</div>
-						<div
-							class="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4 text-left"
-						>
-							<div
-								class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500"
-							>
-								Pipeline
-							</div>
-							<div class="text-sm font-semibold text-white mt-2">
-								Predictable, forecastable.
-							</div>
-						</div>
-						<div
-							class="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4 text-left"
-						>
-							<div
-								class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500"
-							>
-								Decision Speed
-							</div>
-							<div class="text-sm font-semibold text-white mt-2">
-								Faster calls, fewer meetings.
-							</div>
-						</div>
-					</div>
-					<div
-						class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-					>
-						<a
+					<div class="flex gap-4 justify-center lg:justify-start">
+						<a 
+							class="bg-white text-black font-black px-8 py-4 uppercase tracking-wider hover:bg-[#ef4433] hover:text-white transition-colors"
 							href="/contact-sales"
-							class="inline-flex items-center justify-center gap-2 bg-[#ef4444] text-black font-bold px-8 py-3.5 text-sm uppercase tracking-wide hover:bg-[#dc2626] transition-all"
-						>
-							Book Executive Demo
-							<ChevronRight class="w-4 h-4" />
-						</a>
-						<a
+							>
+							Get Started Free
+					</a>
+						<a 
+							class="border-2 border-white text-white font-bold px-8 py-4 uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
 							href="/pricing"
-							class="inline-flex items-center justify-center gap-2 border border-white text-white font-bold px-8 py-3.5 text-sm uppercase tracking-wide hover:bg-white hover:text-black transition-colors"
-						>
+							>
 							View Pricing
-							<ChevronRight class="w-4 h-4" />
-						</a>
+				</a>
 					</div>
 				</div>
-				<div class="flex-shrink-0 w-full">
-					<div class="grid gap-6">
-						<div
-							class="group relative bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-[#ef4444]/50 transition-colors"
-						>
-							<div class="p-6">
-								<div class="text-4xl lg:text-5xl font-black text-white">
-									+10–30%
-								</div>
-								<div class="text-sm font-semibold text-white mt-2">
-									Quota Attainment Lift
-								</div>
-								<div class="text-sm text-zinc-400">
-									Enterprise-wide, without rep sprawl.
-								</div>
+
+				<!-- Right - Brutalist Stats -->
+				<div class="flex-shrink-0 z-10 w-full lg:w-auto">
+					<div class="bg-black border-4 border-white p-8 lg:p-12 shadow-[8px_8px_0px_0px_rgba(255,107,53,1)]">
+						
+						<!-- 150M - Massive -->
+						<div class="mb-8 border-b-4 border-[#ef4433] pb-6">
+							<div class="text-[10px] font-black text-black bg-[#ef4433] inline-block px-3 py-1 uppercase tracking-widest mb-3">
+								The Contrarian Bet
 							</div>
-							<div
-								class="absolute bottom-0 right-0 w-24 h-24 bg-[#ef4444]/10 rounded-tl-full"
-							></div>
-						</div>
-						<div
-							class="group relative bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-[#ef4444]/50 transition-colors"
-						>
-							<div class="p-6">
-								<div
-									class="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500"
-								>
-									The Contrarian Bet
-								</div>
-								<div class="text-sm font-semibold text-white mt-2">
-									Cognition over data
-								</div>
-								<div class="text-sm text-zinc-400">
-									One executive signal, not another dashboard.
-								</div>
+							<div class="text-7xl lg:text-9xl font-black text-white leading-none tracking-tighter">
+								150M
 							</div>
-							<div
-								class="absolute bottom-0 right-0 w-24 h-24 bg-[#ef4444]/10 rounded-tl-full"
-							></div>
+							<div class="text-xl font-bold text-[#ef4433] uppercase tracking-wide mt-2">Sellers Worldwide</div>
 						</div>
+
+						<!-- 10-30% - Highlighted block -->
+						<div class="bg-[#ef4433] p-6 -mx-2 mb-6 transform -rotate-1">
+							<div class="text-6xl lg:text-7xl font-black text-black leading-none">
+								+10-30%
+							</div>
+							<div class="text-black font-black uppercase tracking-wide text-sm mt-2">
+								Quota Attainment Lift
+							</div>
+						</div>
+
+						<div class="text-white font-bold text-lg">Cognition > Data</div>
+						<div class="text-zinc-400 text-sm mt-1">Amplifying human cognition, not just managing data.</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
+	
 	<!-- Platform in Action - Dashboard Showcase -->
 	<section
 		class="relative bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 py-20 lg:py-32 overflow-hidden"

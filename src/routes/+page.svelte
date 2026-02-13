@@ -598,18 +598,18 @@
 	</section>
 
 	<!-- Value Proposition Banner -->
-	<section class="bg-[#111] py-16 lg:py-24 relative overflow-hidden">
+	<section class="bg-black py-16 lg:py-24 relative overflow-hidden">
 		<!-- Diagonal accent -->
-		<div class="absolute top-0 right-0 w-2/3 h-full lg:bg-[#ef4433] transform skew-x-12 translate-x-1/3 opacity-90"></div>
+		<div class="absolute top-0 right-0 w-2/3 h-full lg:bg-[#ef4444] transform skew-x-12 translate-x-1/3 opacity-90"></div>
 		
 		<div class="relative max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12">
 			<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 				
 				<!-- Left -->
 				<div class="flex-1 text-center lg:text-left z-10">
-					<h2 class="text-4xl lg:text-6xl font-black text-white mb-6 leading-none uppercase tracking-tight">
+					<h2 class="text-4xl lg:text-6xl font-black text-white mb-6 leading-none tracking-tight">
 						I didn't wing it<br/>
-						<span class="text-[#ef4433]"> — I won it</span>
+						<span class="text-red-600"> — I won it</span>
 					</h2>
 					<p class="text-lg text-zinc-300 mb-8 max-w-lg">
 						The Know Your Customer feature surfaced insights no other AI could, 
@@ -619,13 +619,13 @@
 					</p>
 					<div class="flex gap-4 justify-center lg:justify-start">
 						<a 
-							class="bg-white text-black font-black px-8 py-4 uppercase tracking-wider hover:bg-[#ef4433] hover:text-white transition-colors"
+							class="text-black font-bold px-8 py-4 uppercase tracking-wider bg-[#ef4444] text-white transition-colors flex flex-wrap gap-2"
 							href="/contact-sales"
 							>
-							Get Started Free
+							Get Started Free <ChevronRight color='white' />
 					</a>
 						<a 
-							class="border-2 border-white text-white font-bold px-8 py-4 uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
+							class="text-white font-bold px-8 py-4 uppercase tracking-wider bg-[#ef4444] transition-colors"
 							href="/pricing"
 							>
 							View Pricing
@@ -635,21 +635,21 @@
 
 				<!-- Right - Brutalist Stats -->
 				<div class="flex-shrink-0 z-10 w-full lg:w-auto">
-					<div class="bg-black border-4 border-white p-8 lg:p-12 shadow-[8px_8px_0px_0px_rgba(255,107,53,1)]">
+					<div class="bg-black border-4 border-white p-8 lg:p-12">
 						
 						<!-- 150M - Massive -->
-						<div class="mb-8 border-b-4 border-[#ef4433] pb-6">
-							<div class="text-[10px] font-black text-black bg-[#ef4433] inline-block px-3 py-1 uppercase tracking-widest mb-3">
+						<div class="mb-8 border-b-4 border-[#ef4444] pb-6">
+							<div class="text-[10px] font-black text-black bg-[#ef4444] inline-block px-3 py-1 uppercase tracking-widest mb-3">
 								The Contrarian Bet
 							</div>
 							<div class="text-7xl lg:text-9xl font-black text-white leading-none tracking-tighter">
 								150M
 							</div>
-							<div class="text-xl font-bold text-[#ef4433] uppercase tracking-wide mt-2">Sellers Worldwide</div>
+							<div class="text-xl font-bold text-[#ef4444] uppercase tracking-wide mt-2">Sellers Worldwide</div>
 						</div>
 
 						<!-- 10-30% - Highlighted block -->
-						<div class="bg-[#ef4433] p-6 -mx-2 mb-6 transform -rotate-1">
+						<div class="bg-[#ef4444] p-6 -mx-2 mb-6 transform -rotate-1">
 							<div class="text-6xl lg:text-7xl font-black text-black leading-none">
 								+10-30%
 							</div>

@@ -106,7 +106,7 @@
 	const productTabs = [
 		{
 			id: "ai-platform",
-			label: "AI Platform",
+			label: "Cognitive Hub",
 			category: "Cognitive Intelligence",
 			title: "AI to Supercharge Sales Productivity and Close More Deals",
 			description:
@@ -118,7 +118,7 @@
 		},
 		{
 			id: "knowledge-agent",
-			label: "Knowledge Agent",
+			label: "Knowledge Hub",
 			category: "Real-Time Intelligence",
 			title: "Instant Answers from Your Knowledge Base",
 			description:
@@ -130,7 +130,7 @@
 		},
 		{
 			id: "call-simulator",
-			label: "Call Simulator",
+			label: "Learning Hub",
 			category: "Training & Practice",
 			title: "Master Your Pitch with AI-Powered Practice",
 			description:
@@ -142,7 +142,7 @@
 		},
 		{
 			id: "analytics",
-			label: "Analytics",
+			label: "Customer Hub",
 			category: "Performance Insights",
 			title: "Advanced Revenue Analytics and Deal Intelligence",
 			description:
@@ -154,7 +154,7 @@
 		},
 		{
 			id: "integrations",
-			label: "Integrations",
+			label: "Enterprise Hub",
 			category: "Seamless Workflow",
 			title: "Native CRM and Tool Integrations",
 			description:
@@ -708,7 +708,7 @@
 						</div>
 						<div class="p-6 bg-zinc-900/80 backdrop-blur-sm">
 							<h3 class="text-2xl font-bold text-white mb-3">
-								Deal Intelligence Hub
+								Conversation Hub
 							</h3>
 							<p class="text-zinc-400">
 								Track MEDDIC qualification, live sentiment, meeting summaries,
@@ -735,7 +735,7 @@
 						</div>
 						<div class="p-6 bg-zinc-900/80 backdrop-blur-sm">
 							<h3 class="text-2xl font-bold text-white mb-3">
-								AI-Powered Insights
+								Cognitive Hub
 							</h3>
 							<p class="text-zinc-400">
 								Strategic risk analysis, AI insights summary, next steps

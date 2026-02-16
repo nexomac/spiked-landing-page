@@ -2,7 +2,7 @@
 	import ShareButton from "$lib/components/ShareButton.svelte";
 	import VoicePlayer from "$lib/components/VoicePlayer.svelte";
 	import { themeStore } from "$lib/stores/theme.js";
-	import { Download, FileText } from "lucide-svelte";
+	import { Download, FileText, Loader2 } from "lucide-svelte";
 	import { page } from "$app/stores";
 	import { onMount } from "svelte";
 
@@ -468,248 +468,66 @@
 	}
 </script>
 
-{#snippet renderBlock(block)}
-	{#if block.type === "richtext"}
-		<div class="mb-10 theme-prose-colors text-left">
-			{@html block.renderedHtml || ""}
-		</div>
-	{:else if block.type === "image" || (typeof block.value === "string" && (block.value.startsWith("data:image") || block.value.match(/\.(jpeg|jpg|gif|png|webp)$/i)))}
-		<div
-			class="mb-10 border-2 p-1 transition-colors
-            {$themeStore === 'dark'
-				? 'bg-[#0f0f0f] border-red-900/30'
-				: 'bg-gray-100 border-black'}"
-		>
-			<img
-				src={block.value}
-				alt={block.name}
-				class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all"
-			/>
-		</div>
-	{:else if block.type === "quote"}
-		<div
-			class="my-10 p-10 border-l-[6px] border-red-600 transition-colors text-left
-            {$themeStore === 'dark'
-				? 'bg-red-950/20 text-white/90'
-				: 'bg-red-50 text-black'}"
-		>
-			<p class="text-2xl md:text-3xl font-black italic leading-snug mb-6">
-				"{block.value}"
-			</p>
-			{#if block.author}
-				<div
-					class="text-sm font-sans font-bold uppercase tracking-widest text-red-600"
-				>
-					{#if block.authorUrl}
-						<a
-							href={block.authorUrl}
-							target="_blank"
-							class="hover:underline hover:text-red-500 transition-all"
-						>
-							— {block.author}
-						</a>
-					{:else}
-						— {block.author}
-					{/if}
-				</div>
-			{/if}
-		</div>
-	{:else if block.type === "highlight"}
-		<div
-			class="my-10 p-8 shadow-[12px_12px_0px_0px_rgba(220,38,38,1)] transition-colors
-            {$themeStore === 'dark'
-				? 'bg-red-950/20 border-l-4 border-red-600'
-				: 'bg-black text-white'}"
-		>
-			<p
-				class="font-sans font-bold uppercase tracking-widest text-xs mb-3 text-red-600"
-			>
-				Intelligence Brief
-			</p>
-			<p class="text-2xl font-bold leading-snug text-left">
-				{block.value}
-			</p>
-		</div>
-	{:else if block.type === "callout"}
-		<div
-			class="my-8 p-6 border-2 border-dashed transition-colors
-            {$themeStore === 'dark'
-				? 'border-red-900/40 bg-red-900/5'
-				: 'border-black bg-gray-50'}"
-		>
-			<div class="flex items-start gap-4">
-				<span class="text-4xl">📢</span>
-				<p class="text-xl font-medium italic text-left">{block.value}</p>
-			</div>
-		</div>
-	{:else if block.type === "link"}
-		<div class="mb-8 font-sans">
-			{#if getYoutubeId(block.value)}
-				<div
-					class="w-full aspect-video mb-4 rounded-xl overflow-hidden bg-black shadow-2xl border border-red-900/10"
-				>
-					<iframe
-						width="100%"
-						height="100%"
-						src="https://www.youtube.com/embed/{getYoutubeId(block.value)}"
-						title="YouTube video player"
-						frameborder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-						allowfullscreen
-					></iframe>
-				</div>
-			{:else}
-			<a
-				href={block.value}
-				target="_blank"
-				class="group inline-flex items-center gap-2 text-xl font-bold border-b-4 border-red-600 hover:bg-red-600 hover:text-white transition-all px-2 py-1"
-			>
-				<span class="group-hover:text-white">
-					{block.value.replace(/^https?:\/\//, "")}
-				</span>
-				<span class="group-hover:text-white">↗</span>
-			</a>
-			{/if}
-		</div>
-	{:else if block.type === "statistic"}
-		{@const [statLabel, statVal] = (block.value || "").split("|")}
-		<div
-			class="my-10 flex flex-col items-center gap-4 p-8 border transition-colors text-center
-            {$themeStore === 'dark'
-				? 'border-red-900/30 bg-[#0a0a0a]'
-				: 'border-black bg-gray-50'}"
-		>
-			<div class="w-32 h-32 shrink-0 relative flex items-center justify-center">
-				<svg viewBox="0 0 32 32" class="w-full h-full rotate-[-90deg]">
-					<circle
-						r="16"
-						cx="16"
-						cy="16"
-						fill="transparent"
-						stroke="currentColor"
-						stroke-width="32"
-						stroke-dasharray="100 100"
-						class="opacity-10"
-					/>
-					<circle
-						r="16"
-						cx="16"
-						cy="16"
-						fill="transparent"
-						stroke="#dc2626"
-						stroke-width="32"
-						stroke-dasharray="{parseFloat(statVal) || 75} 100"
-					/>
-				</svg>
-				<div
-					class="absolute inset-0 flex items-center justify-center text-xl font-black"
-				>
-					{statVal || ""}
-				</div>
-			</div>
-			<div
-				class="text-sm font-sans font-bold uppercase tracking-widest opacity-60"
-			>
-				{statLabel || "Metric"}
-			</div>
-		</div>
-	{:else if block.type === "divider"}
-		<div class="my-12 flex justify-center items-center gap-4">
-			<div class="h-0.5 flex-1 bg-red-600/30"></div>
-			<div class="text-red-600 rotate-45 text-xs">◆</div>
-			<div class="h-0.5 flex-1 bg-red-600/30"></div>
-		</div>
-	{:else if block.type === "string_fallback" || typeof block.value === "string"}
-		<p class="mb-6 font-serif text-xl leading-relaxed text-left">{block.value}</p>
-	{/if}
-{/snippet}
-
-<!-- Outer background -->
+<!-- Outer container -->
 <div
-	class="min-h-screen transition-colors duration-500 font-serif pt-24 pb-20 px-4 flex justify-center selection:bg-red-500/30
-    {$themeStore === 'dark'
-		? 'bg-[#0f0f0f] text-white/90'
-		: 'bg-[#f8f8f0] text-black'}"
+	class="min-h-screen transition-colors duration-500 font-sans pt-24 pb-24 px-4 sm:px-6 lg:px-8
+    {$themeStore === 'dark' ? 'bg-black text-white' : 'bg-white text-zinc-900'}"
 >
-	<!-- The "Vertical Newspaper Strip" Container -->
-	<article
-		class="w-full max-w-5xl border-x shadow-2xl min-h-[80vh] flex flex-col items-center transition-colors duration-500
-        {$themeStore === 'dark'
-			? 'bg-[#1a1a1a] border-red-900/20'
-			: 'bg-white border-black/10'}"
-	>
-		<!-- Strip Header / Metaline -->
-		<header
-			class="w-full border-b mb-8 px-8 pt-8 pb-4 text-center transition-colors
-            {$themeStore === 'dark' ? 'border-red-900/30' : 'border-black'}"
-		>
+	<article class="max-w-4xl mx-auto">
+		<!-- Navigation & Meta Header -->
+		<header class="mb-12 lg:mb-16">
 			<nav
-				class="flex justify-between items-center text-xs font-sans font-bold uppercase tracking-widest mb-6 border-b pb-2
-                {$themeStore === 'dark'
-					? 'border-red-900/10 text-red-600/60'
-					: 'border-black/5 text-gray-500'}"
+				class="flex items-center gap-4 text-[11px] uppercase tracking-[0.3em] font-semibold text-red-500 mb-8"
 			>
-				<a
-					href="/blog"
-					class="flex items-center gap-1 transition-colors group {$themeStore ===
-					'dark'
-						? 'hover:text-red-500'
-						: 'hover:text-black'}"
+				<a href="/blog" class="hover:opacity-70 transition-opacity"
+					>Spiked Journal</a
 				>
-					<span class="group-hover:-translate-x-1 transition-transform">←</span>
-					Research and News
-				</a>
-				<span
-					class="hidden md:block transition-colors {$themeStore === 'dark'
-						? 'text-gray-500'
-						: 'text-gray-400'}"
-				>
-					The SpikedAI Times
-				</span>
-				<span class="flex items-center gap-2">
-					{formattedDate}
-					<span class="opacity-30">/</span>
-					{readingTime}
-				</span>
-				<span class="hidden sm:block">Vol. {new Date().getFullYear()}</span>
+				<span class="opacity-30">|</span>
+				<span>{formattedDate}</span>
 			</nav>
 
 			<h1
-				class="text-4xl md:text-6xl font-black leading-tight mb-6 font-serif transition-colors
-                {$themeStore === 'dark' ? 'text-white' : 'text-black'}"
+				class="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight mb-8"
 			>
-				{data.post.title || data.post.data?.title || data.post.data?.Title}
+				{data.post.title || data.post.data?.title}
 			</h1>
 
 			<div
-				class="flex flex-col items-center justify-center gap-4 font-sans text-sm font-bold border-t pt-4 w-full px-4
-                {$themeStore === 'dark'
-					? 'border-red-900/10 text-gray-500'
-					: 'border-black/10 text-gray-600'}"
+				class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 py-8 border-y {$themeStore ===
+				'dark'
+					? 'border-zinc-800'
+					: 'border-zinc-200'}"
 			>
-				<span class="flex items-center gap-2">
-					<span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
-					By {data.post.author ||
-						data.post.data?.author ||
-						data.post.data?.Author ||
-						"Editorial Staff"}
-					<span class="w-1.5 h-1.5 bg-red-600 rotate-45"></span>
-				</span>
+				<div class="flex items-center gap-4">
+					<div
+						class="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-500"
+					>
+						<FileText size={20} />
+					</div>
+					<div>
+						<p class="text-xs uppercase tracking-widest font-bold text-red-500">
+							Author
+						</p>
+						<p class="text-sm font-medium">
+							{data.post.author || "Editorial Staff"}
+						</p>
+					</div>
+				</div>
 
-				<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+				<div class="flex flex-wrap items-center gap-4">
 					<VoicePlayer blocks={contentBlocks} content={rest || {}} />
+
 					<button
 						onclick={downloadPDF}
 						disabled={isGeneratingPDF}
-						class="flex items-center gap-2 px-10 py-1.5 rounded-full border border-red-900/10 hover:bg-red-600 hover:text-white transition-all disabled:opacity-50 bg-white"
-						title="Download as PDF"
+						class="flex items-center gap-2 px-6 py-2 rounded-full border border-zinc-800 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all disabled:opacity-50 text-[11px] uppercase tracking-widest font-bold"
 					>
 						{#if isGeneratingPDF}
-							<span class="animate-spin text-xs">◌</span>
+							<Loader2 size={14} class="animate-spin" />
 						{:else}
-							<Download size={16} />
+							<Download size={14} />
 						{/if}
-						<span class="text-xs uppercase tracking-wider font-bold">PDF</span>
+						<span>PDF</span>
 					</button>
 
 					<ShareButton
@@ -720,44 +538,168 @@
 			</div>
 		</header>
 
-		<!-- Main Content Column -->
-		<div
-			class="w-full px-8 md:px-16 pb-12 transition-colors {$themeStore ===
-			'dark'
-				? 'bg-[#1a1a1a]'
-				: 'bg-white'}"
-		>
-			<!-- Optional Cover Image -->
-			{#if data.post.coverImage || data.post.data?.coverImage || data.post.data?.["Cover Image"]}
-				<div class="mb-8 p-1 transition-colors">
+		<!-- Hero Image (Optional) -->
+		{#if data.post.coverImage || data.post.data?.coverImage}
+			<div class="mb-16">
+				<div
+					class="aspect-[16/9] rounded-3xl overflow-hidden border {$themeStore ===
+					'dark'
+						? 'border-zinc-800 bg-zinc-950'
+						: 'border-zinc-200 bg-zinc-50'} shadow-2xl"
+				>
 					<img
-						src={data.post.coverImage ||
-							data.post.data?.coverImage ||
-							data.post.data?.["Cover Image"]}
+						src={data.post.coverImage || data.post.data?.coverImage}
 						alt={data.post.title}
-						class="w-full h-auto grayscale contrast-125 block hover:grayscale-0 transition-all duration-700"
+						class="w-full h-full object-cover"
 					/>
 				</div>
-			{/if}
-
-			<!-- Text Content -->
-			<div
-				class="text-left tiptap-content prose prose-lg prose-serif max-w-none transition-colors
-                 {$themeStore === 'dark' ? 'text-white/80' : 'text-black'}"
-			>
-				{#each contentBlocks as block (block.id)}
-					{@render renderBlock(block)}
-				{/each}
 			</div>
+		{/if}
 
-			<!-- End Mark -->
-			<div class="flex justify-center mt-12 mb-8">
-				<div
-					class="text-2xl transition-colors {$themeStore === 'dark'
-						? 'text-red-900'
-						: 'text-black'}"
-				>
-					❦
+		<!-- Reading Progress / Meta -->
+		<div
+			class="flex items-center gap-6 mb-12 text-[10px] uppercase tracking-[0.3em] {$themeStore ===
+			'dark'
+				? 'text-zinc-500'
+				: 'text-zinc-400'}"
+		>
+			<span>{readingTime}</span>
+			<span>|</span>
+			<span>Vol. {new Date().getFullYear()}</span>
+			<span>|</span>
+			<span>Signal Verified</span>
+		</div>
+
+		<!-- Main Content -->
+		<div
+			class="tiptap-content prose prose-lg max-w-none {$themeStore === 'dark'
+				? 'prose-invert'
+				: ''}"
+		>
+			{#each contentBlocks as block (block.id)}
+				<div class="mb-12">
+					{#if block.type === "richtext"}
+						<div
+							class="text-left leading-relaxed {$themeStore === 'dark'
+								? 'text-zinc-300'
+								: 'text-zinc-700'}"
+						>
+							{@html block.renderedHtml || ""}
+						</div>
+					{:else if block.type === "image"}
+						<div class="my-12">
+							<div
+								class="rounded-2xl overflow-hidden border {$themeStore ===
+								'dark'
+									? 'border-zinc-800'
+									: 'border-zinc-200'} shadow-lg group"
+							>
+								<img
+									src={block.value}
+									alt={block.name}
+									class="w-full h-auto transition-transform duration-700 group-hover:scale-[1.03]"
+								/>
+								{#if block.name}
+									<p
+										class="px-6 py-4 text-xs italic text-zinc-500 border-t {$themeStore ===
+										'dark'
+											? 'border-zinc-800 bg-zinc-950'
+											: 'border-zinc-200 bg-zinc-50'}"
+									>
+										{block.name}
+									</p>
+								{/if}
+							</div>
+						</div>
+					{:else if block.type === "quote"}
+						<div
+							class="my-16 pl-8 border-l-4 border-red-500 bg-red-500/5 py-10 px-10 rounded-r-3xl"
+						>
+							<p
+								class="text-3xl font-semibold italic leading-snug mb-8 {$themeStore ===
+								'dark'
+									? 'text-white'
+									: 'text-zinc-900'}"
+							>
+								"{block.value}"
+							</p>
+							{#if block.author}
+								<cite
+									class="not-italic text-sm font-bold uppercase tracking-widest text-red-500"
+								>
+									{#if block.authorUrl}
+										<a
+											href={block.authorUrl}
+											target="_blank"
+											class="hover:underline">— {block.author}</a
+										>
+									{:else}
+										— {block.author}
+									{/if}
+								</cite>
+							{/if}
+						</div>
+					{:else if block.type === "statistic"}
+						{@const [label, val] = (block.value || "").split("|")}
+						<div
+							class="my-12 p-10 rounded-2xl border text-center flex flex-col items-center gap-4 {$themeStore ===
+							'dark'
+								? 'border-zinc-800 bg-zinc-950'
+								: 'border-zinc-200 bg-zinc-50'}"
+						>
+							<div class="text-6xl font-bold text-red-500">{val}</div>
+							<div
+								class="text-sm uppercase tracking-[0.3em] font-bold text-zinc-500"
+							>
+								{label}
+							</div>
+						</div>
+					{:else if block.type === "link"}
+						<div class="my-12">
+							{#if getYoutubeId(block.value)}
+								<div
+									class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-zinc-800 bg-black"
+								>
+									<iframe
+										width="100%"
+										height="100%"
+										src="https://www.youtube.com/embed/{getYoutubeId(
+											block.value,
+										)}"
+										title="YouTube video player"
+										frameborder="0"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+										allowfullscreen
+									></iframe>
+								</div>
+							{:else}
+								<a
+									href={block.value}
+									target="_blank"
+									class="inline-flex items-center gap-2 text-xl font-semibold text-red-500 hover:gap-4 transition-all"
+								>
+									{block.value.replace(/^https?:\/\//, "")} <span>→</span>
+								</a>
+							{/if}
+						</div>
+					{:else if block.type === "string_fallback"}
+						<p
+							class="leading-relaxed {$themeStore === 'dark'
+								? 'text-zinc-300'
+								: 'text-zinc-700'}"
+						>
+							{block.value}
+						</p>
+					{/if}
+				</div>
+			{/each}
+		</div>
+
+		<!-- Footer Mark -->
+		<div class="flex justify-center mt-24">
+			<div class="h-px w-24 bg-red-500/20 relative">
+				<div class="absolute inset-0 flex items-center justify-center">
+					<div class="w-2 h-2 bg-red-500 rotate-45"></div>
 				</div>
 			</div>
 		</div>
@@ -866,337 +808,57 @@
 </div>
 
 <style>
-	/* PDF SPECIFIC STYLES - Forced for the export container */
-	.pdf-export-container {
-		all: initial; /* Reset all inherited styles to avoid oklch from Tailwind 4 */
-		font-family: "Inter", system-ui, sans-serif;
-		color: #1a1a1a !important;
-		background: white !important;
-		width: 210mm; /* A4 width */
-		margin: 0;
-		padding: 0;
-		line-height: 1.5;
-		display: block !important;
-		text-align: left;
-	}
-
-	.pdf-export-container * {
-		box-sizing: border-box;
-		color: #1a1a1a; /* Force standard color */
-	}
-
-	.pdf-cover-page {
-		height: 296mm;
-		width: 210mm;
-		background: #030712;
-		color: white;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		padding: 30mm 25mm 20mm;
-		position: relative;
+	.line-clamp-1 {
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		line-clamp: 1;
+		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
 
-	.pdf-cover-background {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: #030712;
-		z-index: -1;
-	}
-
-	.pdf-logo {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.logo-main {
-		font-size: 32px;
-		font-weight: 900;
-		letter-spacing: -1px;
-		color: white !important;
-	}
-
-	.logo-alt {
-		color: #dc2626;
-	}
-
-	.logo-sub {
-		font-size: 10px;
-		font-weight: 700;
-		letter-spacing: 4px;
-		color: #9ca3af;
-		margin-top: 4px;
-	}
-
-	.pdf-title {
-		font-size: 48px;
-		font-weight: 900;
-		line-height: 1.1;
-		margin: 20mm 0;
-		font-family: serif;
-		color: white !important;
-	}
-
-	.pdf-metadata-top {
-		display: flex;
-		justify-content: space-between;
-		font-size: 12px;
-		font-weight: 700;
-		color: #dc2626 !important;
-		border-bottom: 2px solid rgba(220, 38, 38, 0.3);
-		padding-bottom: 10px;
-	}
-
-	.pdf-author-strip {
-		border-left: 4px solid #dc2626;
-		padding-left: 15px;
-		margin-top: 20mm;
-	}
-
-	.pdf-author-label {
-		font-size: 10px;
-		font-weight: 800;
-		color: #9ca3af;
-		letter-spacing: 2px;
-	}
-
-	.pdf-author-name {
-		font-size: 18px;
-		font-weight: 700;
-		color: white !important;
-	}
-
-	.pdf-footer-brand {
-		font-size: 10px;
-		color: #4b5563;
-		text-align: center;
-	}
-
-	.pdf-main-body {
-		padding: 20mm 25mm;
-		background: white;
-		height: 296mm;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.pdf-content-prose {
-		font-size: 12pt;
-		line-height: 1.6;
-		color: #1f2937;
-	}
-
-	.pdf-block {
-		margin-bottom: 6mm; /* Tighter layout to avoid orphan quotes and empty space */
-		page-break-inside: auto;
-	}
-
-	.pdf-block-quote,
-	.pdf-block-statistic,
-	.pdf-block-image,
-	.pdf-block-highlight {
-		page-break-inside: avoid; /* These specific blocks should not split */
-	}
-
-	.pdf-content-prose p {
-		margin-bottom: 4mm; /* Tighter spacing */
-		page-break-inside: avoid;
-	}
-
-	:global(.pdf-content-prose h2) {
-		font-size: 18pt;
-		font-weight: 800;
-		color: #dc2626;
-		margin-top: 10mm;
-		margin-bottom: 4mm;
-		border-bottom: 1px solid #dc2626;
-		padding-bottom: 2mm;
-		page-break-after: avoid;
-	}
-
-	:global(.pdf-content-prose h3) {
-		font-size: 14pt;
-		font-weight: 700;
-		margin-top: 8mm;
-		margin-bottom: 2mm;
-		page-break-after: avoid;
-	}
-
-	.pdf-quote,
-	:global(.pdf-content-prose blockquote) {
-		background: #fdf2f2 !important;
-		border-left: 4px solid #dc2626 !important;
-		padding: 6mm 8mm !important;
-		font-style: italic !important;
-		font-size: 13pt !important;
-		margin: 4mm 0 !important;
-		page-break-inside: avoid !important;
-		display: block !important;
-	}
-
-	:global(.pdf-content-prose blockquote p) {
-		margin-bottom: 0 !important;
-	}
-
-	.pdf-quote cite {
-		display: block;
-		font-style: normal;
-		font-weight: 700;
-		font-size: 10pt;
-		color: #dc2626;
-		margin-top: 5mm;
-	}
-
-	.pdf-image {
-		width: 100%;
-		margin: 10mm 0;
-		border: 4px solid #f3f4f6;
-	}
-
-	.pdf-highlight {
-		background: #111827;
-		color: white;
-		padding: 8mm;
-		border-radius: 4px;
-		margin: 10mm 0;
-	}
-
-	.pdf-stat {
-		text-align: center;
-		background: #f9fafb;
-		padding: 10mm;
-		border: 1px solid #e5e7eb;
-		margin: 10mm 0;
-	}
-
-	.pdf-stat-val {
-		display: block;
-		font-size: 36pt;
-		font-weight: 900;
-		color: #dc2626;
-	}
-
-	.pdf-stat-label {
-		font-size: 10pt;
-		font-weight: 700;
-		text-transform: uppercase;
-		color: #6b7280;
-	}
-
-	.footer-flex {
-		display: flex;
-		justify-content: space-between;
-		font-size: 8pt;
-		color: #9ca3af;
-	}
-
-	/* Custom Typography Tweaks for the 'Sherwood' feel */
 	:global(.tiptap-content p) {
-		margin-bottom: 2em;
-		text-indent: 0;
-	}
-	/* Specific selector to target ONLY top-level paragraphs, not lists or others */
-	:global(.tiptap-content > p:first-of-type::first-letter) {
-		float: left;
-		font-size: 4em;
-		line-height: 0.8;
-		font-weight: bold;
-		margin-right: 0.15em;
-		margin-top: 0.05em;
-		color: #dc2626; /* Spiked Red Dropcap */
-		font-family: serif;
-	}
-	:global(.theme-dark .tiptap-content p) {
-		color: rgba(255, 255, 255, 0.8);
-	}
-
-	/* Headers: Smaller and more elegant as requested */
-	:global(.tiptap-content h2) {
-		font-family: sans-serif;
-		text-transform: uppercase;
-		font-size: 1.1em;
-		font-weight: 900;
-		letter-spacing: 0.15em;
-		border-bottom: 2px solid #dc2626; /* Red border for headers */
-		padding-bottom: 0.3em;
-		margin-top: 3em;
-		margin-bottom: 1.5em;
-		color: inherit;
-		display: inline-block;
-	}
-
-	:global(.tiptap-content h3) {
-		font-family: sans-serif;
-		text-transform: uppercase;
-		font-size: 0.9em;
-		font-weight: 700;
-		letter-spacing: 0.1em;
-		margin-top: 2.5em;
-		margin-bottom: 1em;
-		color: #dc2626;
-	}
-
-	/* Fix Bold Text in Dark Mode */
-	:global(html.dark .tiptap-content strong),
-	:global(html.dark .tiptap-content b) {
-		color: inherit;
-	}
-
-	:global(.tiptap-content blockquote) {
-		border-left: 6px solid #dc2626;
-		padding-left: 1.5em;
-		font-style: italic;
-		font-weight: 700;
-		background: rgba(220, 38, 38, 0.03);
-		padding: 2em;
-		margin: 3em 0;
-		font-size: 1.25em;
-		color: inherit; /* Respect parent color */
-	}
-
-	:global(.theme-dark .tiptap-content blockquote) {
-		background: rgba(220, 38, 38, 0.07);
-		color: rgba(255, 255, 255, 0.9) !important;
-	}
-
-	:global(.tiptap-content a) {
-		color: #dc2626;
-		text-decoration: underline;
-		text-underline-offset: 4px;
-		font-weight: bold;
+		margin-bottom: 1.5rem;
 	}
 
 	:global(.tiptap-content ul) {
 		list-style-type: none;
 		padding-left: 0;
-		margin-bottom: 2em;
-	}
-	:global(.tiptap-content li) {
-		position: relative;
-		padding-left: 1.5em;
-		margin-bottom: 0.25em;
-	}
-	:global(.tiptap-content li p) {
-		margin-bottom: 0 !important;
-		margin-top: 0 !important;
-	}
-	:global(.tiptap-content li::before) {
-		content: "◆";
-		position: absolute;
-		left: 0;
-		color: #dc2626;
-		font-size: 0.8em;
-		top: 0.2em;
+		margin-bottom: 2rem;
 	}
 
-	/* Handle prose colors in dark mode better than default Tailwind prose */
-	.theme-prose-colors :global(p),
-	.theme-prose-colors :global(li) {
-		color: inherit;
+	:global(.tiptap-content li) {
+		position: relative;
+		padding-left: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	:global(.tiptap-content li::before) {
+		content: "•";
+		position: absolute;
+		left: 0;
+		color: #ef4444; /* red-500 */
+		font-weight: bold;
+	}
+
+	:global(.tiptap-content a) {
+		color: #ef4444;
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		font-weight: 600;
+	}
+
+	:global(.tiptap-content h2) {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin-top: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	:global(.tiptap-content h3) {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
 	}
 
 	:global(body) {
@@ -1204,9 +866,9 @@
 	}
 
 	:global(html.dark body) {
-		background-color: #0f0f0f !important;
+		background-color: #000000 !important;
 	}
 	:global(html:not(.dark) body) {
-		background-color: #f8f8f0 !important;
+		background-color: #ffffff !important;
 	}
 </style>

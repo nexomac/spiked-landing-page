@@ -111,7 +111,7 @@
 			{:else}
 				{#each data.posts as post}
 					<article
-						class="grid lg:grid-cols-12 gap-10 pb-16 {$themeStore === 'dark'
+						class="grid lg:grid-cols-8 gap-10 pb-16 {$themeStore === 'dark'
 						? 'border-b border-zinc-800'
 						: 'border-b border-zinc-200'}"
 					>
@@ -195,36 +195,6 @@
 									</div>
 								</div>
 							</a>
-						</div>
-						<div class="lg:col-span-4 space-y-4">
-							<div
-								class="border rounded-2xl p-6 {$themeStore === 'dark'
-								? 'border-zinc-800 bg-zinc-950'
-								: 'border-zinc-200 bg-zinc-50'}"
-							>
-								<h3 class="text-lg font-semibold">Why this matters</h3>
-								<p
-									class="mt-3 text-sm leading-relaxed {$themeStore === 'dark'
-									? 'text-zinc-400'
-									: 'text-zinc-600'}"
-								>
-									This briefing highlights the levers that move pipeline right now.
-								</p>
-							</div>
-							<div
-								class="border rounded-2xl p-6 {$themeStore === 'dark'
-								? 'border-zinc-800 bg-zinc-950'
-								: 'border-zinc-200 bg-zinc-50'}"
-							>
-								<h3 class="text-lg font-semibold">Suggested next move</h3>
-								<p
-									class="mt-3 text-sm leading-relaxed {$themeStore === 'dark'
-									? 'text-zinc-400'
-									: 'text-zinc-600'}"
-								>
-									Share with your team, align on the takeaway, and act fast.
-								</p>
-							</div>
 						</div>
 					</article>
 				{/each}

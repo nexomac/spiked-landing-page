@@ -292,16 +292,33 @@
 
 	let openSection = $state(null);
 
+	let openTimer;
+	let closeTimer;
+
 	function handleMouseEnter(menu) {
-		if (menuTimer) clearTimeout(menuTimer);
-		openDropdown = menu;
+		if (closeTimer) clearTimeout(closeTimer);
+		if (openTimer) clearTimeout(openTimer);
+
+		// If a menu is already open, switch immediately
+		if (openDropdown) {
+			openDropdown = menu;
+			return;
+		}
+
+		openTimer = setTimeout(() => {
+			openDropdown = menu;
+		}, 200);
 	}
 
 	function handleMouseLeave() {
-		menuTimer = setTimeout(() => {
+		if (openTimer) clearTimeout(openTimer);
+		if (closeTimer) clearTimeout(closeTimer);
+
+		closeTimer = setTimeout(() => {
 			openDropdown = null;
 		}, 300);
 	}
+
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -345,8 +362,8 @@
 	<nav class={isScrolled ? "bg-black/80 backdrop-blur-sm" : "bg-black"}>
 		<div class="max-w-[1920px] mx-auto px-6 lg:px-12">
 			<div class="flex items-center justify-between h-[60px]">
-				<!-- Logo -->
 				<div class="flex items-center gap-10">
+					<!-- Logo -->
 					<a href="/" class="flex items-center gap-3 group py-2">
 						<img
 							src="/icon white.png"

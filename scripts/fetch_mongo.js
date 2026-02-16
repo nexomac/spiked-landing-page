@@ -229,17 +229,53 @@ async function fetchBlogById(id) {
     }
 }
 
-// CLI Argument Handling
-const blogId = process.argv[2];
+async function fetchAllBlogs() {
+    const client = new MongoClient(MONGODB_URI);
 
-if (!blogId) {
-    console.log('Usage: node scripts/fetch_mongo.js <MONGODB_ID>');
-} else {
-    fetchBlogById(blogId).then(markdown => {
-        if (markdown) {
-            // console.log('=== MARKDOWN CONTENT ===\n');
-            console.log(JSON.stringify(markdown));
-            // console.log('\n=======================');
-        }
-    });
+    try {
+        await client.connect();
+        const db = client.db();
+        const collection = db.collection('blogs');
+
+        const blogs = await collection.find({}).toArray(); // <-- key change
+
+        const parsedBlogs = blogs.map(blog => ({
+            id: blog._id.toString(),
+            title: blog.title,
+            slug: blog.slug,
+            author: blog.author,
+            markdown: parseBlocks(blog.content),
+            tags: blog.tags || []
+        }));
+
+        // write locally
+        fs.writeFileSync(
+            path.resolve(process.cwd(), 'blogs.json'),
+            JSON.stringify(parsedBlogs, null, 2)
+        );
+
+        console.log(`Saved ${parsedBlogs.length} blogs to blogs.json`);
+
+    } catch (err) {
+        console.error('Database Error:', err.message);
+    } finally {
+        await client.close();
+    }
 }
+
+fetchAllBlogs();
+
+// // CLI Argument Handling
+// const blogId = process.argv[2];
+
+// if (!blogId) {
+//     console.log('Usage: node scripts/fetch_mongo.js <MONGODB_ID>');
+// } else {
+//     fetchBlogById(blogId).then(markdown => {
+//         if (markdown) {
+//             // console.log('=== MARKDOWN CONTENT ===\n');
+//             console.log(JSON.stringify(markdown));
+//             // console.log('\n=======================');
+//         }
+//     });
+// }

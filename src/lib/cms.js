@@ -54,6 +54,8 @@ export async function createBlog(data) {
         publishedDate: data.publishedDate || new Date().toISOString(),
         // dynamic content fields
         content: data.content || [], 
+        summary: data.summary || null,
+        points: data.points || [],
         createdAt: new Date(),
         updatedAt: new Date(),
         status: 'draft'
@@ -82,7 +84,7 @@ export async function getContentModels() {
     return await db.collection('content_models').find({}).toArray();
 }
 
-export async function getEntries(modelSlug = null, status = null) {
+export async function getEntries(modelSlug = null, status = null, projection = {}) {
     // Legacy support or if we migrate old entries to blogs
     const db = await getDb();
     
@@ -90,10 +92,10 @@ export async function getEntries(modelSlug = null, status = null) {
     if (!modelSlug || modelSlug === 'blog') {
         const query = {};
         if (status) query.status = status;
-        return await db.collection('blogs').find(query).sort({ updatedAt: -1 }).toArray();
+        return await db.collection('blogs').find(query, { projection }).sort({ updatedAt: -1 }).toArray();
     }
     
     const query = { modelSlug };
     if (status) query.status = status;
-    return await db.collection('content_entries').find(query).toArray();
+    return await db.collection('content_entries').find(query, { projection }).toArray();
 }

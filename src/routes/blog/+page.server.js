@@ -122,33 +122,35 @@ function getBestImage(data) {
 export async function load() {
     const db = await getDb();
     
-    // Fetch ALL published entries for the blog listing
-    const posts = await getEntries(null, 'published');
+    // FETCH ONLY METADATA: Explicitly exclude 'content' blocks which are heavy
+    const blogsProjection = {
+        title: 1,
+        slug: 1,
+        author: 1,
+        publishedDate: 1,
+        createdAt: 1,
+        summary: 1,
+        points: 1,
+        coverImage: 1,
+        newsletterId: 1,
+        newsletterIds: 1,
+        data: 1, // Keep legacy data for fallbacks
+        status: 1
+    };
+
+    const posts = await getEntries(null, 'published', blogsProjection);
     
     // Fetch available newsletters for the subscription section
     const newsletters = await db.collection('newsletters').find({}).toArray();
 
     const processedPosts = posts.map(p => {
-        let coverImage = p.coverImage || getBestImage(p.data || {});
+        // Since we excluded 'content', we mostly rely on p.coverImage or p.data fallbacks
+        const coverImage = p.coverImage || getBestImage(p.data || {});
         
-        if (!coverImage && p.content && Array.isArray(p.content)) {
-            const imageBlock = p.content.find(b => b.type === 'image');
-            if (imageBlock && imageBlock.data?.url) {
-                coverImage = imageBlock.data.url;
-            }
-        }
+        // Excerpt is less critical now as we use 'summary' for the main layout, 
+        // but we'll keep a minimal version for compatibility
+        const excerpt = getBestExcerpt(p.data || {});
         
-        let excerpt = getBestExcerpt(p.data || {});
-        if ((!excerpt || excerpt === 'Click to read the full story...') && p.content && Array.isArray(p.content)) {
-            const textBlock = p.content.find(b => b.type === 'text' || b.type === 'richtext');
-            if (textBlock) {
-                if (textBlock.type === 'text') excerpt = textBlock.data.content?.slice(0, 180) + '...';
-                if (textBlock.type === 'richtext' && typeof textBlock.data.html === 'string') {
-                    excerpt = textBlock.data.html.replace(/<[^>]*>?/gm, '').slice(0, 180) + '...';
-                }
-            }
-        }
-
         const summary =
             extractSummary(p.data || {}) ||
             (typeof p.summary === 'string' ? p.summary : null);
@@ -156,8 +158,8 @@ export async function load() {
             extractPoints(p.data || {}) ||
             (Array.isArray(p.points) ? p.points : null);
 
+        // RETURN ONLY WHAT'S NEEDED: Do NOT use ...p as it might include leftover hidden fields
         return {
-            ...p,
             _id: p._id.toString(),
             title: p.title || p.data?.title || p.data?.Title || 'Untitled',
             slug: p.slug || p.data?.slug || p.data?.Slug,

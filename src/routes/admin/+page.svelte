@@ -82,20 +82,21 @@
 
 			if (data.success && data.blocks) {
 				// We have the blocks, now we create the blog via a form submit to include it in the DB
-				// We can just use the createBlog action with the generated blocks as JSON
 				const formData = new FormData();
 				const initialTitle =
 					prompt.length > 30 ? prompt.substring(0, 30) + "..." : prompt;
+
 				formData.append(
 					"json",
 					JSON.stringify({
-						title: `AI Generated: ${initialTitle}`,
+						title: data.title || `AI Generated: ${initialTitle}`,
 						content: data.blocks,
+						summary: data.summary,
+						points: data.points,
 					}),
 				);
 
-				// Standard form submission via fetch or just use a hidden form?
-				// Using fetch to the action endpoint:
+				// Standard form submission via fetch
 				const createRes = await fetch("?/createBlog", {
 					method: "POST",
 					body: formData,

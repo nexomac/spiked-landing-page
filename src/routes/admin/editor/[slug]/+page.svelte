@@ -5,7 +5,7 @@
 		ArrowUp,
 		ArrowDown,
 		Trash2,
-		Plus,
+		Sparkles,
 		Save,
 		ArrowLeft,
 		Type,
@@ -350,6 +350,60 @@
 									No newsletters available.
 								</p>
 							{/if}
+						</div>
+					</div>
+				</div>
+
+				<!-- Summary & Points -->
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 p-6 bg-gray-900/30 border border-gray-800 rounded-2xl relative overflow-hidden group/meta"
+				>
+					<div
+						class="absolute top-0 right-0 p-4 opacity-10 group-hover/meta:opacity-100 transition"
+					>
+						<Sparkles class="w-5 h-5 text-indigo-400" />
+					</div>
+
+					<div class="space-y-4">
+						<label
+							class="block text-sm font-semibold text-indigo-400 flex items-center gap-2"
+							for="summary"
+						>
+							<AlignLeft class="w-4 h-4" />
+							AI Summary
+						</label>
+						<textarea
+							id="summary"
+							bind:value={blog.summary}
+							oninput={() => (isDirty = true)}
+							class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm text-gray-300 focus:ring-1 focus:ring-indigo-500 min-h-[120px] resize-none leading-relaxed"
+							placeholder="Briefly describe what this blog is about..."
+						></textarea>
+					</div>
+
+					<div class="space-y-4">
+						<label
+							class="block text-sm font-semibold text-emerald-400 flex items-center gap-2"
+						>
+							<Hash class="w-4 h-4" />
+							Key Points (Focus on People)
+						</label>
+						<div class="space-y-3">
+							{#each [0, 1, 2] as i}
+								<div class="group/point relative">
+									<span
+										class="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-600 group-focus-within/point:text-emerald-500 transition"
+										>{i + 1}</span
+									>
+									<input
+										type="text"
+										bind:value={blog.points[i]}
+										oninput={() => (isDirty = true)}
+										class="w-full bg-gray-950 border border-gray-800 rounded-lg pl-8 pr-4 py-2 text-sm text-gray-300 focus:ring-1 focus:ring-emerald-500 transition"
+										placeholder="Add key takeaway #{i + 1}..."
+									/>
+								</div>
+							{/each}
 						</div>
 					</div>
 				</div>

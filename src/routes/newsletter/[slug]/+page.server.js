@@ -41,18 +41,35 @@ export async function load({ params }) {
     delete query.status;
     query.status = { $in: ['published', 'live'] };
 
-    const posts = await db.collection('blogs').find(query).sort({ publishedDate: -1, createdAt: -1 }).toArray();
+    const blogsProjection = {
+        title: 1,
+        slug: 1,
+        author: 1,
+        publishedDate: 1,
+        createdAt: 1,
+        summary: 1,
+        points: 1,
+        coverImage: 1,
+        data: 1,
+        status: 1
+    };
+
+    const posts = await db.collection('blogs')
+        .find(query, { projection: blogsProjection })
+        .sort({ publishedDate: -1, createdAt: -1 })
+        .toArray();
 
     return {
         newsletter: { ...newsletter, _id: newsletter._id.toString() },
         posts: posts.map(p => ({
-            ...p,
             _id: p._id.toString(),
             title: p.title || p.data?.title || p.data?.Title || 'Untitled',
             slug: p.slug || p.data?.slug || p.data?.Slug,
             author: p.author || p.data?.author || p.data?.Author,
             publishedDate: p.publishedDate || p.createdAt,
-            coverImage: p.coverImage || getBestImage(p.data || {})
+            coverImage: p.coverImage || getBestImage(p.data || {}),
+            summary: p.summary || null,
+            points: p.points || []
         }))
     };
 }

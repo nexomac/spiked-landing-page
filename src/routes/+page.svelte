@@ -458,7 +458,7 @@
 					<h1
 						class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-[1.08] mb-6 tracking-tight text-white"
 					>
-						Every signal. <br /><span class="text-red-600">One decision.</span>
+						Every signal <br /><span class="text-red-600">One decision</span>
 					</h1>
 					<p class="text-base lg:text-lg xl:text-xl mb-10 leading-[1.6] max-w-xl text-zinc-300">
 						Spiked compresses overload into a single, decisive signal before the
@@ -609,7 +609,7 @@
 				<div class="flex-1 text-center lg:text-left z-10">
 					<h2 class="text-4xl lg:text-6xl font-black text-white mb-6 leading-none tracking-tight">
 						I didn't wing it<br/>
-						<span class="text-red-600"> — I won it</span>
+						<span class="text-red-600"> I won it</span>
 					</h2>
 					<p class="text-lg text-zinc-300 mb-8 max-w-lg">
 						The Know Your Customer feature surfaced insights no other AI could, 

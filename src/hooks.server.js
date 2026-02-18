@@ -13,14 +13,17 @@ export async function handle({ event, resolve }) {
         'Content-Security-Policy',
         [
             "default-src 'self'",
-            "img-src 'self' data: https://images.unsplash.com https://placehold.co",
+            "img-src 'self' data: https://images.unsplash.com https://placehold.co http://localhost:3000",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' data: https://fonts.gstatic.com",
             "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
             "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
-            "connect-src 'self' https://va.vercel-scripts.com",
+            "connect-src 'self' https://va.vercel-scripts.com http://localhost:3000",
+            "media-src 'self' http://localhost:3000",
         ].join('; ')
+
     );
+
 
 	return response;
 }

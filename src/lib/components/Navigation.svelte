@@ -275,6 +275,11 @@
 							href: "/customers",
 						},
 						{
+							name: "Partners",
+							desc: "NVIDIA Inception & Google for Startups — our ecosystem partners",
+							href: "/partners",
+						},
+						{
 							name: "Events",
 							desc: "Find Us at these upcoming Events and see SpikedAI in action",
 							href: "/resources",
@@ -283,11 +288,11 @@
 							name: "Video Resources",
 							desc: "Watch how SpikedAI can transform your business.",
 							href: "/resources#videos",
-						}
+						},
 					],
 				},
 			],
-		}
+		},
 	];
 
 	let openSection = $state(null);
@@ -318,7 +323,6 @@
 			openDropdown = null;
 		}, 300);
 	}
-
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -483,6 +487,11 @@
 						>Pricing</a
 					>
 					<a
+						href="/partners"
+						class="text-[13px] font-medium text-white/90 hover:text-white transition-colors"
+						>Partners</a
+					>
+					<a
 						href="/about-us"
 						class="text-[13px] font-medium text-white/90 hover:text-white transition-colors"
 						>About Us</a
@@ -522,7 +531,7 @@
 <!-- Mobile Menu -->
 {#if mobileMenuOpen}
 	<div
-		class="sticky inset-x-0 top-[60px] h-[calc(100dvh-60px)] 
+		class="sticky inset-x-0 top-[60px] h-[calc(100dvh-60px)]
 		       bg-gradient-to-b from-zinc-900 to-black
 		       overflow-y-auto z-[400]"
 		in:fly={{ y: -12, duration: 160 }}
@@ -587,16 +596,26 @@
 							{/each}
 						</div>
 					{/if}
-			</div>
+				</div>
 			{/each}
 
 			<!-- Primary Links -->
-			<div class="bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg divide-y">
+			<div
+				class="bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg divide-y"
+			>
 				<a
 					href="/pricing"
 					class="flex items-center justify-between px-5 py-4 text-zinc-900 font-semibold hover:bg-zinc-50 active:scale-[0.99] transition-all"
 				>
 					Pricing
+					<span class="text-zinc-400">→</span>
+				</a>
+
+				<a
+					href="/partners"
+					class="flex items-center justify-between px-5 py-4 text-zinc-900 font-semibold hover:bg-zinc-50 active:scale-[0.99] transition-all"
+				>
+					Partners
 					<span class="text-zinc-400">→</span>
 				</a>
 
@@ -619,7 +638,6 @@
 					<span class="text-zinc-400">→</span>
 				</a>
 			</div>
-
 
 			<!-- Action Buttons -->
 			<div class="pt-4 space-y-3">
